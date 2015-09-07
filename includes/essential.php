@@ -8,7 +8,7 @@
  */
 
 // Configuration file
-require_once(__DIR__.'/config.php');
+require_once(__DIR__.'/config-sample.php');
 // Log class
 require_once(__DIR__.'/Log.php');
 // Database class

@@ -3050,4 +3050,37 @@ class sqlDB {
         return $error;
     }
 
+    public function ritornamiId($translation,$idDomanda){
+        global $log;
+
+
+        $this->result = null;
+        $this->mysqli = $this->connect();
+
+        try{
+            $query = "SELECT idAnswer
+                      FROM answers
+                      JOIN translationanswers
+                      ON translationanswers.fkAnswer = answers.idAnswer
+                      JOIN questions
+                      ON answers.fkQuestion = questions.idQuestion
+
+                      WHERE
+                          translationanswers.translation = '$translation'
+                      AND questions.idQuestion = '$idDomanda'";
+
+            $this->execQuery($query);
+
+            if($risultato = $this->nextRowAssoc()) {
+                $log->append($risultato['idAnswer']);
+                return $risultato['idAnswer'];
+
+            }else{return 0;}
+
+        }catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+    }
+
 }

@@ -307,6 +307,8 @@
     <text id="ttQTYNDescription">A Yes/No question is a multiple choice question that asks the participant to give a "Yes" or "No" answer to a question.</text>
     <text id="ttQTTF">True / False</text>
     <text id="ttQTTFDescription">A True/False question is a Multiple Choice question that asks the participant to give a "True" or "False" answer to a question.</text>
+    <text id="ttQTFB">Fill in Blanks</text>
+    <text id="ttQTFBDescription">In a fill in blank question the participant have to complete the text with the correct answer. For insert a new textbox is necessary to write 3 consecutive underscore. (es: ___ )</text>
     <!-- ======================== R ======================== -->
     <text id="ttRandom">Random</text>
     <text id="ttRefresh">Refresh</text>

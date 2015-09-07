@@ -274,8 +274,9 @@ var ttQTES = "Essay Question";
 var ttQTESDescription = "An Essay question lets the participant enter a long, free-range text answer to a question. It's also possible to use this question type to solicit opinions or suggestions on a particular subject.";
 var ttQTYN = "Yes / No";
 var ttQTYNDescription = "A Yes/No question is a multiple choice question that asks the participant to give a \"Yes\" or \"No\" answer to a question.";
-var ttQTTF = "True / False";
-var ttQTTFDescription = "A True/False question is a Multiple Choice question that asks the participant to give a \"True\" or \"False\" answer to a question.";
+var ttQTFB = "Fill In Blanks";
+var ttQTFBDescription = "In a fill in blank question the participant have to complete the text with the correct answer. For insert a new textbox is necessary to write 3 consecutive underscore. (es: ___ )";
+
 var ttRandom = "Random";
 var ttRefresh = "Refresh";
 var ttRegister = "Register";

@@ -276,6 +276,9 @@ define('ttQTYN' , "Si / No");
 define('ttQTYNDescription' , "Una domanda Sì/No è una domanda a risposta singola che chiede al partecipante di rispondere con un \"Sì\" o un \"No\".");
 define('ttQTTF' , "Vera / Falso");
 define('ttQTTFDescription' , "Una domanda Vero/Falso è una domanda a risposta singola che chiede al partecipante di rispondere con un \"Vero\" o un \"Falso\".");
+define('ttQTFB' , "Completamento Testo");
+define('ttQTFBDescription' , "Una domanda a completamento testo è una domanda che richiede al partecipante di completare il testo con le dovute parole mancanti");
+
 define('ttRandom' , "Casuali");
 define('ttRefresh' , "Aggiorna");
 define('ttRegister' , "Registrati");

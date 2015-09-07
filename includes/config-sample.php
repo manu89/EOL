@@ -51,17 +51,17 @@ $config['systemUploadDir'] = '/uploads/';
  *----------------------------------*/
 
 // Database type (mysql | ...)
-$config['dbType'] = '__DBTYPE__';
+$config['dbType'] = 'mysql';
 // Database web address
-$config['dbHost'] = '__DBHOST__';
+$config['dbHost'] = 'localhost';
 // Database port
-$config['dbPort'] = '__DBPORT__';
+$config['dbPort'] = '3306';
 // Database name
-$config['dbName'] = '__DBNAME__';
+$config['dbName'] = 'eol';
 // Database access username
-$config['dbUsername'] = '__DBUSERNAME__';
+$config['dbUsername'] = 'root';
 // Database access password
-$config['dbPassword'] = '__DBPASSWORD__';
+$config['dbPassword'] = '';
 
 /*----------------------------------*
  *  All themes configurations       *

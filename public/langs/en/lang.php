@@ -276,6 +276,9 @@ define('ttQTYN' , "Yes / No");
 define('ttQTYNDescription' , "A Yes/No question is a multiple choice question that asks the participant to give a \"Yes\" or \"No\" answer to a question.");
 define('ttQTTF' , "True / False");
 define('ttQTTFDescription' , "A True/False question is a Multiple Choice question that asks the participant to give a \"True\" or \"False\" answer to a question.");
+define('ttQTFB' , "Fill In Blanks");
+define('ttQTFBDescription' , "A Fill In Blanks question is a question that asks the participant tho complete the text with the correct missing words.");
+
 define('ttRandom' , "Random");
 define('ttRefresh' , "Refresh");
 define('ttRegister' , "Register");

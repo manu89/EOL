@@ -276,6 +276,9 @@ var ttQTYN = "Si / No";
 var ttQTYNDescription = "Una domanda Sì/No è una domanda a risposta singola che chiede al partecipante di rispondere con un \"Sì\" o un \"No\".";
 var ttQTTF = "Vera / Falso";
 var ttQTTFDescription = "Una domanda Vero/Falso è una domanda a risposta singola che chiede al partecipante di rispondere con un \"Vero\" o un \"Falso\".";
+var ttQTFB = "Completamento Testo";
+var ttQTFBDescription = "Una domanda a completamento testo è una domanda che richiede al partecipante di completare il testo con le dovute parole mancanti";
+
 var ttRandom = "Casuali";
 var ttRefresh = "Aggiorna";
 var ttRegister = "Registrati";

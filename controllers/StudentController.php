@@ -193,7 +193,34 @@ class StudentController extends Controller{
                 if($db->qUpdateTestAnswers($_SESSION['idSet'], $questions, $answers)){
 
                     if((isset($_POST['submit'])) && ($_POST['submit'] == "true")){      // Close test
-                        if($db->qEndTest($_SESSION['idSet'])){
+                        $finalAnswers = array();
+                        //calcolo la lunghezza dell'array $questions
+                        $elemquestions=count($questions)-1;
+                        while(count($answers) > 0){
+
+                            $answer = json_decode(array_pop($answers), true);
+                            //calcolo la lunghezza del vettore $answer
+                            $lunganswer=count($answer);
+                            //verifico se nella prima posizione non c'è un valore numerico
+                            if((is_numeric($answer[0])==false)){
+
+                                for($k=0;$k<$lunganswer;$k++){
+                                    $answer[$k]=trim($answer[$k]);
+                                    $idmio=$db->ritornamiId($answer[$k],$questions[$elemquestions]);
+                                    $answer[$k]=$idmio;
+                                }
+
+
+                            }
+                            if($elemquestions!=0){
+                                $elemquestions--;
+                            }
+
+                            if((!empty($answer)) && (is_numeric($answer[0]))){
+                                $finalAnswers = array_merge((array)$finalAnswers, (array)$answer);
+                            }
+                        }
+                        if($db->qEndTest($_SESSION['idSet'], $finalAnswers)){
                             unset($_SESSION['idSet']);
                             echo 'ACK';
                         }else{
