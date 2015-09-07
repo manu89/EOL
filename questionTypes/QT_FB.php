@@ -2,7 +2,7 @@
 <?php
 /**
  * File: QT_FB.php
- * User: Masterplan
+ * User: Alberto
  * Date: 18/09/14
  * Time: 12:41
  * Desc: Class for Fill In Blanks Question
@@ -111,91 +111,77 @@ class QT_FB extends Question {
     <?php
     }
 
-    public function printQuestionPreview(){
+    public function printQuestionPreview()
+    {
         global $config;
+
+
         $db = new sqlDB();
-        if(($db->qAnswerSet($this->get('idQuestion'), $this->get('fkLanguage'), $_SESSION['idSubject'])) && ($answerSet = $db->getResultAssoc())){
+        if (($db->qAnswerSet($this->get('idQuestion'), $this->get('fkLanguage'), $_SESSION['idSubject'])) && ($answerSet = $db->getResultAssoc())) {
 
 
-            $questionAnswers = '<textarea class="textareaTest"></textarea>';
+            // -------  Add extra buttons  ------- //
+            $extra = '';
+            if (strpos($this->get('extra'), 'c') !== false)
+                $extra .= '<img class="extraIcon calculator" src="' . $config['themeImagesDir'] . 'QEc.png' . '">';
+            if (strpos($this->get('extra'), 'p') !== false)
+                $extra .= '<img class="extraIcon periodicTable" src="' . $config['themeImagesDir'] . 'QEp.png' . '">';
 
-        // -------  Add extra buttons  ------- //
-        $extra = '';
-        if(strpos($this->get('extra'), 'c') !== false)
-            $extra .= '<img class="extraIcon calculator" src="'.$config['themeImagesDir'].'QEc.png'.'">';
-        if(strpos($this->get('extra'), 'p') !== false)
-            $extra .= '<img class="extraIcon periodicTable" src="'.$config['themeImagesDir'].'QEp.png'.'">';
-
-        $domanda=$this->get('translation').$extra;
+            $domanda = $this->get('translation') . $extra;
 
 
-        ?>
+            ?>
 
 
 
-        <div class="questionTest" value="<?= $this->get('idQuestion') ?>" type="FB">
-            <div class="questionText"><?= $null="";
+            <div class="questionTest" value="<?= $this->get('idQuestion') ?>" type="FB">
+            <div class="questionText"><?= $null = "";
 
                 //calcolo la lunghezza dell'array "domanda"
-                $lunghezza=strlen($domanda);
+                $lunghezza = strlen($domanda);
 
 
-                $conta=1;
-                for($i=0; $i<$lunghezza; $i++){
-                    if($domanda[$i]!="."){
+                $conta = 1;
+                for ($i = 0; $i < $lunghezza; $i++) {
+                    if ($domanda[$i] != "_") {
                         //stampo la lettera nella posizione $i dell'array "domanda"
-                        echo"$domanda[$i]";
-                    }else{
-                        //verifico se ci sono 6 punti di fila
-                        $j=1;
+                        echo "$domanda[$i]";
+                    } else {
+                        //verifico se ci sono 3 underscore di fila
+                        $j = 1;
 
-                        for($k=0; $k<5;$k++){
-                            if($domanda[$i+1] == "."){
-                                $j++;
-                                $i++;
+
+                        for ($k = 0; $k < 2; $k++) {
+                            if ($i < $lunghezza - 1) {
+                                if ($domanda[$i + 1] == "_") {
+                                    $j++;
+                                    $i++;
+                                }
                             }
                         }
-                        //se j==6 significa che ci sono 6 punti di fila
-                        if($j==6){
+                        //se j==3 significa che ci sono 3 underscore di fila
+                        if ($j == 3) {
                             //inserisco la textbox
 
                             ?>
 
-                            <input  name="risposta" type="text" value="" size="13" maxlength="25" />
+                            <input name="risposta" type="text" value="" size="13" maxlength="25"/>
 
-                        <?php
+                            <?php
                             $conta++;
-                        }else{echo ".";}
+                        } else if ($j == 1) {
+                            echo "_";
+                        } elseif ($j == 2) {
+                            echo "__";
+                        }
                     }
                 }
                 ?></div>
-            <?php
 
-        global $config;
-
-                   $questionAnswers = '';
-            $numerorisposta=1;
-            foreach($answerSet as $answer){
-            $class = '';
-            if($answer['fkLanguage'] != $this->get('fkLanguage'))
-                $class = 'mainLang';
-
-                $questionAnswers .= '<div class="'.$class.'">
-                <input class="hidden"  name="'.$this->get('idQuestion').'" value="'.$answer['idAnswer'].'"/>
-                <span value="'.$answer['idAnswer'].'"></span>
-                <label>Risposta '.$numerorisposta.' : '.$answer['translation'].'</label>
-                </div>';
-                $numerorisposta++;
-            }} ?>
-                <div class="questionAnswers"><?php
-                    echo"NON VISIBILE DALLO STUDENTE";
-                    echo"$questionAnswers";
-
-                    ?>
-                </div>
         </div>
 
     <?php
+    }
     }
 
     public function printQuestionInTest($idSubject, $answered, $extras){
@@ -214,21 +200,23 @@ class QT_FB extends Question {
 
                     $conta=1;
                     for($i=0; $i<$lunghezza; $i++){
-                        if($domanda[$i]!="."){
+                        if($domanda[$i]!="_"){
                             //stampo la lettera nella posizione $i dell'array "domanda"
                             echo"$domanda[$i]";
                         }else{
-                            //verifico se ci sono 6 punti di fila
+                            //verifico se ci sono 3 underscore di fila
                             $j=1;
 
-                            for($k=0; $k<5;$k++){
-                                if($domanda[$i+1] == "."){
-                                    $j++;
-                                    $i++;
+                            for ($k = 0; $k < 2; $k++) {
+                                if ($i < $lunghezza - 1) {
+                                    if ($domanda[$i + 1] == "_") {
+                                        $j++;
+                                        $i++;
+                                    }
                                 }
                             }
-                            //se j==6 significa che ci sono 6 punti di fila
-                            if($j==6){
+                            //se j==6 significa che ci sono 3 underscore di fila
+                            if($j==3){
                                 //inserisco la textbox
 
                                 $textbox='<input type="text" id="rispostas">';
@@ -236,7 +224,11 @@ class QT_FB extends Question {
                                 echo $textbox;
                                 //incremento contatore
                                 $conta++;
-                            }else{echo ".";}
+                            } else if ($j == 1) {
+                                echo "_";
+                            } elseif ($j == 2) {
+                                echo "__";
+                            }
                         }
                     }
                     ?><br>
@@ -311,21 +303,23 @@ class QT_FB extends Question {
                 $conteggiotextbox=0;
                 $conta=1;
                 for($i=0; $i<$lunghezza; $i++){
-                    if($domanda[$i]!="."){
+                    if($domanda[$i]!="_"){
                         //stampo la lettera nella posizione $i dell'array "domanda"
                         echo"$domanda[$i]";
                     }else{
-                        //verifico se ci sono 6 punti di fila
+                        //verifico se ci sono 3 underscore di fila
                         $j=1;
 
-                        for($k=0; $k<5;$k++){
-                            if($domanda[$i+1] == "."){
-                                $j++;
-                                $i++;
+                        for ($k = 0; $k < 2; $k++) {
+                            if ($i < $lunghezza - 1) {
+                                if ($domanda[$i + 1] == "_") {
+                                    $j++;
+                                    $i++;
+                                }
                             }
                         }
-                        //se j==6 significa che ci sono 6 punti di fila
-                        if($j==6){
+                        //se j==3 significa che ci sono 3 underscore di fila
+                        if($j==3){
                             //inserisco la textbox
                             if($vettore[$conteggiotextbox]==1){
                                 $colore="#AFFAB4";
@@ -338,7 +332,11 @@ class QT_FB extends Question {
                             $conteggiotextbox++;
                             //incremento contatore
                             $conta++;
-                        }else{echo ".";}
+                        } else if ($j == 1) {
+                            echo "_";
+                        } elseif ($j == 2) {
+                            echo "__";
+                        }
                     }
                 }
 

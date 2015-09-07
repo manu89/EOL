@@ -1,13 +1,13 @@
 <?php
 /**
  * File: AT_FB.php
- * User: Alberto
+ * User: Masterplan
  * Date: 18/09/14
  * Time: 12:41
- * Desc: Class for Fill in Blanks
+ * Desc: Class for answer in Numeric questions
  */
 
-
+/** Classe copiata NM */
 class AT_FB extends Answer
 {
 
