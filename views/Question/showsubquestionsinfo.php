@@ -1,10 +1,10 @@
 <?php
 /**
- * File: showanswerinfo.php
- * User: Masterplan
+ * File: showsubquestionsinfo.php
+ * User: Gmarsi
  * Date: 4/10/13
  * Time: 8:59 PM
- * Desc: Show answer's info panel or empty panel for new answer
+ * Desc: Show subquestion's info panel or empty panel for new answer
  */
 
 global $config;
