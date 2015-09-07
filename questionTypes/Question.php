@@ -12,6 +12,7 @@ abstract class Question {
     protected $allLangs;
     private $info = null;
 
+
     /**
      * @param   $qType
      * @param   $questionInfo
@@ -41,12 +42,41 @@ abstract class Question {
 
     public function get($var){
         if(isset($this->info[$var])){
+
             return $this->info[$var];
         }else{
             return "Var '$var' not exists";
         }
     }
+    public function getRAsspc($i,$var)
+    {
+        global $log;
+        //var_dump($this->info);
+        //$log->append($this->info[$i][$var]);
 
+        if(isset($this->info[$i][$var])){
+
+            return $this->info[$i][$var];
+        }else{
+            return "Var '$var' not exists";
+        }
+
+
+    }    public function getRA($var)
+{
+    global $log;
+    //var_dump($this->info);
+    //$log->append($this->info[$i][$var]);
+    for ($i=0;$i<5;$i++)
+        if(isset($this->info[$i][$var])){
+
+            return $this->info[$i][$var];
+        }else{
+            return "Var '$var' not exists";
+        }
+
+
+}
     public function set($var, $value){
         $this->info[$var] = $value;
     }
@@ -71,8 +101,8 @@ abstract class Question {
         }else{
             die($db->getError());
         }
-    }
 
+    }
 
 //------------  Functions used in Question edit forms  ------------//
     public abstract function printQuestionEditForm($action, $readonly);
@@ -145,26 +175,26 @@ abstract class Question {
         <div class="right">
             <label class="left"><?= ttDifficulty ?> : </label>
             <dl class="dropdownInfo" id="questionDifficulty">
-            <?php
-            if($action == 'show')
-                echo '<dt class="'.$editClass.'"><span>'.constant('ttD'.$this->get('difficulty')).'<span class="value">'.$this->get('difficulty').'</span></span></dt>';
-            else
-                echo '<dt class="'.$editClass.'"><span>'.ttD1.'<span class="value">1</span></span></dt>';
-            if(!$readonly){ ?>
-                <dd>
-                    <ol>
-                        <?php
-                        $maxdifficulty = getMaxQuestionDifficulty();
-                        $index = 1;
-                        while($index <= $maxdifficulty){
-                            echo '<li>'.constant('ttD'.$index).'<span class="value">'.$index.'</span></li>';
-                            $index++;
-                        }
-                        ?>
-                    </ol>
-                </dd>
-            <?php } ?>
-        </dl>
+                <?php
+                if($action == 'show')
+                    echo '<dt class="'.$editClass.'"><span>'.constant('ttD'.$this->get('difficulty')).'<span class="value">'.$this->get('difficulty').'</span></span></dt>';
+                else
+                    echo '<dt class="'.$editClass.'"><span>'.ttD1.'<span class="value">1</span></span></dt>';
+                if(!$readonly){ ?>
+                    <dd>
+                        <ol>
+                            <?php
+                            $maxdifficulty = getMaxQuestionDifficulty();
+                            $index = 1;
+                            while($index <= $maxdifficulty){
+                                echo '<li>'.constant('ttD'.$index).'<span class="value">'.$index.'</span></li>';
+                                $index++;
+                            }
+                            ?>
+                        </ol>
+                    </dd>
+                <?php } ?>
+            </dl>
         </div>
 
         <div class="right">
@@ -212,19 +242,39 @@ abstract class Question {
             </dl>
         </div>
 
-        <?php
+    <?php
     }
 
     public function printQuestionEditButtons($action, $readonly){
         if($action == 'show'){ ?>
             <a class="button normal left rSpace tSpace" onclick="closeQuestionInfo(questionEditing);"><?= ttExit ?></a>
             <a class="button blue right lSpace tSpace" onclick="saveQuestionInfo_<?= $this->get('type') ?>(close = true);"><?= ttSave ?></a>
+
             <?php if(!$readonly){ ?>
                 <a class="button red right tSpace" onclick="deleteQuestion(ask = true);" id="deleteQuestion"><?= ttDelete ?></a>
             <?php }
         }else{ ?>
             <a class="button normal left rSpace tSpace" onclick="cancelNewQuestion(ask = true);"><?= ttCancel ?></a>
             <a class="button blue right lSpace tSpace" onclick="createNewQuestion_<?= $this->get('type') ?>();"><?= ttCreate ?></a>
+        <?php
+        }
+    }
+
+    /**
+     * @param $action
+     * @param $readonly
+     */
+    public function printQuestionEditButtonsPL($action, $readonly){
+        if($action == 'show'){ ?>
+            <a class="button normal left rSpace tSpace" onclick="closeQuestionInfo(questionEditing);"><?= ttExit ?></a>
+            <a class="button blue right lSpace tSpace" onclick="saveQuestionInfo_<?= $this->get('type') ?>(close = true);"><?= ttSave ?></a>
+            <a class="button blue right lSpace tSpace" onclick="createNewQuestion_();"><?= ttCreatePL2 ?></a>
+            <?php if(!$readonly){ ?>
+                <a class="button red right tSpace" onclick="deleteQuestion(ask = true);" id="deleteQuestion"><?= ttDelete ?></a>
+            <?php }
+        }else{ ?>
+            <a class="button normal left rSpace tSpace" onclick="cancelNewQuestion(ask = true);"><?= ttCancel ?></a>
+            <a class="button blue right lSpace tSpace" onclick="createNewQuestion_<?= $this->get('type') ?>();"><?= ttCreatePL ?></a>
         <?php
         }
     }
@@ -241,7 +291,6 @@ abstract class Question {
 
     public abstract function printQuestionInView($idSubject, $answered, $scale, $lastQuestion);
 
-    public abstract function getScoreFromGivenAnswer();
 
 
 
