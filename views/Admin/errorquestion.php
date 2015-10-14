@@ -1,10 +1,10 @@
 <?php
 /**
- * File: profile.php
- * User: Masterplan
- * Date: 5/30/13
+ * File: errorquestion.php
+ * User: GMarsi
+ * Date: 14/10/2015
  * Time: 4:13 PM
- * Desc: Shows profile page of user's account
+ * Desc: Shows error segnalation
  */
 
 global $user, $log;
