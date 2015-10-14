@@ -12,6 +12,8 @@ define('ttAndExit' , "ed Esci");
 define('ttAnswer' , "Risposta");
 define('ttAnswers' , "Risposte");
 define('ttErrorquestion' ,'Segnala Errore');
+define('ttNote' ,'Note');
+define('ttInvia' ,'Invia');
 define('ttArchive' , "Archivia");
 define('ttArchived' , "Archiviato");
 define('ttAssignSubject' , "Assegna Materia");

@@ -21,6 +21,8 @@ define('ttBlocked' , "Blocked");
 define('ttBlock' , "Block");
 define('ttUnblock' , "Unblock");
 define('ttBonus' , "Bonus");
+define('ttNote' ,'Note');
+define('ttInvia' ,'Invia');
 define('ttCancel' , "Cancel");
 define('ttChangeLanguage' , "Change Language");
 define('ttChangeVersion' , "Change Test Version");
