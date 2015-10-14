@@ -178,7 +178,40 @@ class AdminController extends Controller{
             header('Location: index.php?page=admin/selectlanguage');
         }
     }
+    /**
+     *  @name   actionEmail
+     *  @descr send mail
+     *
+     */
+    private function actionErroremail(){
+        global $user, $log;
 
+        if((isset($_POST['idquestion'])) && (isset($_POST['notes'])) ){
+
+
+
+
+
+            var_dump($user);
+
+            $to = "giovamarsi@live.it"; //destinatatio email
+
+            $subject = "Messaggio di prova via PHP"; //oggetto email
+
+            $message = "Questo e' un messaggio di prova inviato\nusando l'istruzione mail() di PHP.\n\nA presto.";
+
+
+            $headers = 'from' .$user. "\r\n" .
+                'Reply-To:'.$user . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+
+
+            if (mail ($to,$subject,$message,$headers))
+                $log->append("Messaggio inviato con successo a " . $to);
+            else
+                $log->append("Errore. Nessun messaggio inviato.");
+        }
+    }
     /**
      *  @name   actionSavelanguage
      *  @descr  Saves XML or PHP/Javascript file of requested language
