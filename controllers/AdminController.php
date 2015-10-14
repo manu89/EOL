@@ -651,6 +651,16 @@ class AdminController extends Controller{
             $log->append(__FUNCTION__." : Params not set");
         }
     }
+    private function actionErrorquestion(){
+        global $engine;
+
+        $engine->renderDoctype();
+        $engine->loadLibs();
+        $engine->renderHeader();
+        $engine->renderPage();
+        $engine->renderFooter();
+
+    }
 
     /**
      *  @name   actionUpdateprofile
