@@ -192,9 +192,9 @@ class AdminController extends Controller{
             var_dump($user->email);//email dell'users
             $to = ""; //destinatatio email
 
-            $subject = "Messaggio di prova via PHP"; //oggetto email
+            $subject = ""; //oggetto email
 
-            $message = $_POST['notes'] ;
+            $message = $_POST['notes'] ;//note 
 
 
             $headers = 'from' .$user->email. "\r\n" .
