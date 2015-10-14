@@ -188,7 +188,7 @@ class AdminController extends Controller{
 
         if((isset($_POST['idquestion'])) && (isset($_POST['notes'])) ){
 
-            var_dump($user['email']);
+           
             var_dump($user);
             $to = "giovamarsi@live.it"; //destinatatio email
 
