@@ -739,6 +739,15 @@ class AdminController extends Controller{
                 'roles'   => array('?'),
             ),
             array(
+                'allow',
+                'actions' => array('Errorquestion', 'Erroremail'),
+                'roles'   => array('a','s'),
+            ),   array(
+                'allow',
+                'actions' => array('Erroremail'),
+                'roles'   => array('a','s'),
+            ),
+            array(
                 'deny',
                 'actions' => array('*'),
                 'roles'   => array('*'),
