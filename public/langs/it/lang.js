@@ -13,6 +13,7 @@ var ttAnswer = "Risposta";
 var ttAnswers = "Risposte";
 var ttArchive = "Archivia";
 var ttArchived = "Archiviato";
+var ttErrorquestion = "Segnala Errore";
 var ttAssignSubject = "Assegna Materia";
 var ttAutomatic = "Automatico";
 var ttBasedOn = "Basato su";

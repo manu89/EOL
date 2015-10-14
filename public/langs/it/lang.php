@@ -11,6 +11,7 @@ define('ttAlias' , "Codice ISO 639-1");
 define('ttAndExit' , "ed Esci");
 define('ttAnswer' , "Risposta");
 define('ttAnswers' , "Risposte");
+define('ttErrorquestion' ,'Segnala Errore');
 define('ttArchive' , "Archivia");
 define('ttArchived' , "Archiviato");
 define('ttAssignSubject' , "Assegna Materia");

@@ -6,6 +6,7 @@ var ttAdd = "Add";
 var ttAddSelectedStudents = "Add Selected Students";
 var ttAdministration = "Administration";
 var ttAdministrator = "Administrator";
+var ttErrorquestion = "Report error";
 var ttAdminWelcome = "Welcome to the administation panel.<br/>This system includes:";
 var ttAlias = "ISO 639-1 Code";
 var ttAndExit = "and Exit";

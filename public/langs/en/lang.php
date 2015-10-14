@@ -10,6 +10,7 @@ define('ttAdminWelcome' , "Welcome to the administation panel.<br/>This system i
 define('ttAlias' , "ISO 639-1 Code");
 define('ttAndExit' , "and Exit");
 define('ttAnswer' , "Answer");
+define('ttErrorquestion' ,'Report Error');
 define('ttAnswers' , "Answers");
 define('ttArchive' , "Archive");
 define('ttArchived' , "Archived");
