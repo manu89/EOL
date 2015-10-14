@@ -194,7 +194,7 @@ class AdminController extends Controller{
 
             $subject = "Messaggio di prova via PHP"; //oggetto email
 
-            $message = "Questo e' un messaggio di prova inviato\nusando l'istruzione mail() di PHP.\n\nA presto.";
+            $message = $_POST['notes'] ;
 
 
             $headers = 'from' .$user->email. "\r\n" .
