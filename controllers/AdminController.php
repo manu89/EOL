@@ -188,17 +188,17 @@ class AdminController extends Controller{
 
         if((isset($_POST['idquestion'])) && (isset($_POST['notes'])) ){
 
-           
-            var_dump($user);
-            $to = "giovamarsi@live.it"; //destinatatio email
+
+            var_dump($user->email);//email dell'users
+            $to = ""; //destinatatio email
 
             $subject = "Messaggio di prova via PHP"; //oggetto email
 
             $message = "Questo e' un messaggio di prova inviato\nusando l'istruzione mail() di PHP.\n\nA presto.";
 
 
-            $headers = 'from' . "\r\n" .
-                'Reply-To:'. "\r\n" .
+            $headers = 'from' .$user->email. "\r\n" .
+                'Reply-To:'.$user->email. "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
 
 
