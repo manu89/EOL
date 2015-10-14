@@ -211,6 +211,8 @@ class AdminController extends Controller{
                     'X-Mailer: PHP/' . phpversion();
 
             }
+
+            
                 if (mail($to, $subject, $message, $headers))
                     $log->append("Messaggio inviato con successo a " . $to);
                 else
