@@ -186,27 +186,37 @@ class AdminController extends Controller{
     private function actionErroremail(){
         global $user, $log;
 
-        if((isset($_POST['idquestion'])) && (isset($_POST['notes'])) ){
+        if((isset($_POST['idquestion'])) && (isset($_POST['notes'])) ) {
+
+            if ($_POST['idquestion'] == '') { //se non inseriscono id quindi solo una segnalazione varia
+                $to = ""; //destinatatio email
+                $subject = "Segnalazione da Eol";//oggetto
+                var_dump($subject);
+                $message = $_POST['notes'];//note
+                $headers = 'from' . $user->email . "\r\n" .
+                    'Reply-To:' . $user->email . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+            } else {
+
+                $to = ""; //destinatatio email
+
+                $subject = "Modifica domanda n." . $_POST['idquestion']; //oggetto email
+                var_dump($subject);
+                $message = $_POST['notes'];//note
 
 
-            var_dump($user->email);//email dell'users
-            $to = ""; //destinatatio email
+                $headers = 'from' . $user->email . "\r\n" .
+                    'Reply-To:' . $user->email . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
 
-            $subject = ""; //oggetto email
+            }
+                if (mail($to, $subject, $message, $headers))
+                    $log->append("Messaggio inviato con successo a " . $to);
+                else
+                    $log->append("Errore. Nessun messaggio inviato.");
+            }
 
-            $message = $_POST['notes'] ;//note 
-
-
-            $headers = 'from' .$user->email. "\r\n" .
-                'Reply-To:'.$user->email. "\r\n" .
-                'X-Mailer: PHP/' . phpversion();
-
-
-            if (mail ($to,$subject,$message,$headers))
-                $log->append("Messaggio inviato con successo a " . $to);
-            else
-                $log->append("Errore. Nessun messaggio inviato.");
-        }
     }
     /**
      *  @name   actionSavelanguage
