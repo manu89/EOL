@@ -78,7 +78,7 @@ $(function(){
                 { className: "qTopic", width : "100px" },
                 { className: "qType", width : "100px" },
                 { className: "qDifficulty", width : "50px"},
-                { className: "qQuestionID", visible : false, searchable : false },
+                { className: "qQuestionID", visible : false, searchable : true },
                 { className: "qTopicID", visible : false },
                 { className: "qTypeID", visible : false, searchable : false },
                 { className: "qLanguageID", visible : false, searchable : false }

@@ -20,7 +20,7 @@ global $user, $log;
     <form class="infoEdit" onsubmit="return false;">
 
         <label class="b2Space"><?= ttQuestionerror ?> : </label>
-        <input class="writable" type="text" id="idquestion">
+        <input class="writable" id="idquestion" >
         <div class="clearer"></div>
 
         <label class="b2Space"><?= ttNotes ?> : </label>
