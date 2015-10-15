@@ -19,19 +19,23 @@ global $user, $log;
     <?php openBox(ttErrorquestion, 'small', 'profile') ?>
     <form class="infoEdit" onsubmit="return false;">
 
-        <label class="b2Space"><?= ttQuestion ?> : </label>
+        <label class="b2Space"><?= ttQuestionerror ?> : </label>
         <input class="writable" type="text" id="idquestion">
         <div class="clearer"></div>
 
-        <label class="b2Space"><?= ttNote ?> : </label>
+        <label class="b2Space"><?= ttNotes ?> : </label>
         <textarea  id="notes"> </textarea>
         <div class="clearer"></div>
+
 
 <br>
 
         <div>
             <a class="normal button" id="saveProfile" onclick="errorEmail();"><?= ttInvia?></a>
+            <br>
+            <br>
         </div>
+        <label class="b3Space"><?= ttspiegazionerr ?>  </label>
     </form>
     <?php closeBox() ?>
 </div>

@@ -1012,8 +1012,11 @@ div[id^="error"] {
     background-color    :   rgb(245, 252, 194);
     resize              :   none;
     font-size: 12px;
+
+
 }
 img.flag{
+
     width: 17px;
     height: 13px;
     margin-right: 5px;
@@ -1037,6 +1040,7 @@ img.icon{
 }
 .lSpace{
     margin-left         :   10px;
+
 }
 .rSpace{
     margin-right        :   10px;
@@ -1058,6 +1062,11 @@ img.icon{
 }
 .b2Space{
     margin-bottom       :   20px;
+
+}.b3Space{
+    margin-bottom       :   20px;
+    color: #ff0000;
+
 }
 .lPad{
     padding-left         :   10px;

@@ -212,7 +212,7 @@ class AdminController extends Controller{
 
             }
 
-            
+
                 if (mail($to, $subject, $message, $headers))
                     $log->append("Messaggio inviato con successo a " . $to);
                 else
