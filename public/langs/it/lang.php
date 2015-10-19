@@ -286,6 +286,7 @@ define('ttRegister' , "Registrati");
 define('ttRegistrations' , "Registrazione");
 define('ttRegEnd' , "Chiusura registrazione");
 define('ttRenewPassword' , "Rinnova Password");
+define('ttReport',"Report");
 define('ttReset' , "Reimposta");
 define('ttResetPassword' , "Reimposta Password");
 define('ttRole' , "Ruolo");

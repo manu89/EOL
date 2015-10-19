@@ -238,6 +238,7 @@ function adminMenu(){
         </ul>
     </li>
 
+    <li><a href="index.php?page=report"><?= ttReport ?></a></li>
     <li><a href="index.php?page=admin/profile"><?= ttProfile ?></a></li>
     <li><a href="index.php?page=admin/exit" style="color: red"><?= ttExit ?></a></li>
 

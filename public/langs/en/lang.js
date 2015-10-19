@@ -288,6 +288,7 @@ var ttRegister = "Register";
 var ttRegistrations = "Registrations";
 var ttRegEnd = "Registation closure";
 var ttRenewPassword = "Renew Password";
+var ttReport="Report";
 var ttReset = "Reset";
 var ttResetPassword = "Reset Password";
 var ttRole = "Role";
