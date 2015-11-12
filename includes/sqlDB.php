@@ -2995,6 +2995,63 @@ class sqlDB {
     }
 
 /*******************************************************************
+*                              AOReport                              *
+*******************************************************************/
+    /**
+     * @name    qShowExams
+     * @return  boolean
+     * @descr   show searched result in Assesment's select tag
+     */
+    public function qShowExams($letter){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $query = "Select * from Exams where name like '".$letter."%'";
+            $this->execQuery($query);
+            //$rs=mysqli_query($this->mysqli,$query);
+            if($this->numResultRows()>0){
+                while($row=mysqli_fetch_array($this->result)){
+                    echo "<option value='$row[name]'>".$row['name']."</option>";
+                }
+            }
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
+    /**
+     * @name    qShowExams
+     * @return  boolean
+     * @descr   show searched result in Assesment's select tag
+     */
+    public function qSelectExams($exam){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $query = "Select * from Exams where name like '".$letter."%'";
+            $this->execQuery($query);
+            //$rs=mysqli_query($this->mysqli,$query);
+            if($this->numResultRows()>0){
+                while($row=mysqli_fetch_array($this->result)){
+                    echo "<option value='$row[name]'>".$row['name']."</option>";
+                }
+            }
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
+/*******************************************************************
 *                              mysqli                              *
 *******************************************************************/
 

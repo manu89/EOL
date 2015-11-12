@@ -41,16 +41,73 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionIndex(){
-        global $engine, $user;
+        global $engine;
+               //, $user;
 
-        $user->role = 'a';
-        $_SESSION['user'] = serialize($user);
+        //$user->role = 'a';
+       // $_SESSION['user'] = serialize($user);
 
         $engine->renderDoctype();
         $engine->loadLibs();
         $engine->renderHeader();
         $engine->renderPage();
         $engine->renderFooter();
+    }
+
+    /**
+     *  @name   actionIndex
+     *  @descr  Shows report index page
+     */
+    private function actionAoreport(){
+        global $engine;
+               //, $user;
+
+        //$user->role = 'a';
+        //$_SESSION['user'] = serialize($user);
+
+        $engine->renderDoctype();
+        $engine->loadLibs();
+        $engine->renderHeader();
+        $engine->renderPage();
+        $engine->renderFooter();
+    }
+
+    /**
+     *  @name   actionShowassesments
+     *  @descr  Shows report index page
+     */
+    private function actionShowassesments(){
+        global $engine;
+
+        $db=new sqlDB();
+        /*if($db->qShowExams($_POST['letter'])){
+            if($db->numResultRows()>0){
+                $column="name";
+                $data=$db->getResultAssoc($column);
+
+                echo "<option>".$data."</option>";
+
+            }
+        }*/
+        if(!($db->qShowExams($_POST['letter']))){
+            echo "errore";
+        }
+
+    }
+
+    /**
+     *  @name   actionShowpartecipant
+     *  @descr  Shows partecipant div
+     */
+    private function actionShowpartecipant(){
+        global $engine;
+        //, $user;
+
+        //$user->role = 'a';
+        //$_SESSION['user'] = serialize($user);
+
+        $engine->loadLibs();
+        $engine->renderPage();
     }
 
 
@@ -71,26 +128,9 @@ class ReportController extends Controller{
         return array(
             array(
                 'allow',
-                'actions' => array('Index', 'Exit', 'Newteacher', 'Rooms', 'Showroominfo', 'Newroom', 'Updateroominfo',
-                                   'Deleteroom','Selectlanguage', 'Language', 'Savelanguage', 'Newlanguage', 'Systemconfiguration',
-                                   'Updatesystemconfiguration'
+                'actions' => array('Index', 'Aoreport','Showassesments','Showpartecipant'
                                    ),
-                'roles'   => array('a'),
-            ),
-            array(
-                'allow',
-                'actions' => array('Profile', 'Updateprofile'),
-                'roles'   => array('a', 't', 's','e'),
-            ),
-            array(
-                'allow',
-                'actions' => array('Newstudent'),
-                'roles'   => array('?', 'a', 't'),
-            ),
-            array(
-                'allow',
-                'actions' => array('Setpassword', 'Lostpassword'),
-                'roles'   => array('?'),
+                'roles'   => array('a','e'),
             ),
             array(
                 'deny',

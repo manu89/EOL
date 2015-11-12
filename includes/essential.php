@@ -297,6 +297,7 @@ function eteacherMenu(){
             <li><a href="index.php?page=exam/settings"><?= ttSettings ?></a></li>
         </ul>
     </li>
+    <li><a href="index.php?page=report"><?= ttReport ?></a></li>
     <li><a href="index.php?page=admin/profile"><?= ttProfile ?></a></li>
 
 <?php

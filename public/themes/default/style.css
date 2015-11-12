@@ -2302,3 +2302,110 @@ span.extraClose{
 #reportTable td:last-child {
     padding-left: 20px;
 }
+
+.img-report{
+    width: 50px;
+}
+
+#assesmentHomepage .boxContent{
+    font-size: 12px;
+}
+
+#tabs{
+    margin-left:-45px;
+}
+
+#tabs li {
+    list-style: none;
+    display:inline-block;
+    width: 100px;
+    height: 20px;
+    margin-left: 0px;
+}
+#tabs li a {
+    font-size:14px;
+    color: black;
+    border-right: 1px solid black;
+    font-weight: bold;
+    text-decoration: none;
+    width: 100px;
+    height: 30px;
+    display: block;
+    float: left;
+    line-height: 35px;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+#tabs li a:hover{
+    background-color: #5bc0de;
+}
+
+#tabs li .active{
+    background-color: #5bc0de;
+}
+
+#containertab {
+    clear: both;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+#maintab{
+    display:block;
+}
+
+#groupstab{
+    display:none;
+}
+
+#partecipantstab{
+    display:none;
+}
+
+.col-left{
+    float:left;
+    min-width:100px;
+}
+
+.col-left #add, #addg{
+    margin-top:40px;
+    margin-left:10px;
+}
+
+.col-center{
+    float:left;
+    min-width:100px;
+    padding-left:18px;
+}
+
+.col-center #remove, #removeg{
+    margin-top:40px;
+    margin-bottom:5px;
+}
+
+.col-left #filter{
+    margin-top:15px;
+}
+
+.select{
+    width:160px;
+}
+
+.divider{
+    width:100%;
+    margin-top:150px;
+}
+
+.divider2{
+    width:100%;
+    margin-top:50px;
+}
+
+#tabsbutton{
+    padding-top:20px;
+}
+
+#filterpartecipants td{
+    padding:20px;
+}

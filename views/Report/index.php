@@ -17,21 +17,21 @@ global $config, $user;
 
 <div id="main">
     <div id="reportHomepage">
+        <div class="clearer"></div>
         <?php
-        openBox(ttReport, 'normal', 'report');
-        echo ttAdminWelcome;
+        openBox(ttReport, 'center', 'report');
 
         ?>
 
         <table id="reportTable">
-            <tr><td></td><td><?= ttTeachers ?></td></tr>
-            <tr><td></td><td><?= ttETeachers ?></td></tr>
+            <tr><td><img src="<?=$config['themeImagesDir']?>report.png" class="img-report"/></td><td><a href="index.php?page=report/aoreport"><?= ttAssesmentOverview ?></a></td></tr>
+            <tr><td></td><td></td></tr>
 
         </table>
 
         <?php
         closeBox();
         ?>
-        <div class="clearer"></div>
+
     </div>
 </div>
