@@ -198,7 +198,7 @@ class AdminController extends Controller{
 
             } else {
 
-                $to = "osvaldo.gervasi@gmail.com"; //destinatatio email
+                $to = "emanuelegragnoli@live.it"; //destinatatio email
                 $subject = "Modifica domanda n." . $_POST['idquestion']; //oggetto email
                 $message = $_POST['notes'];//note
                 $headers = 'from' . $user->email . "\r\n" .
@@ -207,9 +207,17 @@ class AdminController extends Controller{
 
             }
 
-            if (!mail($to, $subject, $message, $headers))
+            if (!mail($to, $subject, $message, $headers)) {
                 $log->append("Errore. Nessun messaggio inviato.");
+                echo "NACK";
+            }
+            else
+                $log->append("MSG INVIATO CORRETTAMENTE");
+            echo "ACK";
+
         }
+        else
+            echo "NACK";
 
     }
     /**

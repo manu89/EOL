@@ -13,23 +13,19 @@
 function errorEmail(){
     var idquestion = $("#idquestion").val().trim();
     var notes= $("#notes").val().trim();
-    alert(idquestion);
-    alert(notes);
 
                 $.ajax({
                     url     : "index.php?page=admin/erroremail",
                     type    : "post",
                     data    : {
-                        idquestion         :   idquestion,
+                        idquestion   :   idquestion,
                         notes        :   notes
-                                        },
+                    },
                     success : function (data, status) {
                         if(data == "ACK"){
-                            //alert(data);
-                            showSuccessMessage(ttMEdit);
+                            showSuccessMessage(ttErrorSent);
                             setTimeout(function(){location.href = "index.php"}, 2000);
                         }else{
-                            //alert(data);
                             showErrorMessage(data);
                         }
                     },

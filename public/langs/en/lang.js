@@ -367,3 +367,4 @@ var ttImportComplete="Questions Import successfully completed";
 var ttAImportComplete="Questions Import already successfully completed";
 var ttNumberError = "The value should be an integer or a decimal (ES: 12.5) ";
 
+var ttErrorSent = "The Reporting was sent successfully";
