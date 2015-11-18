@@ -191,7 +191,6 @@ class AdminController extends Controller{
             if ($_POST['idquestion'] == '') { //se non inseriscono id quindi solo una segnalazione varia
                 $to = ""; //destinatatio email
                 $subject = "Segnalazione da Eol";//oggetto
-                var_dump($subject);
                 $message = $_POST['notes'];//note
                 $headers = 'from' . $user->email . "\r\n" .
                     'Reply-To:' . $user->email . "\r\n" .
@@ -199,25 +198,18 @@ class AdminController extends Controller{
 
             } else {
 
-                $to = ""; //destinatatio email
-
+                $to = "osvaldo.gervasi@gmail.com"; //destinatatio email
                 $subject = "Modifica domanda n." . $_POST['idquestion']; //oggetto email
-                var_dump($subject);
                 $message = $_POST['notes'];//note
-
-
                 $headers = 'from' . $user->email . "\r\n" .
                     'Reply-To:' . $user->email . "\r\n" .
                     'X-Mailer: PHP/' . phpversion();
 
             }
 
-
-                if (mail($to, $subject, $message, $headers))
-                    $log->append("Messaggio inviato con successo a " . $to);
-                else
-                    $log->append("Errore. Nessun messaggio inviato.");
-            }
+            if (!mail($to, $subject, $message, $headers))
+                $log->append("Errore. Nessun messaggio inviato.");
+        }
 
     }
     /**
@@ -759,11 +751,7 @@ class AdminController extends Controller{
             array(
                 'allow',
                 'actions' => array('Errorquestion', 'Erroremail'),
-                'roles'   => array('a','s'),
-            ),   array(
-                'allow',
-                'actions' => array('Erroremail'),
-                'roles'   => array('a','s'),
+                'roles'   => array('a','e','t'),
             ),
             array(
                 'deny',
