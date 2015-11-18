@@ -72,13 +72,13 @@ $(function(){
             order: [[ qtci.text, "asc" ]],
             columns : [
                 { className: "qStatus", searchable : false, type: "alt-string", width : "10px" },
-                { className: "qText", width : "570px", mRender: function(data){return truncate(data, "600px")} },
+                { className: "qText", width : "400px", mRender: function(data){return truncate(data, "400px")} },
 //                { className: "qText", width : "650px" },
                 { className: "qLanguages", searchable : false, type: "alt-string", width : "60px" },
                 { className: "qTopic", width : "100px" },
                 { className: "qType", width : "100px" },
                 { className: "qDifficulty", width : "50px"},
-                { className: "qQuestionID", visible : false, searchable : true },
+                { className: "qQuestionID", visible : true, searchable : true },
                 { className: "qTopicID", visible : false },
                 { className: "qTypeID", visible : false, searchable : false },
                 { className: "qLanguageID", visible : false, searchable : false }
