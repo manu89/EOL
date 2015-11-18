@@ -178,7 +178,48 @@ class AdminController extends Controller{
             header('Location: index.php?page=admin/selectlanguage');
         }
     }
+    /**
+     *  @name   actionEmail
+     *  @descr send mail
+     *
+     */
+    private function actionErroremail(){
+        global $user, $log;
 
+        if((isset($_POST['idquestion'])) && (isset($_POST['notes'])) ) {
+
+            if ($_POST['idquestion'] == '') { //se non inseriscono id quindi solo una segnalazione varia
+                $to = ""; //destinatatio email
+                $subject = "Segnalazione da Eol";//oggetto
+                $message = $_POST['notes'];//note
+                $headers = 'from' . $user->email . "\r\n" .
+                    'Reply-To:' . $user->email . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+            } else {
+
+                $to = "emanuelegragnoli@live.it"; //destinatatio email
+                $subject = "Modifica domanda n." . $_POST['idquestion']; //oggetto email
+                $message = $_POST['notes'];//note
+                $headers = 'from' . $user->email . "\r\n" .
+                    'Reply-To:' . $user->email . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+            }
+
+            if (!mail($to, $subject, $message, $headers)) {
+                $log->append("Errore. Nessun messaggio inviato.");
+                echo "NACK";
+            }
+            else
+                $log->append("MSG INVIATO CORRETTAMENTE");
+            echo "ACK";
+
+        }
+        else
+            echo "NACK";
+
+    }
     /**
      *  @name   actionSavelanguage
      *  @descr  Saves XML or PHP/Javascript file of requested language
@@ -618,6 +659,16 @@ class AdminController extends Controller{
             $log->append(__FUNCTION__." : Params not set");
         }
     }
+    private function actionErrorquestion(){
+        global $engine;
+
+        $engine->renderDoctype();
+        $engine->loadLibs();
+        $engine->renderHeader();
+        $engine->renderPage();
+        $engine->renderFooter();
+
+    }
 
     /**
      *  @name   actionUpdateprofile
@@ -704,6 +755,11 @@ class AdminController extends Controller{
                 'allow',
                 'actions' => array('Setpassword', 'Lostpassword'),
                 'roles'   => array('?'),
+            ),
+            array(
+                'allow',
+                'actions' => array('Errorquestion', 'Erroremail'),
+                'roles'   => array('a','e','t'),
             ),
             array(
                 'deny',

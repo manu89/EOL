@@ -268,6 +268,8 @@ function teacherMenu(){
         </ul>
     </li>
     <li><a href="index.php?page=admin/profile"><?= ttProfile ?></a></li>
+    <li><a href="index.php?page=admin/errorquestion" > <?=ttErrorquestion ?></a></li>
+
 
 <?php
 }
@@ -297,6 +299,8 @@ function eteacherMenu(){
         </ul>
     </li>
     <li><a href="index.php?page=admin/profile"><?= ttProfile ?></a></li>
+    <li><a href="index.php?page=admin/errorquestion" > <?=ttErrorquestion ?></a></li>
+
 
 <?php
 }
@@ -328,6 +332,7 @@ function adminTeacherMenu(){
 
     <li><a href="index.php?page=admin/profile"><?= ttProfile ?></a></li>
     <li><a href="index.php?page=admin" style="color: red"><?= ttAdministration ?></a></li>
+    <li><a href="index.php?page=admin/errorquestion" > <?=ttErrorquestion ?></a></li>
 
 <?php
 }
