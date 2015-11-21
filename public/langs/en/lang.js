@@ -293,6 +293,7 @@ var ttRenewPassword = "Renew Password";
 var ttReport="Report";
 var ttReportAOWelcome="Choose an assesment and use wizard tabs to filter data";
 var ttReportAOSelectAssesment="Select assesments to report on";
+var ttReportErrorStudent = "The selected student did not participate in chosen tests";
 var ttReportMainAO = "Main";
 var ttReset = "Reset";
 var ttResetPassword = "Reset Password";

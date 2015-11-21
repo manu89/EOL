@@ -3004,7 +3004,7 @@ class sqlDB {
      */
     public function qShowExams($letter){
         global $log;
-        $ack = true;
+        $ack=true;
         $this->result = null;
         $this->mysqli = $this->connect();
         try {
@@ -3025,28 +3025,104 @@ class sqlDB {
     }
 
     /**
-     * @name    qShowExams
+     * @name    qShowStudent
      * @return  boolean
-     * @descr   show searched result in Assesment's select tag
+     * @descr   show searched result in Partecipant's select tag
      */
-    public function qSelectExams($exam){
+    public function qShowStudent(){
         global $log;
-        $ack = true;
+        $ack=true;
         $this->result = null;
         $this->mysqli = $this->connect();
         try {
-            $query = "Select * from Exams where name like '".$letter."%'";
+            $query="Select distinct * from Users WHERE role='s' ORDER BY surname ASC";
             $this->execQuery($query);
-            //$rs=mysqli_query($this->mysqli,$query);
             if($this->numResultRows()>0){
-                while($row=mysqli_fetch_array($this->result)){
-                    echo "<option value='$row[name]'>".$row['name']."</option>";
-                }
+               while($row=mysqli_fetch_array($this->result)){
+                    echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+               }
             }
         }
         catch(Exception $ex){
             $ack=false;
             $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
+    /**
+     * @name    qAddStudent
+     * @return  boolean
+     * @descr   Add the selected student in the realative textarea
+     */
+    public function qAddStudent($userid, $exams){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if ($exams[0]!=""){
+                $d=0;
+                $i=0;
+                $trovato=array();
+                while($exams[$d]!=""){
+                    $sql="Select Users.surname, Users.name from Users JOIN (Tests JOIN Exams ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser where Exams.name='$exams[$d]' and Users.idUser='$userid'";
+                    $this->execQuery($sql);
+                    if ($this->numResultRows()>0){
+                        $trovato[$i]=true;
+                    }
+                    else{
+                        $trovato[$i]=false;
+                    }
+                    $d++;
+                    $i++;
+                }
+                if (in_array(false,$trovato)){
+                    echo "false";
+                }
+                else{
+                    $row=mysqli_fetch_array($this->result);
+                    echo $row['surname']."&nbsp;".$row['name'];
+                }
+            }
+            else{
+                $sql="select name from Exams";
+                $this->execQuery($sql);
+                if ($this->numResultRows()>0){
+                    $d=0;
+                    $allexams=array();
+                    while($row=mysqli_fetch_array($this->result)){
+                        $allexams[$d]=$row['name'];
+                    }
+                }
+                $i=0;
+                $d=0;
+                $trovato=array();
+                foreach($allexams as $value){
+
+                    $sql="Select Users.surname, Users.name from Users JOIN (Tests JOIN Exams ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser where Exams.name='$value' and Users.idUser='$userid'";
+                    $this->execQuery($sql);
+                    if ($this->numResultRows()>0){
+                        $trovato[$i]=true;
+                    }
+                    else{
+                        $trovato[$i]=false;
+                    }
+                    $d++;
+                    $i++;
+                }
+                if (in_array(false,$trovato)){
+                    echo "false";
+                }
+                else{
+                    $row=mysqli_fetch_array($this->result);
+                    echo $row['surname']."&nbsp;".$row['name'];
+                }
+            }
+
+        } catch (Exception $ex) {
+            $ack = false;
+            $log->append(__FUNCTION__ . " : " . $this->getError());
         }
         return $ack;
     }

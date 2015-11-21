@@ -1,8 +1,7 @@
 /**
  * Created by michele on 22/10/15.
  */
-
-var exams=[];//array of selected exams
+var exams=new Array(100);//array of selected exams
 var y=0; //variable used for count selected exams
 
 /*************************************
@@ -105,21 +104,31 @@ function printAssesments(letter){
  *  @descr  Select assesments
  */
 function addAssessment(exam){
-    var x=0;
-    for (i = 0; i < exams.length; i++){
-        if (exams[i]==exam){
-            x=1;
+    var trovato=false;
+    for (v=0; v < exams.length; v++) {
+        if (exams[v] == exam) {
+            trovato = true;
         }
-        y=i;
     }
-    if (x==0){
+    if (!trovato){
+        for (v=0; v < exams.length; v++){
+            if (exams[v]==null){
+                exams[v]=exam;
+                $("#selected").append("<option id="+exam+" value="+exam+">"+exam+"</option>");
+                break;
+            }
+        }
+    }
+        //y=i;
+
+    /*if (x==0){
         exams[y]=exam;
         $("#selected").append("<option id="+exam+" value="+exam+">"+exam+"</option>");
         y++;
-    }
-   /* for (t=0; t< exams.length; t++){
-        console.log(exams[t]);
     }*/
+    for (t=0; t< exams.length; t++){
+     console.log(exams[t]);
+     }
 
 }
 
@@ -129,7 +138,7 @@ function addAssessment(exam){
  */
 function clearAssessments(){
     for (i = 0; i < exams.length; i++){
-            exams[i]="";
+            exams[i]=null;
     }
     y=0;
     $("#selected").html("");
@@ -141,18 +150,28 @@ function clearAssessments(){
  *  @descr  Delete specific selected assessment
  */
 function removeAssessment(exam){
-    for (i = 0; i < exams.length; i++){
+    var x=0;
+    if(exams[exams.length]==exam){
+        exams[exams.length]=null;
+        $("#"+exam).remove();
+        x=1;
+    }
+    for (i = 0; i < exams.length-1; i++){
         if (exams[i]==exam){
             for (r=i; r < exams.length; r++){
                 exams[r]=exams[r+1];
             }
         }
     }
-    exams[i]="";
-    $("#"+exam).remove();
-   /* for (t=0; t< exams.length; t++){
-        console.log(exams[t]);
-    }*/
+    if (x==0){
+        exams[i]=null;
+        $("#"+exam).remove();
+    }
+
+
+   for (t=0; t< exams.length; t++) {
+       console.log(exams[t]);
+   }
 
 }
 
@@ -184,4 +203,72 @@ function showPartecipant(){
  */
 function closePartecipant(){
     closeLightbox($('#partecipants'));
+}
+
+function unlock(el,el1,el2){
+    if(el.checked){
+        el1.disabled = false;
+        el2.disabled = false;
+    }
+    else{
+        el1.disabled = "disabled";
+        el2.disabled = "disabled";
+    }
+
+}
+
+/**
+ *  @name   printStudent
+ *  @descr  Shows partecipants in the select form of lightbox
+ */
+function printStudent(){
+    for (t=0; t< exams.length; t++){
+        console.log(exams[t]);
+    }
+    $.ajax({
+        url     : "index.php?page=report/showstudent",
+        type    : "post",
+        success : function (data){
+            $("#searchedstud").html(data);
+        },
+        error : function (request, status, error) {
+            alert("jQuery AJAX request error:".error);
+        }
+    });
+}
+
+/**
+ *  @name   addStudent
+ *  @descr  Show selected student in the textarea of main page
+ */
+function addStudent(iduser){
+    $.ajax({
+        url     : "index.php?page=report/addstudent",
+        type    : "post",
+        data    : {
+            iduser : iduser,
+            exams: JSON.stringify(exams)
+        },
+        success : function (data){
+            if (data=="false"){
+                showErrorMessage(ttReportErrorStudent);
+            }
+            else{
+                $("#student").html(data);
+                closeLightbox($('#partecipants'));
+            }
+
+        },
+        error : function (request, status, error) {
+            alert("jQuery AJAX request error:".error);
+        }
+    });
+}
+
+/**
+ *  @name   removePartecipant
+ *  @descr  Remove the selected student from the textarea
+ */
+function removePartecipant(iduser){
+    $("#student").html("");
 }

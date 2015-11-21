@@ -80,17 +80,9 @@ class ReportController extends Controller{
         global $engine;
 
         $db=new sqlDB();
-        /*if($db->qShowExams($_POST['letter'])){
-            if($db->numResultRows()>0){
-                $column="name";
-                $data=$db->getResultAssoc($column);
 
-                echo "<option>".$data."</option>";
-
-            }
-        }*/
         if(!($db->qShowExams($_POST['letter']))){
-            echo "errore";
+            echo "errore query";
         }
 
     }
@@ -110,6 +102,53 @@ class ReportController extends Controller{
         $engine->renderPage();
     }
 
+    /**
+     *  @name   actionShowstudent
+     *  @descr  Shows report index page
+     */
+    private function actionShowstudent(){
+        global $engine;
+
+        $db=new sqlDB();
+
+        //if(!($db->qShowStudent($_REQUEST['exams']))){
+        if(!($db->qShowStudent())){
+            echo "errore query";
+        }
+    }
+
+    /**
+     *  @name   actionAddstudent
+     *  @descr  Shows report index page
+     */
+    private function actionAddstudent(){
+        global $engine;
+
+        $db=new sqlDB();
+        $userid=$_POST['iduser'];
+        $exams=$array=json_decode($_POST['exams']);
+        if(!($db->qAddStudent($userid,$exams))){
+            echo "errore query";
+        }
+    }
+
+    /**
+     *  @name   actionIndex
+     *  @descr  Shows report index page
+     */
+    private function actionAoreporttemplate(){
+        global $engine;
+        //, $user;
+
+        //$user->role = 'a';
+        //$_SESSION['user'] = serialize($user);
+
+        $engine->renderDoctype();
+        $engine->loadLibs();
+        $engine->renderHeader();
+        $engine->renderPage();
+        $engine->renderFooter();
+    }
 
 
     /**
@@ -128,8 +167,8 @@ class ReportController extends Controller{
         return array(
             array(
                 'allow',
-                'actions' => array('Index', 'Aoreport','Showassesments','Showpartecipant'
-                                   ),
+                'actions' => array('Index', 'Aoreport','Showassesments','Showpartecipant',
+                    'Showstudent','Addstudent','Aoreporttemplate'),
                 'roles'   => array('a','e'),
             ),
             array(

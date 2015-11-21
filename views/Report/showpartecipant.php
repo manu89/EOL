@@ -16,56 +16,27 @@ global $config, $user;
 
         ?>
 
-    <form name="aoreport" method="post">
-    <h3><?= ttReportAOSelectAssesment ?></h3>
-    <p><?=ttReportAODescription?></p>
+    <form name="partecipant" method="post">
+    <h3><?= ttReportAOSelectPartecipant ?></h3>
 
-    <div class="col-left">
-        <h4><?=ttReportSearchByLetter?></h4>
-        <select id="letter" size="1" onchange="printAssesments(this.value)">
-            <option><?=ttReportSelectLetter?></option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
+    <table id ="table-partecipant" class="filter">
+        <tr>
+            <td>
+                <select size="10" id="searchedstud" class="select-partecipant">
+                </select>
+            </td>
+            <td>
+                <a class="normal button right rSpace" id="add" onclick="addStudent(searchedstud.value)"><?=ttAdd?></a>
+            </td>
+        </tr>
+    </table>
 
-        </select>
-        <br/>
-        <br/>
-        <!--<select id="assesment" size="1">
 
-        </select>-->
-    </div>
-
-    <div class="col-left">
-        <h4><?=ttReportTyping?><br></h4>
-        <input type="text" name="word" oninput="printAssesments(this.value)">
-    </div>
-    <div class="col-center">
-        <h4><?=ttReportSearched?><br></h4>
-        <select size="5" id="searched" class="select">
-
-        </select>
-    </div>
-    <div class="col-left">
-        <a class="normal button right rSpace" id="add" onclick="addAssessment(searched.value)"><?=ttAdd?></a>
-    </div>
-    <div class="col-center">
-        <h4><?=ttReportSelected?><br></h4>
-        <select size="5" id="selected" class="select">
-
-        </select>
-    </div>
-    <div class="col-center">
-        <a class="normal button rSpace" id="remove" onclick="removeAssessment(selected.value)"><?=ttRemove?></a>
-        <br>
-
-        <a class="normal button rSpace" id="removeall" onclick="clearAssessments()"><?=ttRemoveAll?></a>
-    </div>
     </form>
     <br/>
-    <hr class="divider"/>
+    <hr/>
     <div id="tabsbutton">
-        <a class="normal button rSpace" id="next" onclick="closePartecipant()"><?=ttNext?></a>
+        <a class="normal button rSpace" id="next" onclick="closePartecipant()"><?=ttClose?></a>
     </div>
         <div class="clearer"></div>
         <?php

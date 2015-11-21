@@ -994,3 +994,48 @@
 10/27/2015 16:24:12 - 27/10/2015 16:24
 10/27/2015 16:24:27 - 27/10/2015 16:24
 10/27/2015 16:24:39 - 27/10/2015 16:24
+11/18/2015 15:24:07 - qShowStudent : Unknown column 'arch' in 'where clause'
+11/18/2015 15:24:26 - qShowStudent : Unknown column 'arch' in 'where clause'
+11/18/2015 15:25:55 - qShowStudent : Unknown column 'arch' in 'where clause'
+11/18/2015 15:30:21 - qShowStudent : Unknown column 'arch' in 'where clause'
+11/18/2015 15:36:38 - qShowStudent : Unknown column 'arch' in 'where clause'
+11/18/2015 15:44:34 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'arch' at line 1
+11/18/2015 15:45:25 - qShowStudent : Unknown column 'arch' in 'where clause'
+11/18/2015 21:12:51 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+11/18/2015 21:56:43 - qShowStudent : Unknown column 'Array' in 'where clause'
+11/18/2015 21:57:53 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,' at line 1
+11/19/2015 10:52:18 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '0' at line 1
+11/19/2015 10:54:07 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '0arch'' at line 1
+11/19/2015 11:01:38 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '0arch'' at line 1
+11/19/2015 11:02:17 - qShowStudent : 
+11/19/2015 11:03:18 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '0' at line 1
+11/19/2015 11:05:36 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '0arch'' at line 1
+11/19/2015 11:06:28 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '0arch'' at line 1
+11/19/2015 11:40:43 - qShowStudent : Unknown column 'arch' in 'where clause'
+11/19/2015 11:41:35 - qShowStudent : Unknown column 'arch' in 'where clause'
+11/19/2015 11:45:08 - qShowStudent : Unknown column 'arch' in 'where clause'
+11/19/2015 13:05:51 - qShowStudent : Table 'eol.Test' doesn't exist
+11/20/2015 17:06:17 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT IN (Select Exams.name from Exams IN ('arch', 'aaaaaae')' at line 1
+11/20/2015 17:07:43 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT IN (Select Exams.name from Exams IN ('arch', 'aaaaaae')' at line 1
+11/20/2015 17:10:01 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT IN (Select Exams.name from Exams IN ('arch', 'aaaaaae', '', '', '', '', '', ' at line 1
+11/20/2015 17:11:18 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT IN (Select Exams.name from Exams IN ('arch', 'aaaaaae', '', '', '', '', '', ' at line 1
+11/20/2015 17:14:50 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT IN (Select Exams.name from Exams IN ('arch', 'aaaaaae', '', '', '', '', '', ' at line 1
+11/20/2015 17:15:39 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT IN (Select Exams.name from Exams IN ('arch', 'aaaaaae', '', '', '', '', '', ' at line 1
+11/20/2015 17:46:10 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT IN (Select Exams.name from Exams IN ('arch', 'aaaaaae')' at line 1
+11/20/2015 17:49:31 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IN ('arch', 'aaaaaae')' at line 1
+11/20/2015 17:50:28 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+11/20/2015 17:59:54 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '', 'aaaaaae)' at line 1
+11/20/2015 18:00:49 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''aaaaaae)' at line 1
+11/20/2015 18:02:03 - qShowStudent : Unknown column 'Test.fkUser' in 'on clause'
+11/20/2015 18:16:55 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'EXISTS (Select distinct Users.idUser from Users JOIN (Tests JOIN Exams ON Tests.' at line 2
+11/20/2015 19:11:33 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ALL (Select distinct Users.idUser from Users JOIN (Tests JOIN Exams ON Tests.fkE' at line 2
+11/20/2015 19:42:08 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''aaa', 'aaaaaae', 'afcc', 'ass', 'aavvv'))' at line 2
+11/20/2015 19:43:04 - qShowStudent : Operand should contain 1 column(s)
+11/20/2015 19:43:37 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ALL ('aaa', 'aaaaaae', 'afcc', 'ass', 'aavvv'))' at line 2
+11/20/2015 19:48:05 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''aaa', 'aaaaaae', 'afcc', 'ass', 'aavvv'))' at line 2
+11/20/2015 20:40:03 - qShowStudent : Unknown column 'Test.fkExam' in 'on clause'
+11/20/2015 20:40:39 - qShowStudent : Unknown column 'Exam.idExam' in 'on clause'
+11/21/2015 11:58:46 - qShowStudent : 
+11/21/2015 12:00:08 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ASC' at line 1
+11/21/2015 13:03:33 - qAddStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and Exams.name='arch' and Users.idUser='4'' at line 1
+11/21/2015 15:21:54 - qAddStudent : Table 'eol.exams' doesn't exist

@@ -2406,6 +2406,16 @@ span.extraClose{
     padding-top:20px;
 }
 
-#filterpartecipants td{
-    padding:20px;
+.filter td{
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:20px;
+}
+
+.select-partecipant{
+    width:250px;
+}
+
+.autoscroll{
+    overflow:scroll;
 }

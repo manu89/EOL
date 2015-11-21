@@ -289,6 +289,7 @@ var ttRegistrations = "Registrazione";
 var ttRegEnd = "Chiusura registrazione";
 var ttRenewPassword = "Rinnova Password";
 var ttReport = "Report";
+var ttReportErrorStudent = "Lo studente selezionato non ha partecipati agli esami scelti";
 var ttReset = "Reimposta";
 var ttResetPassword = "Reimposta Password";
 var ttRole = "Ruolo";

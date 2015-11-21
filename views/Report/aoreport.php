@@ -105,7 +105,7 @@ global $config, $user;
                    <h3><?= ttReportSelectGroup ?></h3>
                     <div class="col-left">
                         <h4><?=ttReportSearchByLetter?></h4>
-                        <select id="letter" size="1" onchange="printGroups(this.value)">
+                        <select id="lettergroup" size="1" onchange="printGroups(this.value)">
                             <option><?=ttReportSelectLetter?></option>
                             <option value="A">A</option>
                             <option value="B">B</option>
@@ -119,7 +119,7 @@ global $config, $user;
 
                     <div class="col-left">
                         <h4><?=ttReportTyping?><br></h4>
-                        <input type="text" name="word" oninput="printGroups(this.value)">
+                        <input type="text" name="wordgroup" oninput="printGroups(this.value)">
                     </div>
                     <div class="col-center">
                         <h4><?=ttReportSearched?><br></h4>
@@ -164,42 +164,51 @@ global $config, $user;
                 </div>
 
                 <div id="partecipantstab">
-                    <table id="filterpartecipants">
+                    <table id="filterpartecipants" class="filter">
                         <tr>
-                            <td class="bold">Filter on partecipant</td>
-                            <td><input type="text" name="word" readonly="readonly"></td>
-                            <td><a class="normal button rSpace" onclick="showPartecipant()"><?=ttRemove?></a></td>
+                            <td class="bold"><?=ttReportStudent?></td>
+                            <td><textarea rows="1" id="student" readonly="readonly"></textarea></td>
+                            <td>
+                                <a class="normal button rSpace" onclick="showPartecipant(),printStudent()"><?=ttAdd?></a>
+                                <a class="normal button rSpace" onclick="removePartecipant()"><?=ttRemove?></a>
+                            </td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td></td>
+                            <td class="bold"><?=ttReportStudentDetail?></td>
+                            <td><textarea rows="1" id="studentDetail" readonly="readonly"></textarea></td>
+                            <td>
+                                <a class="normal button rSpace" onclick="showPartecipantDetail()"><?=ttAdd?></a>
+                                <a class="normal button rSpace" onclick=""><?=ttRemove?></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bold"><?=ttReportScoreBand?></td>
+                            <td><textarea rows="1" id="scoreBand" readonly="readonly"></textarea></td>
+                            <td>
+                                <a class="normal button rSpace" onclick="showScoreBand()"><?=ttAdd?></a>
+                                <a class="normal button rSpace" onclick=""><?=ttRemove?></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bold"><?=ttReportAssesmentScore?></td>
+                            <td><input type="checkbox" id="assesmentScore" onclick="unlock(this,assesmentMinScore,assesmentMaxScore)"></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
+                            <td class="bold"><?=ttReportMinimumScore?></td>
+                            <td><input type="number" min="0" max="30" value="0" disabled="disabled" id="assesmentMinScore"></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
+                            <td class="bold"><?=ttReportMaximumScore?></td>
+                            <td><input type="number" min="0" max="30" value="30" disabled="disabled" id="assesmentMaxScore"></td>
                             <td></td>
                         </tr>
                     </table>
                     <hr>
                     <div id="tabsbutton">
-                        <a class="normal button rSpace" id="backg" onclick="prevPartecipantsTab()"><?=ttBack?></a>
-                        <a class="normal button rSpace" id="nextg" onclick=""><?=ttNext?></a>
+                        <a class="normal button rSpace" id="backp" onclick="prevPartecipantsTab()"><?=ttBack?></a>
+                        <a class="normal button rSpace" id="nextp" href="index.php?page=report/aoreporttemplate"><?=ttNext?></a>
                     </div>
                 </div>
 
