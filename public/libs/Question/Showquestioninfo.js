@@ -6,54 +6,52 @@
  * Desc: Show question's info with all translations
  */
 
-var maximizeFixForAnswer = false;
-
 $(function(){
 
     /**
      *  @descr  Function to enable QuestionInfo tabs
      */
     $("#questionInfoTabs").tabs({activate: function(e, ui) {
-                                    questionInfoTabChanged(e, ui);
-                                }}).css("border", "none")
-                                   .find("ul").css("background", "none")
-                                            .css("border", "none");
+        questionInfoTabChanged(e, ui);
+    }}).css("border", "none")
+        .find("ul").css("background", "none")
+        .css("border", "none");
 
     $("#questionInfoTabs > div").css("border", "1px solid #686868")
-                                .css("border-radius", "5px")
-                                .css("margin-top", "7px");
+        .css("border-radius", "5px")
+        .css("margin-top", "7px");
 
     $("#qLangsTabs a.tab").on("click", function(){changeCKEditorQuestionLanguage(this)});
 
     $("#question-tab").prepend($("#questionExtra"));
 
     /**
-    *  @descr  Function to enable question tab's dropdownInfo menu effects
-    */
+     *  @descr  Function to enable question tab's dropdownInfo menu effects
+     */
     $("#question-tab .dropdownInfo dt.writable").on("click", function() {
-                                                        $(this).children("span").toggleClass("clicked");
-                                                        $(this).next().children("ol").slideToggle(200);
-                                                    });
+        $(this).children("span").toggleClass("clicked");
+        $(this).next().children("ol").slideToggle(200);
+    });
 
     /**
      *  @descr  Function to change infos
      */
     $("#question-tab .dropdownInfo dd ol li").on("click", function() {
-                                                              questionEditing = true;
-                                                              updateDropdown($(this));
-                                                          });
+        questionEditing = true;
+        updateDropdown($(this));
+    });
 
     $("#qDescription, input[name=extra]").on("change", function(){questionEditing = true});
 
     // Close all dropdowns when click out of it
     // Maybe too heavy for system... IMPROVE
     $(document).on('click', function(e) {
-                                var $clicked = $(e.target);
-                                if (!($clicked.parents().hasClass("dropdownInfo"))){
-                                    $(".dropdownInfo dd ol").slideUp(200);
-                                    $(".dropdownInfo dt span").removeClass("clicked");
-                                }
-                            });
+        var $clicked = $(e.target);
+        if (!($clicked.parents().hasClass("dropdownInfo"))){
+            $(".dropdownInfo dd ol").slideUp(200);
+            $(".dropdownInfo dt span").removeClass("clicked");
+        }
+    });
 });
 
 /**
@@ -218,12 +216,11 @@ function newEmptyAnswer(type) {
             mainLang    :   mainLang
         },
         success : function (data) {
-//            alert(data);
+            //   alert(data);
             if($(data)){
                 $("body").append(data);
                 $("#questionInfo").slideUp();
                 newLightbox($("#answerInfo"), {});
-                maximizeFixForAnswer = true;
             }else{
 //                alert(data);
                 showErrorMessage(data);
@@ -262,7 +259,6 @@ function showAnswerInfo(selectedAnswerConfirmAndType){
                 $("body").append(data);
                 $("#questionInfo").slideUp();
                 newLightbox($("#answerInfo"), {});
-                maximizeFixForAnswer = true;
             },
             error : function (request, status, error) {
                 alert("jQuery AJAX request error:".error);
@@ -284,6 +280,68 @@ function closeQuestionInfo(askConfirmation){
         closeQuestionTypeSelect();
     }
 }
+function newEmptySubquestion(type) {
+
+
+    $.ajax({
+        url : "index.php?page=question/showsubquestionsinfo",
+        type : "post",
+        data : {
+            action : "new",
+            idQuestion : questionsTable.row(questionRowSelected).data()[qtci.questionID],
+            type : type,
+            sub_questions : "none",
+            mainLang : mainLang
+        },
+
+        success : function (data) {
+            //  alert(data);
+//alert("ciao");
+//alert(data);
+            if($(data)){
+
+                $("body").append(data);
+                $("#subquestionInfo").slideUp();
+                newLightbox($("#answerInfo"), {});
+            }else{
+// alert(data);
+                showErrorMessage(data);
+            }
+        },
+        error : function (request, status, error) {
+            alert("jQuery AJAX request error:".error);
+        }
+    });
+}
+function showSubquestionsInfo(selectedAnswerConfirmAndType){
+    clearTimeout(timer);
+    var selectedAnswer = selectedAnswerConfirmAndType[0];
+    var askConfirmation = selectedAnswerConfirmAndType[1];
+    var type = selectedAnswerConfirmAndType[2];
+    if((!askConfirmation) || (confirmDialog(ttWarning, ttCDiscardEdits, showAnswerInfo, new Array(selectedAnswer, false, type)))){
+        answerRowSelected = $(selectedAnswer);
+        $.ajax({
+            url     : "index.php?page=question/showsubquestionsinfo",
+            type    : "post",
+            data    : {
+                action      :   "show",
+                idQuestion  :   questionsTable.row(questionRowSelected).data()[qtci.questionID],
+                type        :   type,
+                sub_questions    :   answersTable.row(answerRowSelected).data()[atci.answerID],
+                mainLang    :   mainLang
+            },
+            success : function (data) {
+//                alert(data);
+                $("body").append(data);
+                $("#questionInfo").slideUp();
+                newLightbox($("#answerInfo"), {});
+            },
+            error : function (request, status, error) {
+                alert("jQuery AJAX request error:".error);
+            }
+        });
+    }
+}
 
 /**
  *  @name   cancelNewQuestion
@@ -303,12 +361,4 @@ function changeCKEditorQuestionLanguage(tab){
     createCKEditorInstance("qt"+idLanguage);
     $("#qLangsTabs a.tab").removeClass("active");
     $(tab).addClass("active");
-}
-
-function fixMaximize(){
-    if(maximizeFixForAnswer){           // Answer editing   =>  Fix for div#answerInfo
-        $("#answerInfo").addClass("maximize_fix");
-    }else{                              // Question editing   =>  Fix for div#questionInfo
-        $("#questionInfo").addClass("maximize_fix");
-    }
 }
