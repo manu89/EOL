@@ -1039,3 +1039,5 @@
 11/21/2015 12:00:08 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ASC' at line 1
 11/21/2015 13:03:33 - qAddStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and Exams.name='arch' and Users.idUser='4'' at line 1
 11/21/2015 15:21:54 - qAddStudent : Table 'eol.exams' doesn't exist
+11/25/2015 16:13:24 - qShowStudent : Unknown column 'User.name' in 'field list'
+11/25/2015 16:13:30 - qShowStudent : Unknown column 'User.name' in 'field list'

@@ -39,7 +39,7 @@ global $config, $user;
                     <h3><?= ttReportAOSelectAssesment ?></h3>
                     <p><?=ttReportAODescription?></p>
 
-                    <div class="col-left">
+                    <!--<div class="col-left">
                         <h4><?=ttReportSearchByLetter?></h4>
                         <select id="letter" size="1" onchange="printAssesments(this.value)">
                             <option><?=ttReportSelectLetter?></option>
@@ -52,8 +52,8 @@ global $config, $user;
                         <br/>
                         <!--<select id="assesment" size="1">
 
-                        </select>-->
-                    </div>
+                        </select>
+                    </div>-->
 
                     <div class="col-left">
                         <h4><?=ttReportTyping?><br></h4>
@@ -103,7 +103,7 @@ global $config, $user;
 
                 <div id="groupstab">
                    <h3><?= ttReportSelectGroup ?></h3>
-                    <div class="col-left">
+                    <!--<div class="col-left">
                         <h4><?=ttReportSearchByLetter?></h4>
                         <select id="lettergroup" size="1" onchange="printGroups(this.value)">
                             <option><?=ttReportSelectLetter?></option>
@@ -115,7 +115,7 @@ global $config, $user;
                         <br/>
                         <br/>
 
-                    </div>
+                    </div>-->
 
                     <div class="col-left">
                         <h4><?=ttReportTyping?><br></h4>
@@ -177,18 +177,18 @@ global $config, $user;
                             <td class="bold"><?=ttReportStudentDetail?></td>
                             <td><textarea rows="1" id="studentDetail" readonly="readonly"></textarea></td>
                             <td>
-                                <a class="normal button rSpace" onclick="showPartecipantDetail()"><?=ttAdd?></a>
-                                <a class="normal button rSpace" onclick=""><?=ttRemove?></a>
+                                <a class="normal button rSpace" onclick="showParticipantDetails(),printStudentDetail()"><?=ttAdd?></a>
+                                <a class="normal button rSpace" onclick="removePartecipantDetail()"><?=ttRemove?></a>
                             </td>
                         </tr>
-                        <tr>
+                        <!--<tr>
                             <td class="bold"><?=ttReportScoreBand?></td>
                             <td><textarea rows="1" id="scoreBand" readonly="readonly"></textarea></td>
                             <td>
                                 <a class="normal button rSpace" onclick="showScoreBand()"><?=ttAdd?></a>
                                 <a class="normal button rSpace" onclick=""><?=ttRemove?></a>
                             </td>
-                        </tr>
+                        </tr>-->
                         <tr>
                             <td class="bold"><?=ttReportAssesmentScore?></td>
                             <td><input type="checkbox" id="assesmentScore" onclick="unlock(this,assesmentMinScore,assesmentMaxScore)"></td>
@@ -208,10 +208,10 @@ global $config, $user;
                     <hr>
                     <div id="tabsbutton">
                         <a class="normal button rSpace" id="backp" onclick="prevPartecipantsTab()"><?=ttBack?></a>
-                        <a class="normal button rSpace" id="nextp" href="index.php?page=report/aoreporttemplate"><?=ttNext?></a>
+                        <a class="normal button rSpace" id="nextp" onclick="transferData(assesmentMinScore.value,assesmentMaxScore.value)"><?=ttNext?></a>
                     </div>
                 </div>
-
+                </form>
             </div>
 
         </div>

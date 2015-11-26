@@ -2416,6 +2416,45 @@ span.extraClose{
     width:250px;
 }
 
-.autoscroll{
-    overflow:scroll;
+#assesmentCustomize .boxContent{
+    font-size: 13px;
+}
+
+.templatecontent{
+   margin-right:10%;
+   margin-left:10%;
+}
+
+.title{
+    font-size:14px;
+}
+
+.customize{
+    margin-top:20px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.customize td{
+    border-bottom:1.5px solid #7ab5d3;
+    padding: 20px;
+}
+
+.order{
+    width: 50px;
+}
+
+.replink{
+    text-decoration: none;
+    color:black;
+}
+
+.replink:link{
+    text-decoration:none;
+    color:black;
+}
+
+.replink:visited{
+    text-decoration:none;
+    color:black;
 }

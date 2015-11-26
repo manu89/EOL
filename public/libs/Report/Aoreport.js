@@ -2,7 +2,11 @@
  * Created by michele on 22/10/15.
  */
 var exams=new Array(100);//array of selected exams
-var y=0; //variable used for count selected exams
+var user; //variable used for userid
+var paramuser; //variable that contain the user id or email want to show on the report
+var groups=new Array(100);//array of selected groups
+var minscore;//variable that contain the minimal score of the exam to show
+var maxscore;//variable that contain the maximum score of the exam to show
 
 /*************************************
  * Tabs function**
@@ -137,12 +141,16 @@ function addAssessment(exam){
  *  @descr  Empty selected assesment form
  */
 function clearAssessments(){
-    for (i = 0; i < exams.length; i++){
-            exams[i]=null;
-    }
-    y=0;
+   // for (i = 0; i < exams.length; i++){
+            //exams[i]=null;
+    exams=new Array(100);
+    //}
+   // y=0;
     $("#selected").html("");
 
+    for (t=0; t< exams.length; t++) {
+        console.log(exams[t]);
+    }
 }
 
 /**
@@ -183,9 +191,6 @@ function showPartecipant(){
    $.ajax({
         url     : "index.php?page=report/showpartecipant",
         type    : "post",
-        data:{
-            action:"show"
-        },
         success : function (data){
 
                 $("body").append(data);
@@ -222,12 +227,15 @@ function unlock(el,el1,el2){
  *  @descr  Shows partecipants in the select form of lightbox
  */
 function printStudent(){
-    for (t=0; t< exams.length; t++){
+    /*for (t=0; t< exams.length; t++){
         console.log(exams[t]);
-    }
+    }*/
     $.ajax({
         url     : "index.php?page=report/showstudent",
         type    : "post",
+        data : {
+            exams : JSON.stringify(exams)
+        },
         success : function (data){
             $("#searchedstud").html(data);
         },
@@ -246,21 +254,16 @@ function addStudent(iduser){
         url     : "index.php?page=report/addstudent",
         type    : "post",
         data    : {
-            iduser : iduser,
-            exams: JSON.stringify(exams)
+            iduser: iduser
         },
         success : function (data){
-            if (data=="false"){
-                showErrorMessage(ttReportErrorStudent);
-            }
-            else{
+                user=iduser;
                 $("#student").html(data);
                 closeLightbox($('#partecipants'));
-            }
 
         },
         error : function (request, status, error) {
-            alert("jQuery AJAX request error:".error);
+           alert("jQuery AJAX request error:".error);
         }
     });
 }
@@ -271,4 +274,97 @@ function addStudent(iduser){
  */
 function removePartecipant(iduser){
     $("#student").html("");
+}
+
+
+/**
+ *  @name   showParticipantDetails
+ *  @descr  Shows lightbox of partecipants
+ */
+function showParticipantDetails(){
+    $.ajax({
+        url     : "index.php?page=report/showparticipantdetails",
+        type    : "post",
+        success : function (data){
+            $("body").append(data);
+            newLightbox($("#participantsdetails"), {});
+        },
+        error : function (request, status, error) {
+            alert("jQuery AJAX request error:".error);
+        }
+    });
+}
+
+/**
+ *@name closePartecipantDetails
+ *@descr Close lightbox of partecipant details
+ */
+function closePartecipantDetails(){
+    closeLightbox($('#participantsdetails'));
+}
+
+/**
+ *  @name   printStudentDetail
+ *  @descr  Show students details in the select form of showparticipantdetail ligthbox
+ */
+function printStudentDetail(){
+    $.ajax({
+        url     : "index.php?page=report/printparticipantdetails",
+        type    : "post",
+        data    : {
+            iduser : user
+        },
+        success : function (data){
+            $("#detail").html(data);
+
+        },
+        error : function (request, status, error) {
+            alert("jQuery AJAX request error:".error);
+        }
+    });
+}
+
+/**
+ *  @name   addStudentDetail
+ *  @descr  Show students detail in the relative textarea
+ */
+function addStudentDetail(param){
+            paramuser=param;
+            $("#studentDetail").html(param);
+            closeLightbox($('#participantsdetails'));
+}
+
+
+/**
+ *  @name   removePartecipantDetail
+ *  @descr  Remove the detail of selected student from the textarea
+ */
+function removePartecipantDetail(){
+    $("#studentDetail").html("");
+}
+
+/**
+ *  @name   transferData
+ *  @descr  transfer all filter parameters to the report template
+ */
+function transferData(min,max){
+    minscore=min;
+    maxscore=max;
+    $.ajax({
+        url     : "index.php?page=report/aoreportparameters",
+        type    : "post",
+        data    : {
+            iduser : paramuser,
+            exams : JSON.stringify(exams),
+            minscore: minscore,
+            maxscore: maxscore,
+            groups: JSON.stringify(groups)
+        },
+        success : function (data){
+            window.location.assign("index.php?page=report/aoreporttemplate")
+        },
+        error : function (request, status, error) {
+            alert("jQuery AJAX request error:".error);
+        }
+    });
 }

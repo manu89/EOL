@@ -24,7 +24,7 @@ global $config, $user;
         ?>
 
         <table id="reportTable">
-            <tr><td><img src="<?=$config['themeImagesDir']?>report.png" class="img-report"/></td><td><a href="index.php?page=report/aoreport"><?= ttAssesmentOverview ?></a></td></tr>
+            <tr><td><img src="<?=$config['themeImagesDir']?>report.png" class="img-report"/></td><td><a class="replink" href="index.php?page=report/aoreport"><?= ttAssesmentOverview ?></a></td></tr>
             <tr><td></td><td></td></tr>
 
         </table>
