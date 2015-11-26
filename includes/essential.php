@@ -40,7 +40,7 @@ function getQuestionTypes(){
         'YN',       # Yes/No
         'TF',       # True/False
         'ES',        # Essay
-        'PD'
+        'PL'
 
     );
     return $types;

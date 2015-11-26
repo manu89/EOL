@@ -26,6 +26,7 @@ define('ttChangeVersion' , "Cambia versione");
 define('ttCheck' , "Verifica...");
 define('ttClose' , "Chiudi");
 define('ttQTPL', "Pull DOWN List");
+define(' ttQTPLDescription', " prova descrizione");
 define('ttClosed' , "Chiuso");
 define('ttCorrect' , "Correggi");
 define('ttConfiguration' , "Configurazione");
