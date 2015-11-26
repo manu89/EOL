@@ -82,11 +82,15 @@ function initializeAnswersTable_PL(){
     }
     else{
         //console.log("ciao");
-      //$("#answersTable").empty();
+        //$("#answersTable").empty();
 
         answersTable.clear().draw();
-       // alert( b[0].aoData[this[0]]);
-       // b[0].aoData[this[0]]=questionsTable.row(questionRowSelected).data()[qtci.questionID];
+        //alert(questionsTable.row(questionRowSelected).data()[qtci.questionID]);
+        //alert("ciao");
+
+        //alert(subquestionsTable.row(subquestionsRowSelected).data()[ztci.subID]);
+        // alert( b[0].aoData[this[0]]);
+        // b[0].aoData[this[0]]=questionsTable.row(questionRowSelected).data()[qtci.questionID];
 
     }
 
@@ -100,9 +104,9 @@ function initializeSubquestionsTable_PL(){
         bSort : false,
         columns :  [
 
-            { className: "aScore", width : "10px",visible :  true },
-            { className: "aText", width : "740px", mRender: function(data){return truncate(data, '740px')} },
-            { className: "aSubID", visible :  true}
+            { className: "zScore", width : "10px",visible : true},
+            { className: "zText", width : "740px", mRender: function(data){return truncate(data, '740px')}, visible :  true },
+            { className: "zSubID", visible :  true}
         ],
 
         language : {
@@ -111,13 +115,18 @@ function initializeSubquestionsTable_PL(){
             infoEmpty: ttDTSubquestionEmpty
         }
 
-    }).on("click", "td", function(){
+    })
 
+        .on("click", "td", function(){
+
+            oTable = $('#subquestionsTable').dataTable();
+
+            var aData = oTable.fnGetData(this);
+            adNumber = aData;
+            alert(aData);
             initializeAnswersTable_PL();
-        //reloadAnswersTable(idNewQuestion, tableData);
-       //updateDropdown(answersTable);
+        });
 
-    });
     $("#subquestionsTable_filter").css("margin-right", "50px")
         .after($("#newSubquestion_PL").parent())
         .before($("#subquestionsTable_info"))
@@ -165,7 +174,7 @@ function showSubquestionsInfo_PL(selectedAnswerAndConfirm){
 /**
  *  @name   newEmptyAnswer_PL
  *  @descr  Ajax request for show empty interface for define a new Multiple Response answer
-*/
+ */
 function newEmptyAnswer_PL() {
     newEmptyAnswer("PL");
 }
@@ -186,9 +195,12 @@ function questionInfoTabChanged(event, ui){
 
 function getGivenAnswer_PL(questionDiv){
     var answer = [];
-
-     answer.push ($(questionDiv).find("option:selected").attr("value"));
+    $(questionDiv).find("option:selected").each(function(index, input){
+        answer.push($(input).attr("value"));
+    });
 
     return answer;
+
 }
+
 
