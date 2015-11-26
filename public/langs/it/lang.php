@@ -25,6 +25,7 @@ define('ttChangeLanguage' , "Cambia lingua");
 define('ttChangeVersion' , "Cambia versione");
 define('ttCheck' , "Verifica...");
 define('ttClose' , "Chiudi");
+define('ttQTPL', "Pull DOWN List");
 define('ttClosed' , "Chiuso");
 define('ttCorrect' , "Correggi");
 define('ttConfiguration' , "Configurazione");

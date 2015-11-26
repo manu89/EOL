@@ -17,6 +17,7 @@ var ttAssignSubject = "Assegna Materia";
 var ttAutomatic = "Automatico";
 var ttBasedOn = "Basato su";
 var ttBlocked = "Bloccato";
+var ttQTPL = "Pull DOWN List";
 var ttBlock = "Blocca";
 var ttUnblock = "Sblocca";
 var ttBonus = "Bonus";

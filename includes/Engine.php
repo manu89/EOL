@@ -90,10 +90,10 @@ class Engine {
      * @descr   Add DOCTYPE on page
      */
     public function renderDoctype(){
-        global $config;
+    global $config;
 
-        require_once($config['themeDir'].'doctype.php');
-    }
+    require_once($config['themeDir'] . 'doctype.php');
+}
 
     /**
      * @name    renderHeader

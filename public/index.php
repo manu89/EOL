@@ -18,7 +18,7 @@ require_once('../includes/essential.php');
 global $config;
 
 // Set timezone for system's functions and logs
-date_default_timezone_set($config['systemTimeZone']);
+//date_default_timezone_set($config['systemTimeZone']);
 
 // Create new log element
 $log = new Log($config);
