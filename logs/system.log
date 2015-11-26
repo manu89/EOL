@@ -1,0 +1,11 @@
+11/26/2015 14:50:40 - qAnswerSet : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'idQuestion' not exists'
+                              AND
+                    ' at line 6
+11/26/2015 14:51:30 - qAnswerSet : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'idQuestion' not exists'
+                              AND
+                    ' at line 6
+11/26/2015 14:53:22 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+11/26/2015 14:53:28 - qAnswerSet : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'idQuestion' not exists'
+                              AND
+                    ' at line 6
+11/26/2015 14:53:41 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7

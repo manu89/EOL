@@ -18,6 +18,9 @@ var ttAutomatic = "Automatic";
 var ttBasedOn = "Based on";
 var ttBlocked = "Blocked";
 var ttBlock = "Block";
+var ttQTPL = "Pull DOWN List";
+
+var ttQTPLDescription = "prova descrizione";
 var ttUnblock = "Unblock";
 var ttBonus = "Bonus";
 var ttCancel = "Cancel";

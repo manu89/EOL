@@ -27,6 +27,7 @@ define('ttCheck' , "Verifica...");
 define('ttClose' , "Chiudi");
 define('ttQTPL', "Pull DOWN List");
 define('ttQTPLDescription', " prova descrizione");
+define('ttQuestionsubPL' , 'Sottodomande');
 define('ttClosed' , "Chiuso");
 define('ttCorrect' , "Correggi");
 define('ttConfiguration' , "Configurazione");

@@ -14,6 +14,8 @@ define('ttAnswers' , "Answers");
 define('ttArchive' , "Archive");
 define('ttArchived' , "Archived");
 define('ttAssignSubject' , "Assign Subject");
+define('ttQTPL', "Pull DOWN List");
+define('ttQTPLDescription', " prova descrizione");
 define('ttAutomatic' , "Automatic");
 define('ttBasedOn' , "Based on");
 define('ttBlocked' , "Blocked");

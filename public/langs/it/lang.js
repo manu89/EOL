@@ -21,6 +21,7 @@ var ttQTPL = "Pull DOWN List";
 var ttQTPLDescription = "prova descrizione";
 var ttBlock = "Blocca";
 var ttUnblock = "Sblocca";
+var ttQuestionsubPL="Sottodomande";
 var ttBonus = "Bonus";
 var ttCancel = "Annulla";
 var ttChangeLanguage = "Cambia lingua";
