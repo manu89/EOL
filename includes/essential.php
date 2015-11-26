@@ -39,7 +39,8 @@ function getQuestionTypes(){
         'MR',       # Multiple Response
         'YN',       # Yes/No
         'TF',       # True/False
-        'ES'        # Essay
+        'ES',        # Essay
+        'PD'
 
     );
     return $types;
