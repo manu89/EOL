@@ -2390,6 +2390,7 @@ span.extraClose{
 
 .select{
     width:160px;
+    overflow-x:scroll;
 }
 
 .divider{
@@ -2414,6 +2415,7 @@ span.extraClose{
 
 .select-partecipant{
     width:250px;
+    overflow-x: scroll;
 }
 
 #assesmentCustomize .boxContent{

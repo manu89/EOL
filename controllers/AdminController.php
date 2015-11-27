@@ -486,7 +486,7 @@ class AdminController extends Controller{
             $db = new sqlDB();
             if(($db->qSelect('Users', 'email', $_POST['email'])) && ($db->numResultRows() == 0)){
                 $token = sha1(randomPassword(10).strtotime('now'));
-                if($db->qNewUser($_POST['name'], $_POST['surname'], $_POST['email'], $token, $_POST['role'])){
+                if($db->qNewUser($_POST['name'], $_POST['surname'], $_POST['email'], $token, $_POST['role'], $_POST['group'], $_POST['subgroup'])){
                     $message = str_replace('_SYSTEMNAME_', $config['systemTitle'], ttMailNewTeacher);
                     $message = str_replace('\n', "\n", $message);
                     $message .= "\n\n".$config['systemHome'].'index.php?page=admin/setpassword&t='.$token;
@@ -524,7 +524,7 @@ class AdminController extends Controller{
                 }else{
                     $password = randomPassword(8);
                 }
-                if(($db->qNewUser($_POST['name'], $_POST['surname'], $_POST['email'], null, 's', sha1($password))) & ($student = $db->nextRowEnum())){
+                if(($db->qNewUser($_POST['name'], $_POST['surname'], $_POST['email'], null, 's', $_POST['group'], $_POST['subgroup'], sha1($password))) & ($student = $db->nextRowEnum())){
                     $message = str_replace('_USERNAME_', $_POST['name'], ttMailCredentials);
                     $message = str_replace('_USEREMAIL_', $_POST['email'], $message);
                     $message = str_replace('_USERPASSWORD_', $password, $message);

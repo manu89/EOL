@@ -1041,3 +1041,61 @@
 11/21/2015 15:21:54 - qAddStudent : Table 'eol.exams' doesn't exist
 11/25/2015 16:13:24 - qShowStudent : Unknown column 'User.name' in 'field list'
 11/25/2015 16:13:30 - qShowStudent : Unknown column 'User.name' in 'field list'
+11/26/2015 13:52:06 - 26/11/2015 13:51
+11/26/2015 14:09:38 - array (
+  0 => '3',
+)
+11/26/2015 14:43:12 - 2Impo bdati301000902
+11/26/2015 14:43:36 - 26/11/2015 14:43
+11/26/2015 15:00:31 - array (
+  0 => '3',
+)
+11/26/2015 15:02:28 - 26/11/2015 15:01
+11/26/2015 15:19:47 - array (
+  0 => '1',
+)
+11/26/2015 15:22:39 - 2impdati300000902
+11/26/2015 15:23:13 - 26/11/2015 15:22
+11/26/2015 15:35:57 - array (
+  0 => '1',
+)
+11/26/2015 15:56:42 - 26/11/2015 15:56
+11/26/2015 15:58:53 - 26/11/2015 15:58
+11/26/2015 16:49:29 - 1prova300000901
+11/26/2015 16:49:46 - 26/11/2015 16:49
+11/26/2015 17:47:17 - 26/11/2015 17:47
+11/26/2015 18:18:50 - array (
+  0 => '1',
+)
+11/26/2015 18:28:19 - 1settings_reti300000602
+11/26/2015 18:29:33 - array (
+  0 => '1',
+)
+11/26/2015 18:29:57 - 26/11/2015 18:29
+11/26/2015 19:18:08 - 2bd_settings30000052
+11/26/2015 19:19:32 - 26/11/2015 19:19
+11/26/2015 19:31:02 - 26/11/2015 19:30
+11/27/2015 15:38:15 - qNewUser : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group, subgroup)
+                          VALUES ('Mario', 'Rossi', 'mario@eol.' at line 1
+11/27/2015 15:43:15 - qNewUser : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group, subgroup)
+                          VALUES ('Mario', 'Rossi', 'mario@eol.' at line 1
+11/27/2015 15:53:22 - qNewUser : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group, subgroup)
+                          VALUES ('Mario', 'Rossi', 'mario@eol.' at line 1
+11/27/2015 15:53:24 - qNewUser : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group, subgroup)
+                          VALUES ('Mario', 'Rossi', 'mario@eol.' at line 1
+11/27/2015 15:53:26 - qNewUser : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group, subgroup)
+                          VALUES ('Mario', 'Rossi', 'mario@eol.' at line 1
+11/27/2015 15:56:37 - qNewUser : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group, subgroup)
+                          VALUES ('Mario', 'Rossi', 'mario@eol.' at line 1
+11/27/2015 16:07:38 - qNewUser : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group, subgroup)
+                          VALUES ('mario', 'rossi', 'mario@eol.' at line 1
+11/27/2015 16:09:48 - qNewUser : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group, subgroup, role)
+                          VALUES ('Mario', 'Rossi', 'mari' at line 1
+11/27/2015 16:26:38 - qNewUser : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group, subgroup, role)
+                          VALUES ('Marco', 'Rossi', 'marc' at line 1
+11/27/2015 16:27:54 - qNewUser : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group, subgroup, role)
+                          VALUES ('Marco', 'Rossi', 'marc' at line 1
+11/27/2015 16:28:34 - qNewUser : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group, subgroup, role)
+                          VALUES ('Mario', 'Rossi', 'mari' at line 1
+11/27/2015 16:44:19 - qNewUser : Duplicate entry 'prova@eol.org-c' for key 'PRIMARY'
+11/27/2015 16:46:59 - qNewUser : Duplicate entry 'prova@eol.org-c' for key 'PRIMARY'

@@ -89,7 +89,7 @@ global $config, $user;
                             <select id="filter">
                                 <option value=""><?=ttReportNotFilter?></option>
                                 <option value="<?=ttReportAllFinished?>"><?=ttReportAllFinished?></option>
-                                <option value="<?=ttReportScheduled?>"><?=ttReportScheduled?></option>
+                                <!--<option value="<?=ttReportScheduled?>"><?=ttReportScheduled?></option>-->
                                 <option value="<?=ttReportTimedOut?>"><?=ttReportTimedOut?></option>
                             </select>
                         </div>
@@ -143,7 +143,7 @@ global $config, $user;
                         <a class="normal button rSpace" id="removeallg" onclick="clearGroups()"><?=ttRemoveAll?></a>
                     </div>
                     <br/>
-                    <hr class="divider"/>
+                    <!--<hr class="divider"/>
                     <div class="col-left">
                         <h4><?=ttReportSelectFilter?></h4>
                     </div>
@@ -152,11 +152,11 @@ global $config, $user;
                             <option value=""><?=ttReportNotFilter?></option>
                             <!--<option value="<?=ttReportAllFinished?>"><?=ttReportAllFinished?></option>
                             <option value="<?=ttReportScheduled?>"><?=ttReportScheduled?></option>
-                            <option value="<?=ttReportTimedOut?>"><?=ttReportTimedOut?></option>-->
+                            <option value="<?=ttReportTimedOut?>"><?=ttReportTimedOut?></option>
                         </select>
-                    </div>
+                    </div>-->
                     <br/>
-                    <hr class="divider2"/>
+                    <hr class="divider"/>
                     <div id="tabsbutton">
                         <a class="normal button rSpace" id="backg" onclick="prevGroupTab()"><?=ttBack?></a>
                         <a class="normal button rSpace" id="nextg" onclick="nextGroupTab()"><?=ttNext?></a>

@@ -16,6 +16,8 @@ class User {
     public $email;      // User's e-mail
     public $lang;       // System language selected by user
     public $role;       // User's role Student (s), Teacher (t), Admin (a) or Teacher/Admin (ta)
+    public $group;
+    public $subgroup;
 
     /**
      * @name    User

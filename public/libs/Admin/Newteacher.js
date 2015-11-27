@@ -51,7 +51,9 @@ function createTeacher(){
                         name        :  name,
                         surname     :  surname,
                         email       :  email,
-                        role        :  role
+                        role        :  role,
+                        group       :  null,
+                        subgroup    :  null
                     },
                     success : function (data, status) {
                         if(data == "ACK"){

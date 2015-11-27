@@ -15,13 +15,15 @@ function createStudent(){
     var surname = $("#userSurname").val().trim();
     var email = $("#userEmail").val().trim();
     var email2 = $("#userEmail2").val().trim();
+    var group = $("#userGroup").val().trim();
+    var subgroup = $("#userSubgroup").val().trim();
     var password = "_";
     var password2 = "_";
     if($("#userPassword").length > 0){
         password = $("#userPassword").val().trim();
         password2 = $("#userPassword2").val().trim();
     }
-    if((name != '') && (surname != '') && (email != '') && (email2 != '') && (password != '') && (password2 != '')){
+    if((name != '') && (surname != '') && (email != '') && (email2 != '') && (password != '') && (password2 != '') && (group != '') && (subgroup != '')){
         if(email == email2){
             if(isValidEmailAddress(email)){
                 if(password == password2){
@@ -33,7 +35,9 @@ function createStudent(){
                                 name        :  name,
                                 surname     :  surname,
                                 email       :  email,
-                                password    :  password
+                                password    :  password,
+                                group       :  group,
+                                subgroup    :  subgroup
                             },
                             success : function (data) {
                                 data = data.split(ajaxSeparator);
