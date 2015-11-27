@@ -17,3 +17,17 @@
                               AND
                     ' at line 6
 11/26/2015 15:01:42 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+11/26/2015 15:04:33 - qAnswerSet : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'idQuestion' not exists'
+                              AND
+                    ' at line 6
+11/26/2015 15:04:38 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+11/26/2015 15:08:23 - qAnswerSet : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'idQuestion' not exists'
+                              AND
+                    ' at line 6
+11/26/2015 15:09:43 - qAnswerSet : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'idQuestion' not exists'
+                              AND
+                    ' at line 6
+11/27/2015 13:21:13 - qAnswerSet : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'idQuestion' not exists'
+                              AND
+                    ' at line 6
+11/27/2015 13:21:25 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
