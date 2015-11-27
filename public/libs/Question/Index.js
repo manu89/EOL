@@ -23,6 +23,10 @@ var qtci = {
 // Time for double click
 var timer;
 
+// Questions/Answers chars limit
+var qMaxLength = aMaxLength = 100;
+var ellipsis = " [...]";
+
 // Anchors for topic list
 var topicRowSelected = null;
 var topicRowEdit = null;
@@ -38,6 +42,10 @@ var answersTable = null;
 var answerRowSelected = null;
 var answerEditing = false;
 
+// Anchor for answers list
+var subquestionsTable = null;
+var subquestionsRowSelected = null;
+var subquestionsEditing = false;
 // Anchors for languages list
 var languageRowSelected = null;
 
@@ -65,30 +73,30 @@ $(function(){
      *  @descr  Questions DataTables initialization
      */
     questionsTable = $("#questionsTable").DataTable({
-            scrollY:        294,
-            scrollCollapse: false,
-            jQueryUI:       true,
-            paging:         false,
-            order: [[ qtci.text, "asc" ]],
-            columns : [
-                { className: "qStatus", searchable : false, type: "alt-string", width : "10px" },
-                { className: "qText", width : "570px", mRender: function(data){return truncate(data, "600px")} },
+        scrollY:        294,
+        scrollCollapse: false,
+        jQueryUI:       true,
+        paging:         false,
+        order: [[ qtci.text, "asc" ]],
+        columns : [
+            { className: "qStatus", searchable : false, type: "alt-string", width : "10px" },
+            { className: "qText", width : "570px", mRender: function(data){return truncate(data, "600px")} },
 //                { className: "qText", width : "650px" },
-                { className: "qLanguages", searchable : false, type: "alt-string", width : "60px" },
-                { className: "qTopic", width : "100px" },
-                { className: "qType", width : "100px" },
-                { className: "qDifficulty", width : "50px"},
-                { className: "qQuestionID", visible : false, searchable : false },
-                { className: "qTopicID", visible : false },
-                { className: "qTypeID", visible : false, searchable : false },
-                { className: "qLanguageID", visible : false, searchable : false }
-            ],
-            language : {
-                info: ttDTQuestionInfo,
-                infoFiltered: ttDTQuestionFiltered,
-                infoEmpty: ttDTQuestionEmpty
-            }
-        })
+            { className: "qLanguages", searchable : false, type: "alt-string", width : "60px" },
+            { className: "qTopic", width : "100px" },
+            { className: "qType", width : "100px" },
+            { className: "qDifficulty", width : "50px"},
+            { className: "qQuestionID", visible : true, searchable : false },
+            { className: "qTopicID", visible : false },
+            { className: "qTypeID", visible : false, searchable : false },
+            { className: "qLanguageID", visible : false, searchable : false }
+        ],
+        language : {
+            info: ttDTQuestionInfo,
+            infoFiltered: ttDTQuestionFiltered,
+            infoEmpty: ttDTQuestionEmpty
+        }
+    })
         .on("click", "tr", function(){
             showQuestionLanguageAndPreview(this);
         })
@@ -100,8 +108,8 @@ $(function(){
             }
         });
     $("#questionsTable_filter").css("margin-right", "50px")
-                               .after($("#newQuestion").parent())
-                               .before($("#questionsTable_info"));
+        .after($("#newQuestion").parent())
+        .before($("#questionsTable_info"));
 
     $("#topicList .boxBottomCenter").append(printBoxHelpMessage(ttHQuestTopicPanel));
     $("#questionsTableContainer .ui-corner-bl").append(printBoxHelpMessage(ttHQuestPanel));
@@ -124,12 +132,12 @@ function filterQuestionsByTopic(selectedTopic){
         topicRowSelected.addClass("selected");
         if($(topicRowSelected).attr("value") != "-1")
             questionsTable.columns(qtci.topicID)
-                          .search("^"+$(topicRowSelected).attr("value").trim()+"$", true)
-                          .draw();
+                .search("^"+$(topicRowSelected).attr("value").trim()+"$", true)
+                .draw();
         else
             questionsTable.columns(qtci.topicID)
-                          .search("")
-                          .draw();
+                .search("")
+                .draw();
     }, 350);
 }
 
@@ -213,7 +221,16 @@ function showQuestionLanguageAndPreview(selectedQuestion) {
             var idQuestion = questionsTable.row(questionRowSelected).data()[qtci.questionID];
             var idLanguage = questionsTable.row(questionRowSelected).data()[qtci.languageID];
 
-            showQuestionPreview(idQuestion, idLanguage, null);
+
+
+
+            var typeQ = questionsTable.row(questionRowSelected).data()[qtci.type];
+
+            ;
+            if(typeQ=='Pull DOWN List')
+                showQuestionPreviewPdl(idQuestion, idLanguage, null);
+            else
+                showQuestionPreview(idQuestion, idLanguage, null);
 
             $.ajax({
                 url     : "index.php?page=question/showquestionlanguages",
@@ -239,6 +256,55 @@ function showQuestionLanguageAndPreview(selectedQuestion) {
         }
     }, 350);
 }
+
+
+
+
+
+
+/**
+ *  @name   showQuestionPreviewpdl
+ *  @descr  Ajax request for show question's preview of requeted language
+ *  @param  idQuestion          String                     Selected question's ID
+ *  @param  idLanguage          String                     Selected question's language ID
+ *  @param  selectedLanguage    DOM Element                If is set select <li>
+ */
+function showQuestionPreviewPdl(idQuestion, idLanguage, selectedLanguage) {
+    if(timer)
+        clearTimeout(timer);
+
+    timer = setTimeout(function(){
+        if(selectedLanguage != null){
+            languageRowSelected = $(selectedLanguage);
+            $(".showQuestionPreview").removeClass("selected");
+            languageRowSelected.addClass("selected");
+        }
+        $.ajax({
+            url     : "index.php?page=question/showquestionpreviewpdl",
+            type    : "post",
+            data    : {
+                idQuestion :   idQuestion,
+                idLanguage :   idLanguage,
+                type       :   questionsTable.row(questionRowSelected).data()[qtci.typeID]
+            },
+            success : function (data) {
+                if(data == "NACK"){
+//                    alert(data);
+                }else{
+//                    alert(data);
+                    $("#questionPreview .boxContent").html(data)
+                        .slideDown({
+                            duration : 400
+                        });
+                }
+            },
+            error : function (request, status, error) {
+                alert("jQuery AJAX request error:".error);
+            }
+        });
+    }, 350);
+}
+
 
 /**
  *  @name   showQuestionPreview
@@ -343,9 +409,9 @@ function newEmptyQuestion() {
             },
             success : function (data) {
                 if(data == "NACK"){
-    //                alert(data);
+                    //                alert(data);
                 }else{
-    //                alert(data);
+                    //                alert(data);
                     $("body").append(data);
                     newLightbox($("#questionInfo"), {});
                 }
@@ -430,13 +496,11 @@ function createCKEditorInstance(instance){
         case "a" : onchange = function() { this.updateElement(); answerEditing = true; }; break;
         default : alert("CKEditor creation error");
     }
-    CKEDITOR.replace(instance, {
-        filebrowserBrowseUrl:roxyFileman,
-//        filebrowserUploadUrl:roxyFileman,
+    CKEDITOR.replace(instance, {filebrowserBrowseUrl:roxyFileman,
+        filebrowserUploadUrl:roxyFileman,
         filebrowserImageBrowseUrl:roxyFileman+'?type=image',
-//        filebrowserImageUploadUrl:roxyFileman+'?type=image',
-        on: { change: onchange }
-    });
+        filebrowserImageUploadUrl:roxyFileman+'?type=image',
+        on: { change: onchange }});
 }
 
 function closeQuestionTypeSelect(){
