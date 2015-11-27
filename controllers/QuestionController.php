@@ -78,6 +78,18 @@ class QuestionController extends Controller{
         }
     }
 
+    private function actionShowquestionpreviewpdl(){
+        global $log, $engine;
+
+        if((isset($_POST['idQuestion'])) && (isset($_POST['idLanguage'])) && (isset($_POST['type']))){
+            $engine->loadLibs();
+            $engine->renderPage();
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+            die(__FUNCTION__." : Params not set");
+        }
+    }
+
     /**
      *  @name   actionShowquestionlanguages
      *  @descr  Show languages about requested question
@@ -119,8 +131,8 @@ class QuestionController extends Controller{
         global $log;
 
         if((isset($_POST['idQuestion'])) && (isset($_POST['idTopic'])) && (isset($_POST['difficulty'])) &&
-           (isset($_POST['translationsQ'])) && (isset($_POST['shortText'])) && (isset($_POST['extras'])) &&
-           (isset($_POST['mainLang']))){
+            (isset($_POST['translationsQ'])) && (isset($_POST['shortText'])) && (isset($_POST['extras'])) &&
+            (isset($_POST['mainLang']))){
 
             $db = new sqlDB();
             $questionID = $_POST['idQuestion'];
@@ -167,8 +179,8 @@ class QuestionController extends Controller{
         if(($db->qQuestionInfo($questionID, $mainLang)) && ($question = $db->nextRowAssoc()) &&
             ($db->qSelect('Languages')) && ($allLangs = $db->getResultAssoc('idLanguage'))){
             $statuses = array('a' => 'Active',
-                              'i' => 'Inactive',
-                              'e' => 'Error');
+                'i' => 'Inactive',
+                'e' => 'Error');
             $languages = '';
             foreach($translationsQ as $idLanguage => $translation){
                 if((isset($allLangs[$idLanguage])) && trim($translation) != "" )
@@ -228,18 +240,18 @@ class QuestionController extends Controller{
         global $log, $config, $ajaxSeparator;
 
         if((isset($_POST['idTopic'])) && (isset($_POST['type'])) && (isset($_POST['difficulty'])) &&
-           (isset($_POST['translationsQ'])) && (isset($_POST['shortText'])) && (isset($_POST['extras'])) &&
-           (isset($_POST['mainLang']))){
+            (isset($_POST['translationsQ'])) && (isset($_POST['shortText'])) && (isset($_POST['extras'])) &&
+            (isset($_POST['mainLang']))){
 
             $db = new sqlDB();
             $translationsQ = json_decode($_POST['translationsQ'], true);
             if($translationsQ[$_POST['mainLang']]){
                 $question = Question::newQuestion($_POST['type'], array('idTopic' => $_POST['idTopic'],
-                                                                        'type' => $_POST['type'],
-                                                                        'difficulty' => $_POST['difficulty'],
-                                                                        'extras' => $_POST['extras'],
-                                                                        'shortText' => $_POST['shortText'],
-                                                                        'translationsQ' => $translationsQ));
+                    'type' => $_POST['type'],
+                    'difficulty' => $_POST['difficulty'],
+                    'extras' => $_POST['extras'],
+                    'shortText' => $_POST['shortText'],
+                    'translationsQ' => $translationsQ));
                 $idQuestion = $question->createNewQuestion();
                 echo $this->updateQuestionRow($idQuestion, $_POST['mainLang'], $translationsQ);
             }else{
@@ -311,7 +323,7 @@ class QuestionController extends Controller{
         global $log, $ajaxSeparator;
 
         if((isset($_POST['idQuestion'])) && (isset($_POST['idAnswer'])) && (isset($_POST['type'])) &&
-           (isset($_POST['translationsA'])) && (isset($_POST['score'])) && (isset($_POST['mainLang']))){
+            (isset($_POST['translationsA'])) && (isset($_POST['score'])) && (isset($_POST['mainLang']))){
             $db = new sqlDB();
 
             $translationsA = json_decode($_POST['translationsA'], true);
@@ -351,8 +363,65 @@ class QuestionController extends Controller{
                     $question->printAnswersTable($newQuestionID, $_SESSION['idSubject']);
                 }else{                                                  // Reprint only edited answer's row
                     $answer = Answer::newAnswer($_POST['type'], array('score'       =>  $_POST['score'],
-                                                                      'translation' =>  $translationsA[$_POST['mainLang']],
-                                                                      'idAnswer'    =>  $answerID));
+                        'translation' =>  $translationsA[$_POST['mainLang']],
+                        'idAnswer'    =>  $answerID));
+                    echo $ajaxSeparator.str_replace('\\/', '/', json_encode($answer->getAnswerRowInTable()));
+                }
+            }else{
+                die($db->getError());
+            }
+
+            $db->close();
+        }else{
+            $log->append(__FUNCTION__." : Params not set - ".var_export($_POST, true));
+        }
+    }
+    private function actionUpdatesubinfo(){
+        global $log, $ajaxSeparator;
+
+        if((isset($_POST['idQuestion'])) && (isset($_POST['idAnswer'])) && (isset($_POST['type'])) &&
+            (isset($_POST['translationsA'])) && (isset($_POST['score'])) && (isset($_POST['mainLang']))){
+            $db = new sqlDB();
+
+            $translationsA = json_decode($_POST['translationsA'], true);
+            if($translationsA[$_POST['mainLang']]){
+                $updateMandatory = false;
+                $questionID = $newQuestionID = $_POST['idQuestion'];
+                $answerID = $_POST['idAnswer'];
+                if($db->qGetEditAndDeleteConstraints('edit', 'answer1', array($questionID))){
+                    $updateMandatory = ($db->numResultRows() > 0) ? true : false;
+                }else{
+                    die($db->getError());
+                }
+
+                if($db->qGetEditAndDeleteConstraints('edit', 'answer2', array($questionID))){
+                    if($db->numResultRows() > 0){
+                        if($db->qDuplicateQuestion($questionID, $updateMandatory, $answerID)){
+                            if($IDs = $db->nextRowEnum()){
+                                $newQuestionID = $IDs[0];
+                                $answerID = $IDs[1];
+                            }
+                        }else{
+                            die($db->getError());
+                        }
+                    }
+                }else{
+                    die($db->getError());
+                }
+            }else{
+                die(ttEMainLanguageEmpty);
+            }
+
+            if($db->qUpdateAnswerInfo($answerID, $_POST['score'], $translationsA)){
+                echo 'ACK'.$ajaxSeparator.$newQuestionID;
+                if($questionID != $newQuestionID){                      // Question duplicated, reload answers table
+                    $question = Question::newQuestion($_POST['type']);
+                    echo $ajaxSeparator;
+                    $question->printAnswersTable($newQuestionID, $_SESSION['idSubject']);
+                }else{                                                  // Reprint only edited answer's row
+                    $answer = Answer::newAnswer($_POST['type'], array('score'       =>  $_POST['score'],
+                        'translation' =>  $translationsA[$_POST['mainLang']],
+                        'idAnswer'    =>  $answerID));
                     echo $ajaxSeparator.str_replace('\\/', '/', json_encode($answer->getAnswerRowInTable()));
                 }
             }else{
@@ -365,6 +434,23 @@ class QuestionController extends Controller{
         }
     }
 
+
+
+
+    private function actionShowsubquestionsinfo(){
+        global $engine, $log;
+        // $log->append(var_export("prova action show ",true));
+
+        if((isset($_SESSION['idSubject'])) && (isset($_POST['action'])) && (isset($_POST['idQuestion'])) &&
+            (isset($_POST['type'])) && (isset($_POST['sub_questions']))){
+            $engine->loadLibs();
+            $engine->renderPage();
+
+
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
     /**
      *  @name   actionNewanswer
      *  @descr  Action used for create a new answer
@@ -373,7 +459,7 @@ class QuestionController extends Controller{
         global $log, $ajaxSeparator;
 
         if((isset($_POST['idQuestion'])) && (isset($_POST['score'])) && (isset($_POST['type'])) &&
-           (isset($_POST['translationsA'])) && (isset($_POST['mainLang']))){
+            (isset($_POST['translationsA'])) && (isset($_POST['mainLang']))){
             $db = new sqlDB();
 
             $translationsA = json_decode($_POST['translationsA'], true);
@@ -400,7 +486,7 @@ class QuestionController extends Controller{
                     die($db->getError());
                 }
 
-                if($db->qNewAnswer($newQuestionID, $_POST['score'], $translationsA)){
+                if($db->qNewAnswer($newQuestionID, $_POST['score'],$translationsA)){
                     $resultSet = $db->nextRowEnum();
                     $answerID = $resultSet[0];
                     echo 'ACK'.$ajaxSeparator.$newQuestionID;
@@ -410,8 +496,134 @@ class QuestionController extends Controller{
                         $question->printAnswersTable($newQuestionID, $_SESSION['idSubject']);
                     }else{                                                  // Reprint only edited answer's row
                         $answer = Answer::newAnswer($_POST['type'], array('score'       =>  $_POST['score'],
-                                                                          'translation' =>  $translationsA[$_POST['mainLang']],
-                                                                          'idAnswer'    =>  $answerID));
+                            'translation' =>  $translationsA[$_POST['mainLang']],
+                            'idAnswer'    =>  $answerID));
+                        echo $ajaxSeparator.str_replace('\\/', '/', json_encode($answer->getAnswerRowInTable()));
+                    }
+                }else{
+                    die($db->getError());
+                }
+            }else{
+                die(ttEMainLanguageEmpty);
+            }
+
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+
+    /**
+     *  @name   actionNewsub
+     *  @descr  Action used for create a new pull down list answer
+     */
+    private function actionNewanswersub(){
+        global $log, $ajaxSeparator;
+        $log->append("1");
+
+        if((isset($_POST['idQuestion'])) && (isset($_POST['subQuestion'])) && (isset($_POST['score'])) && (isset($_POST['type'])) &&
+            (isset($_POST['translationsA'])) && (isset($_POST['mainLang']))){
+            $db = new sqlDB();
+            $log->append("2");
+            $log->append($_POST['idQuestion']);
+            $log->append($_POST['subQuestion']);
+            $translationsA = json_decode($_POST['translationsA'], true);
+            if($translationsA[$_POST['mainLang']]){
+
+                $updateMandatory = false;
+                $questionID = $newQuestionID = $_POST['idQuestion'];
+
+                $subID  = $_POST['subQuestion'];
+                if($db->qGetEditAndDeleteConstraints('create', 'answer1', array($questionID))){
+                    $updateMandatory = ($db->numResultRows() > 0) ? true : false;
+                }else{
+                    die($db->getError());
+                }
+
+                if($db->qGetEditAndDeleteConstraints('create', 'answer2', array($questionID))){
+                    if($db->numResultRows() > 0){
+                        if($db->qDuplicateQuestion($questionID, $updateMandatory)){
+                            $resultSet = $db->nextRowEnum();
+                            $newQuestionID = $resultSet[0];
+                        }else{
+                            die($db->getError());
+                        }
+                    }
+                }else{
+                    die($db->getError());
+                }
+
+                if($db->qNewAnswerPL($subID,$newQuestionID, $_POST['score'],$translationsA)){
+                    $resultSet = $db->nextRowEnum();
+                    $answerID = $resultSet[0];
+                    echo 'ACK'.$ajaxSeparator.$newQuestionID;
+                    if($questionID != $newQuestionID){                      // Question duplicated, reload answers table
+                        $question = Question::newQuestion($_POST['type']);
+                        echo $ajaxSeparator;
+                        $question->printAnswersTable($subID,$_SESSION['idSubject']);
+                    }else{                                                  // Reprint only edited answer's row
+                        $answer = Answer::newAnswer($_POST['type'], array('score'       =>  $_POST['score'],
+                            'translation' =>  $translationsA[$_POST['mainLang']],
+                            'idAnswer'    =>  $answerID));
+                        echo $ajaxSeparator.str_replace('\\/', '/', json_encode($answer->getAnswerRowInTable()));
+                    }
+                }else{
+                    die($db->getError());
+                }
+            }else{
+                die(ttEMainLanguageEmpty);
+            }
+
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+    /**
+     *  @name   actionNewanswer
+     *  @descr  Action used for create a new answer
+     */
+    private function actionNewsubquestion(){
+        global $log, $ajaxSeparator;
+
+        if((isset($_POST['idQuestion'])) && (isset($_POST['score'])) && (isset($_POST['type'])) &&
+            (isset($_POST['translationsA'])) && (isset($_POST['mainLang']))){
+            $db = new sqlDB();
+
+            $translationsA = json_decode($_POST['translationsA'], true);
+            if($translationsA[$_POST['mainLang']]){
+
+                $updateMandatory = false;
+                $questionID = $newQuestionID = $_POST['idQuestion'];
+                if($db->qGetEditAndDeleteConstraints('create', 'answer1', array($questionID))){
+                    $updateMandatory = ($db->numResultRows() > 0) ? true : false;
+                }else{
+                    die($db->getError());
+                }
+
+                if($db->qGetEditAndDeleteConstraints('create', 'answer2', array($questionID))){
+                    if($db->numResultRows() > 0){
+                        if($db->qDuplicateQuestion($questionID, $updateMandatory)){
+                            $resultSet = $db->nextRowEnum();
+                            $newQuestionID = $resultSet[0];
+                        }else{
+                            die($db->getError());
+                        }
+                    }
+                }else{
+                    die($db->getError());
+                }
+
+                if($db->qnewSubquestions($newQuestionID, $_POST['score'],$translationsA)){
+                    $resultSet = $db->nextRowEnum();
+                    $answerID = $resultSet[0];
+                    echo 'ACK'.$ajaxSeparator.$newQuestionID;
+                    if($questionID != $newQuestionID){                      // Question duplicated, reload answers table
+                        $question = Question::newQuestion($_POST['type']);
+                        echo $ajaxSeparator;
+                        $question->printSubquestionsTable($newQuestionID);
+                    }else{                                                  // Reprint only edited answer's row
+                        $answer = Answer::newAnswer($_POST['type'], array('score'       =>  $_POST['score'],
+                            'translation' =>  $translationsA[$_POST['mainLang']],
+                            'idAnswer'    =>  $answerID));
                         echo $ajaxSeparator.str_replace('\\/', '/', json_encode($answer->getAnswerRowInTable()));
                     }
                 }else{
@@ -491,11 +703,11 @@ class QuestionController extends Controller{
         return array(
             array(
                 'allow',
-                'actions' => array('Index', 'Showtopics', 'Showquestionpreview', 'Showquestioninfo',
-                                   'Newquestion', 'Showquestionlanguages',
-                                   'Updatequestioninfo', 'Deletequestion', 'Changestatus',
-                                   'Showanswerinfo', 'Updateanswerdetails',
-                                   'Updateanswerinfo', 'Newanswer', 'Deleteanswer'),
+                'actions' => array('Index', 'Showtopics', 'Showquestionpreview',  'Showquestionpreviewpdl','Showquestioninfo',
+                    'Newquestion', 'Showquestionlanguages','Showsubquestionsinfo',
+                    'Updatequestioninfo', 'Deletequestion', 'Changestatus',
+                    'Showanswerinfo', 'Updateanswerdetails',
+                    'Updateanswerinfo', 'Updatesubinfo', 'Newanswer','Newanswersub', 'Deleteanswer','Newsubquestion'),
                 'roles'   => array('t'),
             ),
             array(
