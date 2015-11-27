@@ -7,8 +7,8 @@
  * Desc:
  */
 
-class QT_PL extends Question {
-
+class QT_PL extends Question
+{
 
 
     public function createNewQuestion()
@@ -29,8 +29,6 @@ class QT_PL extends Question {
         <ul xmlns="http://www.w3.org/1999/html">
             <li><a id="questionTab" href="#question-tab"><?= ttQuestion ?></a></li>
             <?php if ($action == 'show') echo '<li><a id="subTab" href="#subquestions">' . ttQuestionsubPL . '</a></li>'; ?>
-
-
 
 
         </ul>
@@ -62,7 +60,7 @@ class QT_PL extends Question {
         </div>
 
 
-  <?php if ($action == 'show') {?>
+        <?php if ($action == 'show') { ?>
 
         <div id="subquestions">
 
@@ -80,23 +78,23 @@ class QT_PL extends Question {
 
             <div class="clearer"></div>
             <a class="button normal left rSpace tSpace" onclick="closeQuestionInfo(true);"><?= ttExit ?></a>
+
             <div class="clearer"></div>
         </div>
-    <?php
 
-    }
-        $this->printQuestionTypeLibrary();
-        echo '<script> initialize_PL(); </script>';
-   ?>
+
+
         <div id="answers">
 
             <div class="bSpace" id="answersTableContainer">
                 <div class="smallButtons">
                     <div id="newAnswer_PL">
-                        <img class="icon" src="<?= $config['themeImagesDir'].'new.png' ?>"/><br/>
+                        <img class="icon" src="<?= $config['themeImagesDir'] . 'new.png' ?>"/><br/>
                         <?= ttNew ?>
                     </div>
                 </div>
+                <?php global $log;
+                $log->append($this->get('idQuestion')) ?>
                 <?php $this->printAnswersTable($this->get('idQuestion'), $_SESSION['idSubject']) ?>
 
             </div>
@@ -104,33 +102,45 @@ class QT_PL extends Question {
 
         </div>
 
-<?php  }
+    <?php }
 
- public function printSubquestionsTable($idQuestion){ ?>
+        $this->printQuestionTypeLibrary();
+        echo '<script> initialize_PL(); </script>';
+
+    }
+    public function printSubquestionsTable($idQuestion)
+    { ?>
 
         <table id="subquestionsTable" class="stripe hover">
             <thead>
             </thead>
             <tbody>
             <?php
+            global $log;
             $db = new sqlDB();
-            if($db->qsubquestionsetPL($idQuestion)){
-                while($sub_questions = $db->nextRowAssoc()){
-                    echo '<tr>
+            if (($db->qsubquestionsettestPL($this->get('idQuestion'))) && ($subSet = $db->getResultAssoc())) {
 
-                              <td>'.strip_tags($sub_questions['text']).'</td>
-
-
-                          </tr>';
-                }
             }
-            ?>
+            var_dump(($subSet));
+            var_dump(count($subSet));
+            for ($a = 0 ; $a < count($subSet); $a++) {
+                echo '<tr>
+                            <td>' . ($subSet[$a]['text']) . '</td>
+                            <td>' . ($subSet[$a]['sub_questions']) . '</td>
+
+                      </tr>';
+
+
+            }?>
             </tbody>
         </table>
 
     <?php
     }
-    public function printAnswersTable($idQuestion, $idSubject){ ?>
+
+    public function printAnswersTable($idQuestion, $idSubject)
+    {
+        ?>
 
         <table id="answersTable" class="stripe hover">
             <thead>
@@ -138,12 +148,13 @@ class QT_PL extends Question {
             <tbody>
             <?php
             $db = new sqlDB();
-            if($db->qAnswerSet($idQuestion, null, $idSubject)){
-                while($answer = $db->nextRowAssoc()){
+            if ($db->qAnswerSet($idQuestion, null, $idSubject)) {
+                while ($answer = $db->nextRowAssoc()) {
                     echo '<tr>
 
-                              <td>'.strip_tags($answer['translation']).'</td>
-                              <td>'.$answer['idAnswer'].'</td>
+                              <td>' . strip_tags($answer['translation']) . '</td>
+
+                              <td>' . $answer['score'] . '</td>
                           </tr>';
                 }
             }
@@ -164,74 +175,19 @@ class QT_PL extends Question {
         global $config;
         $info = null;
         $db = new sqlDB();
+        ?>
+  <div class="questionTest" value="<?= $this->getRAsspc(0, 'translation') ?>" type="PL"></div>
+        <div class="questionText"><?= $this->getRAsspc(0, 'translation') ?></div>
+        <div class="questionAnswers">
 
-       //echo $this->getRAsspc(0,'sub_questions')." ".$this->getRAsspc(0,'fkLanguage')." ".$_SESSION['idSubject'];
+                <?php
 
-        if (($db->qAnswerSetPL($this->getRA('sub_questions'), $this->getRA('fkLanguage'), $_SESSION['idSubject'])) && ($answerSet = $db->getResultAssoc())) {
-            $questionAnswers = '';
-            //var_dump($answerSet);
-
-
-            // -------  Add extra buttons  ------- //
-            $extra = '';
-            if (strpos($this->get('extra'), 'c') !== false)
-                $extra .= '<img class="extraIcon calculator" src="' . $config['themeImagesDir'] . 'QEc.png' . '">';
-            if (strpos($this->get('extra'), 'p') !== false)
-                $extra .= '<img class="extraIcon periodicTable" src="' . $config['themeImagesDir'] . 'QEp.png' . '">';
-            ?>
-
-        <div class="questionTest" value="<?= $this->getRAsspc(0,'translation') ?>" type="PL">
-            <div class="questionText"><?= $this->getRAsspc(0,'translation') ?></div>
-            <?php
-
-            for ($i = 0; $i < count($this); $i++) {
-                ?>
-                    <div class="questionAnswers"><?= $this->getRAsspc($i,'text') ?>
-                    <?php
-                        ?><select>
-                            <?php
-
-                            foreach ($answerSet as $answer) {
+        for ($a =0;$a <= count($this); $a++) {
 
 
-                                if ($answer['fkLanguage'] != $this->getRAsspc($i,'fkLanguage'))
-                                    $class = 'mainLang';
+            if (($db->qAnswerSetPL($this->getRAsspc($a,'sub_questions'), $this->getRA('fkLanguage'), $_SESSION['idSubject'])) && ($answerSet = $db->getResultAssoc())) {
 
-                                $questionAnswers .='<div>
-
-
-                                        <option value="'.$answer['idAnswer'].'">'.$answer['translation'].'</option>
-
-                                     </div>';
-                            }
-                                echo $questionAnswers;
-
-
-                            ?>
-                        </select></div>
-
-            <?php
-            }
-
-        }
-
-            }
-
-
-
-
-
-
-    public function printQuestionInTest($idSubject, $answered, $extras){
-        global $config;
-        global $log;
-
-        $db = new sqlDB();
-
-        if(($db->qAnswerSet($this->get('idQuestion'), $this->get('fkLanguage'), $idSubject)) && ($answerSet = $db->getResultAssoc())){
-    $questionAnswers = '';
-
-            if(($db-> qsubquestionsettestPL($this->get('idQuestion')))  && ($subSet = $db->nextRowAssoc())) {
+                $questionAnswers = '';
 
 
                 // -------  Add extra buttons  ------- //
@@ -243,80 +199,171 @@ class QT_PL extends Question {
                 ?>
 
 
-               <div class="questionTest" value="<?= $this->get('idQuestion') ?>" type="PL">
-                <div class="questionText"><?= $this->get('translation') ?></div>
 
+
+
+                <?= $this->getRAsspc($a, 'text')
+
+                ?><select>
                 <?php
 
-                for ($i = 0; $i < count($this); $i++) {
 
+                foreach ($answerSet as $answer) {
+
+
+                    if ($answer['fkLanguage'] != $this->getRAsspc($a, 'fkLanguage'))
+                        $class = 'mainLang';
+
+                    $questionAnswers .= '<div>
+
+
+                                        <option value="' . $answer['idAnswer'] . '">' . $answer['translation'] . '</option>
+
+                                     </div>';
+                }
+                echo $questionAnswers;
+
+
+                ?>
+
+                </div>
+                </select>
+                <br/>
+
+            <?php
+            }
+
+
+        }
+    }
+
+
+
+
+
+
+
+    public function printQuestionInTest($idSubject, $answered, $extras)
+    {
+        global $config;
+        global $log;
+
+        $db = new sqlDB();
+        if (($db->qsubquestionsettestPL($this->get('idQuestion'))) && ($subSet = $db->getResultAssoc())) {
+            // var_dump($subSet);
+        }
+
+
+        ?>
+
+        <div class="questionTest" value="<?= $this->get('idQuestion') ?>" type="PL">
+            <div class="questionText"><?= $this->get('translation') ?></div>
+
+
+            <div class="questionAnswers">
+                <?php
+                for ($a = 0; $a <= count($this); $a++) {
+
+
+                if (($db->qAnswerSetPL($subSet[$a]['sub_questions'], $this->getRA('fkLanguage'))) && ($answerSet = $db->getResultAssoc())) {
+
+                $questionAnswers = '';
+
+
+
+
+                // -------  Add extra buttons  ------- //
+                $extra = '';
+                if (strpos($this->get('extra'), 'c') !== false)
+                    $extra .= '<img class="extraIcon calculator" src="' . $config['themeImagesDir'] . 'QEc.png' . '">';
+                if (strpos($this->get('extra'), 'p') !== false)
+                    $extra .= '<img class="extraIcon periodicTable" src="' . $config['themeImagesDir'] . 'QEp.png' . '">';
+                ?>
+
+
+
+
+
+
+                <?= $subSet[$a]['text']?>
+
+
+                <select id="prova">
+                    <?php
+
+                    foreach ($answerSet as $answer) {
+
+
+                        if ($answer['fkLanguage'] != $this->getRAsspc($a, 'fkLanguage'))
+                            $class = 'mainLang';
+
+                        $questionAnswers .= '<div>
+
+
+                                        <option id="prova" value="' . $answer['idAnswer'] . '">' . $answer['translation'] . '</option>
+
+                                     </div>';
+
+                    }
+
+                    echo $questionAnswers;
+
+                    }
 
                     ?>
 
 
-                    <div class="questionAnswers"><?= $subSet['text']?>
+            </div>
+
+            </select>
+            <br/>
+            <?php
+            } ?>
+
+        </div>
 
 
-                <select id="prova">
-                            <?php
-
-                            foreach ($answerSet as $answer) {
+    <?php
+    }
 
 
-                                if ($answer['fkLanguage'] != $this->getRAsspc($i, 'fkLanguage'))
-                                    $class = 'mainLang';
-
-                                $questionAnswers .='<div>
 
 
-                                        <option id="prova" value="'.$answer['idAnswer'].'">'.$answer['translation'].'</option>
-
-                                     </div>';
-
-                            }
-
-                            echo $questionAnswers;
-                            ?>
-                   </select>
-                    </div>
-
-                <?php
-                }
-            }
-}
-}
-
-
-    public function printQuestionInCorrection($idSubject, $answered, $scale, $lastQuestion)
+    public
+    function printQuestionInCorrection($idSubject, $answered, $scale, $lastQuestion)
     {
         global $config;
 
-        $questionAnswers = '';
-        $questionScore = 0;
-        $questionClass = 'emptyQuestion';
-        $scale=1;
+
+
         $db = new sqlDB();
-        if ($db->qAnswerSet($this->get('idQuestion'), null, $idSubject) && ($answerSet = $db->getResultAssoc('idAnswer'))) {
-
+        if (($db->qsubquestionsettestPL($this->get('idQuestion'))) && ($subSet = $db->getResultAssoc())) {
+            // var_dump($subSet);
+        }
+        for ($a = 0; $a <= count($this); $a++) {
+            $questionAnswers = "";
+            $questionClass = 'emptyQuestion';
+            $questionScore = 0;
+            if (($db->qAnswerSetPL($subSet[$a]['sub_questions'], $this->getRA('fkLanguage'))) && ($answerSet = $db->getResultAssoc('idAnswer'))) {
+                //var_dump($answerSet);
                 foreach ($answerSet as $idAnswer => $answer) {
-
-
-
+                    //var_dump($idAnswer);
+                    //var_dump($answer);
                     $answerdClass = "";
+
                     $right_wrongClass = ($answer['score'] > 0) ? 'rightAnswer' : 'wrongAnswer';
                     if (in_array($idAnswer, $answered)) {
-                        $questionScore += round(($answer['score'] * 1),1);
+                        $questionScore += round(($answer['score'] * $scale), 1);
                         $answerdClass = 'answered';
-
-
-
                     }
+
                     $questionAnswers .= '<div class="' . $answerdClass . '">
-                                         <span value="' . $idAnswer . '" class="responseMR ' . $right_wrongClass . '"></span>
+                                         <span value="' . $idAnswer . '" class="responsePL ' . $right_wrongClass . '"></span>
                                          <label>' . $answer['translation'] . '</label>
-                                         <label class="score">' . round($answer['score'] * 1,1) . '</label>
+                                         <label class="score">' . round($answer['score'] * $scale, 1) . '</label>
                                      </div>';
                 }
+
                 $questionAnswers .= '<label class="questionScore">' . $questionScore . '</label>
                                  <div class="clearer"></div>';
 
@@ -324,23 +371,35 @@ class QT_PL extends Question {
                     $questionClass = ($questionScore > 0) ? 'rightQuestion' : 'wrongQuestion';
                 ?>
 
-            <div class="questionTest <?= $questionClass . ' ' . $lastQuestion ?>" value="<?= $this->get('idQuestion') ?>" type="PL">
-                <div class="questionText" onclick="showHide(this);">
-                    <span class="responseQuestion"></span>
-                    <?= $this->get('translation') ?>
-                    <span class="responseScore"><?= number_format($questionScore, 1); ?></span>
+                <div class="questionTest <?= $questionClass . ' ' . $lastQuestion ?>"
+                     value="<?= $this->get('idQuestion') ?>" type="PL">
+                    <div class="questionText" onclick="showHide(this);">
+                        <span class="responseQuestion"></span>
+                        <?= $this->get('translation') ?>
+                        <span class="responseScore"><?= number_format($questionScore, 1); ?></span>
+                        <br/>
+                        <?php $b = $a + 1;
+                        print("Sottodomanda n." . $b); ?>    <br/> <?= $subSet[$a]['text'] ?>
+                        <br/>
+                        <br/>
+                    </div>
+                    <div class="questionAnswers hidden">
+                        <?php
+                        print("Risposte"); ?>
+                        <br/>
+                        <br/>
+                        <?= $questionAnswers ?></div>
                 </div>
-                <div class="questionAnswers hidden"><?= $questionAnswers ?></div>
-            </div>
 
             <?php
-            } else {
-                die(ttEAnswers);
+
             }
         }
+    }
 
 
-    public function printQuestionInView($idSubject, $answered, $scale, $lastQuestion){
+    public function printQuestionInView($idSubject, $answered, $scale, $lastQuestion)
+    {
         $this->printQuestionInCorrection($idSubject, $answered, $scale, $lastQuestion);
     }
 }
