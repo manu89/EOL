@@ -2930,10 +2930,11 @@ class sqlDB {
         $this->mysqli = $this->connect();
         try{
 
-            $query = "SELECT text
+            $query = "SELECT  *
                           FROM
-                              sub_questions AS A JOIN questions  WHERE
-                              A.fkQuestions = '$idQuestion'";
+                              sub_questions AS A JOIN questions AS Q
+                               ON A.fkQuestions = Q.idQuestion
+                               WHERE Q.idQuestion = '$idQuestion'";
 
             $this->execQuery($query);
         }catch (Exception $ex){
