@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="13f1edcb-959c-49dc-b026-fbd65fcd1202" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/questionTypes/Question.php" afterPath="$PROJECT_DIR$/questionTypes/Question.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/system.log" afterPath="$PROJECT_DIR$/logs/system.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="EOL.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,16 +28,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="lang.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/langs/en/lang.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="6086">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="AT_PL.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/libs/questionTypes/AT_PL.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -58,10 +48,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="showquestioninfo.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="showquestioninfo.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/Question/showquestioninfo.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1139">
+            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1139">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="e#6#189#0#PHP" expanded="true" />
@@ -74,8 +64,24 @@
         <entry file="file://$PROJECT_DIR$/public/libs/Question/Showquestioninfo.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="5634" max-vertical-offset="6273">
-              <caret line="357" column="0" selection-start-line="357" selection-start-column="0" selection-end-line="357" selection-end-column="0" />
+              <caret line="359" column="0" selection-start-line="359" selection-start-column="0" selection-end-line="360" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Question.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/questionTypes/Question.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.93772894" vertical-offset="4571" max-vertical-offset="5185">
+              <caret line="299" column="1" selection-start-line="299" selection-start-column="1" selection-end-line="299" selection-end-column="1" />
+              <folding>
+                <element signature="e#6#126#0#PHP" expanded="true" />
+                <element signature="e#5373#5391#0#HTML" expanded="true" />
+                <marker date="1448627806579" expanded="true" signature="4846:5064" placeholder="..." />
+                <marker date="1448627806579" expanded="true" signature="8584:8781" placeholder="..." />
+                <marker date="1448627806579" expanded="true" signature="8623:8745" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,8 +89,8 @@
       <file leaf-file-name="system.log" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/logs/system.log">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="663">
-              <caret line="29" column="31" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="714">
+              <caret line="32" column="31" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -329,7 +335,6 @@
         <option value="$PROJECT_DIR$/views/Question/showsubquestionsinfo.php" />
         <option value="$PROJECT_DIR$/views/Exam/correct.php" />
         <option value="$PROJECT_DIR$/controllers/QuestionController.php" />
-        <option value="$PROJECT_DIR$/questionTypes/Question.php" />
         <option value="$PROJECT_DIR$/public/index.php" />
         <option value="$PROJECT_DIR$/includes/doctype.php" />
         <option value="$PROJECT_DIR$/includes/Engine.php" />
@@ -341,6 +346,7 @@
         <option value="$PROJECT_DIR$/public/langs/it/lang.php" />
         <option value="$PROJECT_DIR$/public/libs/questionTypes/QT_PL.js" />
         <option value="$PROJECT_DIR$/public/libs/Question/Showquestioninfo.js" />
+        <option value="$PROJECT_DIR$/questionTypes/Question.php" />
       </list>
     </option>
   </component>
@@ -1080,6 +1086,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="4445" max-vertical-offset="5032">
           <caret line="285" column="52" selection-start-line="285" selection-start-column="52" selection-end-line="285" selection-end-column="52" />
+          <folding>
+            <element signature="e#6#126#0#PHP" expanded="true" />
+            <element signature="e#5373#5391#0#HTML" expanded="true" />
+            <marker date="1448627806579" expanded="true" signature="4846:5064" placeholder="..." />
+            <marker date="1448627806579" expanded="true" signature="8584:8781" placeholder="..." />
+            <marker date="1448627806579" expanded="true" signature="8623:8745" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1111,7 +1124,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="867">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#6#130#0#PHP" expanded="true" />
+            <element signature="e#6#130#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1134,6 +1147,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5032">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#126#0#PHP" expanded="true" />
+            <element signature="e#5373#5391#0#HTML" expanded="true" />
+            <marker date="1448627806579" expanded="true" signature="4846:5064" placeholder="..." />
+            <marker date="1448627806579" expanded="true" signature="8584:8781" placeholder="..." />
+            <marker date="1448627806579" expanded="true" signature="8623:8745" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1155,6 +1175,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4199">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#126#0#PHP" expanded="true" />
+            <element signature="e#5373#5391#0#HTML" expanded="true" />
+            <marker date="1448627806579" expanded="true" signature="4846:5064" placeholder="..." />
+            <marker date="1448627806579" expanded="true" signature="8584:8781" placeholder="..." />
+            <marker date="1448627806579" expanded="true" signature="8623:8745" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1176,6 +1203,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5032">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#126#0#PHP" expanded="true" />
+            <element signature="e#5373#5391#0#HTML" expanded="true" />
+            <marker date="1448627806579" expanded="true" signature="4846:5064" placeholder="..." />
+            <marker date="1448627806579" expanded="true" signature="8584:8781" placeholder="..." />
+            <marker date="1448627806579" expanded="true" signature="8623:8745" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1208,13 +1242,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/questionTypes/Question.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.7302752" vertical-offset="3255" max-vertical-offset="5032">
-          <caret line="285" column="52" selection-start-line="285" selection-start-column="52" selection-end-line="285" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/QuestionController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5394495" vertical-offset="454" max-vertical-offset="8653">
@@ -1235,7 +1262,7 @@
         <state vertical-scroll-proportion="0.83870965" vertical-offset="297" max-vertical-offset="867">
           <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
           <folding>
-            <element signature="e#6#130#0#PHP" expanded="true" />
+            <element signature="e#6#130#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1300,18 +1327,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/libs/Question/Showquestioninfo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5634" max-vertical-offset="6273">
-          <caret line="357" column="0" selection-start-line="357" selection-start-column="0" selection-end-line="357" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/logs/system.log">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="663">
-          <caret line="29" column="31" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="714">
+          <caret line="32" column="31" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -1534,6 +1553,28 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#6#189#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/libs/Question/Showquestioninfo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5634" max-vertical-offset="6273">
+          <caret line="359" column="0" selection-start-line="359" selection-start-column="0" selection-end-line="360" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/questionTypes/Question.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.93772894" vertical-offset="4571" max-vertical-offset="5185">
+          <caret line="299" column="1" selection-start-line="299" selection-start-column="1" selection-end-line="299" selection-end-column="1" />
+          <folding>
+            <element signature="e#6#126#0#PHP" expanded="true" />
+            <element signature="e#5373#5391#0#HTML" expanded="true" />
+            <marker date="1448627806579" expanded="true" signature="4846:5064" placeholder="..." />
+            <marker date="1448627806579" expanded="true" signature="8584:8781" placeholder="..." />
+            <marker date="1448627806579" expanded="true" signature="8623:8745" placeholder="..." />
           </folding>
         </state>
       </provider>

@@ -62,21 +62,24 @@ abstract class Question {
         }
 
 
-    }    public function getRA($var)
-{
-    global $log;
-    //var_dump($this->info);
-    //$log->append($this->info[$i][$var]);
-    for ($i=0;$i<5;$i++)
-        if(isset($this->info[$i][$var])){
+    }
 
-            return $this->info[$i][$var];
-        }else{
-            return "Var '$var' not exists";
-        }
+    public function getRA($var)
+    {
+        global $log;
 
 
-}
+        for ($i=0;$i<=5;$i++)
+            if(isset($this->info[$i][$var])){
+
+                return $this->info[$i][$var];
+
+            }else{
+                return "Var '$var' not exists";
+            }
+
+
+    }
     public function set($var, $value){
         $this->info[$var] = $value;
     }
@@ -279,7 +282,7 @@ abstract class Question {
         }
     }
 
-    public abstract function printAnswersTable($idQuestion, $idSubject);
+    public abstract function printAnswersTable($subID, $idSubject);
 
 
 //------------  Functions used in preview, test, correction and forms  ------------//
