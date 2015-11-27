@@ -35,10 +35,11 @@ $(function(){
  */
 function createNewAnswer_PL(){
     var score = $("#answerScore").find("dt span span").text();
-    var subQuestion = subquestionsTable.row(subquestionsRowSelected).data()[ztci.subID];
+
+
     var idQuestion = questionsTable.row(questionRowSelected).data()[qtci.questionID];
-    alert(subQuestion);
-    alert(idQuestion);
+
+
     var translationsA = new Array();
 
     $("textarea[id^=at]").each(function(){
@@ -50,7 +51,7 @@ function createNewAnswer_PL(){
         type    : "post",
         data    : {
             idQuestion      :   idQuestion,
-            subQuestion     :   subQuestion,
+            subQuestion     :   adNumber,
             translationsA   :   JSON.stringify(translationsA),
             score           :   score,
             type            :   "PL",
@@ -58,7 +59,7 @@ function createNewAnswer_PL(){
         },
         success : function (data) {
 
-            alert(data);
+            //     alert(data);
             data = data.trim().split(ajaxSeparator);
             if(data[0] == "ACK"){
                 var idNewQuestion = data[1];
@@ -76,7 +77,7 @@ function createNewAnswer_PL(){
                     }
                 }, 1000);
             }else{
-               alert(data);
+                alert(data);
                 showErrorMessage(data);
             }
         },
@@ -106,7 +107,7 @@ function createNewSubQuestion_PL(){
         },
         success : function (data) {
 
-alert(data);
+// alert(data);
             data = data.trim().split(ajaxSeparator);
             if(data[0] == "ACK"){
                 var idNewQuestion = data[1];
@@ -296,7 +297,7 @@ function reloadAnswersTable(idNewQuestion, tableData){
 function reloadSubquestionsTable(idNewQuestion, tableData){
     questionsTable.cell(questionsTable.row(questionRowSelected).index(), qtci.questionID).data(idNewQuestion);
     $("body").append($("#newSubquestion_PL").parent());          // Move new answer button to save it
-subquestionsTable.destroy(true);
+    subquestionsTable.destroy(true);
     $("#subquestionsTableContainer").html(tableData);
     initializeSubquestionsTable_PL();
 }
