@@ -85,7 +85,7 @@ function prevPartecipantsTab(){
 
 /**
  *  @name   printAssesments
- *  @descr  Shows exams in the select form of search
+ *  @descr  Shows assesments in the select form of search
  */
 function printAssesments(letter){
     $.ajax({
@@ -118,21 +118,17 @@ function addAssessment(exam){
         for (v=0; v < exams.length; v++){
             if (exams[v]==null){
                 exams[v]=exam;
-                $("#selected").append("<option id="+exam+" value="+exam+">"+exam+"</option>");
+                $("#selected").append("<option id=\""+exam.replace(" ","_")+"\" value=\""+exam.replace(" ","_")+"\">"+exam+"</option>");
+                //console.log(exam);
                 break;
             }
         }
     }
-        //y=i;
 
-    /*if (x==0){
-        exams[y]=exam;
-        $("#selected").append("<option id="+exam+" value="+exam+">"+exam+"</option>");
-        y++;
-    }*/
-    for (t=0; t< exams.length; t++){
+   for (t=0; t< exams.length; t++){
      console.log(exams[t]);
      }
+    console.log("fine ADD");
 
 }
 
@@ -141,16 +137,13 @@ function addAssessment(exam){
  *  @descr  Empty selected assesment form
  */
 function clearAssessments(){
-   // for (i = 0; i < exams.length; i++){
-            //exams[i]=null;
     exams=new Array(100);
-    //}
-   // y=0;
+
     $("#selected").html("");
 
-    for (t=0; t< exams.length; t++) {
+   /* for (t=0; t< exams.length; t++) {
         console.log(exams[t]);
-    }
+    }*/
 }
 
 /**
@@ -159,13 +152,13 @@ function clearAssessments(){
  */
 function removeAssessment(exam){
     var x=0;
-    if(exams[exams.length]==exam){
+    if(exams[exams.length]==exam.replace("_"," ")){
         exams[exams.length]=null;
-        $("#"+exam).remove();
+        $("#"+exam.replace(" ","_")).remove();
         x=1;
     }
     for (i = 0; i < exams.length-1; i++){
-        if (exams[i]==exam){
+        if (exams[i]==exam.replace("_"," ")){
             for (r=i; r < exams.length; r++){
                 exams[r]=exams[r+1];
             }
@@ -173,13 +166,13 @@ function removeAssessment(exam){
     }
     if (x==0){
         exams[i]=null;
-        $("#"+exam).remove();
+        $("#"+exam.replace(" ","_")).remove();
     }
 
 
-   for (t=0; t< exams.length; t++) {
-       console.log(exams[t]);
-   }
+    for (t=0; t< exams.length; t++) {
+        console.log(exams[t]);
+    }
 
 }
 
@@ -234,7 +227,8 @@ function printStudent(){
         url     : "index.php?page=report/showstudent",
         type    : "post",
         data : {
-            exams : JSON.stringify(exams)
+            exams : JSON.stringify(exams),
+            groups: JSON.stringify(groups)
         },
         success : function (data){
             $("#searchedstud").html(data);
@@ -341,6 +335,97 @@ function addStudentDetail(param){
  */
 function removePartecipantDetail(){
     $("#studentDetail").html("");
+}
+
+/**
+ *  @name   printGroups
+ *  @descr  Shows groups in the select form of search
+ */
+function printGroups(letter){
+    $.ajax({
+        url     : "index.php?page=report/showgroups",
+        type    : "post",
+        data    : {
+            letter : letter
+        },
+        success : function (data){
+            $("#searchedgroup").html(data);
+        },
+        error : function (request, status, error) {
+            alert("jQuery AJAX request error:".error);
+        }
+    });
+}
+
+/**
+ *  @name   addGroup
+ *  @descr  Select assesments
+ */
+function addGroup(group){
+    var trovato=false;
+    for (v=0; v < groups.length; v++) {
+        if (groups[v] == group) {
+            trovato = true;
+        }
+    }
+    if (!trovato){
+        for (v=0; v < exams.length; v++){
+            if (groups[v]==null){
+                groups[v]=group;
+                $("#selectedgroup").append("<option id="+group+" value="+group+">"+group+"</option>");
+                break;
+            }
+        }
+    }
+
+    /*for (t=0; t< groups.length; t++){
+        console.log(groups[t]);
+    }*/
+
+}
+
+/**
+ *  @name   clearGroups
+ *  @descr  Empty selected groups form
+ */
+function clearGroups(){
+    groups=new Array(100);
+
+    $("#selectedgroup").html("");
+
+    /*for (t=0; t< groups.length; t++) {
+     console.log(groups[t]);
+     }*/
+}
+
+/**
+ *  @name   removeGroup
+ *  @descr  Delete specific selected group
+ */
+function removeGroup(group){
+    var x=0;
+    if(groups[groups.length]==group){
+        groups[groups.length]=null;
+        $("#"+group).remove();
+        x=1;
+    }
+    for (i = 0; i < groups.length-1; i++){
+        if (groups[i]==group){
+            for (r=i; r < groups.length; r++){
+                groups[r]=groups[r+1];
+            }
+        }
+    }
+    if (x==0){
+        groups[i]=null;
+        $("#"+group).remove();
+    }
+
+
+    for (t=0; t< groups.length; t++) {
+     console.log(groups[t]);
+     }
+
 }
 
 /**

@@ -1099,3 +1099,5 @@
                           VALUES ('Mario', 'Rossi', 'mari' at line 1
 11/27/2015 16:44:19 - qNewUser : Duplicate entry 'prova@eol.org-c' for key 'PRIMARY'
 11/27/2015 16:46:59 - qNewUser : Duplicate entry 'prova@eol.org-c' for key 'PRIMARY'
+11/28/2015 12:11:09 - qShowStudentGroup : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group='it' and subgroup='pg'' at line 1
+11/28/2015 12:13:40 - qShowStudentGroup : Unknown column 'Users.ubgroup' in 'where clause'

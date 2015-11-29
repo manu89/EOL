@@ -36,12 +36,13 @@ global $user, $tt;
             <div class="clearer"></div>
 
             <label class="b2Space"><?= ttGroup ?> : </label>
-            <input class="writable" type="text" id="userGroup" size="75%" value="">
+            <input class="writable" type="text" id="userGroup" size="75%" value="" placeholder="ex. it or en or fr">
             <div class="clearer"></div>
 
             <label class="b2Space"><?= ttSubgroup ?> : </label>
-            <input class="writable" type="text" id="userSubgroup" size="75%" value="">
+            <input class="writable" type="text" id="userSubgroup" size="75%" value="" placeholder="ex. pg or mi or na">
             <div class="clearer"></div>
+
 
             <?php if($user->role == '?'){ ?>
                 <label class="b2Space"><?= ttPassword ?> : </label>

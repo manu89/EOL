@@ -2435,6 +2435,13 @@ span.extraClose{
     margin-top:20px;
     border-collapse: collapse;
     width: 100%;
+    box-shadow: #003399 3px 3px 3px;
+    background-color: #87C5FB;
+}
+
+.customize tr:hover{
+    background-color: #002a80;
+    color:white;
 }
 
 .customize td{
@@ -2442,6 +2449,9 @@ span.extraClose{
     padding: 20px;
 }
 
+.customize td:first-child{
+    width:40%;
+}
 .order{
     width: 50px;
 }
@@ -2459,4 +2469,8 @@ span.extraClose{
 .replink:visited{
     text-decoration:none;
     color:black;
+}
+
+.done{
+    margin-left:40%;
 }

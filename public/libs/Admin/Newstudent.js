@@ -36,8 +36,8 @@ function createStudent(){
                                 surname     :  surname,
                                 email       :  email,
                                 password    :  password,
-                                group       :  group,
-                                subgroup    :  subgroup
+                                group       :  group.toLowerCase(),
+                                subgroup    :  subgroup.toLowerCase()
                             },
                             success : function (data) {
                                 data = data.split(ajaxSeparator);

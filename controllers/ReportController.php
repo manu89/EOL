@@ -88,6 +88,21 @@ class ReportController extends Controller{
     }
 
     /**
+     *  @name   actionShowgroups
+     *  @descr  Shows report index page
+     */
+    private function actionShowgroups(){
+        global $engine;
+
+        $db=new sqlDB();
+
+        if(!($db->qShowGroups($_POST['letter']))){
+            echo "query error check the log file";
+        }
+
+    }
+
+    /**
      *  @name   actionShowpartecipant
      *  @descr  Shows partecipant div
      */
@@ -107,9 +122,18 @@ class ReportController extends Controller{
 
         $db=new sqlDB();
 
-        if(!($db->qShowStudent($exams=json_decode($_POST['exams'])))){
-            echo "errore query";
+        $groups=json_decode($_POST['groups']);
+        if (($groups[0]!="") or ($groups[0]!=null)){
+            if(!($db->qShowStudentGroup($groups,$exams=json_decode($_POST['exams'])))){
+                echo "query error check the log file";
+            }
         }
+        else{
+            if(!($db->qShowStudent($exams=json_decode($_POST['exams'])))){
+                echo "query error check the log file";
+            }
+        }
+
     }
 
     /**
@@ -198,7 +222,7 @@ class ReportController extends Controller{
                 'allow',
                 'actions' => array('Index', 'Aoreport','Showassesments','Showpartecipant',
                     'Showstudent','Addstudent','Aoreporttemplate','Showparticipantdetails',
-                    'Printparticipantdetails','Aoreportparameters'),
+                    'Printparticipantdetails','Aoreportparameters','Showgroups'),
                 'roles'   => array('a','e'),
             ),
             array(

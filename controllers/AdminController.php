@@ -486,7 +486,7 @@ class AdminController extends Controller{
             $db = new sqlDB();
             if(($db->qSelect('Users', 'email', $_POST['email'])) && ($db->numResultRows() == 0)){
                 $token = sha1(randomPassword(10).strtotime('now'));
-                if($db->qNewUser($_POST['name'], $_POST['surname'], $_POST['email'], $token, $_POST['role'], $_POST['group'], $_POST['subgroup'])){
+                if($db->qNewUser($_POST['name'], $_POST['surname'], $_POST['email'], $token, $_POST['role'], $_POST['group'])){
                     $message = str_replace('_SYSTEMNAME_', $config['systemTitle'], ttMailNewTeacher);
                     $message = str_replace('\n', "\n", $message);
                     $message .= "\n\n".$config['systemHome'].'index.php?page=admin/setpassword&t='.$token;

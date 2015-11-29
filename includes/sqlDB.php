@@ -1747,7 +1747,7 @@ class sqlDB {
                           VALUES ('$email', 'c', '$token')";
                 array_push($queries, $query);
             }else{                      // Creating a student
-                $query = "INSERT INTO Users (name, surname, email, password, `group`, `subgroup`, role)
+                $query = "INSERT INTO Users (name, surname, email, password, `group`,`subgroup`, role)
                           VALUES ('$data[0]', '$data[1]', '$email', '$password', '$group', '$subgroup', 's')";
                 array_push($queries, $query);
                 $query = "SELECT LAST_INSERT_ID()";
@@ -2751,6 +2751,34 @@ class sqlDB {
         }
         return $ack;
     }
+
+    /**
+     * @name    qShowExams
+     * @return  boolean
+     * @descr   show searched result in Assesment's select tag
+     */
+    public function qShowGroups($letter){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $query = "Select distinct Users.group,Users.subgroup from Users where Users.group like '".$letter."%'";
+            $this->execQuery($query);
+            //$rs=mysqli_query($this->mysqli,$query);
+            if($this->numResultRows()>0){
+                while($row=mysqli_fetch_array($this->result)){
+                    echo "<option value='$row[group]-$row[subgroup]'>".$row['group']."-".$row['subgroup']."</option>";
+                }
+            }
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
     /**
      * @name    qShowStudent
      * @return  boolean
@@ -2763,7 +2791,7 @@ class sqlDB {
         $this->mysqli = $this->connect();
         try {
             // 2 cases, 1 exams are selected specifically; 2 all exams to control
-            if ($exams[0]!=""){
+            if (($exams[0]!="") or ($exams[0]!=null)){
                 //exams are selected in this case
                 $query="Select idUser from Users where role='s'";
                 $this->execQuery($query);
@@ -2784,7 +2812,7 @@ class sqlDB {
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
                         WHERE Users.idUser='$student' and Subjects.name='$exams[$x]' and (Exams.status='e' or Exams.status='a')";
-                        echo $query2."\n";
+                      //  echo $query2."\n";
                         $this->execQuery($query2);
                         if ($this->numResultRows()>0){
                             $trovato[$student][$exams[$x]]=true;
@@ -2872,9 +2900,9 @@ class sqlDB {
                 }
                 $d=0;
                 foreach($students as $student){
-                    echo $student."\n";
+                    //echo $student."\n";
                     foreach($allexams as $exam){
-                        echo $exam."\n";
+                       // echo $exam."\n";
                         $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
@@ -2912,6 +2940,190 @@ class sqlDB {
         }
         return $ack;
     }
+
+    /**
+     * @name    qShowStudentGroup
+     * @return  boolean
+     * @descr   show searched result in Partecipant's select tag filter by group
+     */
+    public function qShowStudentGroup($groups, $exams){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            // 2 cases, 1 exams are selected specifically; 2 all exams to control
+            if (($exams[0]!="") or ($exams[0]!=null)){
+                //exams are selected in this case
+                $g=0;
+                $gr=Array();
+                $subgroups=Array();
+                //divide group and subgroup for search students
+                while ($groups[$g]!=""){
+                    if(in_array(substr($groups[$g],-5,2),$gr)){
+                        //do nothing
+                    }
+                    else{
+                        $gr[$g]=substr($groups[$g],-5,2);
+                    }
+                    if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                        //do nothing
+                    }
+                    else{
+                        $subgroups[$g]=substr($groups[$g],-2,2);
+                    }
+
+                    $g++;
+                }
+
+                $students=array();
+                $i=0;
+                foreach($gr as $gval){
+                    echo $gval."\n";
+                    foreach($subgroups as $sbgr){
+                        echo $sbgr."\n";
+                        $query="Select Users.idUser from Users where Users.role='s' and Users.group='$gval' and Users.subgroup='$sbgr'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            while($row=mysqli_fetch_array($this->result)){
+                                $students[$i]=$row['idUser'];
+                                $i++;
+                            }
+                        }
+                    }
+
+                }
+
+                //search students that done tests of assesment selected in group selected
+                $d=0;
+                foreach($students as $student) {
+                    $x = 0;
+                    while ($exams[$x]!=""){
+                        $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.idUser='$student' and Subjects.name='$exams[$x]' and (Exams.status='e' or Exams.status='a')";
+                        //echo $query2."\n";
+                        $this->execQuery($query2);
+                        if ($this->numResultRows()>0){
+                            $trovato[$student][$exams[$x]]=true;
+                        }
+                        else{
+                            $trovato[$student][$exams[$x]]=false;
+                        }
+                        $x++;
+                    }
+                    if (in_array(false,$trovato[$student])){
+                        $notpresent[$d]=true;
+                    }
+                    else{
+                        $row=mysqli_fetch_array($this->result);
+                        echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                        $notpresent[$d]=false;
+                    }
+                    $d++;
+                    //print_r($trovato);
+                }
+                if ((in_array(false,$notpresent))){
+                }
+                else{
+                    echo "<option>Nessuno studente presente</option>";
+                }
+
+
+            }
+            else{
+                //all exams should be controlled
+                $g=0;
+                $gr=Array();
+                $subgroups=Array();
+                //divide group and subgroup for search students
+                while ($groups[$g]!=""){
+                    if(in_array(substr($groups[$g],-5,2),$gr)){
+                        //do nothing
+                    }
+                    else{
+                        $gr[$g]=substr($groups[$g],-5,2);
+                    }
+                    if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                        //do nothing
+                    }
+                    else{
+                        $subgroups[$g]=substr($groups[$g],-2,2);
+                    }
+
+                    $g++;
+                }
+
+                $students=array();
+                $i=0;
+                foreach($gr as $gval){
+                    foreach($subgroups as $sbgr){
+                        $query="Select Users.idUser from Users where Users.role='s' and Users.group='$gval' and Users.subgroup='$sbgr'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            while($row=mysqli_fetch_array($this->result)){
+                                $students[$i]=$row['idUser'];
+                                $i++;
+                            }
+                        }
+                    }
+
+                }
+
+                $query2="Select Subjects.name from Subjects";
+                $this->execQuery($query2);
+                if ($this->numResultRows()>0){
+                    $i=0;
+                    $allexams=array();
+                    while($row=mysqli_fetch_array($this->result)){
+                        $allexams[$i]=$row['name'];
+                        $i++;
+                    }
+                }
+                $d=0;
+                foreach($students as $student){
+                    //echo $student."\n";
+                    foreach($allexams as $exam){
+                      //  echo $exam."\n";
+                        $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.idUser='$student' and Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')";
+                        //echo $query2."\n\n";
+                        $this->execQuery($query2);
+                        if ($this->numResultRows()>0){
+                            $trovato[$student][$exam]=true;
+                        }
+                        else{
+                            $trovato[$student][$exam]=false;
+                        }
+                    }
+                    if (in_array(false,$trovato[$student])){
+                        $notpresent[$d]=true;
+                    }
+                    else{
+                        $row=mysqli_fetch_array($this->result);
+                        echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                        $notpresent[$d]=false;
+                    }
+                    $d++;
+                    //print_r($trovato);
+                }
+                if ((in_array(false,$notpresent))){
+                }
+                else{
+                    echo "<option>Nessuno studente presente</option>";
+                }
+            }
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
     /**
      * @name    qAddStudent
      * @return  boolean
