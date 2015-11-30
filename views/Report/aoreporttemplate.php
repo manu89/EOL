@@ -29,7 +29,7 @@ global $config, $user;
             <hr>
             <form name="template" action="" method="post">
             <div class="templatecontent">
-            <table class="customize">
+            <table id="assesment_info "class="customize">
                 <tr>
                     <td class="bold title"><?=ttReportField?></td>
                     <td class="bold title"><?=ttReportChecked?></td>
@@ -37,82 +37,82 @@ global $config, $user;
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentName?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentID?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentAuthor?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentDateTimeFirst?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentDateTimeLast?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentNumberStarted?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentNumberNotFinished?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentNumberFinished?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentMinscoreFinished?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentMaxcoreFinished?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentMediumFinished?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentLeastTimeFinished?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentMostTimeFinished?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentMediumTimeFinished?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td><?=ttReportAssesmentStdDeviation?></td>
-                    <td><input type="checkbox"></td>
-                    <td><input type="number" id="" class="order"></td>
+                    <td><input type="checkbox" class="checkass"></td>
+                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><a class="normal button" id="selectall" onclick=""><?=ttSelectAll?></td>
+                    <td><a class="normal button" id="selectall" onclick="selectAllAssesment()"><?=ttSelectAll?></td>
                     <td><a class="normal button" id="resetorder" onclick=""><?=ttResetOrder?></td>
                 </tr>
             </table>
@@ -131,28 +131,28 @@ global $config, $user;
                             </tr>
                             <tr>
                                 <td><?=ttReportTopicAverageScore?></td>
-                                <td><input type="checkbox"></td>
-                                <td><input type="number" id="" class="order"></td>
+                                <td><input type="checkbox" class="checktopic"></td>
+                                <td><input type="number" min="1" max="23" id="" class="order"></td>
                             </tr>
                             <tr>
                                 <td><?=ttReportTopicMinimumScore?></td>
-                                <td><input type="checkbox"></td>
-                                <td><input type="number" id="" class="order"></td>
+                                <td><input type="checkbox" class="checktopic"></td>
+                                <td><input type="number" min="1" max="23" id="" class="order"></td>
                             </tr>
                             <tr>
                                 <td><?=ttReportTopicMaximumScore?></td>
-                                <td><input type="checkbox"></td>
-                                <td><input type="number" id="" class="order"></td>
+                                <td><input type="checkbox" class="checktopic"></td>
+                                <td><input type="number" min="1" max="23" id="" class="order"></td>
                             </tr>
                             <tr>
                                 <td><?=ttReportTopicStandardDeviation?></td>
-                                <td><input type="checkbox"></td>
-                                <td><input type="number" id="" class="order"></td>
+                                <td><input type="checkbox" class="checktopic"></td>
+                                <td><input type="number" min="1" max="23" id="" class="order"></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><a class="normal button" id="selectall" onclick=""><?=ttSelectAll?></td>
-                                <td><a class="normal button" id="resetorder" onclick=""><?=ttResetOrder?></td>
+                                <td><a class="normal button" id="selectallt" onclick="selectAllTopic()"><?=ttSelectAll?></td>
+                                <td><a class="normal button" id="resetordert" onclick=""><?=ttResetOrder?></td>
                             </tr>
                         </table>
 
@@ -170,27 +170,27 @@ global $config, $user;
                                 </tr>
                                 <tr>
                                     <td><?=ttReportTopicAverageScore?></td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="number" id="" class="order"></td>
+                                    <td><input type="checkbox" class="checkgraphic"></td>
+                                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                                 </tr>
                                 <tr>
                                     <td><?=ttReportTopicMinimumScore?></td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="number" id="" class="order"></td>
+                                    <td><input type="checkbox" class="checkgraphic"></td>
+                                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                                 </tr>
                                 <tr>
                                     <td><?=ttReportTopicMaximumScore?></td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="number" id="" class="order"></td>
+                                    <td><input type="checkbox" class="checkgraphic"></td>
+                                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                                 </tr>
                                 <tr>
                                     <td><?=ttReportTopicStandardDeviation?></td>
-                                    <td><input type="checkbox"></td>
-                                    <td><input type="number" id="" class="order"></td>
+                                    <td><input type="checkbox" class="checkgraphic"></td>
+                                    <td><input type="number" min="1" max="23" id="" class="order"></td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><a class="normal button" id="selectall" onclick=""><?=ttSelectAll?></td>
+                                    <td><a class="normal button" id="selectallg" onclick="selectAllGraphic()"><?=ttSelectAll?></td>
                                     <td><a class="normal button" id="resetorder" onclick=""><?=ttResetOrder?></td>
                                 </tr>
                             </table>
