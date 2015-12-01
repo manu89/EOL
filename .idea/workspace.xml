@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bac809f8-b99d-43ab-a1e2-c08f901bc5a6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/questionTypes/Answer.php" afterPath="$PROJECT_DIR$/questionTypes/Answer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/Question/showanswerinfo.php" afterPath="$PROJECT_DIR$/views/Question/showanswerinfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/Question/showquestionpreview.php" afterPath="$PROJECT_DIR$/views/Question/showquestionpreview.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/system.log" afterPath="$PROJECT_DIR$/logs/system.log" />
     </list>
     <ignored path="Mater.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,8 +38,8 @@
       <file leaf-file-name="system.log" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/logs/system.log">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="364" max-vertical-offset="935">
-              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="381" max-vertical-offset="952">
+              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -73,10 +74,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Answer.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Answer.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/questionTypes/Answer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9376147" vertical-offset="2515" max-vertical-offset="3128">
+            <state vertical-scroll-proportion="-19.653847" vertical-offset="2515" max-vertical-offset="3128">
               <caret line="178" column="1" selection-start-line="178" selection-start-column="1" selection-end-line="178" selection-end-column="1" />
               <folding>
                 <element signature="e#6#122#0#PHP" expanded="true" />
@@ -85,12 +86,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QT_PL.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/libs/questionTypes/QT_PL.js">
+      <file leaf-file-name="showanswerinfo.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/Question/showanswerinfo.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1944" max-vertical-offset="3604">
-              <caret line="206" column="0" selection-start-line="206" selection-start-column="0" selection-end-line="206" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="-19.653847" vertical-offset="339" max-vertical-offset="952">
+              <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
+              <folding>
+                <element signature="e#6#159#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -108,9 +111,21 @@
       <file leaf-file-name="showquestioninfo.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/Question/showquestioninfo.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1037">
+            <state vertical-scroll-proportion="18.923077" vertical-offset="492" max-vertical-offset="1037">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="showquestionpreview.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/Question/showquestionpreview.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7311828" vertical-offset="0" max-vertical-offset="558">
+              <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+              <folding>
+                <element signature="e#7#164#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -137,16 +152,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Showquestioninfo.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/libs/Question/Showquestioninfo.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="748" max-vertical-offset="6273">
-              <caret line="60" column="3" selection-start-line="60" selection-start-column="3" selection-end-line="60" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="Git.Settings">
@@ -165,7 +170,6 @@
         <option value="$PROJECT_DIR$/includes/Engine.php" />
         <option value="$PROJECT_DIR$/public/libs/Question/Showsubquestioninfo.js" />
         <option value="$PROJECT_DIR$/public/libs/questionTypes/SQT_PL.js" />
-        <option value="$PROJECT_DIR$/views/Question/showanswerinfo.php" />
         <option value="$PROJECT_DIR$/questionTypes/SQT_PL.php" />
         <option value="$PROJECT_DIR$/questionTypes/Subquestion.php" />
         <option value="$PROJECT_DIR$/public/libs/Question/Showsubquestionsinfo.js" />
@@ -186,7 +190,6 @@
         <option value="$PROJECT_DIR$/questionTypes/QT_MR.php" />
         <option value="$PROJECT_DIR$/public/libs/questionTypes/AT_PL.js" />
         <option value="$PROJECT_DIR$/questionTypes/Question.php" />
-        <option value="$PROJECT_DIR$/views/Question/showquestionpreview.php" />
         <option value="$PROJECT_DIR$/public/libs/Admin/Language.js" />
         <option value="$PROJECT_DIR$/public/libs/Admin/Error.js" />
         <option value="$PROJECT_DIR$/views/Admin/error.php" />
@@ -206,6 +209,8 @@
         <option value="$PROJECT_DIR$/controllers/QuestionController.php" />
         <option value="$PROJECT_DIR$/includes/sqlDB.php" />
         <option value="$PROJECT_DIR$/questionTypes/Answer.php" />
+        <option value="$PROJECT_DIR$/views/Question/showanswerinfo.php" />
+        <option value="$PROJECT_DIR$/views/Question/showquestionpreview.php" />
       </list>
     </option>
   </component>
@@ -644,13 +649,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/Question/showquestionpreview.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="510">
-          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/Question/showquestionpreviewpdl.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="408">
@@ -802,13 +800,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="918">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/Question/showanswerinfo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34615386" vertical-offset="162" max-vertical-offset="850">
-          <caret line="15" column="44" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -1139,14 +1130,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/Question/showquestioninfo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1037">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/QuestionController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-17.038462" vertical-offset="11814" max-vertical-offset="12359">
@@ -1167,8 +1150,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/logs/system.log">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="363" max-vertical-offset="935">
-          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="381" max-vertical-offset="952">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1200,10 +1183,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/questionTypes/Answer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9376147" vertical-offset="2515" max-vertical-offset="3128">
+        <state vertical-scroll-proportion="-19.653847" vertical-offset="2515" max-vertical-offset="3128">
           <caret line="178" column="1" selection-start-line="178" selection-start-column="1" selection-end-line="178" selection-end-column="1" />
           <folding>
             <element signature="e#6#122#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/Question/showanswerinfo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.653847" vertical-offset="339" max-vertical-offset="952">
+          <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
+          <folding>
+            <element signature="e#6#159#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/Question/showquestioninfo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="18.923077" vertical-offset="492" max-vertical-offset="1037">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/Question/showquestionpreview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7311828" vertical-offset="0" max-vertical-offset="558">
+          <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+          <folding>
+            <element signature="e#7#164#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

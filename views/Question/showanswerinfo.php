@@ -18,15 +18,15 @@ if(($_POST['action'] == 'show') && ($db->qAnswerInfo($_POST['idAnswer'])) && ($a
     $answerInfo = $answerTranslations[$_POST['mainLang']];
 
 }elseif(($_POST['action'] == 'show') && (in_array($_POST['type'], array('YN', 'TF'))) &&
-        ($db->qSelect('Answers', 'idAnswer', $_POST['idAnswer'])) && ($answers = $db->getResultAssoc())){
+    ($db->qSelect('Answers', 'idAnswer', $_POST['idAnswer'])) && ($answers = $db->getResultAssoc())){
 
     $answerInfo = $answers[0];
 
 }elseif($_POST['action'] == 'new'){
     $answerInfo = array('score' => 0,
-                        'type'  => $_POST['type'],
-                        'fkLanguage' => $_POST['mainLang'],
-                        'translation' => '');
+        'type'  => $_POST['type'],
+        'fkLanguage' => $_POST['mainLang'],
+        'translation' => '');
 }else{
     die($db->getError());
 }
@@ -40,6 +40,8 @@ openBox(ttAnswer, 'normal-683px', 'answerInfo'); ?>
         $answer = Answer::newAnswer($_POST['type'], $answerInfo);
         $answer->set('ATranslations', $answerTranslations);
         $answer->printAnswerEditForm($_POST['action']);
+        ?>
+        <?php
 
         ?>
 
