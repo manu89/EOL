@@ -274,6 +274,7 @@ define('ttQTMCDescription' , "In una domanda a risposta singola il partecipante 
 define('ttQTMR' , "Risposta multipla");
 define('ttQTMRDescription' , "Una domanda a risposta multipla è simile a quella a Risposta Singola, con la differenza che il partecipante può rispondere scegliendo una o più risposte tra quelle fornite.");
 define('ttQTES' , "Risposta aperta");
+define('ttDTsubquestionInfo' , 'Visualizzati _TOTAL_sottodomanda');
 define('ttQTESDescription' , "Una domanda a risposta aperta permette al partecipante di rispondere inserendo un testo libero senza limiti di caratteri. È possibile usare questo tipo di domanda per chiedere opinioni o suggerimenti riguardo una particolare materia.");
 define('ttQTYN' , "Si / No");
 define('ttQTYNDescription' , "Una domanda Sì/No è una domanda a risposta singola che chiede al partecipante di rispondere con un \"Sì\" o un \"No\".");

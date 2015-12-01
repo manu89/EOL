@@ -29,6 +29,7 @@ var ttChangeVersion = "Cambia versione";
 var ttCheck = "Verifica...";
 var ttClose = "Chiudi";
 var ttClosed = "Chiuso";
+var ttDTsubquestionInfo = "Visualizzate _TOTAL_ sottodomande";
 var ttCorrect = "Correggi";
 var ttConfiguration = "Configurazione";
 var ttConfirm = "Conferma";
