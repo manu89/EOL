@@ -126,7 +126,7 @@ CREATE  TABLE IF NOT EXISTS `eol`.`TestSettings` (
   `name` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Test setting''s name' ,
   `description` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL COMMENT 'Test setting''s description' ,
   `questions` SMALLINT(5) UNSIGNED NOT NULL COMMENT 'Test setting''s question''s number' ,
-  `scoreType` VARCHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT '' COMMENT 'Test setting''s score type' ,
+  `scoreType` VARCHAR(3) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT '' COMMENT 'Test setting''s score type' ,
   `scoreMin` VARCHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT '' COMMENT 'Test setting''s minimum score' ,
   `scale` DOUBLE NOT NULL DEFAULT '1' COMMENT 'Test setting''s score factor scale',
   `bonus` DOUBLE NULL DEFAULT '0' COMMENT 'Test setting''s bonus' ,

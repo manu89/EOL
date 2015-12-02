@@ -97,15 +97,9 @@ class ExamController extends Controller{
                 $statuses = array('w' => array('Waiting', 'Start'),
                                   's' => array('Started', 'Stop'),
                                   'e' => array('Stopped', 'Start'));
-                /*
                 $datetime = new DateTime($examInfo['datetime']);
                 $day = $datetime->format("d/m/Y");
                 $time = $datetime->format("H:i");
-                */
-
-                $datetime = strtotime($examInfo['datetime']);
-                $day = date('d/m/Y', $datetime);
-                $time = date('H:i', $datetime);
                 $manage = '<span class="manageButton edit">
                                <img name="edit" src="'.$config['themeImagesDir'].'edit.png"title="'.ttEdit.'" onclick="showExamInfo(this);">
                            </span>
@@ -182,22 +176,9 @@ class ExamController extends Controller{
                 $statuses = array('w' => array('Waiting', 'Start'),
                                   's' => array('Started', 'Stop'),
                                   'e' => array('Stopped', 'Start'));
-                /*
                 $datetime = new DateTime($examInfo['datetime']);
                 $day = $datetime->format("d/m/Y");
                 $time = $datetime->format("H:i");
-                */
-
-
-
-
-
-                $datetime = strtotime($examInfo['datetime']);
-                $day = date('d/m/Y', $datetime);
-                $time = date('H:i', $datetime);
-
-                $log->append($day." ".$time);
-
                 $manage = '<span class="manageButton edit">
                                <img name="edit" src="'.$config['themeImagesDir'].'edit.png"title="'.ttEdit.'" onclick="showExamInfo(this);">
                            </span>
@@ -350,7 +331,7 @@ class ExamController extends Controller{
      *  @descr  Show the list of settings for selected subject
      */
     private function actionSettings(){
-        global $config, $engine,$user;
+        global $config, $engine;
 
         if(isset($_POST['idSubject'])){
             $_SESSION['idSubject'] = $_POST['idSubject'];
@@ -364,10 +345,7 @@ class ExamController extends Controller{
             $engine->renderPage();
             $engine->renderFooter();
         }else{
-            if(($user->role=='t') || ($user->role=='at'))
-                header('Location: index.php?page=subject&r=set');
-            else
-                header('Location: index.php?page=subject/index2&r=set');
+            header('Location: index.php?page=subject&r=set');
         }
     }
 
@@ -657,14 +635,15 @@ class ExamController extends Controller{
         global $log, $engine;
 
         if((isset($_POST['idTest'])) && (isset($_POST['correctScores'])) &&
-           (isset($_POST['scoreTest'])) &&
-           (isset($_POST['bonus'])) && (isset($_POST['scoreFinal']))){
+            (isset($_POST['scoreTest'])) &&
+            (isset($_POST['bonus'])) && (isset($_POST['scoreFinal']))){
 
             $db = new sqlDB();
-            if(($db->qTestDetails($_POST['idTest']) && ($testInfo = $db->nextRowAssoc()))){
+            if(($db->qTestDetails(null,$_POST['idTest']) && ($testInfo = $db->nextRowAssoc()))){
                 $allowNegative = ($testInfo['negative'] == 0)? false : true;
+
                 if($db->qArchiveTest($_POST['idTest'], json_decode(stripslashes($_POST['correctScores']), true),
-                                     $_POST['scoreTest'], $_POST['bonus'], $_POST['scoreFinal'], $testInfo['scale'], $allowNegative)){
+                    $_POST['scoreTest'], $_POST['bonus'], $_POST['scoreFinal'], $testInfo['scale'], $allowNegative)){
                     echo 'ACK';
                 }else{
                     die($db->getError());
@@ -682,7 +661,6 @@ class ExamController extends Controller{
             header("Location: index.php?page=exam/exams");
         }
     }
-
     /**
      *  @name   actionToggleblock
      *  @descr  Action to block/unblock student's test
