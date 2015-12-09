@@ -48,6 +48,7 @@ define('ttCDeleteTopic' , "Are you sure to delete this topic?<br/>The following 
 define('ttCDiscardEdits' , "Your changes will be lost.<br/>Exit?");
 define('ttCDiscardNew' , "The created item will be lost.<br/>Exit?");
 define('ttCRegister' , "Are you sure to register on this exam?");
+define('ttDTsubquestionInfo' , "Visualizzate _TOTAL_ sottodomande");
 define('ttCRegisterStudents' , "Are you sure to register these selected students on the exam?");
 define('ttCRenewPassword' , "The exam's password will be changed.<br/>This operation can not be undone.<br/>Continue?");
 define('ttCStartExam' , "Do you want to start the selected exam?");

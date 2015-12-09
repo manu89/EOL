@@ -319,6 +319,7 @@ var ttST10 = "Tenths";
 var ttST30 = "Thirtieths";
 var ttST100 = "Hundredth";
 var ttSubject = "Subject";
+var ttDTsubquestionInfo = "Visualizzate _TOTAL_ sottodomande";
 var ttSubjects = "Subjects";
 var ttSubmit = "Submit";
 var ttSurname = "Surname";

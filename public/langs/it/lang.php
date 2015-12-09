@@ -285,6 +285,9 @@ define('ttRefresh' , "Aggiorna");
 define('ttRegister' , "Registrati");
 define('ttRegistrations' , "Registrazione");
 define('ttRegEnd' , "Chiusura registrazione");
+define('ttDTsubquestionInfo' , "Visualizzate _TOTAL_ sottodomande");
+
+
 define('ttRenewPassword' , "Rinnova Password");
 define('ttReset' , "Reimposta");
 define('ttResetPassword' , "Reimposta Password");
