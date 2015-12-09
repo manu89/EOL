@@ -39,22 +39,6 @@ global $config, $user;
                     <h3><?= ttReportAOSelectAssesment ?></h3>
                     <p><?=ttReportAODescription?></p>
 
-                    <!--<div class="col-left">
-                        <h4><?=ttReportSearchByLetter?></h4>
-                        <select id="letter" size="1" onchange="printAssesments(this.value)">
-                            <option><?=ttReportSelectLetter?></option>
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="C">C</option>
-
-                        </select>
-                        <br/>
-                        <br/>
-                        <!--<select id="assesment" size="1">
-
-                        </select>
-                    </div>-->
-
                     <div class="col-left">
                         <h4><?=ttReportTyping?><br></h4>
                         <input type="text" name="word" oninput="printAssesments(this.value)">
@@ -82,19 +66,19 @@ global $config, $user;
                     </div>
                         <br/>
                         <hr class="divider"/>
-                        <div class="col-left">
+                        <!--<div class="col-left">
                             <h4><?=ttReportSelectFilter?></h4>
                         </div>
                         <div class="col-left">
                             <select id="filter">
                                 <option value=""><?=ttReportNotFilter?></option>
                                 <option value="<?=ttReportAllFinished?>"><?=ttReportAllFinished?></option>
-                                <!--<option value="<?=ttReportScheduled?>"><?=ttReportScheduled?></option>-->
+                                <!--<option value="<?=ttReportScheduled?>"><?=ttReportScheduled?></option>
                                 <option value="<?=ttReportTimedOut?>"><?=ttReportTimedOut?></option>
                             </select>
                         </div>
                     <br/>
-                    <hr class="divider2"/>
+                    <hr class="divider2"/>-->
                     <div id="tabsbutton">
                         <!--<a class="normal button rSpace" id="back" onclick="prevTab()"><?=ttBack?></a>-->
                         <a class="normal button rSpace" id="next" onclick="nextMainTab()"><?=ttNext?></a>
@@ -103,19 +87,6 @@ global $config, $user;
 
                 <div id="groupstab">
                    <h3><?= ttReportSelectGroup ?></h3>
-                    <!--<div class="col-left">
-                        <h4><?=ttReportSearchByLetter?></h4>
-                        <select id="lettergroup" size="1" onchange="printGroups(this.value)">
-                            <option><?=ttReportSelectLetter?></option>
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="C">C</option>
-
-                        </select>
-                        <br/>
-                        <br/>
-
-                    </div>-->
 
                     <div class="col-left">
                         <h4><?=ttReportTyping?><br></h4>
@@ -166,6 +137,21 @@ global $config, $user;
                 <div id="partecipantstab">
                     <table id="filterpartecipants" class="filter">
                         <tr>
+                            <td class="bold"><?=ttReportAssesmentScore?></td>
+                            <td><input type="checkbox" id="assesmentScore" onclick="unlock(this,assesmentMinScore,assesmentMaxScore)"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="bold"><?=ttReportMinimumScore?></td>
+                            <td><input type="number" min="0" value="0" disabled="disabled" id="assesmentMinScore"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="bold"><?=ttReportMaximumScore?></td>
+                            <td><input type="number" min="0" value="30" disabled="disabled" id="assesmentMaxScore"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
                             <td class="bold"><?=ttReportStudent?></td>
                             <td><textarea rows="1" id="student" readonly="readonly"></textarea></td>
                             <td>
@@ -189,21 +175,7 @@ global $config, $user;
                                 <a class="normal button rSpace" onclick=""><?=ttRemove?></a>
                             </td>
                         </tr>-->
-                        <tr>
-                            <td class="bold"><?=ttReportAssesmentScore?></td>
-                            <td><input type="checkbox" id="assesmentScore" onclick="unlock(this,assesmentMinScore,assesmentMaxScore)"></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="bold"><?=ttReportMinimumScore?></td>
-                            <td><input type="number" min="0" max="30" value="0" disabled="disabled" id="assesmentMinScore"></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="bold"><?=ttReportMaximumScore?></td>
-                            <td><input type="number" min="0" max="30" value="30" disabled="disabled" id="assesmentMaxScore"></td>
-                            <td></td>
-                        </tr>
+
                     </table>
                     <hr>
                     <div id="tabsbutton">

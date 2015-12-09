@@ -1101,3 +1101,35 @@
 11/27/2015 16:46:59 - qNewUser : Duplicate entry 'prova@eol.org-c' for key 'PRIMARY'
 11/28/2015 12:11:09 - qShowStudentGroup : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group='it' and subgroup='pg'' at line 1
 11/28/2015 12:13:40 - qShowStudentGroup : Unknown column 'Users.ubgroup' in 'where clause'
+12/01/2015 18:39:35 - qShowAssesmentMediumTimeFinished : Incorrect parameter count in the call to native function 'DATEDIFF'
+12/01/2015 18:40:03 - qShowAssesmentMediumTimeFinished : Incorrect parameter count in the call to native function 'DATEDIFF'
+12/01/2015 18:40:07 - qShowAssesmentMediumTimeFinished : Incorrect parameter count in the call to native function 'DATEDIFF'
+12/01/2015 18:43:49 - qShowAssesmentMediumTimeFinished : Incorrect parameter count in the call to native function 'DATEDIFF'
+12/01/2015 22:21:47 - qShowAssesmentMediumTimeFinished : Incorrect parameter count in the call to native function 'DATEDIFF'
+12/01/2015 22:21:52 - qShowAssesmentMediumTimeFinished : Incorrect parameter count in the call to native function 'DATEDIFF'
+12/01/2015 22:23:13 - qShowAssesmentMediumTimeFinished : Incorrect parameter count in the call to native function 'datediff'
+12/01/2015 22:23:37 - qShowAssesmentMediumTimeFinished : Incorrect parameter count in the call to native function 'datediff'
+12/01/2015 23:08:39 - qShowAssesmentDateTimeFirstTaken : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(first,'%d-%m-%y %h:%i')
+                        FROM Users JOIN (Tests JOIN(Exa' at line 1
+12/01/2015 23:08:39 - qShowAssesmentMediumTimeFinished : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Sub' at line 1
+12/01/2015 23:27:44 - qShowAssesmentMediumTimeFinished : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Sub' at line 1
+12/02/2015 12:59:07 - qShowAssesmentMediumTimeFinished : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Sub' at line 1
+12/02/2015 13:09:32 - qShowAssesmentMediumTimeFinished : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Sub' at line 1
+12/02/2015 13:10:02 - qShowAssesmentMediumTimeFinished : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Sub' at line 1
+12/02/2015 13:10:08 - qShowAssesmentMediumTimeFinished : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Sub' at line 1
+12/02/2015 13:10:24 - qShowAssesmentMediumTimeFinished : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Sub' at line 1
+12/02/2015 14:21:28 - qShowAssesmentMediumTimeFinished : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VARCHAR(20), AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)), 14) AS medtime
+     ' at line 1
+12/02/2015 21:39:38 - qShowStudent : Unknown column 'Tests.finalScore' in 'where clause'
+12/02/2015 21:39:43 - qShowStudent : Unknown column 'Tests.finalScore' in 'where clause'
+12/02/2015 21:40:22 - qShowStudent : Unknown column 'Tests.finalScore' in 'where clause'
+12/03/2015 14:14:01 - array (
+  0 => '1',
+)

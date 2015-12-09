@@ -118,7 +118,7 @@ function addAssessment(exam){
         for (v=0; v < exams.length; v++){
             if (exams[v]==null){
                 exams[v]=exam;
-                $("#selected").append("<option id=\""+exam.replace(" ","_")+"\" value=\""+exam.replace(" ","_")+"\">"+exam+"</option>");
+                $("#selected").append("<option id=\""+exam.replace(/ /gi,"_")+"\" value=\""+exam.replace(/ /gi,"_")+"\">"+exam+"</option>");
                 //console.log(exam);
                 break;
             }
@@ -152,13 +152,13 @@ function clearAssessments(){
  */
 function removeAssessment(exam){
     var x=0;
-    if(exams[exams.length]==exam.replace("_"," ")){
+    if(exams[exams.length]==exam.replace(/_/," ")){
         exams[exams.length]=null;
         $("#"+exam.replace(" ","_")).remove();
         x=1;
     }
     for (i = 0; i < exams.length-1; i++){
-        if (exams[i]==exam.replace("_"," ")){
+        if (exams[i]==exam.replace(/_/gi," ")){
             for (r=i; r < exams.length; r++){
                 exams[r]=exams[r+1];
             }
@@ -223,12 +223,16 @@ function printStudent(){
     /*for (t=0; t< exams.length; t++){
         console.log(exams[t]);
     }*/
+    minscore=($("#assesmentScore").is(":checked"))? $("#assesmentMinScore").val():-1; //check if minscore is enable and eventually return the value
+    maxscore=($("#assesmentScore").is(":checked"))? $("#assesmentMaxScore").val():-1; //check if maxscore is enable and eventually return the value
     $.ajax({
         url     : "index.php?page=report/showstudent",
         type    : "post",
         data : {
             exams : JSON.stringify(exams),
-            groups: JSON.stringify(groups)
+            groups: JSON.stringify(groups),
+            minscore: minscore,
+            maxscore: maxscore
         },
         success : function (data){
             $("#searchedstud").html(data);
@@ -433,8 +437,8 @@ function removeGroup(group){
  *  @descr  transfer all filter parameters to the report template
  */
 function transferData(min,max){
-    minscore=min;
-    maxscore=max;
+    minscore=($("#assesmentScore").is(":checked"))? min:-1; //check if minscore is enable and eventually return the value
+    maxscore=($("#assesmentScore").is(":checked"))? max:-1; //check if maxscore is enable and eventually return the value
     $.ajax({
         url     : "index.php?page=report/aoreportparameters",
         type    : "post",

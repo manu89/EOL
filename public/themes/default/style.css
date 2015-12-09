@@ -2432,24 +2432,31 @@ span.extraClose{
 }
 
 .customize{
+    text-align:center;
     margin-top:20px;
     border-collapse: collapse;
     width: 100%;
     box-shadow: #003399 3px 3px 3px;
-    background-color: #87C5FB;
+    background-color: #D4E7F2;  /*#87C5FB  #AEC5DA*/
 }
 
-.customize tr:hover{
-    background-color: #002a80;
+.customize thead tr{
+    background-color: #434a8c;
     color:white;
 }
 
-.customize td{
+.customize tbody tr:hover{
+    background-color: #6da2ff; /*#002a80*/
+    color:white;
+}
+
+.customize td, .customize th{
     border-bottom:1.5px solid #7ab5d3;
     padding: 20px;
 }
 
 .customize td:first-child{
+    text-align:left;
     width:40%;
 }
 .order{

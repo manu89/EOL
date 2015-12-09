@@ -2784,153 +2784,231 @@ class sqlDB {
      * @return  boolean
      * @descr   show searched result in Partecipant's select tag
      */
-    public function qShowStudent($exams){
+    public function qShowStudent($exams,$minscore,$maxscore){
         global $log;
         $ack=true;
         $this->result = null;
         $this->mysqli = $this->connect();
         try {
-            // 2 cases, 1 exams are selected specifically; 2 all exams to control
-            if (($exams[0]!="") or ($exams[0]!=null)){
-                //exams are selected in this case
-                $query="Select idUser from Users where role='s'";
-                $this->execQuery($query);
-                if ($this->numResultRows()>0){
-                    $i=0;
-                    $students=array();
-                    while($row=mysqli_fetch_array($this->result)){
-                        $students[$i]=$row['idUser'];
-                        $i++;
+            //check if minscore and maxscore are set
+            echo $maxscore;
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                // 2 cases, 1 exams are selected specifically; 2 all exams to control
+                if (($exams[0]!="") or ($exams[0]!=null)){
+                    //exams are selected in this case
+                    $query="Select idUser from Users where role='s'";
+                    $this->execQuery($query);
+                    if ($this->numResultRows()>0){
+                        $i=0;
+                        $students=array();
+                        while($row=mysqli_fetch_array($this->result)){
+                            $students[$i]=$row['idUser'];
+                            $i++;
+                        }
+                    }
+
+                    $d=0;
+                    foreach($students as $student) {
+                        $x = 0;
+                        while ($exams[$x]!=""){
+                            $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.idUser='$student' and Subjects.name='$exams[$x]' and (Exams.status='e' or Exams.status='a') and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                            echo $query2."\n";
+                            $this->execQuery($query2);
+                            if ($this->numResultRows()>0){
+                                $trovato[$student][$exams[$x]]=true;
+                            }
+                            else{
+                                $trovato[$student][$exams[$x]]=false;
+                            }
+                            $x++;
+                        }
+                        if (in_array(false,$trovato[$student])){
+                            $notpresent[$d]=true;
+                        }
+                        else{
+                            $row=mysqli_fetch_array($this->result);
+                            echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                            $notpresent[$d]=false;
+                        }
+                        $d++;
+                        //print_r($trovato);
+                    }
+                    if ((in_array(false,$notpresent))){
+                    }
+                    else{
+                        echo "<option>Nessuno studente presente</option>";
+                    }
+
+                }
+                else{
+                    //all exams should be controlled
+                    $query="Select idUser from Users where role='s'";
+                    $this->execQuery($query);
+                    if ($this->numResultRows()>0){
+                        $i=0;
+                        $students=array();
+                        while($row=mysqli_fetch_array($this->result)){
+                            $students[$i]=$row['idUser'];
+                            $i++;
+                        }
+                    }
+                    $query2="Select Subjects.name from Subjects";
+                    $this->execQuery($query2);
+                    if ($this->numResultRows()>0){
+                        $i=0;
+                        $allexams=array();
+                        while($row=mysqli_fetch_array($this->result)){
+                            $allexams[$i]=$row['name'];
+                            $i++;
+                        }
+                    }
+                    $d=0;
+                    foreach($students as $student){
+                        //echo $student."\n";
+                        foreach($allexams as $exam){
+                            // echo $exam."\n";
+                            $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.idUser='$student' and Subjects.name='$exam' and (Exams.status='e' or Exams.status='a') and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                            //echo $query2."\n\n";
+                            $this->execQuery($query2);
+                            if ($this->numResultRows()>0){
+                                $trovato[$student][$exam]=true;
+                            }
+                            else{
+                                $trovato[$student][$exam]=false;
+                            }
+                        }
+                        if (in_array(false,$trovato[$student])){
+                            $notpresent[$d]=true;
+                        }
+                        else{
+                            $row=mysqli_fetch_array($this->result);
+                            echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                            $notpresent[$d]=false;
+                        }
+                        $d++;
+                        //print_r($trovato);
+                    }
+                    if ((in_array(false,$notpresent))){
+                    }
+                    else{
+                        echo "<option>Nessuno studente presente</option>";
                     }
                 }
+            }
+            else{
+                echo "bbbbbbbbbbbbbbb";
+                // 2 cases, 1 exams are selected specifically; 2 all exams to control
+                if (($exams[0]!="") or ($exams[0]!=null)){
+                    //exams are selected in this case
+                    $query="Select idUser from Users where role='s'";
+                    $this->execQuery($query);
+                    if ($this->numResultRows()>0){
+                        $i=0;
+                        $students=array();
+                        while($row=mysqli_fetch_array($this->result)){
+                            $students[$i]=$row['idUser'];
+                            $i++;
+                        }
+                    }
 
-                $d=0;
-                foreach($students as $student) {
-                    $x = 0;
-                    while ($exams[$x]!=""){
-                        $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                    $d=0;
+                    foreach($students as $student) {
+                        $x = 0;
+                        while ($exams[$x]!=""){
+                            $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
                         WHERE Users.idUser='$student' and Subjects.name='$exams[$x]' and (Exams.status='e' or Exams.status='a')";
-                      //  echo $query2."\n";
-                        $this->execQuery($query2);
-                        if ($this->numResultRows()>0){
-                            $trovato[$student][$exams[$x]]=true;
+                            //  echo $query2."\n";
+                            $this->execQuery($query2);
+                            if ($this->numResultRows()>0){
+                                $trovato[$student][$exams[$x]]=true;
+                            }
+                            else{
+                                $trovato[$student][$exams[$x]]=false;
+                            }
+                            $x++;
+                        }
+                        if (in_array(false,$trovato[$student])){
+                            $notpresent[$d]=true;
                         }
                         else{
-                            $trovato[$student][$exams[$x]]=false;
+                            $row=mysqli_fetch_array($this->result);
+                            echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                            $notpresent[$d]=false;
                         }
-                        $x++;
+                        $d++;
+                        //print_r($trovato);
                     }
-                    if (in_array(false,$trovato[$student])){
-                        $notpresent[$d]=true;
+                    if ((in_array(false,$notpresent))){
                     }
                     else{
-                        $row=mysqli_fetch_array($this->result);
-                        echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
-                        $notpresent[$d]=false;
+                        echo "<option>Nessuno studente presente</option>";
                     }
-                    $d++;
-                    //print_r($trovato);
-                }
-                if ((in_array(false,$notpresent))){
+
                 }
                 else{
-                    echo "<option>Nessuno studente presente</option>";
-                }
-
-                /*$d=0;
-                foreach($students as $student) {
-                    //echo $student;
-                    $x = 0;
-                    while ($exams[$x]!=""){
-                         //echo $exam;
-                         $query2="select distinct Users.idUser, Users.name, Users.surname
-                       FROM Users JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Users.idUser=Tests.fkUser
-                       where Users.idUser='$student' and Exams.name='$exams[$x]'";
-                         //echo $query2."\n\n";
-                         $this->execQuery($query2);
-                         if ($this->numResultRows()>0){
-                             $trovato[$student][$exams[$x]]=true;
-                         }
-                         else{
-                             $trovato[$student][$exams[$x]]=false;
-                         }
-                         $x++;
-                     }
-                     if (in_array(false,$trovato[$student])){
-                         $notpresent[$d]=true;
-                     }
-                     else{
-                         $row=mysqli_fetch_array($this->result);
-                         echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
-                         $notpresent[$d]=false;
-                     }
-                     $d++;
-                     //print_r($trovato);
-                 }
-                 if ((in_array(false,$notpresent))){
-                 }
-                 else{
-                     echo "<option>Nessuno studente presente</option>";
-                 }*/
-
-            }
-            else{
-                //all exams should be controlled
-                $query="Select idUser from Users where role='s'";
-                $this->execQuery($query);
-                if ($this->numResultRows()>0){
-                    $i=0;
-                    $students=array();
-                    while($row=mysqli_fetch_array($this->result)){
-                        $students[$i]=$row['idUser'];
-                        $i++;
+                    //all exams should be controlled
+                    $query="Select idUser from Users where role='s'";
+                    $this->execQuery($query);
+                    if ($this->numResultRows()>0){
+                        $i=0;
+                        $students=array();
+                        while($row=mysqli_fetch_array($this->result)){
+                            $students[$i]=$row['idUser'];
+                            $i++;
+                        }
                     }
-                }
-                $query2="Select Subjects.name from Subjects";
-                $this->execQuery($query2);
-                if ($this->numResultRows()>0){
-                    $i=0;
-                    $allexams=array();
-                    while($row=mysqli_fetch_array($this->result)){
-                        $allexams[$i]=$row['name'];
-                        $i++;
+                    $query2="Select Subjects.name from Subjects";
+                    $this->execQuery($query2);
+                    if ($this->numResultRows()>0){
+                        $i=0;
+                        $allexams=array();
+                        while($row=mysqli_fetch_array($this->result)){
+                            $allexams[$i]=$row['name'];
+                            $i++;
+                        }
                     }
-                }
-                $d=0;
-                foreach($students as $student){
-                    //echo $student."\n";
-                    foreach($allexams as $exam){
-                       // echo $exam."\n";
-                        $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                    $d=0;
+                    foreach($students as $student){
+                        //echo $student."\n";
+                        foreach($allexams as $exam){
+                            // echo $exam."\n";
+                            $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
                         WHERE Users.idUser='$student' and Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')";
-                        //echo $query2."\n\n";
-                        $this->execQuery($query2);
-                        if ($this->numResultRows()>0){
-                            $trovato[$student][$exam]=true;
+                            //echo $query2."\n\n";
+                            $this->execQuery($query2);
+                            if ($this->numResultRows()>0){
+                                $trovato[$student][$exam]=true;
+                            }
+                            else{
+                                $trovato[$student][$exam]=false;
+                            }
+                        }
+                        if (in_array(false,$trovato[$student])){
+                            $notpresent[$d]=true;
                         }
                         else{
-                            $trovato[$student][$exam]=false;
+                            $row=mysqli_fetch_array($this->result);
+                            echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                            $notpresent[$d]=false;
                         }
+                        $d++;
+                        //print_r($trovato);
                     }
-                    if (in_array(false,$trovato[$student])){
-                        $notpresent[$d]=true;
+                    if ((in_array(false,$notpresent))){
                     }
                     else{
-                        $row=mysqli_fetch_array($this->result);
-                        echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
-                        $notpresent[$d]=false;
+                        echo "<option>Nessuno studente presente</option>";
                     }
-                    $d++;
-                    //print_r($trovato);
-                }
-                if ((in_array(false,$notpresent))){
-                }
-                else{
-                    echo "<option>Nessuno studente presente</option>";
                 }
             }
         }
@@ -2946,176 +3024,346 @@ class sqlDB {
      * @return  boolean
      * @descr   show searched result in Partecipant's select tag filter by group
      */
-    public function qShowStudentGroup($groups, $exams){
+    public function qShowStudentGroup($groups, $exams, $minscore, $maxscore){
         global $log;
         $ack=true;
         $this->result = null;
         $this->mysqli = $this->connect();
         try {
-            // 2 cases, 1 exams are selected specifically; 2 all exams to control
-            if (($exams[0]!="") or ($exams[0]!=null)){
-                //exams are selected in this case
-                $g=0;
-                $gr=Array();
-                $subgroups=Array();
-                //divide group and subgroup for search students
-                while ($groups[$g]!=""){
-                    if(in_array(substr($groups[$g],-5,2),$gr)){
-                        //do nothing
-                    }
-                    else{
-                        $gr[$g]=substr($groups[$g],-5,2);
-                    }
-                    if(in_array(substr($groups[$g],-2,2),$subgroups)){
-                        //do nothing
-                    }
-                    else{
-                        $subgroups[$g]=substr($groups[$g],-2,2);
+            //check if minscore and maxscore are set
+            if(($minscore!=-1)&&($maxscore!=-1)) {
+                // 2 cases, 1 exams are selected specifically; 2 all exams to control
+                if (($exams[0]!="") or ($exams[0]!=null)){
+                    //exams are selected in this case
+                    $g=0;
+                    $gr=Array();
+                    $subgroups=Array();
+                    //divide group and subgroup for search students
+                    while ($groups[$g]!=""){
+                        if(in_array(substr($groups[$g],-5,2),$gr)){
+                            //do nothing
+                        }
+                        else{
+                            $gr[$g]=substr($groups[$g],-5,2);
+                        }
+                        if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            //do nothing
+                        }
+                        else{
+                            $subgroups[$g]=substr($groups[$g],-2,2);
+                        }
+
+                        $g++;
                     }
 
-                    $g++;
-                }
-
-                $students=array();
-                $i=0;
-                foreach($gr as $gval){
-                    echo $gval."\n";
-                    foreach($subgroups as $sbgr){
-                        echo $sbgr."\n";
-                        $query="Select Users.idUser from Users where Users.role='s' and Users.group='$gval' and Users.subgroup='$sbgr'";
-                        $this->execQuery($query);
-                        if ($this->numResultRows()>0){
-                            while($row=mysqli_fetch_array($this->result)){
-                                $students[$i]=$row['idUser'];
-                                $i++;
+                    $students=array();
+                    $i=0;
+                    foreach($gr as $gval){
+                        echo $gval."\n";
+                        foreach($subgroups as $sbgr){
+                            echo $sbgr."\n";
+                            $query="Select Users.idUser from Users where Users.role='s' and Users.group='$gval' and Users.subgroup='$sbgr'";
+                            $this->execQuery($query);
+                            if ($this->numResultRows()>0){
+                                while($row=mysqli_fetch_array($this->result)){
+                                    $students[$i]=$row['idUser'];
+                                    $i++;
+                                }
                             }
                         }
+
                     }
 
-                }
+                    //search students that done tests of assesment selected in group selected
+                    $d=0;
+                    foreach($students as $student) {
+                        $x = 0;
+                        while ($exams[$x]!=""){
+                            $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.idUser='$student' and Subjects.name='$exams[$x]' and (Exams.status='e' or Exams.status='a') and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                            //echo $query2."\n";
+                            $this->execQuery($query2);
+                            if ($this->numResultRows()>0){
+                                $trovato[$student][$exams[$x]]=true;
+                            }
+                            else{
+                                $trovato[$student][$exams[$x]]=false;
+                            }
+                            $x++;
+                        }
+                        if (in_array(false,$trovato[$student])){
+                            $notpresent[$d]=true;
+                        }
+                        else{
+                            $row=mysqli_fetch_array($this->result);
+                            echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                            $notpresent[$d]=false;
+                        }
+                        $d++;
+                        //print_r($trovato);
+                    }
+                    if ((in_array(false,$notpresent))){
+                    }
+                    else{
+                        echo "<option>Nessuno studente presente</option>";
+                    }
 
-                //search students that done tests of assesment selected in group selected
-                $d=0;
-                foreach($students as $student) {
-                    $x = 0;
-                    while ($exams[$x]!=""){
-                        $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+
+                }
+                else{
+                    //all exams should be controlled
+                    $g=0;
+                    $gr=Array();
+                    $subgroups=Array();
+                    //divide group and subgroup for search students
+                    while ($groups[$g]!=""){
+                        if(in_array(substr($groups[$g],-5,2),$gr)){
+                            //do nothing
+                        }
+                        else{
+                            $gr[$g]=substr($groups[$g],-5,2);
+                        }
+                        if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            //do nothing
+                        }
+                        else{
+                            $subgroups[$g]=substr($groups[$g],-2,2);
+                        }
+
+                        $g++;
+                    }
+
+                    $students=array();
+                    $i=0;
+                    foreach($gr as $gval){
+                        foreach($subgroups as $sbgr){
+                            $query="Select Users.idUser from Users where Users.role='s' and Users.group='$gval' and Users.subgroup='$sbgr'";
+                            $this->execQuery($query);
+                            if ($this->numResultRows()>0){
+                                while($row=mysqli_fetch_array($this->result)){
+                                    $students[$i]=$row['idUser'];
+                                    $i++;
+                                }
+                            }
+                        }
+
+                    }
+
+                    $query2="Select Subjects.name from Subjects";
+                    $this->execQuery($query2);
+                    if ($this->numResultRows()>0){
+                        $i=0;
+                        $allexams=array();
+                        while($row=mysqli_fetch_array($this->result)){
+                            $allexams[$i]=$row['name'];
+                            $i++;
+                        }
+                    }
+                    $d=0;
+                    foreach($students as $student){
+                        //echo $student."\n";
+                        foreach($allexams as $exam){
+                            //  echo $exam."\n";
+                            $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.idUser='$student' and Subjects.name='$exam' and (Exams.status='e' or Exams.status='a') and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                            //echo $query2."\n\n";
+                            $this->execQuery($query2);
+                            if ($this->numResultRows()>0){
+                                $trovato[$student][$exam]=true;
+                            }
+                            else{
+                                $trovato[$student][$exam]=false;
+                            }
+                        }
+                        if (in_array(false,$trovato[$student])){
+                            $notpresent[$d]=true;
+                        }
+                        else{
+                            $row=mysqli_fetch_array($this->result);
+                            echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                            $notpresent[$d]=false;
+                        }
+                        $d++;
+                        //print_r($trovato);
+                    }
+                    if ((in_array(false,$notpresent))){
+                    }
+                    else{
+                        echo "<option>Nessuno studente presente</option>";
+                    }
+                }
+            }
+            else{
+                // 2 cases, 1 exams are selected specifically; 2 all exams to control
+                if (($exams[0]!="") or ($exams[0]!=null)){
+                    //exams are selected in this case
+                    $g=0;
+                    $gr=Array();
+                    $subgroups=Array();
+                    //divide group and subgroup for search students
+                    while ($groups[$g]!=""){
+                        if(in_array(substr($groups[$g],-5,2),$gr)){
+                            //do nothing
+                        }
+                        else{
+                            $gr[$g]=substr($groups[$g],-5,2);
+                        }
+                        if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            //do nothing
+                        }
+                        else{
+                            $subgroups[$g]=substr($groups[$g],-2,2);
+                        }
+
+                        $g++;
+                    }
+
+                    $students=array();
+                    $i=0;
+                    foreach($gr as $gval){
+                        echo $gval."\n";
+                        foreach($subgroups as $sbgr){
+                            echo $sbgr."\n";
+                            $query="Select Users.idUser from Users where Users.role='s' and Users.group='$gval' and Users.subgroup='$sbgr'";
+                            $this->execQuery($query);
+                            if ($this->numResultRows()>0){
+                                while($row=mysqli_fetch_array($this->result)){
+                                    $students[$i]=$row['idUser'];
+                                    $i++;
+                                }
+                            }
+                        }
+
+                    }
+
+                    //search students that done tests of assesment selected in group selected
+                    $d=0;
+                    foreach($students as $student) {
+                        $x = 0;
+                        while ($exams[$x]!=""){
+                            $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
                         WHERE Users.idUser='$student' and Subjects.name='$exams[$x]' and (Exams.status='e' or Exams.status='a')";
-                        //echo $query2."\n";
-                        $this->execQuery($query2);
-                        if ($this->numResultRows()>0){
-                            $trovato[$student][$exams[$x]]=true;
+                            //echo $query2."\n";
+                            $this->execQuery($query2);
+                            if ($this->numResultRows()>0){
+                                $trovato[$student][$exams[$x]]=true;
+                            }
+                            else{
+                                $trovato[$student][$exams[$x]]=false;
+                            }
+                            $x++;
+                        }
+                        if (in_array(false,$trovato[$student])){
+                            $notpresent[$d]=true;
                         }
                         else{
-                            $trovato[$student][$exams[$x]]=false;
+                            $row=mysqli_fetch_array($this->result);
+                            echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                            $notpresent[$d]=false;
                         }
-                        $x++;
+                        $d++;
+                        //print_r($trovato);
                     }
-                    if (in_array(false,$trovato[$student])){
-                        $notpresent[$d]=true;
+                    if ((in_array(false,$notpresent))){
                     }
                     else{
-                        $row=mysqli_fetch_array($this->result);
-                        echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
-                        $notpresent[$d]=false;
+                        echo "<option>Nessuno studente presente</option>";
                     }
-                    $d++;
-                    //print_r($trovato);
-                }
-                if ((in_array(false,$notpresent))){
+
+
                 }
                 else{
-                    echo "<option>Nessuno studente presente</option>";
-                }
+                    //all exams should be controlled
+                    $g=0;
+                    $gr=Array();
+                    $subgroups=Array();
+                    //divide group and subgroup for search students
+                    while ($groups[$g]!=""){
+                        if(in_array(substr($groups[$g],-5,2),$gr)){
+                            //do nothing
+                        }
+                        else{
+                            $gr[$g]=substr($groups[$g],-5,2);
+                        }
+                        if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            //do nothing
+                        }
+                        else{
+                            $subgroups[$g]=substr($groups[$g],-2,2);
+                        }
 
-
-            }
-            else{
-                //all exams should be controlled
-                $g=0;
-                $gr=Array();
-                $subgroups=Array();
-                //divide group and subgroup for search students
-                while ($groups[$g]!=""){
-                    if(in_array(substr($groups[$g],-5,2),$gr)){
-                        //do nothing
-                    }
-                    else{
-                        $gr[$g]=substr($groups[$g],-5,2);
-                    }
-                    if(in_array(substr($groups[$g],-2,2),$subgroups)){
-                        //do nothing
-                    }
-                    else{
-                        $subgroups[$g]=substr($groups[$g],-2,2);
+                        $g++;
                     }
 
-                    $g++;
-                }
-
-                $students=array();
-                $i=0;
-                foreach($gr as $gval){
-                    foreach($subgroups as $sbgr){
-                        $query="Select Users.idUser from Users where Users.role='s' and Users.group='$gval' and Users.subgroup='$sbgr'";
-                        $this->execQuery($query);
-                        if ($this->numResultRows()>0){
-                            while($row=mysqli_fetch_array($this->result)){
-                                $students[$i]=$row['idUser'];
-                                $i++;
+                    $students=array();
+                    $i=0;
+                    foreach($gr as $gval){
+                        foreach($subgroups as $sbgr){
+                            $query="Select Users.idUser from Users where Users.role='s' and Users.group='$gval' and Users.subgroup='$sbgr'";
+                            $this->execQuery($query);
+                            if ($this->numResultRows()>0){
+                                while($row=mysqli_fetch_array($this->result)){
+                                    $students[$i]=$row['idUser'];
+                                    $i++;
+                                }
                             }
                         }
+
                     }
 
-                }
-
-                $query2="Select Subjects.name from Subjects";
-                $this->execQuery($query2);
-                if ($this->numResultRows()>0){
-                    $i=0;
-                    $allexams=array();
-                    while($row=mysqli_fetch_array($this->result)){
-                        $allexams[$i]=$row['name'];
-                        $i++;
+                    $query2="Select Subjects.name from Subjects";
+                    $this->execQuery($query2);
+                    if ($this->numResultRows()>0){
+                        $i=0;
+                        $allexams=array();
+                        while($row=mysqli_fetch_array($this->result)){
+                            $allexams[$i]=$row['name'];
+                            $i++;
+                        }
                     }
-                }
-                $d=0;
-                foreach($students as $student){
-                    //echo $student."\n";
-                    foreach($allexams as $exam){
-                      //  echo $exam."\n";
-                        $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                    $d=0;
+                    foreach($students as $student){
+                        //echo $student."\n";
+                        foreach($allexams as $exam){
+                            //  echo $exam."\n";
+                            $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
                         WHERE Users.idUser='$student' and Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')";
-                        //echo $query2."\n\n";
-                        $this->execQuery($query2);
-                        if ($this->numResultRows()>0){
-                            $trovato[$student][$exam]=true;
+                            //echo $query2."\n\n";
+                            $this->execQuery($query2);
+                            if ($this->numResultRows()>0){
+                                $trovato[$student][$exam]=true;
+                            }
+                            else{
+                                $trovato[$student][$exam]=false;
+                            }
+                        }
+                        if (in_array(false,$trovato[$student])){
+                            $notpresent[$d]=true;
                         }
                         else{
-                            $trovato[$student][$exam]=false;
+                            $row=mysqli_fetch_array($this->result);
+                            echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                            $notpresent[$d]=false;
                         }
+                        $d++;
+                        //print_r($trovato);
                     }
-                    if (in_array(false,$trovato[$student])){
-                        $notpresent[$d]=true;
+                    if ((in_array(false,$notpresent))){
                     }
                     else{
-                        $row=mysqli_fetch_array($this->result);
-                        echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
-                        $notpresent[$d]=false;
+                        echo "<option>Nessuno studente presente</option>";
                     }
-                    $d++;
-                    //print_r($trovato);
-                }
-                if ((in_array(false,$notpresent))){
-                }
-                else{
-                    echo "<option>Nessuno studente presente</option>";
                 }
             }
+
         }
         catch(Exception $ex){
             $ack=false;
@@ -3173,6 +3421,1652 @@ class sqlDB {
         }
         return $ack;
     }
+
+    /**
+     * @name    qPrintExams
+     * @return  boolean
+     * @descr   create array of exams for the report
+     */
+    public function qPrintExams($assesment,$userparam){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $found=strpos($userparam,"@");
+            if ($found==false){
+                $query="SELECT DISTINCT Exams.name
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.idUser='$userparam' and Subjects.name='$assesment' and (Exams.status='e' or Exams.status='a')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    $sel=array();
+                    $i=0;
+                    while($row=mysqli_fetch_array($this->result)){
+                        $sel[$i]=$row['name'];
+                        $i++;
+                    }
+                    $_SESSION['exselected']=$sel;
+                }
+            }
+            else{
+                $query="SELECT DISTINCT Exams.name
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.email='$userparam' and Subjects.name='$assesment' and (Exams.status='e' or Exams.status='a')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    $sel=array();
+                    $i=0;
+                    while($row=mysqli_fetch_array($this->result)){
+                        $sel[$i]=$row['name'];
+                        $i++;
+                    }
+                    $_SESSION['exselected']=$sel;
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
+    /**
+     * @name    qShowAssesmentName
+     * @return  boolean
+     * @descr   print assesment name
+     */
+    public function qShowAssesmentName($exam){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $query="Select distinct Exams.name
+             from Exams
+             where Exams.name='$exam'";
+            $this->execQuery($query);
+            if($this->numResultRows()>0){
+                while($row=mysqli_fetch_array($this->result)){
+                    echo $row['name']."\n";
+                }
+            }
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
+    /**
+     * @name    qShowAssesmentID
+     * @return  string
+     * @descr   print assesment ID
+     */
+    public function qShowAssesmentID($exam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $query="Select Subjects.idSubject
+             from Subjects
+             where Subjects.name='$exam'";
+            $this->execQuery($query);
+            if($this->numResultRows()>0){
+                while($row=mysqli_fetch_array($this->result)){
+                    $val=$row['idSubject'];
+                }
+            }
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentAuthor
+     * @return  string
+     * @descr   print assesment author
+     */
+    public function qShowAssesmentAuthor($exam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $query="select Users.name, Users.surname
+                    FROM Users JOIN (Users_Subjects JOIN Subjects ON Users_Subjects.fkSubject=Subjects.idSubject)
+                    ON Users.idUser=Users_Subjects.fkUser
+                    where Subjects.name='$exam' ";
+            $this->execQuery($query);
+            if($this->numResultRows()>0){
+                while($row=mysqli_fetch_array($this->result)){
+                    return $row['surname']." ".$row['name'];
+                }
+            }
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+    }
+
+    /**
+     * @name    qShowAssesmentDateTimeFirstTaken
+     * @return  string
+     * @descr   print assesment date/time first taken
+     */
+    public function qShowAssesmentDateTimeFirstTaken($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select DATE_FORMAT(MIN(Tests.timeStart),'%d-%m-%Y %H:%i') AS first
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.idUser='$userparam' and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['first'];
+                        }
+                    }
+                }
+                else{
+                    $query="select DATE_FORMAT(MIN(Tests.timeStart),'%d-%m-%Y %H:%i') AS first
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.email='$userparam' and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['first'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select DATE_FORMAT(MIN(Tests.timeStart),'%d-%m-%Y %H:%i') AS first
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['first'];
+                        }
+                    }
+                }
+                else{
+                    $query="select DATE_FORMAT(MIN(Tests.timeStart),'%d-%m-%Y %H:%i') AS first
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['first'];
+                        }
+                    }
+                }
+            }
+
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+
+    /**
+     * @name    qShowAssesmentDateTimeLastTaken
+     * @return  boolean
+     * @descr   print assesment date/time last taken
+     */
+    public function qShowAssesmentDateTimeLastTaken($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select DATE_FORMAT(MAX(Tests.timeStart),'%d-%m-%Y %H:%i') AS last
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.idUser='$userparam' and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['last'];
+                        }
+                    }
+                }
+                else{
+                    $query="select DATE_FORMAT(MAX(Tests.timeStart),'%d-%m-%Y %H:%i') AS last
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.email='$userparam' and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['last'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select DATE_FORMAT(MAX(Tests.timeStart),'%d-%m-%Y %H:%i') AS last
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['last'];
+                        }
+                    }
+                }
+                else{
+                    $query="select DATE_FORMAT(MAX(Tests.timeStart),'%d-%m-%Y %H:%i') AS last
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['last'];
+                        }
+                    }
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentNumberStarted
+     * @return  string
+     * @descr   print number of times started of the exam
+     */
+    public function qShowAssesmentNumberStarted($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            //check if the minscore or the maxscore are selected and execute the relative query
+            if(($minscore!=-1) && ($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select COUNT(Tests.timeStart) AS numberstart
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.idUser='$userparam' and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['numberstart'];
+                        }
+                    }
+                }
+                else{
+                    $query="select COUNT(Tests.timeStart) AS numberstart
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.email='$userparam' and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['numberstart'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select COUNT(Tests.timeStart) AS numberstart
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['numberstart'];
+                        }
+                    }
+                }
+                else{
+                    $query="select COUNT(Tests.timeStart) AS numberstart
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['numberstart'];
+                        }
+                    }
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentNumberNotFinished
+     * @return  string
+     * @descr   print number of times not finished of the exam
+     */
+    public function qShowAssesmentNumberNotFinished($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select COUNT(Tests.idTest) AS notfinished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Tests.status='b' and Users.idUser='$userparam' and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['notfinished'];
+                        }
+                    }
+                }
+                else{
+                    $query="select COUNT(Tests.idTest) AS notfinished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Tests.status='b' and Users.email='$userparam' and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['notfinished'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select COUNT(Tests.idTest) AS notfinished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Tests.status='b' and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['notfinished'];
+                        }
+                    }
+                }
+                else{
+                    $query="select COUNT(Tests.idTest) AS notfinished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Tests.status='b' and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['notfinished'];
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentNumberFinished
+     * @return  string
+     * @descr   print number of times finished of the exam
+     */
+    public function qShowAssesmentNumberFinished($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if (($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select COUNT(Tests.idTest) AS finished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finished'];
+                        }
+                    }
+                }
+                else{
+                    $query="select COUNT(Tests.idTest) AS finished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finished'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select COUNT(Tests.idTest) AS finished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finished'];
+                        }
+                    }
+                }
+                else{
+                    $query="select COUNT(Tests.idTest) AS finished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finished'];
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentMinScoreFinished
+     * @return  string
+     * @descr   print minimum score
+     */
+    public function qShowAssesmentMinScoreFinished($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select MIN(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+                else{
+                    $query="select MIN(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select MIN(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+                else{
+                    $query="select MIN(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentMaxScoreFinished
+     * @return  string
+     * @descr   print max score
+     */
+    public function qShowAssesmentMaxScoreFinished($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select MAX(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+                else{
+                    $query="select MAX(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select MAX(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+                else{
+                    $query="select MAX(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentMedScoreFinished
+     * @return  string
+     * @descr   print medium score
+     */
+    public function qShowAssesmentMedScoreFinished($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if (($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select AVG(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+                else{
+                    $query="select AVG(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select AVG(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+                else{
+                    $query="select AVG(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['finalscore'];
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentLeastTimeFinished
+     * @return  string
+     * @descr   print medium score
+     */
+    public function qShowAssesmentLeastTimeFinished($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select MIN(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS mintime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['mintime'];
+                        }
+                    }
+                }
+                else{
+                    $query="select MIN(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS mintime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['mintime'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select MIN(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS mintime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['mintime'];
+                        }
+                    }
+                }
+                else{
+                    $query="select MIN(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS mintime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['mintime'];
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentMostTimeFinished
+     * @return  string
+     * @descr   print medium score
+     */
+    public function qShowAssesmentMostTimeFinished($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if (($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select MAX(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS maxtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['maxtime'];
+                        }
+                    }
+                }
+                else{
+                    $query="select MAX(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS maxtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['maxtime'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select MAX(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS maxtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['maxtime'];
+                        }
+                    }
+                }
+                else{
+                    $query="select MAX(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS maxtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['maxtime'];
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentMediumTimeFinished
+     * @return  string
+     * @descr   print medium score
+     */
+    public function qShowAssesmentMediumTimeFinished($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['medtime'];
+                        }
+                    }
+                }
+                else{
+                    $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['medtime'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['medtime'];
+                        }
+                    }
+                }
+                else{
+                    $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['medtime'];
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentStdDeviation
+     * @return  string
+     * @descr   print std deviation
+     */
+    public function qShowAssesmentStdDeviation($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if (($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select STD(Tests.scoreFinal) AS stddeviation
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['stddeviation'];
+                        }
+                    }
+                }
+                else{
+                    $query="select STD(Tests.scoreFinal) AS stddeviation
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['stddeviation'];
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select STD(Tests.scoreFinal) AS stddeviation
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['stddeviation'];
+                        }
+                    }
+                }
+                else{
+                    $query="select STD(Tests.scoreFinal) AS stddeviation
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['stddeviation'];
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentDateTimeFirstTakenGroup
+     * @return  string
+     * @descr   print assesment date/time first taken
+     */
+    public function qShowAssesmentDateTimeFirstTakenGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query="select DATE_FORMAT(MIN(Tests.timeStart),'%d-%m-%Y %H:%i') AS first
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]' and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['first'];
+                    }
+                }
+            }
+            else{
+                $query="select DATE_FORMAT(MIN(Tests.timeStart),'%d-%m-%Y %H:%i') AS first
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['first'];
+                    }
+                }
+
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentDateTimeLastTakenGroup
+     * @return  string
+     * @descr   print assesment date/time last taken
+     */
+    public function qShowAssesmentDateTimeLastTakenGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query="select DATE_FORMAT(MAX(Tests.timeStart),'%d-%m-%Y %H:%i') AS last
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]' and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['last'];
+                    }
+                }
+            }
+            else{
+                $query="select DATE_FORMAT(MAX(Tests.timeStart),'%d-%m-%Y %H:%i') AS last
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['last'];
+                    }
+                }
+
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentDateTimeLastTakenGroup
+     * @return  string
+     * @descr   print assesment number of times started
+     */
+    public function qShowAssesmentNumberStartedGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query="select COUNT(Tests.timeStart) AS numberstart
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]' and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['numberstart'];
+                    }
+                }
+            }
+            else{
+                $query="select COUNT(Tests.timeStart) AS numberstart
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['numberstart'];
+                    }
+                }
+
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qLoadTopicUsers
+     * @return  array
+     * @descr   load an array of topics correlate to user selected's tests
+     */
+    public function qLoadTopicUser($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select Topics.name
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.idUser='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $usertopics=array();
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $usertopics[$index]=$row['name'];
+                            $index++;
+                        }
+                    }
+                }
+                else{
+                    $query="select Topics.name
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.email='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $usertopics=array();
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $usertopics[$index]=$row['name'];
+                            $index++;
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select Topics.name
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $usertopics=array();
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $usertopics[$index]=$row['name'];
+                            $index++;
+                        }
+                    }
+                }
+                else{
+                    $query="select Topics.name
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $usertopics=array();
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $usertopics[$index]=$row['name'];
+                            $index++;
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $usertopics;
+    }
+
+    /**
+     * @name    qShowTopicMedScore
+     * @return  string
+     * @descr   show med score of participant's topic
+     */
+    public function qShowTopicMedScore($topic,$userparam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $found=strpos($userparam,"@");
+            if ($found==false){
+                $query="select AVG(Tests.scoreFinal) AS avgtopic
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.idUser='$userparam'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['avgtopic'];
+                    }
+                }
+            }
+            else{
+                $query="select AVG(Tests.scoreFinal) AS avgtopic
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.email='$userparam'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['avgtopic'];
+
+                    }
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowTopicMinScore
+     * @return  string
+     * @descr   show min score of participant's topic
+     */
+    public function qShowTopicMinScore($topic,$userparam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $found=strpos($userparam,"@");
+            if ($found==false){
+                $query="select MIN(Tests.scoreFinal) AS mintopic
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.idUser='$userparam'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['mintopic'];
+                    }
+                }
+            }
+            else{
+                $query="select MIN(Tests.scoreFinal) AS mintopic
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.email='$userparam'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['mintopic'];
+
+                    }
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowTopicMaxScore
+     * @return  string
+     * @descr   show max score of particitant's topics
+     */
+    public function qShowTopicMaxScore($topic,$userparam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $found=strpos($userparam,"@");
+            if ($found==false){
+                $query="select MAX(Tests.scoreFinal) AS maxtopic
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.idUser='$userparam'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['maxtopic'];
+                    }
+                }
+            }
+            else{
+                $query="select MAX(Tests.scoreFinal) AS maxtopic
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.email='$userparam'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['maxtopic'];
+
+                    }
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowTopicStdDeviation
+     * @return  string
+     * @descr   show std deviation of particitant's topics
+     */
+    public function qShowTopicStdDeviation($topic,$userparam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $found=strpos($userparam,"@");
+            if ($found==false){
+                $query="select STD(Tests.scoreFinal) AS stdtopic
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.idUser='$userparam'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['stdtopic'];
+                    }
+                }
+            }
+            else{
+                $query="select STD(Tests.scoreFinal) AS stdtopic
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.email='$userparam'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['stdtopic'];
+
+                    }
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qLoadAssesmentScores
+     * @return  array
+     * @descr   load an array of assesments scores
+     */
+    public function qLoadAssesmentScores($exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if (($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select Tests.scoreFinal
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $assesmentsdata[$index]=$row['scoreFinal'];
+                            $index++;
+                        }
+                    }
+                }
+                else{
+                    $query="select Tests.scoreFinal
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $assesmentsdata[$index]=$row['scoreFinal'];
+                            $index++;
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    $query="select Tests.scoreFinal
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $assesmentsdata[$index]=$row['scoreFinal'];
+                            $index++;
+                        }
+                    }
+                }
+                else{
+                    $query="select Tests.scoreFinal
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $assesmentsdata[$index]=$row['scoreFinal'];
+                            $index++;
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $assesmentsdata;
+    }
+
+    /**
+     * @name    qLoadTopicScores
+     * @return  array
+     * @descr   load an array of topic scores for the histogram
+     */
+    public function qLoadTopicScores($usertopics,$exam,$userparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if (($minscore!=-1)&&($maxscore!=-1)){
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    foreach($usertopics as $topic){
+                        $query="select Tests.scoreFinal
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Topics.name='$topic' and Users.idUser='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                        $this->execQuery($query);
+                        if($this->numResultRows()>0){
+                            while($row=mysqli_fetch_array($this->result)){
+                                $topicsdata[$topic]=$row['scoreFinal'];
+                            }
+                        }
+                    }
+
+                }
+                else{
+                    foreach($usertopics as $topic){
+                        $query="select Tests.scoreFinal
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Topics.name='$topic' and Users.email='$userparam'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                        $this->execQuery($query);
+                        if($this->numResultRows()>0){
+                            while($row=mysqli_fetch_array($this->result)){
+                                $topicsdata[$topic]=$row['scoreFinal'];
+                            }
+                        }
+                    }
+                }
+            }
+            else{
+                $found=strpos($userparam,"@");
+                if ($found==false){
+                    foreach($usertopics as $topic){
+                        $query="select Tests.scoreFinal
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Topics.name='$topic' and Users.idUser='$userparam'";
+                        $this->execQuery($query);
+                        if($this->numResultRows()>0){
+                            while($row=mysqli_fetch_array($this->result)){
+                                $topicsdata[$topic]=$row['scoreFinal'];
+                            }
+                        }
+                    }
+
+                }
+                else{
+                    foreach($usertopics as $topic){
+                        $query="select Tests.scoreFinal
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Topics.name='$topic' and Users.email='$userparam'";
+                        $this->execQuery($query);
+                        if($this->numResultRows()>0){
+                            while($row=mysqli_fetch_array($this->result)){
+                                $topicsdata[$topic]=$row['scoreFinal'];
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $topicsdata;
+    }
+
+    /**
+     * @name    qLoadStudent
+     * @return  string
+     * @descr   print name of student by selected parameter
+     */
+    public function qLoadStudent($userparam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $found=strpos($userparam,"@");
+            if ($found==false) {
+                $query = "select Users.name,Users.surname
+                          from Users
+                          where Users.idUser='$userparam'";
+                $this->execQuery($query);
+                if ($this->numResultRows() > 0) {
+                    while ($row = mysqli_fetch_array($this->result)) {
+                        $val=$row['name']." ".$row['surname'];
+                    }
+                }
+            }
+            else{
+                $query = "select Users.name,Users.surname
+                          from Users
+                          where Users.email='$userparam'";
+                $this->execQuery($query);
+                if ($this->numResultRows() > 0) {
+                    while ($row = mysqli_fetch_array($this->result)) {
+                        $val=$row['name']." ".$row['surname'];
+                    }
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qLoadExams
+     * @return  array
+     * @descr   load array of all exams
+     */
+    public function qLoadExams(){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "select distinct Subjects.name
+                      from Subjects";
+            $this->execQuery($query);
+            if ($this->numResultRows() > 0) {
+                $i=0;
+                while ($row = mysqli_fetch_array($this->result)) {
+                    $val[$i]=$row['name'];
+                    $i++;
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
     /*******************************************************************
      *                              mysqli                              *
      *******************************************************************/
