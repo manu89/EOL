@@ -47,6 +47,7 @@ $config['systemUploadDir'] = '/uploads/';
 $config['datatablesTextLength'] = 100;
 // Ellipsis
 $config['ellipsis'] = ' [...]';
+$config['systemLogo']='logo';
 
 /*----------------------------------*
  *  All database configurations     *
