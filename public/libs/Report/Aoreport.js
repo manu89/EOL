@@ -2,8 +2,8 @@
  * Created by michele on 22/10/15.
  */
 var exams=new Array(100);//array of selected exams
-var user; //variable used for userid
-var paramuser; //variable that contain the user id or email want to show on the report
+var user=""; //variable used for userid
+var paramuser=""; //variable that contain the user id or email want to show on the report
 var groups=new Array(100);//array of selected groups
 var minscore;//variable that contain the minimal score of the exam to show
 var maxscore;//variable that contain the maximum score of the exam to show
@@ -207,12 +207,12 @@ function unlock(el,el1,el2){
     if(el.checked){
         el1.disabled = false;
         el2.disabled = false;
+        showErrorMessage(ttReportScoreFilter);
     }
     else{
         el1.disabled = "disabled";
         el2.disabled = "disabled";
     }
-
 }
 
 /**
@@ -272,6 +272,7 @@ function addStudent(iduser){
  */
 function removePartecipant(iduser){
     $("#student").html("");
+    user="";
 }
 
 
@@ -339,6 +340,7 @@ function addStudentDetail(param){
  */
 function removePartecipantDetail(){
     $("#studentDetail").html("");
+    paramuser="";
 }
 
 /**
@@ -439,21 +441,49 @@ function removeGroup(group){
 function transferData(min,max){
     minscore=($("#assesmentScore").is(":checked"))? min:-1; //check if minscore is enable and eventually return the value
     maxscore=($("#assesmentScore").is(":checked"))? max:-1; //check if maxscore is enable and eventually return the value
-    $.ajax({
-        url     : "index.php?page=report/aoreportparameters",
-        type    : "post",
-        data    : {
-            iduser : paramuser,
-            exams : JSON.stringify(exams),
-            minscore: minscore,
-            maxscore: maxscore,
-            groups: JSON.stringify(groups)
-        },
-        success : function (data){
-            window.location.assign("index.php?page=report/aoreporttemplate")
-        },
-        error : function (request, status, error) {
-            alert("jQuery AJAX request error:".error);
+    if($("#student").text()!=""){
+        if (paramuser!=""){
+            $.ajax({
+                url     : "index.php?page=report/aoreportparameters",
+                type    : "post",
+                data    : {
+                    iduser : paramuser,
+                    exams : JSON.stringify(exams),
+                    minscore: minscore,
+                    maxscore: maxscore,
+                    groups: JSON.stringify(groups)
+                },
+                success : function (data){
+                    window.location.assign("index.php?page=report/aoreporttemplate")
+                },
+                error : function (request, status, error) {
+                    alert("jQuery AJAX request error:".error);
+                }
+            });
         }
-    });
+        else{
+            showErrorMessage(ttErrorUserParameter);
+        }
+
+    }
+    else{
+        $.ajax({
+            url     : "index.php?page=report/aoreportparameters",
+            type    : "post",
+            data    : {
+                iduser : paramuser,
+                exams : JSON.stringify(exams),
+                minscore: minscore,
+                maxscore: maxscore,
+                groups: JSON.stringify(groups)
+            },
+            success : function (data){
+                window.location.assign("index.php?page=report/aoreporttemplate")
+            },
+            error : function (request, status, error) {
+                alert("jQuery AJAX request error:".error);
+            }
+        });
+    }
+
 }

@@ -1133,3 +1133,6 @@
 12/03/2015 14:14:01 - array (
   0 => '1',
 )
+12/10/2015 12:34:23 - qLoadAllStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+12/10/2015 14:07:33 - qLoadAllStudent : Unknown column 'Exam.status' in 'where clause'
+12/10/2015 14:09:33 - qLoadAllStudent : Unknown column 'Exam.status' in 'where clause'

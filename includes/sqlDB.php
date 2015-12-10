@@ -3410,9 +3410,12 @@ class sqlDB {
             $this->execQuery($query);
             if($this->numResultRows()>0){
                 while($row=mysqli_fetch_array($this->result)){
-                    echo "<option value='$row[idUser]'>".$row['idUser']."</option>";
+                    echo "<option value='$row[idUser]'>User_".$row['idUser']."</option>";
                     echo "<option value='$row[email]'>".$row['email']."</option>";
                 }
+            }
+            else{
+                echo "<option>".ttReportErrorDetail."</option>";
             }
         }
         catch(Exception $ex){
@@ -4147,7 +4150,7 @@ class sqlDB {
     /**
      * @name    qShowAssesmentLeastTimeFinished
      * @return  string
-     * @descr   print medium score
+     * @descr   print least time of assesment finished
      */
     public function qShowAssesmentLeastTimeFinished($exam,$userparam,$minscore,$maxscore){
         global $log;
@@ -4571,6 +4574,427 @@ class sqlDB {
     }
 
     /**
+     * @name    qShowAssesmentNumberNotFinished
+     * @return  string
+     * @descr   print number of times not finished of the exam
+     */
+    public function qShowAssesmentNumberNotFinishedGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                    $query="select COUNT(Tests.idTest) AS notfinished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Tests.status='b'
+                        and Users.group='$groups[0]' and Users.group='$groups[1]' and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['notfinished'];
+                        }
+                    }
+            }
+            else{
+                    $query="select COUNT(Tests.idTest) AS notfinished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Tests.status='b' and Users.group='$groups[0]' and Users.group='$groups[1]'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $val=$row['notfinished'];
+                        }
+                    }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentNumberFinishedGroup
+     * @return  string
+     * @descr   print number of times finished of the exam
+     */
+    public function qShowAssesmentNumberFinishedGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query="select COUNT(Tests.idTest) AS finished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['finished'];
+                    }
+                }
+            }
+            else{
+                $query="select COUNT(Tests.idTest) AS finished
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['finished'];
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentMinScoreFinishedGroup
+     * @return  string
+     * @descr   print min score of finished assesment
+     */
+    public function qShowAssesmentMinScoreFinishedGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query="select MIN(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['finalscore'];
+                    }
+                }
+            }
+            else{
+                $query="select MIN(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['finalscore'];
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentMaxScoreFinishedGroup
+     * @return  string
+     * @descr   print max score of finished assesment
+     */
+    public function qShowAssesmentMaxScoreFinishedGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query="select MAX(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['finalscore'];
+                    }
+                }
+            }
+            else{
+                $query="select MAX(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['finalscore'];
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentMedScoreFinishedGroup
+     * @return  string
+     * @descr   print med score of finished assesment
+     */
+    public function qShowAssesmentMedScoreFinishedGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query="select AVG(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['finalscore'];
+                    }
+                }
+            }
+            else{
+                $query="select AVG(Tests.scoreFinal) AS finalscore
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['finalscore'];
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentLeastTimeFinishedGroup
+     * @return  string
+     * @descr   print least time of assesment
+     */
+    public function qShowAssesmentLeastTimeFinishedGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query="select MIN(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS mintime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['mintime'];
+                    }
+                }
+            }
+            else{
+                $query="select MIN(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS mintime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['mintime'];
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentMostTimeFinishedGroup
+     * @return  string
+     * @descr   print most time of assesment
+     */
+    public function qShowAssesmentMostTimeFinishedGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query="select MAX(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS maxtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['maxtime'];
+                    }
+                }
+            }
+            else{
+                $query="select MAX(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS maxtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['maxtime'];
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentMediumTimeFinishedGroup
+     * @return  string
+     * @descr   print medium time of assesment
+     */
+    public function qShowAssesmentMediumTimeFinishedGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['medtime'];
+                    }
+                }
+            }
+            else{
+                $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['medtime'];
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowAssesmentStdDeviationGroup
+     * @return  string
+     * @descr   print medium time of assesment
+     */
+    public function qShowAssesmentStdDeviationGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query="select STD(Tests.scoreFinal) AS stddeviation
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['stddeviation'];
+                    }
+                }
+            }
+            else{
+                $query="select STD(Tests.scoreFinal) AS stddeviation
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['stddeviation'];
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
      * @name    qLoadTopicUsers
      * @return  array
      * @descr   load an array of topics correlate to user selected's tests
@@ -4833,6 +5257,169 @@ class sqlDB {
     }
 
     /**
+     * @name    qLoadTopicGroup
+     * @return  array
+     * @descr   load an array of topics correlate to group selected's tests
+     */
+    public function qLoadTopicGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                    $query="select Topics.name
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $topics=array();
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $topics[$index]=$row['name'];
+                            $index++;
+                        }
+                    }
+            }
+            else{
+                    $query="select Topics.name
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $topics=array();
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $topics[$index]=$row['name'];
+                            $index++;
+                        }
+                    }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $topics;
+    }
+
+    /**
+     * @name    qShowTopicMedScoreGroup
+     * @return  string
+     * @descr   show med score of participant's topic
+     */
+    public function qShowTopicMedScoreGroup($topic,$groupparam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+                $query="select AVG(Tests.scoreFinal) AS avgtopic
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($query);
+                if($this->numResultRows()>0){
+                    while($row=mysqli_fetch_array($this->result)){
+                        $val=$row['avgtopic'];
+                    }
+                }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowTopicMindScoreGroup
+     * @return  string
+     * @descr   show min score of participant's topic
+     */
+    public function qShowTopicMinScoreGroup($topic,$groupparam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            $query="select MIN(Tests.scoreFinal) AS mintopic
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+            $this->execQuery($query);
+            if($this->numResultRows()>0){
+                while($row=mysqli_fetch_array($this->result)){
+                    $val=$row['mintopic'];
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowTopicMaxScoreGroup
+     * @return  string
+     * @descr   show max score of participant's topic
+     */
+    public function qShowTopicMaxScoreGroup($topic,$groupparam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            $query="select MAX(Tests.scoreFinal) AS maxtopic
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+            $this->execQuery($query);
+            if($this->numResultRows()>0){
+                while($row=mysqli_fetch_array($this->result)){
+                    $val=$row['maxtopic'];
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
+     * @name    qShowTopicStdDeviationGroup
+     * @return  string
+     * @descr   show std deviation of participant's topic
+     */
+    public function qShowTopicStdDeviationGroup($topic,$groupparam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            $query="select STD(Tests.scoreFinal) AS stddeviation
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+            $this->execQuery($query);
+            if($this->numResultRows()>0){
+                while($row=mysqli_fetch_array($this->result)){
+                    $val=$row['stddeviation'];
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
      * @name    qLoadAssesmentScores
      * @return  array
      * @descr   load an array of assesments scores
@@ -4905,6 +5492,57 @@ class sqlDB {
                         }
                     }
                 }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $assesmentsdata;
+    }
+
+    /**
+     * @name    qLoadAssesmentScoresGroup
+     * @return  array
+     * @descr   load an array of assesments scores
+     */
+    public function qLoadAssesmentScoresGroup($exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if (($minscore!=-1)&&($maxscore!=-1)){
+                    $query="select Tests.scoreFinal
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $assesmentsdata[$index]=$row['scoreFinal'];
+                            $index++;
+                        }
+                    }
+            }
+            else{
+                    $query="select Tests.scoreFinal
+                        FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
+                        ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $index=0;
+                        while($row=mysqli_fetch_array($this->result)){
+                            $assesmentsdata[$index]=$row['scoreFinal'];
+                            $index++;
+                        }
+                    }
             }
 
         }
@@ -5001,6 +5639,58 @@ class sqlDB {
     }
 
     /**
+     * @name    qLoadTopicScoresGroup
+     * @return  array
+     * @descr   load an array of topic scores
+     */
+    public function qLoadTopicScoresGroup($grouptopics,$exam,$groupparam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $groups=explode("-",$groupparam);
+        try {
+            if (($minscore!=-1)&&($maxscore!=-1)){
+                foreach($grouptopics as $topic){
+                    $query="select Tests.scoreFinal
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Topics.name='$topic'
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $topicsdata[$topic]=$row['scoreFinal'];
+                        }
+                    }
+                }
+
+            }
+            else{
+                foreach($grouptopics as $topic){
+                    $query="select Tests.scoreFinal
+                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                        where Subjects.name='$exam' and Topics.name='$topic'
+                        and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            $topicsdata[$topic]=$row['scoreFinal'];
+                        }
+                    }
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $topicsdata;
+    }
+
+    /**
      * @name    qLoadStudent
      * @return  string
      * @descr   print name of student by selected parameter
@@ -5038,6 +5728,54 @@ class sqlDB {
             $log->append(__FUNCTION__." : ".$this->getError());
         }
         return $val;
+    }
+
+    /**
+     * @name    qLoadAllStudent
+     * @return  array
+     * @descr   load all user
+     */
+    public function qLoadAllStudent($exam,$minscore,$maxscore){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                $query ="SELECT DISTINCT Users.idUser
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
+                        and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                $this->execQuery($query);
+                if ($this->numResultRows() > 0) {
+                    $students=array();
+                    $i=0;
+                    while ($row = mysqli_fetch_array($this->result)) {
+                        $students[$i]=$row['idUser'];
+                        $i++;
+                    }
+                }
+            }
+            else{
+                $query ="SELECT DISTINCT Users.idUser
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')";
+                $this->execQuery($query);
+                if ($this->numResultRows() > 0) {
+                    $students=array();
+                    $i=0;
+                    while ($row = mysqli_fetch_array($this->result)) {
+                        $students[$i]=$row['idUser'];
+                        $i++;
+                    }
+                }
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $students;
     }
 
     /**
