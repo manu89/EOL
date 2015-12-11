@@ -1136,3 +1136,13 @@
 12/10/2015 12:34:23 - qLoadAllStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
 12/10/2015 14:07:33 - qLoadAllStudent : Unknown column 'Exam.status' in 'where clause'
 12/10/2015 14:09:33 - qLoadAllStudent : Unknown column 'Exam.status' in 'where clause'
+12/11/2015 14:44:38 - qInsertTemplate : Duplicate entry 'template_4' for key 'name'
+12/11/2015 14:48:55 - qInsertTemplate : Duplicate entry 'template_4' for key 'name'
+12/11/2015 14:51:37 - qInsertTemplate : Duplicate entry 'template_4' for key 'name'
+12/11/2015 14:52:39 - qInsertTemplate : Duplicate entry 'template_4' for key 'name'
+12/11/2015 14:54:28 - qInsertTemplate : Duplicate entry 'template_4' for key 'name'
+12/11/2015 16:46:38 - qInsertTemplate : Duplicate entry 'template_4' for key 'name'
+12/11/2015 16:47:11 - qInsertTemplate : Duplicate entry 'template_4' for key 'name'
+12/11/2015 16:56:11 - qInsertTemplate : Duplicate entry 'template_7' for key 'name'
+12/11/2015 16:57:18 - qInsertTemplate : Duplicate entry 'template_10' for key 'name'
+12/11/2015 22:33:50 - 11/12/2015 22:33

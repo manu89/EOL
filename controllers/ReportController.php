@@ -1733,7 +1733,109 @@ class ReportController extends Controller{
 
         $pdf->Output();
 
+    }
 
+    /**
+     *  @name   actionSavetemplate
+     *  @descr  Save a Report Template
+     */
+    private function actionSavetemplate(){
+        if (isset($_POST['assesmentName'])){
+            $assesmentName=1;
+        }else{$assesmentName=0;}
+
+        if (isset($_POST['assesmentID'])){
+            $assesmentID=1;
+        }else{$assesmentID=0;}
+
+        if (isset($_POST['assesmentAuthor'])){
+            $assesmentAuthor=1;
+        }else{$assesmentAuthor=0;}
+
+        if (isset($_POST['assesmentDateTimeFirst'])){
+            $assesmentDateTimeFirst=1;
+        }else{$assesmentDateTimeFirst=0;}
+
+        if (isset($_POST['assesmentDateTimeLast'])){
+            $assesmentDateTimeLast=1;
+        }else{$assesmentDateTimeLast=0;}
+
+        if (isset($_POST['assesmentLeastTimeFinished'])){
+            $assesmentLeastTimeFinished=1;
+        }else{$assesmentLeastTimeFinished=0;}
+
+        if (isset($_POST['assesmentNumberStarted'])){
+            $assesmentNumberStarted=1;
+        }else{$assesmentNumberStarted=0;}
+
+        if (isset($_POST['assesmentNumberNotFinished'])){
+            $assesmentNumberNotFinished=1;
+        }else{$assesmentNumberNotFinished=0;}
+
+        if (isset($_POST['assesmentNumberFinished'])){
+            $assesmentNumberFinished=1;
+        }else{$assesmentNumberFinished=0;}
+
+        if (isset($_POST['assesmentMinscoreFinished'])){
+            $assesmentMinscoreFinished=1;
+        }else{$assesmentMinscoreFinished=0;}
+
+        if (isset($_POST['assesmentMaxscoreFinished'])){
+            $assesmentMaxscoreFinished=1;
+        }else{$assesmentMaxscoreFinished=0;}
+
+        if (isset($_POST['assesmentMediumFinished'])){
+            $assesmentMediumFinished=1;
+        }else{$assesmentMediumFinished=0;}
+        if (isset($_POST['assesmentMostTimeFinished'])){
+            $assesmentMostTimeFinished=1;
+        }else{$assesmentMostTimeFinished=0;}
+
+        if (isset($_POST['assesmentMediumTimeFinished'])){
+            $assesmentMediumTimeFinished=1;
+        }else{$assesmentMediumTimeFinished=0;}
+
+        if (isset($_POST['assesmentStdDeviation'])){
+            $assesmentStdDeviation=1;
+        }else{$assesmentStdDeviation=0;}
+
+        if (isset($_POST['topicAverageScore'])){
+            $topicAverageScore=1;
+        }else{$topicAverageScore=0;}
+
+        if (isset($_POST['topicMinimumScore'])){
+            $topicMinimumScore=1;
+        }else{$topicMinimumScore=0;}
+
+        if (isset($_POST['topicMaximumScore'])){
+            $topicMaximumScore=1;
+        }else{$topicMaximumScore=0;}
+
+        if (isset($_POST['topicStdDeviation'])){
+            $topicStdDeviation=1;
+        }else{$topicStdDeviation=0;}
+
+        if (isset($_POST['graphicHistogram'])){
+            $graphicHistogram=1;
+        }else{$graphicHistogram=0;}
+
+        if (isset($_POST['graphicTopicScore'])){
+            $graphicTopicScore=1;
+        }else{$graphicTopicScore=0;}
+
+        $db=new sqlDB();
+        if($db->qInsertTemplate($_POST['templateName'],$assesmentName,$assesmentID,$assesmentAuthor,$assesmentDateTimeFirst,$assesmentDateTimeLast,$assesmentNumberStarted,$assesmentNumberNotFinished,$assesmentNumberFinished,$assesmentMinscoreFinished,$assesmentMaxscoreFinished,$assesmentMediumFinished,$assesmentLeastTimeFinished,$assesmentMostTimeFinished,$assesmentMediumTimeFinished,$assesmentStdDeviation,$topicAverageScore,$topicMinimumScore,$topicMaximumScore,$topicStdDeviation,$graphicHistogram,$graphicTopicScore)){
+            echo "true";
+        }
+
+
+    }
+
+    private function actionLoadtemplate(){
+        global $log;
+        $db=new sqlDB();
+        $checkbox=json_encode($db->qLoadCheckboxTemplate($_POST['templateName']));
+        echo $checkbox;
     }
 
     /**
@@ -1754,8 +1856,9 @@ class ReportController extends Controller{
                 'allow',
                 'actions' => array('Index', 'Aoreport','Showassesments','Showpartecipant',
                     'Showstudent','Addstudent','Aoreporttemplate','Showparticipantdetails',
-                    'Printparticipantdetails','Aoreportparameters','Showgroups','Aoreportresult'),
-                'roles'   => array('a','e'),
+                    'Printparticipantdetails','Aoreportparameters','Showgroups','Aoreportresult',
+                    'Savetemplate','Loadtemplate'),
+                'roles'   => array('a','e','t','at'),
             ),
             array(
                 'deny',

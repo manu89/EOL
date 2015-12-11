@@ -20,13 +20,17 @@ global $config, $user;
     <div id="assesmentCustomize">
 
         <?php
+        $db=new sqlDB();
         openBox(ttAssesmentOverview, 'normal', 'report');
 
         ?>
             <h1><?=ttReportCustomize?></h1>
             <hr>
             <div>
-                <select id="template" size="1"></select>
+                <?=ttReportTemplateLoad?> <select id="template" size="1" onchange="LoadCheckbox()"><?if (!($db->qLoadReportTemplate())){echo "errore query";}?></select>
+                <br><br>
+                <?=ttReportTemplateSave?> <input type="text" placeholder="<?=ttReportTemplateName?>" id="template_name"/>
+                <a class="normal button" id="save" onclick="saveTemplate()"><?=ttSave?></a>
             </div>
             <h3><?=ttReportAssessmentInformation?></h3>
             <hr>
@@ -43,77 +47,77 @@ global $config, $user;
                 <tbody>
                     <tr>
                         <td><?=ttReportAssesmentName?></td>
-                        <td><input type="checkbox" name="assesmentName" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentName" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentID?></td>
-                        <td><input type="checkbox" name="assesmentID" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentID" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentAuthor?></td>
-                        <td><input type="checkbox" name="assesmentAuthor" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentAuthor" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentDateTimeFirst?></td>
-                        <td><input type="checkbox" name="assesmentDateTimeFirst" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentDateTimeFirst" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentDateTimeLast?></td>
-                        <td><input type="checkbox" name="assesmentDateTimeLast" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentDateTimeLast" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentNumberStarted?></td>
-                        <td><input type="checkbox" name="assesmentNumberStarted" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentNumberStarted" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentNumberNotFinished?></td>
-                        <td><input type="checkbox" name="assesmentNumberNotFinished" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentNumberNotFinished" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentNumberFinished?></td>
-                        <td><input type="checkbox" name="assesmentNumberFinished" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentNumberFinished" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentMinscoreFinished?></td>
-                        <td><input type="checkbox" name="assesmentMinscoreFinished" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentMinscoreFinished" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentMaxcoreFinished?></td>
-                        <td><input type="checkbox" name="assesmentMaxscoreFinished" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentMaxscoreFinished" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentMediumFinished?></td>
-                        <td><input type="checkbox" name="assesmentMediumFinished" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentMediumFinished" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentLeastTimeFinished?></td>
-                        <td><input type="checkbox" name="assesmentLeastTimeFinished" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentLeastTimeFinished" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentMostTimeFinished?></td>
-                        <td><input type="checkbox" name="assesmentMostTimeFinished" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentMostTimeFinished" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentMediumTimeFinished?></td>
-                        <td><input type="checkbox" name="assesmentMediumTimeFinished" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentMediumTimeFinished" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
                     <tr>
                         <td><?=ttReportAssesmentStdDeviation?></td>
-                        <td><input type="checkbox" name="assesmentStdDeviation" class="checkass"></td>
+                        <td><input type="checkbox" name="assesmentStdDeviation" class="checkass" value="si"></td>
                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                     </tr>
 
@@ -121,8 +125,8 @@ global $config, $user;
                 <tfoot>
                     <tr>
                         <td></td>
-                        <td><a class="normal button" id="selectall" onclick="selectAllAssesment()"><?=ttSelectAll?></td>
-                        <td><a class="normal button" id="resetorder" onclick=""><?=ttResetOrder?></td>
+                        <td><a class="normal button" id="selectall" onclick="selectAllAssesment()"><?=ttSelectAll?></a></td>
+                        <td><a class="normal button" id="resetorder" onclick=""><?=ttResetOrder?></a></td>
                     </tr>
                 </tfoot>
             </table>
@@ -144,22 +148,22 @@ global $config, $user;
                             <tbody>
                                 <tr>
                                     <td><?=ttReportTopicAverageScore?></td>
-                                    <td><input type="checkbox" name="topicAverageScore" class="checktopic"></td>
+                                    <td><input type="checkbox" name="topicAverageScore" class="checktopic" value="si"></td>
                                     <td><input type="number" min="1" max="23" id="" class="order"></td>
                                 </tr>
                                 <tr>
                                     <td><?=ttReportTopicMinimumScore?></td>
-                                    <td><input type="checkbox" name="topicMinimumScore" class="checktopic"></td>
+                                    <td><input type="checkbox" name="topicMinimumScore" class="checktopic" value="si"></td>
                                     <td><input type="number" min="1" max="23" id="" class="order"></td>
                                 </tr>
                                 <tr>
                                     <td><?=ttReportTopicMaximumScore?></td>
-                                    <td><input type="checkbox" name="topicMaximumScore" class="checktopic"></td>
+                                    <td><input type="checkbox" name="topicMaximumScore" class="checktopic" value="si"></td>
                                     <td><input type="number" min="1" max="23" id="" class="order"></td>
                                 </tr>
                                 <tr>
                                     <td><?=ttReportTopicStandardDeviation?></td>
-                                    <td><input type="checkbox" name="topicStdDeviation" class="checktopic"></td>
+                                    <td><input type="checkbox" name="topicStdDeviation" class="checktopic" value="si"></td>
                                     <td><input type="number" min="1" max="23" id="" class="order"></td>
                                 </tr>
 
@@ -167,8 +171,8 @@ global $config, $user;
                             <tfoot>
                                 <tr>
                                     <td></td>
-                                    <td><a class="normal button" id="selectallt" onclick="selectAllTopic()"><?=ttSelectAll?></td>
-                                    <td><a class="normal button" id="resetordert" onclick=""><?=ttResetOrder?></td>
+                                    <td><a class="normal button" id="selectallt" onclick="selectAllTopic()"><?=ttSelectAll?></a></td>
+                                    <td><a class="normal button" id="resetordert" onclick=""><?=ttResetOrder?></a></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -190,12 +194,12 @@ global $config, $user;
                                 <tbody>
                                     <tr>
                                         <td><?=ttReportGraphicHistogram?></td>
-                                        <td><input type="checkbox" name="graphicHistogram" class="checkgraphic"></td>
+                                        <td><input type="checkbox" name="graphicHistogram" class="checkgraphic" value="si"></td>
                                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                                     </tr>
                                     <tr>
                                         <td><?=ttReportGraphicTopicScore?></td>
-                                        <td><input type="checkbox" name="graphicTopicScore" class="checkgraphic"></td>
+                                        <td><input type="checkbox" name="graphicTopicScore" class="checkgraphic" value="si"></td>
                                         <td><input type="number" min="1" max="23" id="" class="order"></td>
                                     </tr>
                                     <!-- <tr>
@@ -207,8 +211,8 @@ global $config, $user;
                                 <tfoot>
                                     <tr>
                                         <td></td>
-                                        <td><a class="normal button" id="selectallg" onclick="selectAllGraphic()"><?=ttSelectAll?></td>
-                                        <td><a class="normal button" id="resetorder" onclick=""><?=ttResetOrder?></td>
+                                        <td><a class="normal button" id="selectallg" onclick="selectAllGraphic()"><?=ttSelectAll?></a></td>
+                                        <td><a class="normal button" id="resetorder" onclick=""><?=ttResetOrder?></a></td>
                                     </tr>
                                 </tfoot>
                             </table>

@@ -5805,6 +5805,92 @@ class sqlDB {
         return $val;
     }
 
+    /**
+     * @name    qInsertTemplate
+     * @return  boolean
+     * @descr   insert a Report Template
+     */
+    public function qInsertTemplate($name,$assesmentName,$assesmentID,$assesmentAuthor,$assesmentDateTimeFirst,$assesmentDateTimeLast,$assesmentNumberStarted,$assesmentNumberNotFinished,$assesmentNumberFinished,$assesmentMinscoreFinished,$assesmentMaxscoreFinished,$assesmentMediumFinished,$assesmentLeastTimeFinished,$assesmentMostTimeFinished,$assesmentMediumTimeFinished,$assesmentStdDeviation,$topicAverageScore,$topicMinimumScore,$topicMaximumScore,$topicStdDeviation,$graphicHistogram,$graphicTopicScore){
+        global $log,$user;
+        $this->result = null;
+        $ack=true;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "INSERT INTO ReportTemplate (name,assesmentName,assesmentID,assesmentAuthor,assesmentDateTimeFirst,
+                      assesmentDateTimeLast,assesmentNumberStarted,assesmentNumberNotFinished,assesmentNumberFinished,
+                      assesmentMinscoreFinished,assesmentMaxscoreFinished,assesmentMediumFinished,assesmentLeastTimeFinished,
+                      assesmentMostTimeFinished,assesmentMediumTimeFinished,assesmentStdDeviation,topicAverageScore,topicMinimumScore,
+                      topicMaximumScore,topicStdDeviation, graphicHistogram,graphicTopicScore,fkUser)
+                     VALUES ('$name','$assesmentName','$assesmentID','$assesmentAuthor','$assesmentDateTimeFirst',
+                     '$assesmentDateTimeLast','$assesmentNumberStarted','$assesmentNumberNotFinished',
+                     '$assesmentNumberFinished','$assesmentMinscoreFinished','$assesmentMaxscoreFinished','$assesmentMediumFinished',
+                     '$assesmentLeastTimeFinished','$assesmentMostTimeFinished','$assesmentMediumTimeFinished','$assesmentStdDeviation',
+                     '$topicAverageScore','$topicMinimumScore',
+                     '$topicMaximumScore','$topicStdDeviation','$graphicHistogram','$graphicTopicScore','$user->id')";
+            $this->execQuery($query);
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
+    /**
+     * @name    qLoadReportTemplate
+     * @return  string
+     * @descr   load template already save by the current user
+     */
+    public function qLoadReportTemplate(){
+        global $log,$user;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "SELECT ReportTemplate.name
+                    FROM ReportTemplate
+                    WHERE ReportTemplate.fkUser='$user->id'";
+            $this->execQuery($query);
+            if ($this->numResultRows() > 0) {
+                echo "<option>".ttReportSelectTemplate."</option>";
+                while ($row = mysqli_fetch_array($this->result)) {
+                    echo "<option value=".$row['name'].">".$row['name']."</option>";
+                }
+            }
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
+    /**
+     * @name    qLoadCheckboxTemplate
+     * @return  array
+     * @descr   load checkbox depends to Template selected
+     */
+    public function qLoadCheckboxTemplate($tname){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "SELECT *
+                    FROM ReportTemplate
+                    WHERE ReportTemplate.name='$tname'";
+            $this->execQuery($query);
+            if ($this->numResultRows() > 0) {
+                $row = mysqli_fetch_array($this->result);
+            }
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $row;
+    }
+
     /*******************************************************************
      *                              mysqli                              *
      *******************************************************************/
