@@ -124,12 +124,12 @@ class ReportController extends Controller{
 
         $groups=json_decode($_POST['groups']);
         if (($groups[0]!="") or ($groups[0]!=null)){
-            if(!($db->qShowStudentGroup($groups,$exams=json_decode($_POST['exams']),$_POST['minscore'],$_POST['maxscore']))){
+            if(!($db->qShowStudentGroup($groups,$exams=json_decode($_POST['exams']),$_POST['minscore'],$_POST['maxscore'],$_POST['datein'],$_POST['datefn']))){
                 echo "query error check the log file";
             }
         }
         else{
-            if(!($db->qShowStudent($exams=json_decode($_POST['exams']),$_POST['minscore'],$_POST['maxscore']))){
+            if(!($db->qShowStudent($exams=json_decode($_POST['exams']),$_POST['minscore'],$_POST['maxscore'],$_POST['datein'],$_POST['datefn']))){
                 echo "query error check the log file";
             }
         }
@@ -187,6 +187,8 @@ class ReportController extends Controller{
         $_SESSION['groupsparam']=json_decode($_POST['groups']);
         $_SESSION['minscoreparam']=$_POST['minscore'];
         $_SESSION['maxscoreparam']=$_POST['maxscore'];
+        $_SESSION['datein']=$_POST['datein'];
+        $_SESSION['datefn']=$_POST['datefn'];
     }
 
     /**
@@ -277,7 +279,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentDateTimeFirst,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentDateTimeFirstTaken($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentDateTimeFirstTaken($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment DATA/TIME LAST TAKEN
@@ -286,7 +288,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentDateTimeLast,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentDateTimeLastTaken($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentDateTimeLastTaken($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment number of times started
@@ -295,7 +297,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentNumberStarted,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentNumberStarted($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentNumberStarted($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print exam number of times not finished
@@ -304,7 +306,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentNumberNotFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentNumberNotFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentNumberNotFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment number of times finished
@@ -313,7 +315,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentNumberFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentNumberFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentNumberFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment min score finished
@@ -322,7 +324,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentMinscoreFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentMinScoreFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentMinScoreFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment max score finished
@@ -331,7 +333,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentMaxcoreFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentMaxScoreFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentMaxScoreFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment medium score finished
@@ -340,7 +342,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentMediumFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentMedScoreFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentMedScoreFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment least time finished
@@ -349,7 +351,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentLeastTimeFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentLeastTimeFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentLeastTimeFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment most time finished
@@ -358,7 +360,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentMostTimeFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentMostTimeFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentMostTimeFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment medium time finished
@@ -367,7 +369,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentMediumTimeFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentMediumTimeFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentMediumTimeFinished($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment std deviation
@@ -376,11 +378,11 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentStdDeviation,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentStdDeviation($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentStdDeviation($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //now load all the topics relative to selected student
-                    $usertopics=$db->qLoadTopicUser($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                    $usertopics=$db->qLoadTopicUser($_SESSION['examsparam'][$i],$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
 
                     //print all statistics relative to each topics loaded before
                     foreach($usertopics as $topic){
@@ -446,7 +448,7 @@ class ReportController extends Controller{
                     }
                     //draw assesments Histograms if selected
                     if (isset($_POST['graphicHistogram'])) {
-                        $graphdata=$db->qLoadAssesmentScores($_SESSION['examsparam'][$i], $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                        $graphdata=$db->qLoadAssesmentScores($_SESSION['examsparam'][$i], $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
                         ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i.".png");
                         ${'graph'.$i}->addData($graphdata);
                         ${'graph'.$i}->setTitle("Assesments Scores");
@@ -460,7 +462,7 @@ class ReportController extends Controller{
 
                     //draw topics Histograms if selected
                     if (isset($_POST['graphicTopicScore'])) {
-                        $graphdatatopic=$db->qLoadTopicScores($usertopics, $_SESSION['examsparam'][$i], $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                        $graphdatatopic=$db->qLoadTopicScores($usertopics, $_SESSION['examsparam'][$i], $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
                         ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i.".png");
                         ${'topics'.$i}->addData($graphdatatopic);
                         ${'topics'.$i}->setTitle("Topics Scores");
@@ -517,7 +519,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentDateTimeFirst,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentDateTimeFirstTaken($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentDateTimeFirstTaken($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment DATA/TIME LAST TAKEN
@@ -526,7 +528,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentDateTimeLast,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentDateTimeLastTaken($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentDateTimeLastTaken($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment number of times started
@@ -535,7 +537,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentNumberStarted,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentNumberStarted($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentNumberStarted($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print exam number of times not finished
@@ -544,7 +546,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentNumberNotFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentNumberNotFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentNumberNotFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment number of times finished
@@ -553,7 +555,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentNumberFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentNumberFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentNumberFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment min score finished
@@ -562,7 +564,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentMinscoreFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentMinScoreFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentMinScoreFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment max score finished
@@ -571,7 +573,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentMaxcoreFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentMaxScoreFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentMaxScoreFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment medium score finished
@@ -580,7 +582,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentMediumFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentMedScoreFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentMedScoreFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment least time finished
@@ -589,7 +591,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentLeastTimeFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentLeastTimeFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentLeastTimeFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment most time finished
@@ -598,7 +600,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentMostTimeFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentMostTimeFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentMostTimeFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment medium time finished
@@ -607,7 +609,7 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentMediumTimeFinished,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentMediumTimeFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentMediumTimeFinished($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //print assesment std deviation
@@ -616,11 +618,11 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(30);
                         $pdf->Cell(85,10,ttReportAssesmentStdDeviation,0,0);
                         $pdf->SetFont("Helvetica","",13);
-                        $pdf->Cell(85,10,$db->qShowAssesmentStdDeviation($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                        $pdf->Cell(85,10,$db->qShowAssesmentStdDeviation($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                     }
 
                     //now load all the topics relative to selected student
-                    $usertopics=$db->qLoadTopicUser($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                    $usertopics=$db->qLoadTopicUser($exam,$_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
 
                     //print all statistics relative to each topics loaded before
                     foreach($usertopics as $topic){
@@ -686,7 +688,7 @@ class ReportController extends Controller{
                     }
                     //draw assesments Histograms if selected
                     if (isset($_POST['graphicHistogram'])) {
-                        $graphdata=$db->qLoadAssesmentScores($exam, $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                        $graphdata=$db->qLoadAssesmentScores($exam, $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
                         ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i.".png");
                         ${'graph'.$i}->addData($graphdata);
                         ${'graph'.$i}->setTitle("Assesments Scores");
@@ -700,7 +702,7 @@ class ReportController extends Controller{
 
                     //draw topics Histograms if selected
                     if (isset($_POST['graphicTopicScore'])) {
-                        $graphdatatopic=$db->qLoadTopicScores($usertopics, $exam, $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                        $graphdatatopic=$db->qLoadTopicScores($usertopics, $exam, $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
                         ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i.".png");
                         ${'topics'.$i}->addData($graphdatatopic);
                         ${'topics'.$i}->setTitle("Topics Scores");
@@ -740,6 +742,7 @@ class ReportController extends Controller{
             $pdf->Cell(0,5,"",0,1);
 
             if (($_SESSION['examsparam'][0]!="") or ($_SESSION['examsparam'][0]!=null)){
+                //case exams selected
                 $d=0;
                 while (($_SESSION['groupsparam'][$d]!="") or ($_SESSION['groupsparam'][$d]!=null)){
                     $i=0;
@@ -786,7 +789,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentDateTimeFirst,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentDateTimeFirstTakenGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentDateTimeFirstTakenGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment DATA/TIME LAST TAKEN
@@ -795,7 +798,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentDateTimeLast,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentDateTimeLastTakenGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentDateTimeLastTakenGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment number of times started
@@ -804,7 +807,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentNumberStarted,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentNumberStartedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentNumberStartedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print exam number of times not finished
@@ -813,7 +816,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentNumberNotFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentNumberNotFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentNumberNotFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment number of times finished
@@ -822,7 +825,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentNumberFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentNumberFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentNumberFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment min score finished
@@ -831,7 +834,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentMinscoreFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentMinScoreFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentMinScoreFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment max score finished
@@ -840,7 +843,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentMaxcoreFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentMaxScoreFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentMaxScoreFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment medium score finished
@@ -849,7 +852,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentMediumFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentMedScoreFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentMedScoreFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment least time finished
@@ -858,7 +861,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentLeastTimeFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentLeastTimeFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentLeastTimeFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment most time finished
@@ -867,7 +870,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentMostTimeFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentMostTimeFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentMostTimeFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment medium time finished
@@ -876,7 +879,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentMediumTimeFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentMediumTimeFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentMediumTimeFinishedGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment std deviation
@@ -885,11 +888,11 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentStdDeviation,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentStdDeviationGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentStdDeviationGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //now load all the topics relative to selected student
-                        $grouptopics=$db->qLoadTopicGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                        $grouptopics=$db->qLoadTopicGroup($_SESSION['examsparam'][$i],$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
 
                         //print all statistics relative to each topics loaded before
                         foreach($grouptopics as $topic){
@@ -955,7 +958,7 @@ class ReportController extends Controller{
                         }
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
-                            $graphdata=$db->qLoadAssesmentScoresGroup($_SESSION['examsparam'][$i], $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                            $graphdata=$db->qLoadAssesmentScoresGroup($_SESSION['examsparam'][$i], $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
                             ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i.".png");
                             ${'graph'.$i}->addData($graphdata);
                             ${'graph'.$i}->setTitle("Assesments Scores");
@@ -969,7 +972,7 @@ class ReportController extends Controller{
 
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
-                            $graphdatatopic=$db->qLoadTopicScoresGroup($grouptopics, $_SESSION['examsparam'][$i], $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                            $graphdatatopic=$db->qLoadTopicScoresGroup($grouptopics, $_SESSION['examsparam'][$i], $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
                             ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i.".png");
                             ${'topics'.$i}->addData($graphdatatopic);
                             ${'topics'.$i}->setTitle("Topics Scores");
@@ -1032,7 +1035,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentDateTimeFirst,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentDateTimeFirstTakenGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentDateTimeFirstTakenGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment DATA/TIME LAST TAKEN
@@ -1041,7 +1044,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentDateTimeLast,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentDateTimeLastTakenGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentDateTimeLastTakenGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment number of times started
@@ -1050,7 +1053,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentNumberStarted,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentNumberStartedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentNumberStartedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print exam number of times not finished
@@ -1059,7 +1062,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentNumberNotFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentNumberNotFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentNumberNotFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment number of times finished
@@ -1068,7 +1071,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentNumberFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentNumberFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentNumberFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment min score finished
@@ -1077,7 +1080,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentMinscoreFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentMinScoreFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentMinScoreFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment max score finished
@@ -1086,7 +1089,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentMaxcoreFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentMaxScoreFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentMaxScoreFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment medium score finished
@@ -1095,7 +1098,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentMediumFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentMedScoreFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentMedScoreFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment least time finished
@@ -1104,7 +1107,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentLeastTimeFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentLeastTimeFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentLeastTimeFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment most time finished
@@ -1113,7 +1116,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentMostTimeFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentMostTimeFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentMostTimeFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment medium time finished
@@ -1122,7 +1125,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentMediumTimeFinished,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentMediumTimeFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentMediumTimeFinishedGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //print assesment std deviation
@@ -1131,11 +1134,11 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85,10,ttReportAssesmentStdDeviation,0,0);
                             $pdf->SetFont("Helvetica","",13);
-                            $pdf->Cell(85,10,$db->qShowAssesmentStdDeviationGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']),0,1);
+                            $pdf->Cell(85,10,$db->qShowAssesmentStdDeviationGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']),0,1);
                         }
 
                         //now load all the topics relative to selected student
-                        $grouptopics=$db->qLoadTopicGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                        $grouptopics=$db->qLoadTopicGroup($exam,$_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
 
                         //print all statistics relative to each topics loaded before
                         foreach($grouptopics as $topic){
@@ -1201,7 +1204,7 @@ class ReportController extends Controller{
                         }
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
-                            $graphdata=$db->qLoadAssesmentScoresGroup($exam, $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                            $graphdata=$db->qLoadAssesmentScoresGroup($exam, $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
                             ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i.".png");
                             ${'graph'.$i}->addData($graphdata);
                             ${'graph'.$i}->setTitle("Assesments Scores");
@@ -1215,7 +1218,7 @@ class ReportController extends Controller{
 
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
-                            $graphdatatopic=$db->qLoadTopicScoresGroup($grouptopics, $exam, $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                            $graphdatatopic=$db->qLoadTopicScoresGroup($grouptopics, $exam, $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
                             ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i.".png");
                             ${'topics'.$i}->addData($graphdatatopic);
                             ${'topics'.$i}->setTitle("Topics Scores");
@@ -1241,7 +1244,7 @@ class ReportController extends Controller{
             if (($_SESSION['examsparam'][0] != "") or ($_SESSION['examsparam'][0] != null)) {
                     $i = 0;
                     while (($_SESSION['examsparam'][$i] != "") or ($_SESSION['examsparam'][$i] != null)) {
-                        $students = $db->qLoadAllStudent($_SESSION['examsparam'][$i],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam']);
+                        $students = $db->qLoadAllStudent($_SESSION['examsparam'][$i],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
                         foreach ($students as $student) {
 
                         if ((isset($_POST['assesmentName'])) or (isset($_POST['assesmentID'])) or (isset($_POST['assesmentAuthor'])) or (isset($_POST['assesmentDateTimeFirst'])) or (isset($_POST['assesmentDateTimeLast'])) or (isset($_POST['assesmentNumberStarted'])) or (isset($_POST['assesmentNumberNotFinished'])) or (isset($_POST['assesmentNumberFinished'])) or (isset($_POST['assesmentMinscoreFinished'])) or (isset($_POST['assesmentMaxscoreFinished'])) or (isset($_POST['assesmentMediumFinished'])) or (isset($_POST['assesmentLeastTimeFinished'])) or (isset($_POST['assesmentMostTimeFinished'])) or (isset($_POST['assesmentMediumTimeFinished'])) or (isset($_POST['assesmentStdDeviation']))) {
@@ -1286,7 +1289,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentDateTimeFirst, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentDateTimeFirstTaken($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentDateTimeFirstTaken($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment DATA/TIME LAST TAKEN
@@ -1295,7 +1298,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentDateTimeLast, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentDateTimeLastTaken($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentDateTimeLastTaken($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment number of times started
@@ -1304,7 +1307,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentNumberStarted, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberStarted($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberStarted($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print exam number of times not finished
@@ -1313,7 +1316,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentNumberNotFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberNotFinished($_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberNotFinished($_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment number of times finished
@@ -1322,7 +1325,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentNumberFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment min score finished
@@ -1331,7 +1334,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentMinscoreFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentMinScoreFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentMinScoreFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment max score finished
@@ -1340,7 +1343,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentMaxcoreFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentMaxScoreFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentMaxScoreFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment medium score finished
@@ -1349,7 +1352,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentMediumFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentMedScoreFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentMedScoreFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment least time finished
@@ -1358,7 +1361,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentLeastTimeFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentLeastTimeFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentLeastTimeFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment most time finished
@@ -1367,7 +1370,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentMostTimeFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentMostTimeFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentMostTimeFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment medium time finished
@@ -1376,7 +1379,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentMediumTimeFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentMediumTimeFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentMediumTimeFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment std deviation
@@ -1385,11 +1388,11 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentStdDeviation, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentStdDeviation($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentStdDeviation($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
                         
                         //now load all the topics relative to selected student
-                        $topics = $db->qLoadTopicUser($_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']);
+                        $topics = $db->qLoadTopicUser($_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
 
                         //print all statistics relative to each topics loaded before
                         foreach ($topics as $topic) {
@@ -1454,7 +1457,7 @@ class ReportController extends Controller{
                         }
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
-                            $graphdata = $db->qLoadAssesmentScores($_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']);
+                            $graphdata = $db->qLoadAssesmentScores($_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
                             ${'graph' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/assesmentsgraph" . $i . ".png");
                             ${'graph' . $i}->addData($graphdata);
                             ${'graph' . $i}->setTitle("Assesments Scores");
@@ -1468,7 +1471,7 @@ class ReportController extends Controller{
 
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
-                            $graphdatatopic = $db->qLoadTopicScores($topics, $_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']);
+                            $graphdatatopic = $db->qLoadTopicScores($topics, $_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
                             ${'topics' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/topicsgraph" . $i . ".png");
                             ${'topics' . $i}->addData($graphdatatopic);
                             ${'topics' . $i}->setTitle("Topics Scores");
@@ -1487,7 +1490,7 @@ class ReportController extends Controller{
                 $allexams = $db->qLoadExams();
                 $i = 0;
                 foreach ($allexams as $exam) {
-                    $students = $db->qLoadAllStudent($exam, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']);
+                    $students = $db->qLoadAllStudent($exam, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
                     foreach ($students as $student) {
                         if ((isset($_POST['assesmentName'])) or (isset($_POST['assesmentID'])) or (isset($_POST['assesmentAuthor'])) or (isset($_POST['assesmentDateTimeFirst'])) or (isset($_POST['assesmentDateTimeLast'])) or (isset($_POST['assesmentNumberStarted'])) or (isset($_POST['assesmentNumberNotFinished'])) or (isset($_POST['assesmentNumberFinished'])) or (isset($_POST['assesmentMinscoreFinished'])) or (isset($_POST['assesmentMaxscoreFinished'])) or (isset($_POST['assesmentMediumFinished'])) or (isset($_POST['assesmentLeastTimeFinished'])) or (isset($_POST['assesmentMostTimeFinished'])) or (isset($_POST['assesmentMediumTimeFinished'])) or (isset($_POST['assesmentStdDeviation']))) {
                             if ($i > 0) {
@@ -1531,7 +1534,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentDateTimeFirst, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentDateTimeFirstTaken($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentDateTimeFirstTaken($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment DATA/TIME LAST TAKEN
@@ -1540,7 +1543,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentDateTimeLast, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentDateTimeLastTaken($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentDateTimeLastTaken($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment number of times started
@@ -1549,7 +1552,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentNumberStarted, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberStarted($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberStarted($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print exam number of times not finished
@@ -1558,7 +1561,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentNumberNotFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberNotFinished($exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberNotFinished($exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment number of times finished
@@ -1567,7 +1570,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentNumberFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentNumberFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment min score finished
@@ -1576,7 +1579,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentMinscoreFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentMinScoreFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentMinScoreFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment max score finished
@@ -1585,7 +1588,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentMaxcoreFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentMaxScoreFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentMaxScoreFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment medium score finished
@@ -1594,7 +1597,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentMediumFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentMedScoreFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentMedScoreFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment least time finished
@@ -1603,7 +1606,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentLeastTimeFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentLeastTimeFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentLeastTimeFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment most time finished
@@ -1612,7 +1615,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentMostTimeFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentMostTimeFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentMostTimeFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment medium time finished
@@ -1621,7 +1624,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentMediumTimeFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentMediumTimeFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentMediumTimeFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //print assesment std deviation
@@ -1630,11 +1633,11 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentStdDeviation, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentStdDeviation($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentStdDeviation($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
 
                         //now load all the topics relative to selected student
-                        $topics = $db->qLoadTopicUser($exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']);
+                        $topics = $db->qLoadTopicUser($exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
 
                         //print all statistics relative to each topics loaded before
                         foreach ($topics as $topic) {
@@ -1699,7 +1702,7 @@ class ReportController extends Controller{
                         }
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
-                            $graphdata = $db->qLoadAssesmentScores($exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']);
+                            $graphdata = $db->qLoadAssesmentScores($exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
                             ${'graph' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/assesmentsgraph" . $i . ".png");
                             ${'graph' . $i}->addData($graphdata);
                             ${'graph' . $i}->setTitle("Assesments Scores");
@@ -1713,7 +1716,7 @@ class ReportController extends Controller{
 
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
-                            $graphdatatopic = $db->qLoadTopicScores($topics,$exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam']);
+                            $graphdatatopic = $db->qLoadTopicScores($topics,$exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
                             ${'topics' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/topicsgraph" . $i . ".png");
                             ${'topics' . $i}->addData($graphdatatopic);
                             ${'topics' . $i}->setTitle("Topics Scores");

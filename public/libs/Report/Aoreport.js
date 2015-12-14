@@ -232,7 +232,9 @@ function printStudent(){
             exams : JSON.stringify(exams),
             groups: JSON.stringify(groups),
             minscore: minscore,
-            maxscore: maxscore
+            maxscore: maxscore,
+            datein: $("#dateIn").val(),
+            datefn:$("#dateFn").val()
         },
         success : function (data){
             $("#searchedstud").html(data);
@@ -451,7 +453,9 @@ function transferData(min,max){
                     exams : JSON.stringify(exams),
                     minscore: minscore,
                     maxscore: maxscore,
-                    groups: JSON.stringify(groups)
+                    groups: JSON.stringify(groups),
+                    datein: $("#dateIn").val(),
+                    datefn:$("#dateFn").val()
                 },
                 success : function (data){
                     window.location.assign("index.php?page=report/aoreporttemplate")
@@ -475,7 +479,9 @@ function transferData(min,max){
                 exams : JSON.stringify(exams),
                 minscore: minscore,
                 maxscore: maxscore,
-                groups: JSON.stringify(groups)
+                groups: JSON.stringify(groups),
+                datein: $("#dateIn").val(),
+                datefn:$("#dateFn").val()
             },
             success : function (data){
                 window.location.assign("index.php?page=report/aoreporttemplate")

@@ -1146,3 +1146,6 @@
 12/11/2015 16:56:11 - qInsertTemplate : Duplicate entry 'template_7' for key 'name'
 12/11/2015 16:57:18 - qInsertTemplate : Duplicate entry 'template_10' for key 'name'
 12/11/2015 22:33:50 - 11/12/2015 22:33
+12/14/2015 11:28:55 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''2015-11-30)' at line 5
+12/14/2015 11:29:01 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''2015-11-30)' at line 5
+12/14/2015 11:29:05 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''2015-11-30)' at line 5

@@ -10,7 +10,17 @@
 global $config, $user;
 
 ?>
-
+<!--THIS SCRIPT IS USED FOR ABILITATE HTML 5 INPUT DATE FOR ALL BROWSER-->
+<!-- cdn for modernizr, if you haven't included it already -->
+<script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+<!-- polyfiller file to detect and load polyfills -->
+<script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+<script>
+    webshims.setOptions('waitReady', false);
+    webshims.setOptions('forms-ext', {types: 'date'});
+    webshims.polyfill('forms forms-ext');
+</script>
+<!-- *********************************************************************-->
 <div id="navbar">
     <?php printMenu(); ?>
 </div>
@@ -41,7 +51,7 @@ global $config, $user;
 
                     <div class="col-left">
                         <h4><?=ttReportTyping?><br></h4>
-                        <input type="text" name="word" oninput="printAssesments(this.value)">
+                        <input type="text" name="word" placeholder="<?=ttReportSearch?>" oninput="printAssesments(this.value)">
                     </div>
                     <div class="col-center">
                         <h4><?=ttReportSearched?><br></h4>
@@ -66,6 +76,9 @@ global $config, $user;
                     </div>
                         <br/>
                         <hr class="divider"/>
+                        <h3><?=ttReportDateInterval?></h3>
+                        <?=ttReportDateFrom?> <input type="date" id="dateIn"/>&nbsp;&nbsp;<?=ttReportDateTo?> <input type="date" id="dateFn"/>
+                        <hr/>
                         <!--<div class="col-left">
                             <h4><?=ttReportSelectFilter?></h4>
                         </div>
@@ -90,7 +103,7 @@ global $config, $user;
 
                     <div class="col-left">
                         <h4><?=ttReportTyping?><br></h4>
-                        <input type="text" name="wordgroup" oninput="printGroups(this.value)">
+                        <input type="text" name="wordgroup" placeholder="<?=ttReportSearch?>" oninput="printGroups(this.value)">
                     </div>
                     <div class="col-center">
                         <h4><?=ttReportSearched?><br></h4>
