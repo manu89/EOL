@@ -4,7 +4,7 @@
  * User: Masterplan
  * Date: 4/19/13
  * Time: 10:04 AM
- * Desc: Controller for all Admin's operations
+ * Desc: Controller for all Report operations
  */
 
 class ReportController extends Controller{
@@ -55,8 +55,8 @@ class ReportController extends Controller{
     }
 
     /**
-     *  @name   actionIndex
-     *  @descr  Shows report index page
+     *  @name   actionAoreport
+     *  @descr  Shows AOreport home page
      */
     private function actionAoreport(){
         global $engine;
