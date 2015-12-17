@@ -4,7 +4,7 @@
  * User: Masterplan
  * Date: 3/21/13
  * Time: 8:44 PM
- * Desc: Admin's Homepage
+ * Desc: Report Homepage
  */
 
 global $config, $user;
