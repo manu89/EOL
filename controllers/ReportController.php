@@ -77,7 +77,6 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionShowassesments(){
-        global $engine;
 
         $db=new sqlDB();
 
@@ -92,8 +91,7 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionShowgroups(){
-        global $engine;
-
+       
         $db=new sqlDB();
 
         if(!($db->qShowGroups($_POST['letter'],$exams=json_decode($_POST['exams']),$_POST['minscore'],$_POST['maxscore'],$_POST['datein'],$_POST['datefn']))){
@@ -118,8 +116,7 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionShowstudent(){
-        global $engine;
-
+       
         $db=new sqlDB();
 
         $groups=json_decode($_POST['groups']);
@@ -142,8 +139,7 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionAddstudent(){
-        global $engine;
-
+       
         $db=new sqlDB();
         $userid=$_POST['iduser'];
         if(!($db->qAddStudent($userid))){
@@ -167,8 +163,7 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionPrintparticipantdetails(){
-        global $engine;
-
+       
         $db=new sqlDB();
         $userid=$_POST['iduser'];
         if(!($db->qShowStudentDetails($userid))){
@@ -181,8 +176,7 @@ class ReportController extends Controller{
      *  @descr  Set parameters for AOreport
      */
     private function actionAoreportparameters(){
-        global $engine;
-
+       
         $_SESSION['userparam']=$_POST['iduser'];
         $_SESSION['examsparam']=json_decode($_POST['exams']);
         $_SESSION['groupsparam']=json_decode($_POST['groups']);
@@ -211,7 +205,7 @@ class ReportController extends Controller{
      *  @descr  Shows the report
      */
     private function actionAoreportresult(){
-        global $engine,$config;
+        global $config;
 
         include($config['systemPhpGraphLibDir'].'phpgraphlib.php');
         include($config['systemFpdfDir'].'fpdf.php');
