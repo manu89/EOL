@@ -1783,7 +1783,7 @@ class ReportController extends Controller{
 
         $pdf->Output();
         $t=time();
-        $pdf->Output("../views/Report/generated_report/AOreport/AOreport_".date("d-m-Y_H:i:s",$t).".pdf","F");
+        $pdf->Output($config['systemViewsDir']."Report/generated_report/AOreport/AOreport_".date("d-m-Y_H:i:s",$t).".pdf","F");
 
     }
 
