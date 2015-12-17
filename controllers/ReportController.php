@@ -1,6 +1,6 @@
 <?php
 /**
- * File: UserController.php
+ * File: ReportController.php
  * User: Masterplan
  * Date: 4/19/13
  * Time: 10:04 AM
