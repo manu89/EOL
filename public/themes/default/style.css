@@ -2391,6 +2391,8 @@ span.extraClose{
 .select{
     width:160px;
     overflow-x:scroll;
+    border-radius:5px;
+    border: 2px solid #7ab5d3;
 }
 
 .divider{
@@ -2416,6 +2418,8 @@ span.extraClose{
 .select-partecipant{
     width:350px;
     overflow-x: scroll;
+    border-radius:5px;
+    border: 2px solid #7ab5d3;
 }
 
 #assesmentCustomize .boxContent{
@@ -2466,6 +2470,8 @@ span.extraClose{
 .replink{
     text-decoration: none;
     color:black;
+    font-size:14px;
+    font-weight: bold;
 }
 
 .replink:link{

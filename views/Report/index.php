@@ -25,7 +25,7 @@ global $config, $user;
 
         <table id="reportTable">
             <tr><td><img src="<?=$config['themeImagesDir']?>report.png" class="img-report"/></td><td><a class="replink" href="index.php?page=report/aoreport"><?= ttAssesmentOverview ?></a></td></tr>
-            <tr><td></td><td></td></tr>
+            <tr><td></td><td>See an overwiev of result for one or more assessments</td></tr>
 
         </table>
 

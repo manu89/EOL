@@ -2,7 +2,6 @@
  * Created by michele on 22/10/15.
  */
 var exams=new Array(100);//array of selected exams
-var user=""; //variable used for userid
 var paramuser=""; //variable that contain the user id or email want to show on the report
 var groups=new Array(100);//array of selected groups
 var minscore;//variable that contain the minimal score of the exam to show
@@ -257,7 +256,7 @@ function addStudent(iduser){
             iduser: iduser
         },
         success : function (data){
-                user=iduser;
+                paramuser=iduser;
                 $("#student").html(data);
                 closeLightbox($('#partecipants'));
 
@@ -274,7 +273,7 @@ function addStudent(iduser){
  */
 function removePartecipant(iduser){
     $("#student").html("");
-    user="";
+    paramuser="";
 }
 
 
@@ -313,7 +312,7 @@ function printStudentDetail(){
         url     : "index.php?page=report/printparticipantdetails",
         type    : "post",
         data    : {
-            iduser : user
+            iduser : paramuser
         },
         success : function (data){
             $("#detail").html(data);
@@ -350,11 +349,18 @@ function removePartecipantDetail(){
  *  @descr  Shows groups in the select form of search
  */
 function printGroups(letter){
+    minscore=($("#assesmentScore").is(":checked"))? $("#assesmentMinScore").val():-1; //check if minscore is enable and eventually return the value
+    maxscore=($("#assesmentScore").is(":checked"))? $("#assesmentMaxScore").val():-1; //check if maxscore is enable and eventually return the value
     $.ajax({
         url     : "index.php?page=report/showgroups",
         type    : "post",
         data    : {
-            letter : letter
+            letter : letter,
+            exams : JSON.stringify(exams),
+            minscore: minscore,
+            maxscore: maxscore,
+            datein: $("#dateIn").val(),
+            datefn:$("#dateFn").val()
         },
         success : function (data){
             $("#searchedgroup").html(data);
@@ -443,45 +449,18 @@ function removeGroup(group){
 function transferData(min,max){
     minscore=($("#assesmentScore").is(":checked"))? min:-1; //check if minscore is enable and eventually return the value
     maxscore=($("#assesmentScore").is(":checked"))? max:-1; //check if maxscore is enable and eventually return the value
-    if($("#student").text()!=""){
-        if (paramuser!=""){
-            $.ajax({
-                url     : "index.php?page=report/aoreportparameters",
-                type    : "post",
-                data    : {
-                    iduser : paramuser,
-                    exams : JSON.stringify(exams),
-                    minscore: minscore,
-                    maxscore: maxscore,
-                    groups: JSON.stringify(groups),
-                    datein: $("#dateIn").val(),
-                    datefn:$("#dateFn").val()
-                },
-                success : function (data){
-                    window.location.assign("index.php?page=report/aoreporttemplate")
-                },
-                error : function (request, status, error) {
-                    alert("jQuery AJAX request error:".error);
-                }
-            });
-        }
-        else{
-            showErrorMessage(ttErrorUserParameter);
-        }
 
-    }
-    else{
-        $.ajax({
-            url     : "index.php?page=report/aoreportparameters",
-            type    : "post",
-            data    : {
-                iduser : paramuser,
-                exams : JSON.stringify(exams),
-                minscore: minscore,
-                maxscore: maxscore,
-                groups: JSON.stringify(groups),
-                datein: $("#dateIn").val(),
-                datefn:$("#dateFn").val()
+    $.ajax({
+        url     : "index.php?page=report/aoreportparameters",
+        type    : "post",
+        data    : {
+            iduser : paramuser,
+            exams : JSON.stringify(exams),
+            minscore: minscore,
+            maxscore: maxscore,
+            groups: JSON.stringify(groups),
+            datein: $("#dateIn").val(),
+            datefn:$("#dateFn").val()
             },
             success : function (data){
                 window.location.assign("index.php?page=report/aoreporttemplate")
@@ -489,7 +468,5 @@ function transferData(min,max){
             error : function (request, status, error) {
                 alert("jQuery AJAX request error:".error);
             }
-        });
-    }
-
+    });
 }

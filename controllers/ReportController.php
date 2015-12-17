@@ -96,7 +96,7 @@ class ReportController extends Controller{
 
         $db=new sqlDB();
 
-        if(!($db->qShowGroups($_POST['letter']))){
+        if(!($db->qShowGroups($_POST['letter'],$exams=json_decode($_POST['exams']),$_POST['minscore'],$_POST['maxscore'],$_POST['datein'],$_POST['datefn']))){
             echo "query error check the log file";
         }
 
@@ -123,6 +123,7 @@ class ReportController extends Controller{
         $db=new sqlDB();
 
         $groups=json_decode($_POST['groups']);
+
         if (($groups[0]!="") or ($groups[0]!=null)){
             if(!($db->qShowStudentGroup($groups,$exams=json_decode($_POST['exams']),$_POST['minscore'],$_POST['maxscore'],$_POST['datein'],$_POST['datefn']))){
                 echo "query error check the log file";
@@ -252,9 +253,13 @@ class ReportController extends Controller{
                     }
                     //print assesment name
                     if (isset($_POST['assesmentName'])) {
-                        $pdf->Cell(0, 10, $_SESSION['examsparam'][$i], 1, 1, 'L', false);
+                        $pdf->SetFont("Helvetica","B",13);
+                        $pdf->SetLeftMargin(30);
+                        $pdf->Cell(85,10,ttReportAssesmentName,0,0);
+                        $pdf->SetFont("Helvetica","",13);
+                        $pdf->Cell(85,10,$_SESSION['examsparam'][$i],0,1);
                     }
-                    $pdf->Cell(0,7,"",0,1);
+
                     //print assesment ID
                     if (isset($_POST['assesmentID'])){
                         $pdf->SetFont("Helvetica","B",13);
@@ -399,6 +404,11 @@ class ReportController extends Controller{
                             $pdf->SetFont("Helvetica","B",16);
                             $pdf->Cell(0,10,ttReportTopicInformation,1,1,'L',false);
                             $pdf->Cell(0,5,"",0,1);
+                            $pdf->SetFont("Helvetica","B",13);
+                            $pdf->SetLeftMargin(30);
+                            $pdf->Cell(85,10,ttReportTopicName,0,0);
+                            $pdf->SetFont("Helvetica","",13);
+                            $pdf->Cell(85,10,$topic,0,1);
                         }
 
                         //print topic medium score
@@ -440,11 +450,11 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(10);
                     }
 
-                    if ((isset($_POST['graphicHistogram']))&&(isset($_POST['graphicTopicScore']))){
+                    if ((isset($_POST['graphicHistogram']))or(isset($_POST['graphicTopicScore']))){
                         $pdf->SetFont("Helvetica","B",16);
                         $pdf->Cell(0,5,"",0,1);
                         $pdf->Cell(0,10,ttReportGraphicalDsiplays,1,1,'L',false);
-                        $pdf->Cell(0,5,"",0,1);
+                        $pdf->Cell(0,1,"",0,1);
                     }
                     //draw assesments Histograms if selected
                     if (isset($_POST['graphicHistogram'])) {
@@ -492,9 +502,13 @@ class ReportController extends Controller{
                     }
                     //print assesment name
                     if (isset($_POST['assesmentName'])) {
-                        $pdf->Cell(0, 10,$exam, 1, 1, 'L', false);
+                        $pdf->SetFont("Helvetica","B",13);
+                        $pdf->SetLeftMargin(30);
+                        $pdf->Cell(85,10,ttReportAssesmentName,0,0);
+                        $pdf->SetFont("Helvetica","",13);
+                        $pdf->Cell(85,10,$exam,0,1);
                     }
-                    $pdf->Cell(0,7,"",0,1);
+
                     //print assesment ID
                     if (isset($_POST['assesmentID'])){
                         $pdf->SetFont("Helvetica","B",13);
@@ -639,6 +653,11 @@ class ReportController extends Controller{
                             $pdf->SetFont("Helvetica","B",16);
                             $pdf->Cell(0,10,ttReportTopicInformation,1,1,'L',false);
                             $pdf->Cell(0,5,"",0,1);
+                            $pdf->SetFont("Helvetica","B",13);
+                            $pdf->SetLeftMargin(30);
+                            $pdf->Cell(85,10,ttReportTopicName,0,0);
+                            $pdf->SetFont("Helvetica","",13);
+                            $pdf->Cell(85,10,$topic,0,1);
                         }
 
                         //print topic medium score
@@ -680,11 +699,11 @@ class ReportController extends Controller{
                         $pdf->SetLeftMargin(10);
                     }
 
-                    if ((isset($_POST['graphicHistogram']))&&(isset($_POST['graphicTopicScore']))){
+                    if ((isset($_POST['graphicHistogram']))or(isset($_POST['graphicTopicScore']))){
                         $pdf->SetFont("Helvetica","B",16);
                         $pdf->Cell(0,5,"",0,1);
                         $pdf->Cell(0,10,ttReportGraphicalDsiplays,1,1,'L',false);
-                        $pdf->Cell(0,5,"",0,1);
+                        $pdf->Cell(0,1,"",0,1);
                     }
                     //draw assesments Histograms if selected
                     if (isset($_POST['graphicHistogram'])) {
@@ -757,14 +776,20 @@ class ReportController extends Controller{
                             $pdf->Cell(0, 10, "", 0, 1);
                             $pdf->SetFont("Helvetica","B",13);
                             $pdf->Cell(85,10,$_SESSION['groupsparam'][$d],0,1);
+                            $pdf->Cell(0,0.5,"",1,1);
+                            $pdf->Cell(0,5,"",0,1);
                             $pdf->SetFont("Helvetica","B",16);
                         }
 
                         //print assesment name
                         if (isset($_POST['assesmentName'])) {
-                            $pdf->Cell(0, 10, $_SESSION['examsparam'][$i], 1, 1, 'L', false);
+                            $pdf->SetFont("Helvetica","B",13);
+                            $pdf->SetLeftMargin(30);
+                            $pdf->Cell(85,10,ttReportAssesmentName,0,0);
+                            $pdf->SetFont("Helvetica","",13);
+                            $pdf->Cell(85,10,$_SESSION['examsparam'][$i],0,1);
                         }
-                        $pdf->Cell(0,7,"",0,1);
+
                         //print assesment ID
                         if (isset($_POST['assesmentID'])){
                             $pdf->SetFont("Helvetica","B",13);
@@ -909,6 +934,11 @@ class ReportController extends Controller{
                                 $pdf->SetFont("Helvetica","B",16);
                                 $pdf->Cell(0,10,ttReportTopicInformation,1,1,'L',false);
                                 $pdf->Cell(0,5,"",0,1);
+                                $pdf->SetFont("Helvetica","B",13);
+                                $pdf->SetLeftMargin(30);
+                                $pdf->Cell(85,10,ttReportTopicName,0,0);
+                                $pdf->SetFont("Helvetica","",13);
+                                $pdf->Cell(85,10,$topic,0,1);
                             }
 
                             //print topic medium score
@@ -950,11 +980,11 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(10);
                         }
 
-                        if ((isset($_POST['graphicHistogram']))&&(isset($_POST['graphicTopicScore']))){
+                        if ((isset($_POST['graphicHistogram']))or(isset($_POST['graphicTopicScore']))){
                             $pdf->SetFont("Helvetica","B",16);
                             $pdf->Cell(0,5,"",0,1);
                             $pdf->Cell(0,10,ttReportGraphicalDsiplays,1,1,'L',false);
-                            $pdf->Cell(0,5,"",0,1);
+                            $pdf->Cell(0,1,"",0,1);
                         }
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
@@ -1004,13 +1034,19 @@ class ReportController extends Controller{
                             $pdf->Cell(0, 10, "", 0, 1);
                             $pdf->SetFont("Helvetica","B",13);
                             $pdf->Cell(85,10,$_SESSION['groupsparam'][$d],0,1);
+                            $pdf->Cell(0,0.5,"",1,1);
+                            $pdf->Cell(0,5,"",0,1);
                         }
 
                         //print assesment name
                         if (isset($_POST['assesmentName'])) {
-                            $pdf->Cell(0, 10, $exam, 1, 1, 'L', false);
+                            $pdf->SetFont("Helvetica","B",13);
+                            $pdf->SetLeftMargin(30);
+                            $pdf->Cell(85,10,ttReportAssesmentName,0,0);
+                            $pdf->SetFont("Helvetica","",13);
+                            $pdf->Cell(85,10,$exam,0,1);
                         }
-                        $pdf->Cell(0,7,"",0,1);
+
                         //print assesment ID
                         if (isset($_POST['assesmentID'])){
                             $pdf->SetFont("Helvetica","B",13);
@@ -1196,11 +1232,11 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(10);
                         }
 
-                        if ((isset($_POST['graphicHistogram']))&&(isset($_POST['graphicTopicScore']))){
+                        if ((isset($_POST['graphicHistogram']))or(isset($_POST['graphicTopicScore']))){
                             $pdf->SetFont("Helvetica","B",16);
                             $pdf->Cell(0,5,"",0,1);
                             $pdf->Cell(0,10,ttReportGraphicalDsiplays,1,1,'L',false);
-                            $pdf->Cell(0,5,"",0,1);
+                            $pdf->Cell(0,1,"",0,1);
                         }
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
@@ -1257,14 +1293,20 @@ class ReportController extends Controller{
                             $pdf->SetFont("Helvetica", "B", 13);
                             $pdf->Cell(85, 10, $db->qLoadStudent($student), 0, 0);
                             $pdf->Cell(70,10,"ID: User_".$student,0,1);
+                            $pdf->Cell(0,0.5,"",1,1);
+                            $pdf->Cell(0,5,"",0,1);
                             $pdf->SetFont("Helvetica", "B", 16);
                         }
 
                         //print assesment name
                         if (isset($_POST['assesmentName'])) {
-                            $pdf->Cell(0, 10, $_SESSION['examsparam'][$i], 1, 1, 'L', false);
+                            $pdf->SetFont("Helvetica","B",13);
+                            $pdf->SetLeftMargin(30);
+                            $pdf->Cell(85,10,ttReportAssesmentName,0,0);
+                            $pdf->SetFont("Helvetica","",13);
+                            $pdf->Cell(85,10,$_SESSION['examsparam'][$i],0,1);
                         }
-                        $pdf->Cell(0, 7, "", 0, 1);
+
                         //print assesment ID
                         if (isset($_POST['assesmentID'])) {
                             $pdf->SetFont("Helvetica", "B", 13);
@@ -1449,11 +1491,11 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(10);
                         }
 
-                        if ((isset($_POST['graphicHistogram'])) && (isset($_POST['graphicTopicScore']))) {
+                        if ((isset($_POST['graphicHistogram'])) or (isset($_POST['graphicTopicScore']))) {
                             $pdf->SetFont("Helvetica", "B", 16);
                             $pdf->Cell(0, 5, "", 0, 1);
                             $pdf->Cell(0, 10, ttReportGraphicalDsiplays, 1, 1, 'L', false);
-                            $pdf->Cell(0, 5, "", 0, 1);
+                            $pdf->Cell(0, 1, "", 0, 1);
                         }
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
@@ -1502,14 +1544,20 @@ class ReportController extends Controller{
                             $pdf->SetFont("Helvetica", "B", 13);
                             $pdf->Cell(85, 10, $db->qLoadStudent($student), 0, 0);
                             $pdf->Cell(70,10,"ID: User_".$student,0,1);
+                            $pdf->Cell(0,0.5,"",1,1);
+                            $pdf->Cell(0,5,"",0,1);
                             $pdf->SetFont("Helvetica", "B", 16);
                         }
 
                         //print assesment name
                         if (isset($_POST['assesmentName'])) {
-                            $pdf->Cell(0, 10, $exam, 1, 1, 'L', false);
+                            $pdf->SetFont("Helvetica","B",13);
+                            $pdf->SetLeftMargin(30);
+                            $pdf->Cell(85,10,ttReportAssesmentName,0,0);
+                            $pdf->SetFont("Helvetica","",13);
+                            $pdf->Cell(85,10,$exam,0,1);
                         }
-                        $pdf->Cell(0, 7, "", 0, 1);
+
                         //print assesment ID
                         if (isset($_POST['assesmentID'])) {
                             $pdf->SetFont("Helvetica", "B", 13);
@@ -1694,11 +1742,11 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(10);
                         }
 
-                        if ((isset($_POST['graphicHistogram'])) && (isset($_POST['graphicTopicScore']))) {
+                        if ((isset($_POST['graphicHistogram'])) or (isset($_POST['graphicTopicScore']))) {
                             $pdf->SetFont("Helvetica", "B", 16);
                             $pdf->Cell(0, 5, "", 0, 1);
                             $pdf->Cell(0, 10, ttReportGraphicalDsiplays, 1, 1, 'L', false);
-                            $pdf->Cell(0, 5, "", 0, 1);
+                            $pdf->Cell(0, 1, "", 0, 1);
                         }
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
@@ -1733,8 +1781,9 @@ class ReportController extends Controller{
             }
         }
 
-
         $pdf->Output();
+        $t=time();
+        $pdf->Output("../views/Report/generated_report/AOreport/AOreport_".date("d-m-Y_H:i:s",$t).".pdf","F");
 
     }
 

@@ -1149,3 +1149,7 @@
 12/14/2015 11:28:55 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''2015-11-30)' at line 5
 12/14/2015 11:29:01 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''2015-11-30)' at line 5
 12/14/2015 11:29:05 - qShowStudent : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''2015-11-30)' at line 5
+12/17/2015 12:06:37 - qShowTopicMedScore : Table 'eol.Testsettings' doesn't exist
+12/17/2015 12:06:38 - qShowTopicMedScore : Table 'eol.Testsettings' doesn't exist
+12/17/2015 12:07:59 - qShowTopicMedScore : Table 'eol.Testsettings' doesn't exist
+12/17/2015 12:07:59 - qShowTopicMedScore : Table 'eol.Testsettings' doesn't exist

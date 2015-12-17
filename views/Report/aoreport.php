@@ -48,6 +48,7 @@ global $config, $user;
                     <form name="aoreport" method="post">
                     <h3><?= ttReportAOSelectAssesment ?></h3>
                     <p><?=ttReportAODescription?></p>
+                    <p><?=ttAOreportSaved?></p>
 
                     <div class="col-left">
                         <h4><?=ttReportTyping?><br></h4>

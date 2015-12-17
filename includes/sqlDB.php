@@ -2753,23 +2753,601 @@ class sqlDB {
     }
 
     /**
-     * @name    qShowExams
+     * @name    qShowGroup
      * @return  boolean
-     * @descr   show searched result in Assesment's select tag
+     * @descr   show groups in groups area
      */
-    public function qShowGroups($letter){
+
+    public function qShowGroups($letter,$exams,$minscore,$maxscore,$datein,$datefn){
         global $log;
         $ack=true;
         $this->result = null;
         $this->mysqli = $this->connect();
         try {
-            $query = "Select distinct Users.group,Users.subgroup from Users where Users.group like '".$letter."%'";
-            $this->execQuery($query);
-            //$rs=mysqli_query($this->mysqli,$query);
-            if($this->numResultRows()>0){
-                while($row=mysqli_fetch_array($this->result)){
-                    echo "<option value='$row[group]-$row[subgroup]'>".$row['group']."-".$row['subgroup']."</option>";
+            //check if minscore and maxscore are set
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                //check if date interval has set
+                if (($datein=="")&&($datefn=="")){//dates not set
+                    // 2 cases, 1 exams are selected specifically; 2 all exams to control
+                    if (($exams[0]!="") or ($exams[0]!=null)){
+                        //exams are selected in this case
+                        $query="SELECT distinct Users.group
+                    FROM Users
+                    WHERE role='s' and Users.group like '$letter%'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $groups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $groups[$i]=$row['group'];
+                                $i++;
+                            }
+                        }
+
+                        $query="SELECT distinct Users.subgroup
+                    FROM Users
+                    WHERE role='s'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $subgroups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $subgroups[$i]=$row['subgroup'];
+                                $i++;
+                            }
+                        }
+
+                        $d=0;
+                        foreach($groups as $group) {
+                            foreach($subgroups as $subgr){
+                                $x = 0;
+                                while ($exams[$x]!=""){
+                                    $query2="SELECT DISTINCT Users.group, Users.sugroup
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.group='$group' Users.subgroup='$subgr' and Users.role='s'
+                        and Subjects.name='$exams[$x]' and (Exams.status='e' or Exams.status='a') and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                                    $this->execQuery($query2);
+                                    if ($this->numResultRows()>0){
+                                        $trovato[$group.'-'.$subgr][$exams[$x]]=true;
+                                    }
+                                    else{
+                                        $trovato[$group.'-'.$subgr][$exams[$x]]=false;
+                                    }
+                                    $x++;
+                                }
+                                if (in_array(false,$trovato[$group.'-'.$subgr])){
+                                    $notpresent[$d]=true;
+                                }
+                                else{
+                                    $row=mysqli_fetch_array($this->result);
+                                    echo "<option value='$row[group]-$row[subgroup]'>".$row['group']."-".$row['subgroup']."</option>";
+                                    $notpresent[$d]=false;
+                                }
+                                $d++;
+                            }
+
+                        }
+                        if ((in_array(false,$notpresent))){
+                        }
+                        else{
+                            echo "<option>".ttReportGroupNotPresent."</option>";
+                        }
+
+                    }
+                    else{
+                        //all exams should be controlled
+                        $query="SELECT distinct Users.group
+                    FROM Users
+                    WHERE role='s' and Users.group like '$letter%'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $groups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $groups[$i]=$row['group'];
+                                $i++;
+                            }
+                        }
+
+                        $query="SELECT distinct Users.subgroup
+                    FROM Users
+                    WHERE role='s'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $subgroups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $subgroups[$i]=$row['subgroup'];
+                                $i++;
+                            }
+                        }
+
+                        $query2="Select Subjects.name from Subjects";
+                        $this->execQuery($query2);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $allexams=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $allexams[$i]=$row['name'];
+                                $i++;
+                            }
+                        }
+
+                        $d=0;
+                        foreach($groups as $group){
+                            foreach($subgroups as $subgr){
+                                foreach($allexams as $exam){
+                                    $query2="SELECT DISTINCT Users.group, Users.subgroup
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.group='$group' and Users.subgroup='$subgr'
+                        and Subjects.name='$exam' and (Exams.status='e' or Exams.status='a') and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                                    //echo $query2."\n\n";
+                                    $this->execQuery($query2);
+                                    if ($this->numResultRows()>0){
+                                        $trovato[$group.'-'.$subgr][$exam]=true;
+                                    }
+                                    else{
+                                        $trovato[$group.'-'.$subgr][$exam]=false;
+                                    }
+                                }
+                                if (in_array(false,$trovato[$group.'-'.$subgr])){
+                                    $notpresent[$d]=true;
+                                }
+                                else{
+                                    $row=mysqli_fetch_array($this->result);
+                                    echo "<option value='$row[group]-$row[subgroup]'>".$row['group']."-".$row['subgroup']."</option>";
+                                    $notpresent[$d]=false;
+                                }
+                                $d++;
+                            }
+                        }
+                        if ((in_array(false,$notpresent))){
+                        }
+                        else{
+                            echo "<option>".ttReportGroupNotPresent."</option>";
+                        }
+                    }
                 }
+                else{//date set
+                    // 2 cases, 1 exams are selected specifically; 2 all exams to control
+                    if (($exams[0]!="") or ($exams[0]!=null)){
+                        //exams are selected in this case
+                        $query="SELECT distinct Users.group
+                    FROM Users
+                    WHERE role='s' and Users.group like '$letter%'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $groups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $groups[$i]=$row['group'];
+                                $i++;
+                            }
+                        }
+
+                        $query="SELECT distinct Users.subgroup
+                    FROM Users
+                    WHERE role='s'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $subgroups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $subgroups[$i]=$row['subgroup'];
+                                $i++;
+                            }
+                        }
+
+                        $d=0;
+                        foreach($groups as $group) {
+                            foreach($subgroups as $subgr) {
+                                $x = 0;
+                                while ($exams[$x]!=""){
+                                    $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.groups='$group' and Users.subgroup='$subgr'
+                        and Subjects.name='$exams[$x]' and (Exams.status='e' or Exams.status='a') and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')
+                        and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
+                                    echo $query2."\n";
+                                    $this->execQuery($query2);
+                                    if ($this->numResultRows()>0){
+                                        $trovato[$group.'-'.$subgr][$exams[$x]]=true;
+                                    }
+                                    else{
+                                        $trovato[$group.'-'.$subgr][$exams[$x]]=false;
+                                    }
+                                    $x++;
+                                }
+                                if (in_array(false,$trovato[$group.'-'.$subgr])){
+                                    $notpresent[$d]=true;
+                                }
+                                else{
+                                    $row=mysqli_fetch_array($this->result);
+                                    echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                                    $notpresent[$d]=false;
+                                }
+                                $d++;
+                            }
+                        }
+                        if ((in_array(false,$notpresent))){
+                        }
+                        else{
+                            echo "<option>".ttReportGroupNotPresent."</option>";
+                        }
+
+                    }
+                    else{
+                        //all exams should be controlled
+                        $query="SELECT distinct Users.group
+                    FROM Users
+                    WHERE role='s' and Users.group like '$letter%'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $groups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $groups[$i]=$row['group'];
+                                $i++;
+                            }
+                        }
+
+                        $query="SELECT distinct Users.subgroup
+                    FROM Users
+                    WHERE role='s'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $subgroups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $subgroups[$i]=$row['subgroup'];
+                                $i++;
+                            }
+                        }
+
+                        $query2="Select Subjects.name from Subjects";
+                        $this->execQuery($query2);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $allexams=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $allexams[$i]=$row['name'];
+                                $i++;
+                            }
+                        }
+                        $d=0;
+                        foreach($groups as $group){
+                            foreach($subgroups as $subgr){
+                                foreach($allexams as $exam){
+                                    $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.group='$group' and Users.subgroup='$subgr'
+                        and Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
+                        and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')
+                        and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
+                                    //echo $query2."\n\n";
+                                    $this->execQuery($query2);
+                                    if ($this->numResultRows()>0){
+                                        $trovato[$group.'-'.$subgr][$exam]=true;
+                                    }
+                                    else{
+                                        $trovato[$group.'-'.$subgr][$exam]=false;
+                                    }
+                                }
+                                if (in_array(false,$trovato[$group.'-'.$subgr])){
+                                    $notpresent[$d]=true;
+                                }
+                                else{
+                                    $row=mysqli_fetch_array($this->result);
+                                    echo "<option value='$row[idUser]'>".$row['surname']."&nbsp;".$row['name']."</option>";
+                                    $notpresent[$d]=false;
+                                }
+                                $d++;
+                            }
+                        }
+                        if ((in_array(false,$notpresent))){
+                        }
+                        else{
+                            echo "<option>".ttReportGroupNotPresent."</option>";
+                        }
+                    }
+                }
+
+            }
+            else{
+                //check if date interval has set
+                if (($datein=="")&&($datefn=="")){//date not set
+                    // 2 cases, 1 exams are selected specifically; 2 all exams to control
+                    if (($exams[0]!="") or ($exams[0]!=null)){
+                        //exams are selected in this case
+                        $query="SELECT distinct Users.group
+                    FROM Users
+                    WHERE role='s' and Users.group like '$letter%'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $groups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $groups[$i]=$row['group'];
+                                $i++;
+                            }
+                        }
+
+                        $query="SELECT distinct Users.subgroup
+                    FROM Users
+                    WHERE role='s'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $subgroups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $subgroups[$i]=$row['subgroup'];
+                                $i++;
+                            }
+                        }
+
+                        $d=0;
+                        foreach($groups as $group) {
+                            foreach($subgroups as $subgr){
+                                $x = 0;
+                                while ($exams[$x]!=""){
+                                    $query2="SELECT DISTINCT Users.group, Users.subgroup
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.group='$group' and Users.subgroup='$subgr' and Users.role='s'
+                        and Subjects.name='$exams[$x]' and (Exams.status='e' or Exams.status='a')";
+                                    echo $query2."\n";
+                                    $this->execQuery($query2);
+                                    if ($this->numResultRows()>0){
+                                        $trovato[$group.'-'.$subgr][$exams[$x]]=true;
+                                    }
+                                    else{
+                                        $trovato[$group.'-'.$subgr][$exams[$x]]=false;
+                                    }
+                                    $x++;
+                                }
+                                if (in_array(false,$trovato[$group.'-'.$subgr])){
+                                    $notpresent[$d]=true;
+                                }
+                                else{
+                                    $row=mysqli_fetch_array($this->result);
+                                    echo "<option value='$row[group]-$row[subgroup]'>".$row['group']."-".$row['subgroup']."</option>";
+                                    $notpresent[$d]=false;
+                                }
+                                $d++;
+                                //print_r($trovato);
+                            }
+
+                        }
+                        if ((in_array(false,$notpresent))){
+                        }
+                        else{
+                            echo "<option>".ttReportGroupNotPresent."</option>";
+                        }
+
+                    }
+                    else{
+                        //all exams should be controlled
+                        $query="SELECT distinct Users.group
+                    FROM Users
+                    WHERE role='s' and Users.group like '$letter%'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $groups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $groups[$i]=$row['group'];
+                                $i++;
+                            }
+                        }
+
+                        $query="SELECT distinct Users.subgroup
+                    FROM Users
+                    WHERE role='s'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $subgroups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $subgroups[$i]=$row['subgroup'];
+                                $i++;
+                            }
+                        }
+
+                        $query="Select Subjects.name from Subjects";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $allexams=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $allexams[$i]=$row['name'];
+                                $i++;
+                            }
+                        }
+                        $d=0;
+                        foreach($groups as $group){
+                            foreach($subgroups as $subgr){
+                                foreach($allexams as $exam){
+                                    $query2="SELECT DISTINCT Users.group, Users.subgroup
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.group='$group' and Users.subgroup='$subgr' and Users.role='s'
+                        and Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')";
+                                    $this->execQuery($query2);
+                                    if ($this->numResultRows()>0){
+                                        $trovato[$group.'-'.$subgr][$exam]=true;
+                                    }
+                                    else{
+                                        $trovato[$group.'-'.$subgr][$exam]=false;
+                                    }
+                                }
+                                if (in_array(false,$trovato[$group.'-'.$subgr])){
+                                    $notpresent[$d]=true;
+                                }
+                                else{
+                                    $row=mysqli_fetch_array($this->result);
+                                    echo "<option value='$row[group]-$row[subgroup]'>".$row['group']."-".$row['subgroup']."</option>";
+                                    $notpresent[$d]=false;
+                                }
+                                $d++;
+                            }
+
+                        }
+                        if ((in_array(false,$notpresent))){
+                        }
+                        else{
+                            echo "<option>".ttReportGroupNotPresent."</option>";
+                        }
+                    }
+                }
+                else{//date set
+                    // 2 cases, 1 exams are selected specifically; 2 all exams to control
+                    if (($exams[0]!="") or ($exams[0]!=null)){
+                        //exams are selected in this case
+                        $query="SELECT distinct Users.group
+                    FROM Users
+                    WHERE role='s' and Users.group like '$letter%'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $groups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $groups[$i]=$row['group'];
+                                $i++;
+                            }
+                        }
+
+                        $query="SELECT distinct Users.subgroup
+                    FROM Users
+                    WHERE role='s'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $subgroups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $subgroups[$i]=$row['subgroup'];
+                                $i++;
+                            }
+                        }
+
+                        $d=0;
+                        foreach($groups as $group) {
+                            foreach($subgroups as $subgr){
+                                $x = 0;
+                                while ($exams[$x]!=""){
+                                    $query2="SELECT DISTINCT Users.group, Users.subgroup
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.group='$group' and Users.subgroup='$subgr'
+                        and Subjects.name='$exams[$x]' and (Exams.status='e' or Exams.status='a')
+                        and (DATE(Tests.timeStart) between '$datein' and '$datefn')";
+                                    //  echo $query2."\n";
+                                    $this->execQuery($query2);
+                                    if ($this->numResultRows()>0){
+                                        $trovato[$group.'-'.$subgr][$exams[$x]]=true;
+                                    }
+                                    else{
+                                        $trovato[$group.'-'.$subgr][$exams[$x]]=false;
+                                    }
+                                    $x++;
+                                }
+                                if (in_array(false,$trovato[$student])){
+                                    $notpresent[$d]=true;
+                                }
+                                else{
+                                    $row=mysqli_fetch_array($this->result);
+                                    echo "<option value='$row[group]-$row[subgroup]'>".$row['group']."-".$row['subgroup']."</option>";
+                                    $notpresent[$d]=false;
+                                }
+                                $d++;
+                            }
+                        }
+                        if ((in_array(false,$notpresent))){
+                        }
+                        else{
+                            echo "<option>".ttReportGroupNotPresent."</option>";
+                        }
+
+                    }
+                    else{
+                        //all exams should be controlled
+                        $query="SELECT distinct Users.group
+                    FROM Users
+                    WHERE role='s' and Users.group like '$letter%'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $groups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $groups[$i]=$row['group'];
+                                $i++;
+                            }
+                        }
+
+                        $query="SELECT distinct Users.subgroup
+                    FROM Users
+                    WHERE role='s'";
+                        $this->execQuery($query);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $subgroups=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $subgroups[$i]=$row['subgroup'];
+                                $i++;
+                            }
+                        }
+
+                        $query2="Select Subjects.name from Subjects";
+                        $this->execQuery($query2);
+                        if ($this->numResultRows()>0){
+                            $i=0;
+                            $allexams=array();
+                            while($row=mysqli_fetch_array($this->result)){
+                                $allexams[$i]=$row['name'];
+                                $i++;
+                            }
+                        }
+
+                        $d=0;
+                        foreach($groups as $group){
+                            foreach($subgroups as $subgr){
+                                foreach($allexams as $exam){
+                                    $query2="SELECT DISTINCT Users.group, Users.subgroup
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Users.group='$group' and Users.subgroup='$subgr'
+                        and Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
+                        and (DATE(Tests.timeStart) between '$datein' and '$datefn')";
+                                    $this->execQuery($query2);
+                                    if ($this->numResultRows()>0){
+                                        $trovato[$group.'-'.$subgr][$exam]=true;
+                                    }
+                                    else{
+                                        $trovato[$group.'-'.$subgr][$exam]=false;
+                                    }
+                                }
+                                if (in_array(false,$trovato[$group.'-'.$subgr])){
+                                    $notpresent[$d]=true;
+                                }
+                                else{
+                                    $row=mysqli_fetch_array($this->result);
+                                    echo "<option value='$row[group]-$row[subgroup]'>".$row['group']."-".$row['subgroup']."</option>";
+                                    $notpresent[$d]=false;
+                                }
+                                $d++;
+                            }
+                        }
+                        if ((in_array(false,$notpresent))){
+                        }
+                        else{
+                            echo "<option>".ttReportGroupNotPresent."</option>";
+                        }
+                    }
+                }
+
             }
         }
         catch(Exception $ex){
@@ -2840,7 +3418,7 @@ class sqlDB {
                         if ((in_array(false,$notpresent))){
                         }
                         else{
-                            echo "<option>Nessuno studente presente</option>";
+                            echo "<option>".ttReportStudentNotPresent."</option>";
                         }
 
                     }
@@ -2898,7 +3476,7 @@ class sqlDB {
                         if ((in_array(false,$notpresent))){
                         }
                         else{
-                            echo "<option>Nessuno studente presente</option>";
+                            echo "<option>".ttReportStudentNotPresent."</option>";
                         }
                     }
                 }
@@ -2950,7 +3528,7 @@ class sqlDB {
                         if ((in_array(false,$notpresent))){
                         }
                         else{
-                            echo "<option>Nessuno studente presente</option>";
+                            echo "<option>".ttReportStudentNotPresent."</option>";
                         }
 
                     }
@@ -3010,14 +3588,13 @@ class sqlDB {
                         if ((in_array(false,$notpresent))){
                         }
                         else{
-                            echo "<option>Nessuno studente presente</option>";
+                            echo "<option>".ttReportStudentNotPresent."</option>";
                         }
                     }
                 }
 
             }
             else{
-                echo $datein;
                 //check if date interval has set
                 if (($datein=="")&&($datefn=="")){//date not set
                     // 2 cases, 1 exams are selected specifically; 2 all exams to control
@@ -3066,7 +3643,7 @@ class sqlDB {
                         if ((in_array(false,$notpresent))){
                         }
                         else{
-                            echo "<option>Nessuno studente presente</option>";
+                            echo "<option>".ttReportStudentNotPresent."</option>";
                         }
 
                     }
@@ -3124,7 +3701,7 @@ class sqlDB {
                         if ((in_array(false,$notpresent))){
                         }
                         else{
-                            echo "<option>Nessuno studente presente</option>";
+                            echo "<option>".ttReportStudentNotPresent."</option>";
                         }
                     }
                 }
@@ -3176,7 +3753,7 @@ class sqlDB {
                         if ((in_array(false,$notpresent))){
                         }
                         else{
-                            echo "<option>Nessuno studente presente</option>";
+                            echo "<option>".ttReportStudentNotPresent."</option>";
                         }
 
                     }
@@ -3235,7 +3812,7 @@ class sqlDB {
                         if ((in_array(false,$notpresent))){
                         }
                         else{
-                            echo "<option>Nessuno studente presente</option>";
+                            echo "<option>".ttReportStudentNotPresent."</option>";
                         }
                     }
                 }
@@ -3254,7 +3831,7 @@ class sqlDB {
      * @return  boolean
      * @descr   show searched result in Partecipant's select tag filter by group
      */
-    public function qShowStudentGroup($groups, $exams, $minscore, $maxscore, $datein, $datefn){
+    public function qShowStudentGroup($groups,$exams,$minscore,$maxscore,$datein,$datefn){
         global $log;
         $ack=true;
         $this->result = null;
@@ -3263,7 +3840,7 @@ class sqlDB {
             //check if minscore and maxscore are set
             if(($minscore!=-1)&&($maxscore!=-1)) {
                 //check if date interval has set
-                if (($datein=="")&&($datefn=="")) {//dates not set
+                if (($datein=="")&&($datefn=="")){//dates not set
                     // 2 cases, 1 exams are selected specifically; 2 all exams to control
                     if (($exams[0]!="") or ($exams[0]!=null)){
                         //exams are selected in this case
@@ -3272,17 +3849,18 @@ class sqlDB {
                         $subgroups=Array();
                         //divide group and subgroup for search students
                         while ($groups[$g]!=""){
-                            if(in_array(substr($groups[$g],-5,2),$gr)){
+                            $parts=explode("-",$groups[$g]);
+                            if(in_array($parts[0],$gr)){
                                 //do nothing
                             }
                             else{
-                                $gr[$g]=substr($groups[$g],-5,2);
+                                $gr[$g]=$parts[0];
                             }
-                            if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            if(in_array($parts[1],$subgroups)){
                                 //do nothing
                             }
                             else{
-                                $subgroups[$g]=substr($groups[$g],-2,2);
+                                $subgroups[$g]=$parts[1];
                             }
 
                             $g++;
@@ -3334,7 +3912,7 @@ class sqlDB {
                                 $notpresent[$d]=false;
                             }
                             $d++;
-                            //print_r($trovato);
+                            print_r($trovato);
                         }
                         if ((in_array(false,$notpresent))){
                         }
@@ -3351,21 +3929,23 @@ class sqlDB {
                         $subgroups=Array();
                         //divide group and subgroup for search students
                         while ($groups[$g]!=""){
-                            if(in_array(substr($groups[$g],-5,2),$gr)){
+                            $parts=explode("-",$groups[$g]);
+                            if(in_array($parts[0],$gr)){
                                 //do nothing
                             }
                             else{
-                                $gr[$g]=substr($groups[$g],-5,2);
+                                $gr[$g]=$parts[0];
                             }
-                            if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            if(in_array($parts[1],$subgroups)){
                                 //do nothing
                             }
                             else{
-                                $subgroups[$g]=substr($groups[$g],-2,2);
+                                $subgroups[$g]=$parts[1];
                             }
 
                             $g++;
                         }
+
 
                         $students=array();
                         $i=0;
@@ -3438,21 +4018,23 @@ class sqlDB {
                         $subgroups=Array();
                         //divide group and subgroup for search students
                         while ($groups[$g]!=""){
-                            if(in_array(substr($groups[$g],-5,2),$gr)){
+                            $parts=explode("-",$groups[$g]);
+                            if(in_array($parts[0],$gr)){
                                 //do nothing
                             }
                             else{
-                                $gr[$g]=substr($groups[$g],-5,2);
+                                $gr[$g]=$parts[0];
                             }
-                            if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            if(in_array($parts[1],$subgroups)){
                                 //do nothing
                             }
                             else{
-                                $subgroups[$g]=substr($groups[$g],-2,2);
+                                $subgroups[$g]=$parts[1];
                             }
 
                             $g++;
                         }
+
 
                         $students=array();
                         $i=0;
@@ -3519,21 +4101,23 @@ class sqlDB {
                         $subgroups=Array();
                         //divide group and subgroup for search students
                         while ($groups[$g]!=""){
-                            if(in_array(substr($groups[$g],-5,2),$gr)){
+                            $parts=explode("-",$groups[$g]);
+                            if(in_array($parts[0],$gr)){
                                 //do nothing
                             }
                             else{
-                                $gr[$g]=substr($groups[$g],-5,2);
+                                $gr[$g]=$parts[0];
                             }
-                            if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            if(in_array($parts[1],$subgroups)){
                                 //do nothing
                             }
                             else{
-                                $subgroups[$g]=substr($groups[$g],-2,2);
+                                $subgroups[$g]=$parts[1];
                             }
 
                             $g++;
                         }
+
 
                         $students=array();
                         $i=0;
@@ -3602,7 +4186,7 @@ class sqlDB {
 
             }
             else{
-                if (($datein=="")&&($datefn="")){//date not set
+                if (($datein=="")&&($datefn=="")){//date not set
                     // 2 cases, 1 exams are selected specifically; 2 all exams to control
                     if (($exams[0]!="") or ($exams[0]!=null)){
                         //exams are selected in this case
@@ -3611,21 +4195,23 @@ class sqlDB {
                         $subgroups=Array();
                         //divide group and subgroup for search students
                         while ($groups[$g]!=""){
-                            if(in_array(substr($groups[$g],-5,2),$gr)){
+                            $parts=explode("-",$groups[$g]);
+                            if(in_array($parts[0],$gr)){
                                 //do nothing
                             }
                             else{
-                                $gr[$g]=substr($groups[$g],-5,2);
+                                $gr[$g]=$parts[0];
                             }
-                            if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            if(in_array($parts[1],$subgroups)){
                                 //do nothing
                             }
                             else{
-                                $subgroups[$g]=substr($groups[$g],-2,2);
+                                $subgroups[$g]=$parts[1];
                             }
 
                             $g++;
                         }
+
 
                         $students=array();
                         $i=0;
@@ -3690,21 +4276,23 @@ class sqlDB {
                         $subgroups=Array();
                         //divide group and subgroup for search students
                         while ($groups[$g]!=""){
-                            if(in_array(substr($groups[$g],-5,2),$gr)){
+                            $parts=explode("-",$groups[$g]);
+                            if(in_array($parts[0],$gr)){
                                 //do nothing
                             }
                             else{
-                                $gr[$g]=substr($groups[$g],-5,2);
+                                $gr[$g]=$parts[0];
                             }
-                            if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            if(in_array($parts[1],$subgroups)){
                                 //do nothing
                             }
                             else{
-                                $subgroups[$g]=substr($groups[$g],-2,2);
+                                $subgroups[$g]=$parts[1];
                             }
 
                             $g++;
                         }
+
 
                         $students=array();
                         $i=0;
@@ -3734,9 +4322,7 @@ class sqlDB {
                         }
                         $d=0;
                         foreach($students as $student){
-                            //echo $student."\n";
                             foreach($allexams as $exam){
-                                //  echo $exam."\n";
                                 $query2="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
@@ -3759,7 +4345,6 @@ class sqlDB {
                                 $notpresent[$d]=false;
                             }
                             $d++;
-                            //print_r($trovato);
                         }
                         if ((in_array(false,$notpresent))){
                         }
@@ -3777,21 +4362,23 @@ class sqlDB {
                         $subgroups=Array();
                         //divide group and subgroup for search students
                         while ($groups[$g]!=""){
-                            if(in_array(substr($groups[$g],-5,2),$gr)){
+                            $parts=explode("-",$groups[$g]);
+                            if(in_array($parts[0],$gr)){
                                 //do nothing
                             }
                             else{
-                                $gr[$g]=substr($groups[$g],-5,2);
+                                $gr[$g]=$parts[0];
                             }
-                            if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            if(in_array($parts[1],$subgroups)){
                                 //do nothing
                             }
                             else{
-                                $subgroups[$g]=substr($groups[$g],-2,2);
+                                $subgroups[$g]=$parts[1];
                             }
 
                             $g++;
                         }
+
 
                         $students=array();
                         $i=0;
@@ -3857,21 +4444,23 @@ class sqlDB {
                         $subgroups=Array();
                         //divide group and subgroup for search students
                         while ($groups[$g]!=""){
-                            if(in_array(substr($groups[$g],-5,2),$gr)){
+                            $parts=explode("-",$groups[$g]);
+                            if(in_array($parts[0],$gr)){
                                 //do nothing
                             }
                             else{
-                                $gr[$g]=substr($groups[$g],-5,2);
+                                $gr[$g]=$parts[0];
                             }
-                            if(in_array(substr($groups[$g],-2,2),$subgroups)){
+                            if(in_array($parts[1],$subgroups)){
                                 //do nothing
                             }
                             else{
-                                $subgroups[$g]=substr($groups[$g],-2,2);
+                                $subgroups[$g]=$parts[1];
                             }
 
                             $g++;
                         }
+
 
                         $students=array();
                         $i=0;
@@ -4220,7 +4809,6 @@ class sqlDB {
         }
         return $val;
     }
-
 
     /**
      * @name    qShowAssesmentDateTimeLastTaken
@@ -4919,6 +5507,32 @@ class sqlDB {
 
             }
 
+            //print max score for this assesment
+            $found=strpos($userparam,"@");
+            if ($found==false) {
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM Users JOIN (Tests JOIN(Subjects JOIN (Exams JOIN TestSettings ON Exams.fkTestSetting=TestSettings.idTestSetting)
+            ON Subjects.idSubject=Exams.fkSubject)
+            ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+            WHERE Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
+                }
+            }
+            else{
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM Users JOIN (Tests JOIN(Subjects JOIN (Exams JOIN TestSettings ON Exams.fkTestSetting=TestSettings.idTestSetting)
+            ON Subjects.idSubject=Exams.fkSubject)
+            ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+            WHERE Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
+                }
+            }
         }
         catch(Exception $ex){
             $log->append(__FUNCTION__." : ".$this->getError());
@@ -5060,7 +5674,32 @@ class sqlDB {
                 }
 
             }
-
+            //print max score for this assesment
+            $found=strpos($userparam,"@");
+            if ($found==false) {
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM Users JOIN (Tests JOIN(Subjects JOIN (Exams JOIN TestSettings ON Exams.fkTestSetting=TestSettings.idTestSetting)
+            ON Subjects.idSubject=Exams.fkSubject)
+            ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+            WHERE Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
+                }
+            }
+            else{
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM Users JOIN (Tests JOIN(Subjects JOIN (Exams JOIN TestSettings ON Exams.fkTestSetting=TestSettings.idTestSetting)
+            ON Subjects.idSubject=Exams.fkSubject)
+            ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+            WHERE Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
+                }
+            }
         }
         catch(Exception $ex){
             $log->append(__FUNCTION__." : ".$this->getError());
@@ -5203,6 +5842,32 @@ class sqlDB {
 
             }
 
+            //print max score for this assesment
+            $found=strpos($userparam,"@");
+            if ($found==false) {
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM Users JOIN (Tests JOIN(Subjects JOIN (Exams JOIN TestSettings ON Exams.fkTestSetting=TestSettings.idTestSetting)
+            ON Subjects.idSubject=Exams.fkSubject)
+            ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+            WHERE Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
+                }
+            }
+            else{
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM Users JOIN (Tests JOIN(Subjects JOIN (Exams JOIN TestSettings ON Exams.fkTestSetting=TestSettings.idTestSetting)
+            ON Subjects.idSubject=Exams.fkSubject)
+            ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+            WHERE Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
+                }
+            }
         }
         catch(Exception $ex){
             $log->append(__FUNCTION__." : ".$this->getError());
@@ -6255,6 +6920,18 @@ class sqlDB {
 
             }
 
+            //print max score for this assesment
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM Users JOIN (Tests JOIN(Subjects JOIN (Exams JOIN TestSettings ON Exams.fkTestSetting=TestSettings.idTestSetting)
+            ON Subjects.idSubject=Exams.fkSubject)
+            ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+            WHERE Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+            and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/" . $row['scoreType'];
+                }
         }
         catch(Exception $ex){
             $log->append(__FUNCTION__." : ".$this->getError());
@@ -6339,6 +7016,18 @@ class sqlDB {
 
             }
 
+            //print max score for this assesment
+            $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM Users JOIN (Tests JOIN(Subjects JOIN (Exams JOIN TestSettings ON Exams.fkTestSetting=TestSettings.idTestSetting)
+            ON Subjects.idSubject=Exams.fkSubject)
+            ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+            WHERE Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+            and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+            $this->execQuery($sql);
+            if ($this->numResultRows() > 0) {
+                $row = mysqli_fetch_array($this->result);
+                $val .= "/" . $row['scoreType'];
+            }
         }
         catch(Exception $ex){
             $log->append(__FUNCTION__." : ".$this->getError());
@@ -6423,6 +7112,18 @@ class sqlDB {
 
             }
 
+            //print max score for this assesment
+            $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM Users JOIN (Tests JOIN(Subjects JOIN (Exams JOIN TestSettings ON Exams.fkTestSetting=TestSettings.idTestSetting)
+            ON Subjects.idSubject=Exams.fkSubject)
+            ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
+            WHERE Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
+            and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+            $this->execQuery($sql);
+            if ($this->numResultRows() > 0) {
+                $row = mysqli_fetch_array($this->result);
+                $val .= "/" . $row['scoreType'];
+            }
         }
         catch(Exception $ex){
             $log->append(__FUNCTION__." : ".$this->getError());
@@ -6781,7 +7482,7 @@ class sqlDB {
                 if(($datein=="")&&($datefn=="")){//dates not set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select Topics.name
+                        $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.idUser='$userparam'
@@ -6797,7 +7498,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select Topics.name
+                        $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.email='$userparam'
@@ -6816,7 +7517,7 @@ class sqlDB {
                 else{//dates set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select Topics.name
+                        $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.idUser='$userparam'
@@ -6833,7 +7534,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select Topics.name
+                        $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.email='$userparam'
@@ -6857,7 +7558,7 @@ class sqlDB {
                 if(($datein=="")&&($datefn=="")){//dates not set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select Topics.name
+                        $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.idUser='$userparam'";
@@ -6872,7 +7573,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select Topics.name
+                        $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.email='$userparam'";
@@ -6890,7 +7591,7 @@ class sqlDB {
                 else{//dates set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select Topics.name
+                        $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.idUser='$userparam'
@@ -6906,7 +7607,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select Topics.name
+                        $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.email='$userparam'
@@ -6954,6 +7655,17 @@ class sqlDB {
                         $val=$row['avgtopic'];
                     }
                 }
+                //print max for this topic
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM TestSettings JOIN (Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+            ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject)
+            ON Users.idUser=Tests.fkUser) ON TestSettings.idTestSetting=Exams.fkTestSetting
+            WHERE Topics.name='$topic' and Users.idUser='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
+                }
             }
             else{
                 $query="select AVG(Tests.scoreFinal) AS avgtopic
@@ -6965,10 +7677,21 @@ class sqlDB {
 
                     while($row=mysqli_fetch_array($this->result)){
                         $val=$row['avgtopic'];
-
                     }
                 }
+                //print max for this topic
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM TestSettings JOIN (Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+            ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject)
+            ON Users.idUser=Tests.fkUser) ON TestSettings.idTestSetting=Exams.fkTestSetting
+            WHERE Topics.name='$topic' and Users.email='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
+                }
             }
+
         }
         catch(Exception $ex){
             $log->append(__FUNCTION__." : ".$this->getError());
@@ -6998,6 +7721,17 @@ class sqlDB {
                         $val=$row['mintopic'];
                     }
                 }
+                //print max for this topic
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM TestSettings JOIN (Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+            ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject)
+            ON Users.idUser=Tests.fkUser) ON TestSettings.idTestSetting=Exams.fkTestSetting
+            WHERE Topics.name='$topic' and Users.idUser='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
+                }
             }
             else{
                 $query="select MIN(Tests.scoreFinal) AS mintopic
@@ -7011,6 +7745,17 @@ class sqlDB {
                         $val=$row['mintopic'];
 
                     }
+                }
+                //print max for this topic
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM TestSettings JOIN (Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+            ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject)
+            ON Users.idUser=Tests.fkUser) ON TestSettings.idTestSetting=Exams.fkTestSetting
+            WHERE Topics.name='$topic' and Users.email='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
                 }
             }
         }
@@ -7042,6 +7787,17 @@ class sqlDB {
                         $val=$row['maxtopic'];
                     }
                 }
+                //print max for this topic
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM TestSettings JOIN (Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+            ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject)
+            ON Users.idUser=Tests.fkUser) ON TestSettings.idTestSetting=Exams.fkTestSetting
+            WHERE Topics.name='$topic' and Users.idUser='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
+                }
             }
             else{
                 $query="select MAX(Tests.scoreFinal) AS maxtopic
@@ -7055,6 +7811,17 @@ class sqlDB {
                         $val=$row['maxtopic'];
 
                     }
+                }
+                //print max for this topic
+                $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM TestSettings JOIN (Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+            ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject)
+            ON Users.idUser=Tests.fkUser) ON TestSettings.idTestSetting=Exams.fkTestSetting
+            WHERE Topics.name='$topic' and Users.email='$userparam'";
+                $this->execQuery($sql);
+                if ($this->numResultRows() > 0) {
+                    $row = mysqli_fetch_array($this->result);
+                    $val .= "/".$row['scoreType'];
                 }
             }
         }
@@ -7122,7 +7889,7 @@ class sqlDB {
             if(($minscore!=-1)&&($maxscore!=-1)){
                 //check dates interval has set
                 if(($datein=="")&&($datefn=="")){//dates not set
-                    $query="select Topics.name
+                    $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
@@ -7138,7 +7905,7 @@ class sqlDB {
                     }
                 }
                 else{//dates set
-                    $query="select Topics.name
+                    $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
@@ -7159,7 +7926,7 @@ class sqlDB {
             else{
                 //check dates interval has set
                 if(($datein=="")&&($datefn=="")){//dates not set
-                    $query="select Topics.name
+                    $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
@@ -7174,7 +7941,7 @@ class sqlDB {
                     }
                 }
                 else{//dates set
-                    $query="select Topics.name
+                    $query="select distinct Topics.name
                         FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
                         ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
@@ -7210,16 +7977,28 @@ class sqlDB {
         $this->mysqli = $this->connect();
         $groups=explode("-",$groupparam);
         try {
-                $query="select AVG(Tests.scoreFinal) AS avgtopic
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
-                $this->execQuery($query);
-                if($this->numResultRows()>0){
-                    while($row=mysqli_fetch_array($this->result)){
-                        $val=$row['avgtopic'];
-                    }
+            $query="select AVG(Tests.scoreFinal) AS avgtopic
+                    FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                    ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
+                    where Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+            $this->execQuery($query);
+            if($this->numResultRows()>0){
+                while($row=mysqli_fetch_array($this->result)){
+                    $val=$row['avgtopic'];
                 }
+            }
+
+            //print max for this topic
+            $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM TestSettings JOIN (Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+            ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject)
+            ON Users.idUser=Tests.fkUser) ON TestSettings.idTestSetting=Exams.fkTestSetting
+            WHERE Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+            $this->execQuery($sql);
+            if ($this->numResultRows() > 0) {
+                $row = mysqli_fetch_array($this->result);
+                $val .= "/".$row['scoreType'];
+            }
 
         }
         catch(Exception $ex){
@@ -7249,6 +8028,17 @@ class sqlDB {
                     $val=$row['mintopic'];
                 }
             }
+            //print max for this topic
+            $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM TestSettings JOIN (Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+            ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject)
+            ON Users.idUser=Tests.fkUser) ON TestSettings.idTestSetting=Exams.fkTestSetting
+            WHERE Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+            $this->execQuery($sql);
+            if ($this->numResultRows() > 0) {
+                $row = mysqli_fetch_array($this->result);
+                $val .= "/".$row['scoreType'];
+            }
         }
         catch(Exception $ex){
             $log->append(__FUNCTION__." : ".$this->getError());
@@ -7276,6 +8066,17 @@ class sqlDB {
                 while($row=mysqli_fetch_array($this->result)){
                     $val=$row['maxtopic'];
                 }
+            }
+            //print max for this topic
+            $sql = "SELECT DISTINCT TestSettings.scoreType
+            FROM TestSettings JOIN (Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+            ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject)
+            ON Users.idUser=Tests.fkUser) ON TestSettings.idTestSetting=Exams.fkTestSetting
+            WHERE Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+            $this->execQuery($sql);
+            if ($this->numResultRows() > 0) {
+                $row = mysqli_fetch_array($this->result);
+                $val .= "/".$row['scoreType'];
             }
         }
         catch(Exception $ex){
