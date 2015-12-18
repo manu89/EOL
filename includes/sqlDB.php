@@ -2994,6 +2994,115 @@ class sqlDB {
         return $ack;
     }
 
+    /*******************************************************************
+     *                              Creport                              *
+     *******************************************************************/
+    /**
+     * @name    qShowExams
+     * @return  boolean
+     * @descr   show searched result in Assesment's select tag
+     */
+    public function qShowExams($letter){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $query = "Select * from Subjects where name like '".$letter."%'";
+            $this->execQuery($query);
+            if($this->numResultRows()>0){
+                while($row=mysqli_fetch_array($this->result)){
+                    echo "<option value='$row[name]'>".$row['name']."</option>";
+                }
+            }
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
+    /**
+     * @name    qShowStudentCreport
+     * @return  boolean
+     * @descr   show participant in exam selected on Coaching Report
+     */
+
+    public function qShowStudentCreport($exam,$minscore,$maxscore,$datein,$datefn){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            //check if minscore and maxscore are set
+            if(($minscore!=-1)&&($maxscore!=-1)){
+                //check if date interval has set
+                if (($datein=="")&&($datefn=="")){//dates not set
+                    $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
+                        and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    if ($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
+                        }
+                    }
+                }
+                else{//date set
+                    $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
+                        and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')
+                        and (Tests.timeStart BETWEEN '$datein' and '$datefn')";
+                    $this->execQuery($query);
+                    if ($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
+                        }
+                    }
+                }
+            }
+            else{
+                //check if date interval has set
+                if (($datein=="")&&($datefn=="")){//dates not set
+                    $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')";
+                    $this->execQuery($query);
+                    if ($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
+                        }
+                    }
+                }
+                else{//date set
+                    $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
+                        and (Tests.timeStart BETWEEN '$datein' and '$datefn')";
+                    $this->execQuery($query);
+                    if ($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
+                        }
+                    }
+                }
+            }
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
+
 /*******************************************************************
 *                              mysqli                              *
 *******************************************************************/

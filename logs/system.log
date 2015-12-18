@@ -976,3 +976,5 @@
 09/11/2015 14:15:06 - 11/09/2015 14:14
 09/11/2015 14:39:22 - 9New Settings1000009030
 09/11/2015 14:39:37 - 11/09/2015 14:39
+12/18/2015 15:51:25 - qShowStudentCreport : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and Subjects.name='Architettura reti' and (Exams.status='e' or Exams.status='a')' at line 4
+12/18/2015 15:53:10 - qShowStudentCreport : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and Subjects.name='Architettura reti' and (Exams.status='e' or Exams.status='a')' at line 4

@@ -38,6 +38,8 @@ $config['systemLangsDir'] = 'langs/';
 $config['systemQuestionTypesLibDir'] = $config['systemLibsDir'].'questionTypes/';
 $config['systemLangsXml'] = '../resources/languages/';
 $config['systemExtraDir'] = 'extra/';
+$config['systemFpdfDir'] = 'fpdf/';
+$config['systemPhpGraphLibDir'] = 'phpgraphlib-master/';
 
 //ImportQM directory
 $config['importQMDir']='../../QUESTIONS';

@@ -2276,3 +2276,242 @@ span.extraClose{
     width: 420px;
     height: 450px;
 }
+
+/*******************************************************************
+********************************************************************
+***                                                              ***
+***                             Report                           ***
+***                                                              ***
+********************************************************************
+*******************************************************************/
+
+/*************************************
+*              Homepage              *
+*************************************/
+#reportHomepage .boxContent {
+    font-size: 12px;
+}
+#reportHomepage table {
+    margin-left: 50px;
+}
+#reportTable td:first-child {
+    text-align: right;
+    width: 100px;
+}
+#reportTable td:last-child {
+    padding-left: 20px;
+}
+
+.img-report{
+    width: 50px;
+}
+
+#assesmentHomepage .boxContent{
+    font-size: 12px;
+}
+
+#tabs{
+    margin-left:-45px;
+}
+
+#tabs li {
+    list-style: none;
+    display:inline-block;
+    width: 100px;
+    height: 20px;
+    margin-left: 0px;
+}
+#tabs li a {
+    font-size:14px;
+    color: black;
+    border-right: 1px solid black;
+    font-weight: bold;
+    text-decoration: none;
+    width: 100px;
+    height: 30px;
+    display: block;
+    float: left;
+    line-height: 35px;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+#tabs li a:hover{
+    background-color: #5bc0de;
+}
+
+#tabs li .active{
+    background-color: #5bc0de;
+}
+
+#containertab {
+    clear: both;
+    min-height: 300px;
+    overflow: hidden;
+    padding:5px;
+    background-color: #efefef;
+}
+
+#maintab{
+    display:block;
+}
+
+#groupstab{
+    display:none;
+}
+
+#partecipantstab{
+    display:none;
+}
+
+.col-left{
+    float:left;
+    min-width:100px;
+}
+
+.col-left #add, #addg{
+    margin-top:40px;
+    margin-left:10px;
+}
+
+.col-center{
+    float:left;
+    min-width:100px;
+    padding-left:18px;
+}
+
+.col-center #remove, #removeg{
+    margin-top:40px;
+    margin-bottom:5px;
+}
+
+.col-left #filter{
+    margin-top:15px;
+}
+
+.select{
+    width:160px;
+    overflow-x:scroll;
+    border-radius:5px;
+    border: 2px solid #7ab5d3;
+    transition: border 0.3s;
+    padding: 10px;
+}
+
+.divider{
+    width:100%;
+    margin-top:150px;
+}
+
+.divider2{
+    width:100%;
+    margin-top:50px;
+}
+
+#tabsbutton{
+    padding-top:20px;
+}
+
+.filter td{
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:20px;
+}
+
+.select-partecipant{
+    width:350px;
+    overflow-x: scroll;
+    border-radius:5px;
+    border: 2px solid #7ab5d3;
+    transition: border 0.3s;
+    padding: 10px;
+}
+
+#assesmentCustomize .boxContent{
+    font-size: 13px;
+}
+
+.templatecontent{
+    margin-right:15%;
+    margin-left:15%;
+}
+
+.title{
+    font-size:14px;
+}
+
+.customize{
+    text-align:center;
+    margin-top:20px;
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: #003399 3px 3px 3px;
+    background-color: #D4E7F2;  /*#87C5FB  #AEC5DA*/
+}
+
+.customize thead tr{
+    background-color: #434a8c;
+    color:white;
+}
+
+.customize tbody tr:hover{
+    background-color: #6da2ff; /*#002a80*/
+    color:white;
+}
+
+.customize td, .customize th{
+    border-bottom:1.5px solid #7ab5d3;
+    padding: 20px;
+}
+
+.customize td:first-child{
+    text-align:left;
+    width:40%;
+}
+.order{
+    width: 50px;
+}
+
+.replink{
+    text-decoration: none;
+    color:black;
+    font-size:14px;
+    font-weight: bold;
+}
+
+.replink:link{
+    text-decoration:none;
+    color:black;
+}
+
+.replink:visited{
+    text-decoration:none;
+    color:black;
+}
+
+.done{
+    margin-left:40%;
+}
+
+.select-creport{
+    width:250px;
+    overflow-x: scroll;
+    border-radius:5px;
+    border: 5px solid #c9c9c9/*#7ab5d3*/;
+    height:110px;
+    transition: border 0.3s;
+    padding: 10px;
+}
+
+.select-creport:focus{
+    border: solid 5px #969696;
+}
+.input-report{
+    border: solid 5px #c9c9c9/*#7ab5d3*/;
+    transition: border 0.3s;
+    padding: 10px;
+}
+
+.input-report:focus{
+    border: solid 5px #969696;
+}
