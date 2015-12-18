@@ -175,3 +175,28 @@ function LoadCheckbox(){
         });
 
 }
+
+/***********************
+ * @name DeleteTemplate
+ * @desc Delete selected template
+ **********************/
+function DeleteTemplate(){
+        $.ajax({
+            url     : "index.php?page=report/deletetemplate",
+            type    : "post",
+            data    : {
+                templateName:$("#template").val(),
+            },
+            success : function (data){
+		if (data=="error"){
+		    showErrorMessage(ttReportTemplateDeleteFailed);
+		}else{
+                showSuccessMessage(ttReportTemplateDelete);
+		}
+            },
+            error : function (request, status, error) {
+                alert("jQuery AJAX request error:".error);
+            }
+        });
+
+}

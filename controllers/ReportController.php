@@ -1,10 +1,10 @@
 <?php
 /**
- * File: UserController.php
+ * File: ReportController.php
  * User: Masterplan
  * Date: 4/19/13
  * Time: 10:04 AM
- * Desc: Controller for all Admin's operations
+ * Desc: Controller for all Report operations
  */
 
 class ReportController extends Controller{
@@ -92,8 +92,7 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionShowgroups(){
-        global $engine;
-
+    
         $db=new sqlDB();
 
         if(!($db->qShowGroups($_POST['letter'],$exams=json_decode($_POST['exams']),$_POST['minscore'],$_POST['maxscore'],$_POST['datein'],$_POST['datefn']))){
@@ -118,7 +117,7 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionShowstudent(){
-        global $engine;
+        
 
         $db=new sqlDB();
 
@@ -142,7 +141,7 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionAddstudent(){
-        global $engine;
+        
 
         $db=new sqlDB();
         $userid=$_POST['iduser'];
@@ -167,7 +166,7 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionPrintparticipantdetails(){
-        global $engine;
+       
 
         $db=new sqlDB();
         $userid=$_POST['iduser'];
@@ -181,7 +180,7 @@ class ReportController extends Controller{
      *  @descr  Set parameters for AOreport
      */
     private function actionAoreportparameters(){
-        global $engine;
+        
 
         $_SESSION['userparam']=$_POST['iduser'];
         $_SESSION['examsparam']=json_decode($_POST['exams']);
@@ -211,7 +210,7 @@ class ReportController extends Controller{
      *  @descr  Shows the report
      */
     private function actionAoreportresult(){
-        global $engine,$config;
+        global $config;
 
         include($config['systemPhpGraphLibDir'].'phpgraphlib.php');
         include($config['systemFpdfDir'].'fpdf.php');
@@ -1890,6 +1889,12 @@ class ReportController extends Controller{
         echo $checkbox;
     }
 
+    private function actionDeletetemplate(){
+        global $log;
+        $db=new sqlDB();
+        if (!($db->qDeleteReportTemplate($_POST['templateName']))){echo "error";}
+    }
+
     /**
      * @name   accessRules
      * @descr  Returns all access rules for User controller's actions:
@@ -1909,7 +1914,7 @@ class ReportController extends Controller{
                 'actions' => array('Index', 'Aoreport','Showassesments','Showpartecipant',
                     'Showstudent','Addstudent','Aoreporttemplate','Showparticipantdetails',
                     'Printparticipantdetails','Aoreportparameters','Showgroups','Aoreportresult',
-                    'Savetemplate','Loadtemplate'),
+                    'Savetemplate','Loadtemplate','Deletetemplate'),
                 'roles'   => array('a','e','t','at'),
             ),
             array(

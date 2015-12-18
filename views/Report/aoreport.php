@@ -52,7 +52,7 @@ global $config, $user;
 
                     <div class="col-left">
                         <h4><?=ttReportTyping?><br></h4>
-                        <input type="text" name="word" placeholder="<?=ttReportSearch?>" oninput="printAssesments(this.value)">
+                        <input type="text" class="input-report" name="word" placeholder="<?=ttReportSearch?>" oninput="printAssesments(this.value)">
                     </div>
                     <div class="col-center">
                         <h4><?=ttReportSearched?><br></h4>
@@ -78,7 +78,7 @@ global $config, $user;
                         <br/>
                         <hr class="divider"/>
                         <h3><?=ttReportDateInterval?></h3>
-                        <?=ttReportDateFrom?> <input type="date" id="dateIn"/>&nbsp;&nbsp;<?=ttReportDateTo?> <input type="date" id="dateFn"/>
+                        <?=ttReportDateFrom?> <input class="input-report" type="date" id="dateIn"/>&nbsp;&nbsp;<?=ttReportDateTo?> <input class="input-report" type="date" id="dateFn"/>
                         <hr/>
                         <!--<div class="col-left">
                             <h4><?=ttReportSelectFilter?></h4>
@@ -104,7 +104,7 @@ global $config, $user;
 
                     <div class="col-left">
                         <h4><?=ttReportTyping?><br></h4>
-                        <input type="text" name="wordgroup" placeholder="<?=ttReportSearch?>" oninput="printGroups(this.value)">
+                        <input class="input-report" type="text" name="wordgroup" placeholder="<?=ttReportSearch?>" oninput="printGroups(this.value)">
                     </div>
                     <div class="col-center">
                         <h4><?=ttReportSearched?><br></h4>
@@ -157,17 +157,17 @@ global $config, $user;
                         </tr>
                         <tr>
                             <td class="bold"><?=ttReportMinimumScore?></td>
-                            <td><input type="number" min="0" value="0" disabled="disabled" id="assesmentMinScore"></td>
+                            <td><input class="input-report" type="number" min="0" value="0" disabled="disabled" id="assesmentMinScore"></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td class="bold"><?=ttReportMaximumScore?></td>
-                            <td><input type="number" min="0" value="30" disabled="disabled" id="assesmentMaxScore"></td>
+                            <td><input class="input-report" type="number" min="0" value="30" disabled="disabled" id="assesmentMaxScore"></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td class="bold"><?=ttReportStudent?></td>
-                            <td><textarea rows="1" id="student" readonly="readonly"></textarea></td>
+                            <td><textarea class="textarea-report" rows="1" id="student" readonly="readonly"></textarea></td>
                             <td>
                                 <a class="normal button rSpace" onclick="showPartecipant(),printStudent()"><?=ttAdd?></a>
                                 <a class="normal button rSpace" onclick="removePartecipant()"><?=ttRemove?></a>
@@ -175,7 +175,7 @@ global $config, $user;
                         </tr>
                         <tr>
                             <td class="bold"><?=ttReportStudentDetail?></td>
-                            <td><textarea rows="1" id="studentDetail" readonly="readonly"></textarea></td>
+                            <td><textarea class="textarea-report" rows="1" id="studentDetail" readonly="readonly"></textarea></td>
                             <td>
                                 <a class="normal button rSpace" onclick="showParticipantDetails(),printStudentDetail()"><?=ttAdd?></a>
                                 <a class="normal button rSpace" onclick="removePartecipantDetail()"><?=ttRemove?></a>

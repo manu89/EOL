@@ -27,9 +27,11 @@ global $config, $user;
             <h1><?=ttReportCustomize?></h1>
             <hr>
             <div>
-                <?=ttReportTemplateLoad?> <select id="template" size="1" onchange="LoadCheckbox()"><?if (!($db->qLoadReportTemplate())){echo "errore query";}?></select>
+                <?=ttReportTemplateLoad?> <select class="select-template" id="template" size="1"><?if (!($db->qLoadReportTemplate())){echo "errore query";}?></select>
+		<a class="normal button" id="load" onclick="LoadCheckbox()"><?=ttLoad?></a>
+		<a class="normal button" id="del" onclick="DeleteTemplate()"><?=ttDelete?></a>
                 <br><br>
-                <?=ttReportTemplateSave?> <input type="text" placeholder="<?=ttReportTemplateName?>" id="template_name"/>
+                <?=ttReportTemplateSave?> <input class="input-report" type="text" placeholder="<?=ttReportTemplateName?>" id="template_name"/>
                 <a class="normal button" id="save" onclick="saveTemplate()"><?=ttSave?></a>
             </div>
             <h3><?=ttReportAssessmentInformation?></h3>

@@ -1153,3 +1153,12 @@
 12/17/2015 12:06:38 - qShowTopicMedScore : Table 'eol.Testsettings' doesn't exist
 12/17/2015 12:07:59 - qShowTopicMedScore : Table 'eol.Testsettings' doesn't exist
 12/17/2015 12:07:59 - qShowTopicMedScore : Table 'eol.Testsettings' doesn't exist
+12/18/2015 14:52:56 - qDeleteReportTemplate : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* FROM ReportTemplate
+                    FROM ReportTemplate
+                  ' at line 1
+12/18/2015 14:54:42 - qDeleteReportTemplate : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* FROM ReportTemplate
+                    FROM ReportTemplate
+                  ' at line 1
+12/18/2015 14:59:01 - qDeleteReportTemplate : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM ReportTemplate
+                    WHERE ReportTemplate.fkUser='3'
+		    AN' at line 2

@@ -8862,6 +8862,29 @@ class sqlDB {
         return $row;
     }
 
+/**
+     * @name    qDeleteReportTemplate
+     * @return  boolean
+     * @descr   delete a template
+     */
+    public function qDeleteReportTemplate($template_name){
+        global $log,$user;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "DELETE FROM ReportTemplate
+                    WHERE ReportTemplate.fkUser='$user->id'
+		    AND ReportTemplate.name='$template_name'";
+            $this->execQuery($query);
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
     /*******************************************************************
      *                              mysqli                              *
      *******************************************************************/

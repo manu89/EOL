@@ -181,6 +181,7 @@ define('ttInactive' , "Inactive");
 define('ttJoin' , "Join");
 define('ttLanguage' , "Language");
 define('ttLanguages' , "Languages");
+define('ttLoad', "Load");
 define('ttLogin' , "Login");
 define('ttLogo' , "Logo");
 define('ttLoginOk' , "Login complete!");

@@ -2335,6 +2335,7 @@ span.extraClose{
     line-height: 35px;
     text-align: center;
     border-bottom: 1px solid black;
+    
 }
 
 #tabs li a:hover{
@@ -2349,6 +2350,8 @@ span.extraClose{
     clear: both;
     min-height: 300px;
     overflow: hidden;
+    padding:5px;
+    background-color: #efefef;
 }
 
 #maintab{
@@ -2392,7 +2395,13 @@ span.extraClose{
     width:160px;
     overflow-x:scroll;
     border-radius:5px;
-    border: 2px solid #7ab5d3;
+    border: 5px solid #c9c9c9;
+    transition: border 0.3s;
+    padding: 10px;
+}
+
+.select:focus{
+    border: solid 5px #969696;
 }
 
 .divider{
@@ -2419,7 +2428,13 @@ span.extraClose{
     width:350px;
     overflow-x: scroll;
     border-radius:5px;
-    border: 2px solid #7ab5d3;
+    border: 5px solid #c9c9c9;
+    transition: border 0.3s;
+    padding: 10px;
+}
+
+.select-partecipant:focus{
+    border: solid 5px #969696;
 }
 
 #assesmentCustomize .boxContent{
@@ -2487,3 +2502,31 @@ span.extraClose{
 .done{
     margin-left:40%;
 }
+
+.input-report{
+    border: solid 5px #c9c9c9;
+    transition: border 0.3s;
+    padding: 10px;
+}
+
+.input-report:focus{
+    border: solid 5px #969696;
+}
+
+.textarea-report{
+    padding: 10px;
+    border: solid 1px #fff;
+    box-shadow: inset 1px 1px 2px 0 #707070;
+    transition: box-shadow 0.3s;
+}
+
+.select-template{
+    border-radius:5px;
+    border: 5px solid #c9c9c9;
+    padding:10px;
+}
+
+.select-template:focus{
+    border: 5px solid #969696;
+}
+
