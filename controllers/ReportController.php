@@ -1479,7 +1479,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentMediumTimeFinished, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentMediumTimeFinished($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentMediumTimeFinished($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
                         //print assesment std deviation
                         if (isset($_POST['assesmentStdDeviation'])) {
@@ -1487,7 +1487,7 @@ class ReportController extends Controller{
                             $pdf->SetLeftMargin(30);
                             $pdf->Cell(85, 10, ttReportAssesmentStdDeviation, 0, 0);
                             $pdf->SetFont("Helvetica", "", 13);
-                            $pdf->Cell(85, 10, $db->qShowAssesmentStdDeviation($_SESSION['examsparam'][$i], $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
+                            $pdf->Cell(85, 10, $db->qShowAssesmentStdDeviation($exam, $student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']), 0, 1);
                         }
                         //now load all the topics relative to selected student
                         $topics = $db->qLoadTopicUser($exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
