@@ -108,6 +108,20 @@ class ReportController extends Controller{
         $_SESSION['CRdatefn']=$_POST['CRdatefn'];
     }
 
+    /**
+     *  @name   actionCreportlist
+     *  @descr  Shows list of all the test done
+     */
+    private function actionCreportlist(){
+        global $engine;
+
+        $engine->renderDoctype();
+        $engine->loadLibs();
+        $engine->renderHeader();
+        $engine->renderPage();
+        $engine->renderFooter();
+    }
+
 
     /**
      * @name   accessRules
@@ -126,7 +140,7 @@ class ReportController extends Controller{
             array(
                 'allow',
                 'actions' => array('Index', 'Creport','Showassesments',
-                    'Showstudentcreport','Creportparameters'),
+                    'Showstudentcreport','Creportparameters','Creportlist'),
                 'roles'   => array('a','e','t','at'),
             ),
             array(
