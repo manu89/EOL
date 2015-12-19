@@ -69,7 +69,6 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionShowassesments(){
-        global $engine;
 
         $db=new sqlDB();
 
@@ -84,7 +83,6 @@ class ReportController extends Controller{
      *  @descr  Shows report index page
      */
     private function actionShowstudentcreport(){
-        global $engine;
 
         $db=new sqlDB();
 
@@ -101,11 +99,12 @@ class ReportController extends Controller{
     private function actionCreportparameters(){
 
         $_SESSION['CRuser']=$_POST['CRiduser'];
-        $_SESSION['CRexam']=json_decode($_POST['CRexam']);
+        $_SESSION['CRexam']=$_POST['CRexam'];
         $_SESSION['CRminscore']=$_POST['CRminscore'];
         $_SESSION['CRmaxscore']=$_POST['CRmaxscore'];
         $_SESSION['CRdatein']=$_POST['CRdatein'];
         $_SESSION['CRdatefn']=$_POST['CRdatefn'];
+
     }
 
     /**
@@ -120,6 +119,19 @@ class ReportController extends Controller{
         $engine->renderHeader();
         $engine->renderPage();
         $engine->renderFooter();
+    }
+
+    /**
+     *  @name   actionShowtestscreport
+     *  @descr  Shows all the test for creport
+     */
+    private function actionShowtestscreport(){
+        $db=new sqlDB();
+
+        if(!($db->qShowTestsCreport($_SESSION['CRuser'],$_SESSION['CRexam'],$_SESSION['CRminscore'],$_SESSION['CRmaxscore'],$_SESSION['CRdatein'],$_SESSION['CRdatefn']))){
+            echo "errore query caricamento test";
+        }
+
     }
 
 
@@ -140,7 +152,7 @@ class ReportController extends Controller{
             array(
                 'allow',
                 'actions' => array('Index', 'Creport','Showassesments',
-                    'Showstudentcreport','Creportparameters','Creportlist'),
+                    'Showstudentcreport','Creportparameters','Creportlist','Showtestscreport'),
                 'roles'   => array('a','e','t','at'),
             ),
             array(

@@ -71,20 +71,20 @@ function transferData(min,max){
 
    if (($("#crsearched_ass").val()==null) || ($("#crparticipant").val()==null)){
        showErrorMessage(ttReportCoachingError);
-    }else{
+   }else{
        $.ajax({
            url     : "index.php?page=report/creportparameters",
            type    : "post",
            data    : {
-               iduser : $("#crparticipant").val(),
-               exam : $("#crsearched_ass").val(),
-               minscore: minscore,
-               maxscore: maxscore,
-               datein: $("#crdateIn").val(),
-               datefn:$("#crdateFn").val()
+               CRiduser : $("#crparticipant").val(),
+               CRexam : $("#crsearched_ass").val(),
+               CRminscore: minscore,
+               CRmaxscore: maxscore,
+               CRdatein: $("#crdateIn").val(),
+               CRdatefn:$("#crdateFn").val()
            },
            success : function (data){
-               window.location.assign("index.php?page=report/creportlist")
+              window.location.assign("index.php?page=report/creportlist")
            },
            error : function (request, status, error) {
                alert("jQuery AJAX request error:".error);

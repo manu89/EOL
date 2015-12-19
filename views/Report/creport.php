@@ -52,9 +52,6 @@ global $config, $user;
 
                         </select>
                     </div>
-                        <!--<div class="col-left">
-                            <a class="normal button right rSpace" id="add" onclick="addAssessment(searched.value)"><?=ttAdd?></a>
-                        </div>-->
                     <div class="col-center">
                         <h4><?=ttReportAOSelectPartecipant?><br></h4>
                         <select size="5" id="crparticipant" class="select-creport">

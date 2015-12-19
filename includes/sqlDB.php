@@ -3102,6 +3102,147 @@ class sqlDB {
         return $ack;
     }
 
+    /**
+     * @name    qShowTestsCreport
+     * @return  boolean
+     * @descr   show all tests on creport
+     */
+    public function qShowTestsCreport($user,$exam,$minscore,$maxscore,$datein,$datefn){
+        global $log;
+        $ack=true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            if(($minscore!=-1)&&($maxscore!=-1)){//minscore and maxscore set
+                if (($datein==null)&&($datefn==null)){//date not set
+                    $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
+                        Tests.scoreFinal, Tests.timeStart, Users.group, Users.subgroup, Tests.status
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
+                        and Users.idUser='$user'
+                        and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    echo "<tbody>";
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            echo "<a onclick=showCreportDetails()><tr id=".$row['idUser'].">
+                            <td>".$row['surname']."&nbsp;".$row['name']."</td>
+                            <td>".$row['materia']."</td>
+                            <td>".$row['scoreFinal']."</td>
+                            <td>".$row['group']."-".$row['subgroup']."</td>
+                            <td>".$row['timeStart']."</td>";
+                            if (($row['status']=="a")or($row['status']=="e")) {
+                                echo "<td>".ttFinishedNormal."</td>";
+                            }
+                            if (($row['status']=="b")) {
+                                echo "<td>".ttBlocked."</td>";
+                            }
+                            echo"</tr></a>";
+                        }
+                    }
+                    echo "</tbody>";
+                }else{//dates set
+                    $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
+                        Tests.scoreFinal, Tests.timeStart, Users.group, Users.subgroup, Tests.status
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
+                        and Users.idUser='$user'
+                        and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')
+                        and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
+                    $this->execQuery($query);
+                    echo "<tbody>";
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            echo "<a onclick=showCreportDetails()><tr id=".$row['idUser'].">
+                            <td>".$row['surname']."&nbsp;".$row['name']."</td>
+                            <td>".$row['materia']."</td>
+                            <td>".$row['scoreFinal']."</td>
+                            <td>".$row['group']."-".$row['subgroup']."</td>
+                            <td>".$row['timeStart']."</td>";
+                            if (($row['status']=="a")or($row['status']=="e")) {
+                                echo "<td>".ttFinishedNormal."</td>";
+                            }
+                            if (($row['status']=="b")) {
+                                echo "<td>".ttBlocked."</td>";
+                            }
+                            echo"</tr></a>";
+                        }
+                    }
+                    echo "</tbody>";
+                }
+            }else{
+                if (($datein==null)&&($datefn==null)){
+                    $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
+                        Tests.scoreFinal, Tests.timeStart, Users.group, Users.subgroup, Tests.status
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
+                        and Users.idUser='$user'";
+                    $this->execQuery($query);
+                    echo "<tbody>";
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            echo "<a onclick=showCreportDetails()><tr id=".$row['idUser'].">
+                            <td>".$row['surname']."&nbsp;".$row['name']."</td>
+                            <td>".$row['materia']."</td>
+                            <td>".$row['scoreFinal']."</td>
+                            <td>".$row['group']."-".$row['subgroup']."</td>
+                            <td>".$row['timeStart']."</td>";
+                            if (($row['status']=="a")or($row['status']=="e")) {
+                                echo "<td>".ttFinishedNormal."</td>";
+                            }
+                            if (($row['status']=="b")) {
+                                echo "<td>".ttBlocked."</td>";
+                            }
+                            echo"</tr></a>";
+                        }
+                    }
+                    echo "</tbody>";
+                }else{
+                    $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
+                        Tests.scoreFinal, Tests.timeStart, Users.group, Users.subgroup, Tests.status
+                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
+                        ON Subjects.idSubject=Exams.fkSubject)
+                        ON Users.idUser=Tests.fkUser
+                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
+                        and Users.idUser='$user'
+                        and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
+                    $this->execQuery($query);
+                    echo "<tbody>";
+                    if($this->numResultRows()>0){
+                        while($row=mysqli_fetch_array($this->result)){
+                            echo "<a onclick=showCreportDetails()><tr id=".$row['idUser'].">
+                            <td>".$row['surname']."&nbsp;".$row['name']."</td>
+                            <td>".$row['materia']."</td>
+                            <td>".$row['scoreFinal']."</td>
+                            <td>".$row['group']."-".$row['subgroup']."</td>
+                            <td>".$row['timeStart']."</td>";
+                            if (($row['status']=="a")or($row['status']=="e")) {
+                                echo "<td>".ttFinishedNormal."</td>";
+                            }
+                            if (($row['status']=="b")) {
+                                echo "<td>".ttBlocked."</td>";
+                            }
+                            echo"</tr></a>";
+                        }
+                    }
+                    echo "</tbody>";
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $ack=false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
 
 /*******************************************************************
 *                              mysqli                              *

@@ -2515,3 +2515,28 @@ span.extraClose{
 .input-report:focus{
     border: solid 5px #969696;
 }
+
+.crlist{
+    text-align:center;
+    margin-top:20px;
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: #003399 3px 3px 3px;
+    background-color: #D4E7F2;  /*#87C5FB  #AEC5DA*/
+    font-size:12px;
+}
+
+.crlist thead tr{
+    background-color: #434a8c;
+    color:white;
+}
+
+.crlist tbody tr:hover{
+    background-color: #6da2ff; /*#002a80*/
+    color:white;
+}
+
+.crlist td, .crlist th{
+    border-bottom:1.5px solid #7ab5d3;
+    padding: 20px;
+}
