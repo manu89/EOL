@@ -134,6 +134,152 @@ class ReportController extends Controller{
 
     }
 
+    /**
+     *  @name   actionLoadcreportresult
+     *  @descr  Load parameters for specific Test
+     */
+    private function actionLoadcreportresult(){
+        global $engine;
+        $_SESSION['CRdateTaken']=$_POST['dateTaken'];
+        $_SESSION['CRscoreFinal']=$_POST['scoreFinal'];
+        $_SESSION['CRstatus']=$_POST['status'];
+        $_SESSION['CRidTest']=$_POST['idTest'];
+    }
+
+    /**
+     *  @name   actionCreportpdf
+     *  @descr  Shows the report
+     */
+    private function actionCreportpdf(){
+        global $config;
+        include($config['systemPhpGraphLibDir'].'phpgraphlib.php');
+        include($config['systemFpdfDir'].'fpdf.php');
+        $db=new sqlDB();
+        $pdf = new FPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('Helvetica','B',22);
+        $pdf->Image("themes/default/images/eol.png");
+        $pdf->Cell(0,20,ttReportCoaching,1,1,'C',false);
+        $pdf->Cell(0,8,"",0,1);
+        $pdf->SetFont('Helvetica','B',12);
+        $pdf->Cell(30,10,ttReportPartecipant,"B",0);
+        $pdf->SetFont('Helvetica','',12);
+        $pdf->Cell(70,10,$db->qLoadStudent($_SESSION['CRuser']),"B",0);
+        $pdf->SetFont('Helvetica','B',12);
+        $pdf->Cell(40,10,ttStudentDetailCreport,"B",0);
+        $pdf->SetFont('Helvetica','',12);
+        $pdf->Cell(45,10,"User_".$_SESSION['CRuser'],"B",1);
+        $pdf->SetFont('Helvetica','B',12);
+        $pdf->Cell(30,10,ttGroup,"B",0);
+        $pdf->SetFont('Helvetica','',12);
+        $pdf->Cell(70,10,$db->qLoadGroup($_SESSION['CRuser']),"B",0);
+        $pdf->SetFont('Helvetica','B',12);
+        $pdf->Cell(40,10,ttStatus,"B",0);
+        $pdf->SetFont('Helvetica','',12);
+        $pdf->Cell(45,10,$_SESSION['CRstatus'],"B",1);
+        $pdf->SetFont('Helvetica','B',12);
+        $pdf->Cell(40,10,ttReportAssesmentName,"B",0);
+        $pdf->SetFont('Helvetica','',12);
+        $pdf->Cell(60,10,$_SESSION['CRexam'],"B",0);
+        $pdf->SetFont('Helvetica','B',12);
+        $pdf->Cell(40,10,ttScoreFinal,"B",0);
+        $pdf->SetFont('Helvetica','',12);
+        $pdf->Cell(45,10,$_SESSION['CRscoreFinal'],"B",1);
+        $pdf->SetFont('Helvetica','B',12);
+        $pdf->Cell(40,10,ttTimeUsed,"B",0);
+        $pdf->SetFont('Helvetica','',12);
+        $pdf->Cell(60,10,$db->qLoadTimeUsed($_SESSION['CRidTest']),"B",0);
+        $pdf->SetFont('Helvetica','B',12);
+        $pdf->Cell(40,10,ttTimeLimit,"B",0);
+        $pdf->SetFont('Helvetica','',12);
+        $pdf->Cell(45,10,$db->qLoadTestTimeLimit($_SESSION['CRidTest']),"B",1);
+        $pdf->SetFont('Helvetica','B',12);
+        $pdf->Cell(40,10,ttTopic,"B",0);
+        $pdf->SetFont('Helvetica','',12);
+        $pdf->Cell(60,10,$db->qLoadTestTopic($_SESSION['CRidTest']),"B",0);
+        $pdf->SetFont('Helvetica','B',12);
+        $pdf->Cell(40,10,ttReportDateTaken,"B",0);
+        $pdf->SetFont('Helvetica','',12);
+        $pdf->Cell(45,10,$_SESSION['CRdateTaken'],"B",1);
+        $pdf->Cell(0,10,"",0,1);
+        $pdf->SetFont('Helvetica','B',16);
+        $pdf->Cell(0,10,ttQuestions,0,1);
+        $pdf->Cell(0,10,"",0,1);
+        $questions=$db->qLoadTestQuestions($_SESSION['CRidTest']);
+        $i=1;
+        //select lang to load for question & answer
+        $langs=get_required_files();
+        foreach($langs as $lang){
+            if(strpos($lang,"it/lang.php")){$idLang=2;}
+            if(strpos($lang,"en/lang.php")){$idLang=1;}
+        }
+
+        foreach($questions as $question){
+            $details=$db->qShowQuestionsDetails($_SESSION['CRidTest'],$idLang,$question);
+            $pdf->SetFont('Helvetica','B',20);
+            $pdf->Cell(10,10,$i,1,0,"C");
+            $pdf->SetFont('Helvetica','B',12);
+            $pdf->SetTextColor(255,0,0);
+            $pdf->Cell(170,10,$details['questionText'],1,0);
+            if ($details['score']>0){
+                $pdf->Image($config['themeImagesDir'].'done.png',null,null,10);
+
+            }else{
+                $pdf->Image($config['themeImagesDir'].'False.png',null,null,10);
+
+            }
+            $pdf->Cell(1,5,"",0,1);
+            $pdf->SetTextColor(0,0,0);
+            $pdf->SetFont('Helvetica','B',12);
+            $pdf->Cell(80,10,ttReportQuestionType,0,0,"");
+            $pdf->SetFont('Helvetica','',12);
+            switch ($details['qtype']) {
+                case "MC":
+                    $pdf->Cell(50,10,ttQTMC,0,1,"");
+                    break;
+                case "MR":
+                    $pdf->Cell(50,10,ttQTMR,0,1,"");
+                    break;
+                case "YN":
+                    $pdf->Cell(50,10,ttQTYN,0,1,"");
+                    break;
+                case "TF":
+                    $pdf->Cell(50,10,ttQTTF,0,1,"");
+                    break;
+                case "ES":
+                    $pdf->Cell(50,10,ttQTES,0,1,"");
+                    break;
+                case "NM":
+                    $pdf->Cell(50,10,ttQTNM,0,1,"");
+                case "TM":
+                    $pdf->Cell(50,10,ttQTTM,0,1,"");
+                    break;
+            }
+            $pdf->SetFont('Helvetica','B',12);
+            $pdf->Cell(80,10,ttDifficulty,0,0,"");
+            $pdf->SetFont('Helvetica','',12);
+            $pdf->Cell(50,10,$details['difficulty'],0,1,"");
+            $pdf->SetFont('Helvetica','B',12);
+            $pdf->Cell(80,10,ttScore,0,0,"");
+            $pdf->SetFont('Helvetica','',12);
+            $pdf->Cell(50,10,$details['score'],0,1,"");
+            $pdf->SetFont('Helvetica','B',12);
+            $pdf->Cell(80,10,ttAnswer,0,0,"");
+            $pdf->SetFont('Helvetica','',12);
+            $pdf->Cell(50,10,$details['answerNum'],0,1,"");
+            $pdf->Cell(0,10,"",0,1,"");
+
+            $i++;//questions counter
+            //select number of question for pages
+            if ($i % 3==0){
+                $pdf->AddPage();
+            }
+        }
+        $pdf->Output();
+        $t=time();
+        $pdf->Output($config['systemViewsDir']."Report/generated_report/Creport/Creport_".date("d-m-Y_H:i:s",$t).".pdf","F");
+    }
+
 
     /**
      * @name   accessRules
@@ -152,7 +298,8 @@ class ReportController extends Controller{
             array(
                 'allow',
                 'actions' => array('Index', 'Creport','Showassesments',
-                    'Showstudentcreport','Creportparameters','Creportlist','Showtestscreport'),
+                    'Showstudentcreport','Creportparameters','Creportlist',
+                    'Showtestscreport','Loadcreportresult','Creportpdf'),
                 'roles'   => array('a','e','t','at'),
             ),
             array(

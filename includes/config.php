@@ -40,6 +40,7 @@ $config['systemLangsXml'] = '../resources/languages/';
 $config['systemExtraDir'] = 'extra/';
 $config['systemFpdfDir'] = 'fpdf/';
 $config['systemPhpGraphLibDir'] = 'phpgraphlib-master/';
+$config['systemFileManagerDir'] = 'filemanager/';
 
 //ImportQM directory
 $config['importQMDir']='../../QUESTIONS';

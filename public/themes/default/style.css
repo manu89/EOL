@@ -2518,7 +2518,7 @@ span.extraClose{
 
 .crlist{
     text-align:center;
-    margin-top:20px;
+    margin-top:60px;
     border-collapse: collapse;
     width: 100%;
     box-shadow: #003399 3px 3px 3px;
@@ -2534,9 +2534,25 @@ span.extraClose{
 .crlist tbody tr:hover{
     background-color: #6da2ff; /*#002a80*/
     color:white;
+    cursor: pointer;
 }
 
 .crlist td, .crlist th{
     border-bottom:1.5px solid #7ab5d3;
     padding: 20px;
+}
+
+.small-title{
+    font-size:14px;
+    font-weight: bold;
+    float:left;
+    padding-right:5px;
+    padding-top:10px;
+}
+.small-text{
+    font-size:14px;
+    float:left;
+    margin:0;
+    padding-right:15px;
+    padding-top:10px;
 }

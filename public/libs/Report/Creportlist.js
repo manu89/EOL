@@ -5,6 +5,7 @@
  *  @name   printParticipant
  *  @descr  Shows partecipants in the select form
  */
+
 $(document).ready(function(){
     $.ajax({
         url     : "index.php?page=report/showtestscreport",
@@ -19,4 +20,32 @@ $(document).ready(function(){
             alert("jQuery AJAX request error:".error);
         }
     });
+
 });
+
+/**
+ *  @name   showCreportDetails
+ *  @descr  Send data for create Coaching report pdf
+ */
+function showCreportDetails() {
+    var scoreFinal = $("#crtests tr:hover").find(".scoreFinal").text();
+    var dateTaken = $("#crtests tr:hover").find(".dateTaken").text();
+    var status = $("#crtests tr:hover").find(".status").text();
+    var idTest = $("#crtests tr:hover").attr("id");
+    $.ajax({
+         url     : "index.php?page=report/loadcreportresult",
+         type    : "post",
+         data : {
+         scoreFinal: scoreFinal,
+         dateTaken: dateTaken,
+         status: status,
+         idTest: idTest
+         },
+         success : function (data){
+             window.location.assign("index.php?page=report/creportpdf")
+         },
+         error : function (request, status, error) {
+            alert("jQuery AJAX request error:".error);
+         }
+    });
+}

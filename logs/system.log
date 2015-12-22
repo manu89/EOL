@@ -978,3 +978,16 @@
 09/11/2015 14:39:37 - 11/09/2015 14:39
 12/18/2015 15:51:25 - qShowStudentCreport : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and Subjects.name='Architettura reti' and (Exams.status='e' or Exams.status='a')' at line 4
 12/18/2015 15:53:10 - qShowStudentCreport : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and Subjects.name='Architettura reti' and (Exams.status='e' or Exams.status='a')' at line 4
+12/20/2015 13:58:45 - qShowTestsCreport : Incorrect parameter count in the call to native function 'DATE_FORMAT'
+12/22/2015 20:33:00 - 1reti_setting100000304
+12/22/2015 20:33:48 - 22/12/2015 20:33
+12/22/2015 20:35:11 - 22/12/2015 20:34
+12/22/2015 20:36:39 - qSelect : Table 'eol.answers' doesn't exist
+12/22/2015 20:37:09 - qSelect : Table 'eol.answers' doesn't exist
+12/22/2015 20:37:35 - qSelect : Table 'eol.answers' doesn't exist
+12/22/2015 20:40:02 - 1New Settings300000153
+12/22/2015 20:40:18 - 22/12/2015 20:40
+12/22/2015 20:40:32 - 22/12/2015 20:40
+12/22/2015 21:04:05 - qSelect : Table 'eol.sets_questions' doesn't exist
+12/22/2015 21:29:09 - qSelect : Table 'eol.sets_questions' doesn't exist
+12/22/2015 21:53:06 - 22/12/2015 21:52
