@@ -151,7 +151,7 @@ class ReportController extends Controller{
      *  @descr  Shows the report
      */
     private function actionCreportpdf(){
-        global $config;
+        global $config,$user;
         include($config['systemPhpGraphLibDir'].'phpgraphlib.php');
         include($config['systemFpdfDir'].'fpdf.php');
         $db=new sqlDB();
@@ -268,16 +268,21 @@ class ReportController extends Controller{
             $pdf->SetFont('Helvetica','',12);
             $pdf->Cell(50,10,$details['answerNum'],0,1,"");
             $pdf->Cell(0,10,"",0,1,"");
-
-            $i++;//questions counter
-            //select number of question for pages
-            if ($i % 3==0){
+            if ($i==2){
                 $pdf->AddPage();
             }
+            if (($i%3==0)&&($i!=3)){
+                $pdf->AddPage();
+            }
+            $i++;//questions counter
+
+
         }
-        $pdf->Output();
         $t=time();
-        $pdf->Output($config['systemViewsDir']."Report/generated_report/Creport/Creport_".date("d-m-Y_H:i:s",$t).".pdf","F");
+        $pdf->Output($config['systemViewsDir']."Report/generated_report/Creport/Creport_".$user->surname."_".$user->name."_".date("d-m-Y_H:i:s",$t).".pdf","F");
+        $pdf->Output();
+
+
     }
 
 

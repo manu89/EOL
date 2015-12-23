@@ -225,7 +225,7 @@ viewDeletedFiles = no
 
 ; check for file and directory changes every .. seconds (0 = disable smart refresh)
 ; NOTE: will increase traffic and server load!
-smartRefresh = 0
+smartRefresh = 20
 
 ; quota setting, examples: 500M, 1G; leave empty if you don't need it
 quota = ""
@@ -292,7 +292,7 @@ enableDownload = yes
 
 ; enable bulk download of files/directories as ZIP archive
 ; NOTE: your PHP installation must support ZLib or this won't work!
-enableBulkDownload = no
+enableBulkDownload = yes
 
 ; enable file editing
 enableEdit = no

@@ -3453,9 +3453,14 @@ class sqlDB {
                 $val['difficulty']=$row['difficulty']."/3";
                 $val['score']=$row['score'];
                 $val['qtype']=$row['type'];
+
+                //text of answer given by student
+                //preg_match_all ('/["(.*)<\"]>/U',  $val['answerNum'], $answertext);
+                //echo $answertext[0][0];
+
             }
-            //possible answers
-            //$query="Select distinct "
+
+
         }
         catch(Exceptin $ex){
             $log->append(__FUNCTION__." : ".$this->getError());
