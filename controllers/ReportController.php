@@ -174,7 +174,7 @@ class ReportController extends Controller{
      *  @descr  Shows the report
      */
     private function actionAoreportresult(){
-        global $config;
+        global $config,$user;
         include($config['systemPhpGraphLibDir'].'phpgraphlib.php');
         include($config['systemFpdfDir'].'fpdf.php');
         $db=new sqlDB();
@@ -867,26 +867,26 @@ class ReportController extends Controller{
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
                             $graphdata=$db->qLoadAssesmentScoresGroup($_SESSION['examsparam'][$i], $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                            ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i.".png");
+                            ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                             ${'graph'.$i}->addData($graphdata);
                             ${'graph'.$i}->setTitle("Assesments Scores");
                             ${'graph'.$i}->setTextColor("black");
                             ${'graph'.$i}->setXValuesHorizontal(true);
                             ${'graph'.$i}->setBarColor("#6da2ff");
                             ${'graph'.$i}->createGraph();
-                            $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i.".png");
+                            $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                         }
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
                             $graphdatatopic=$db->qLoadTopicScoresGroup($grouptopics, $_SESSION['examsparam'][$i], $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                            ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i.".png");
+                            ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                             ${'topics'.$i}->addData($graphdatatopic);
                             ${'topics'.$i}->setTitle("Topics Scores");
                             ${'topics'.$i}->setTextColor("black");
                             ${'topics'.$i}->setXValuesHorizontal(true);
                             ${'topics'.$i}->setBarColor("green");
                             ${'topics'.$i}->createGraph();
-                            $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i.".png");
+                            $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                         }
                         $i++;//counter of assesments
                     }
@@ -1093,26 +1093,26 @@ class ReportController extends Controller{
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
                             $graphdata=$db->qLoadAssesmentScoresGroup($exam, $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                            ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i.".png");
+                            ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                             ${'graph'.$i}->addData($graphdata);
                             ${'graph'.$i}->setTitle("Assesments Scores");
                             ${'graph'.$i}->setTextColor("black");
                             ${'graph'.$i}->setXValuesHorizontal(true);
                             ${'graph'.$i}->setBarColor("#6da2ff");
                             ${'graph'.$i}->createGraph();
-                            $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i.".png");
+                            $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                         }
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
                             $graphdatatopic=$db->qLoadTopicScoresGroup($grouptopics, $exam, $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                            ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i.".png");
+                            ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                             ${'topics'.$i}->addData($graphdatatopic);
                             ${'topics'.$i}->setTitle("Topics Scores");
                             ${'topics'.$i}->setTextColor("black");
                             ${'topics'.$i}->setXValuesHorizontal(true);
                             ${'topics'.$i}->setBarColor("green");
                             ${'topics'.$i}->createGraph();
-                            $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i.".png");
+                            $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                         }
                         $i++; //counter of assesments
                     }
@@ -1127,6 +1127,7 @@ class ReportController extends Controller{
                     $i = 0;
                     while (($_SESSION['examsparam'][$i] != "") or ($_SESSION['examsparam'][$i] != null)) {
                         $students = $db->qLoadAllStudent($_SESSION['examsparam'][$i],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
+                        $d=0;
                         foreach ($students as $student) {
                         if ((isset($_POST['assesmentName'])) or (isset($_POST['assesmentID'])) or (isset($_POST['assesmentAuthor'])) or (isset($_POST['assesmentDateTimeFirst'])) or (isset($_POST['assesmentDateTimeLast'])) or (isset($_POST['assesmentNumberStarted'])) or (isset($_POST['assesmentNumberNotFinished'])) or (isset($_POST['assesmentNumberFinished'])) or (isset($_POST['assesmentMinscoreFinished'])) or (isset($_POST['assesmentMaxscoreFinished'])) or (isset($_POST['assesmentMediumFinished'])) or (isset($_POST['assesmentLeastTimeFinished'])) or (isset($_POST['assesmentMostTimeFinished'])) or (isset($_POST['assesmentMediumTimeFinished'])) or (isset($_POST['assesmentStdDeviation']))) {
                             if ($i > 0) {
@@ -1323,27 +1324,28 @@ class ReportController extends Controller{
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
                             $graphdata = $db->qLoadAssesmentScores($_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
-                            ${'graph' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/assesmentsgraph" . $i . ".png");
+                            ${'graph' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                             ${'graph' . $i}->addData($graphdata);
                             ${'graph' . $i}->setTitle("Assesments Scores");
                             ${'graph' . $i}->setTextColor("black");
                             ${'graph' . $i}->setXValuesHorizontal(true);
                             ${'graph' . $i}->setBarColor("#6da2ff");
                             ${'graph' . $i}->createGraph();
-                            $pdf->Image("../views/Report/generated_graphs/assesmentsgraph" . $i . ".png");
+                            $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                         }
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
                             $graphdatatopic = $db->qLoadTopicScores($topics, $_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
-                            ${'topics' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/topicsgraph" . $i . ".png");
+                            ${'topics' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                             ${'topics' . $i}->addData($graphdatatopic);
                             ${'topics' . $i}->setTitle("Topics Scores");
                             ${'topics' . $i}->setTextColor("black");
                             ${'topics' . $i}->setXValuesHorizontal(true);
                             ${'topics' . $i}->setBarColor("green");
                             ${'topics' . $i}->createGraph();
-                            $pdf->Image("../views/Report/generated_graphs/topicsgraph" . $i . ".png");
+                            $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                         }
+                        $d++;
                     }
                     $i++; //counter of assesments
                     }
@@ -1354,6 +1356,7 @@ class ReportController extends Controller{
                 $i = 0;
                 foreach ($allexams as $exam) {
                     $students = $db->qLoadAllStudent($exam, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
+                    $d=0;
                     foreach ($students as $student) {
                         if ((isset($_POST['assesmentName'])) or (isset($_POST['assesmentID'])) or (isset($_POST['assesmentAuthor'])) or (isset($_POST['assesmentDateTimeFirst'])) or (isset($_POST['assesmentDateTimeLast'])) or (isset($_POST['assesmentNumberStarted'])) or (isset($_POST['assesmentNumberNotFinished'])) or (isset($_POST['assesmentNumberFinished'])) or (isset($_POST['assesmentMinscoreFinished'])) or (isset($_POST['assesmentMaxscoreFinished'])) or (isset($_POST['assesmentMediumFinished'])) or (isset($_POST['assesmentLeastTimeFinished'])) or (isset($_POST['assesmentMostTimeFinished'])) or (isset($_POST['assesmentMediumTimeFinished'])) or (isset($_POST['assesmentStdDeviation']))) {
                             if ($i > 0) {
@@ -1549,27 +1552,28 @@ class ReportController extends Controller{
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
                             $graphdata = $db->qLoadAssesmentScores($exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
-                            ${'graph' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/assesmentsgraph" . $i . ".png");
+                            ${'graph' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                             ${'graph' . $i}->addData($graphdata);
                             ${'graph' . $i}->setTitle("Assesments Scores");
                             ${'graph' . $i}->setTextColor("black");
                             ${'graph' . $i}->setXValuesHorizontal(true);
                             ${'graph' . $i}->setBarColor("#6da2ff");
                             ${'graph' . $i}->createGraph();
-                            $pdf->Image("../views/Report/generated_graphs/assesmentsgraph" . $i . ".png");
+                            $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                         }
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
                             $graphdatatopic = $db->qLoadTopicScores($topics,$exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
-                            ${'topics' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/topicsgraph" . $i . ".png");
+                            ${'topics' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                             ${'topics' . $i}->addData($graphdatatopic);
                             ${'topics' . $i}->setTitle("Topics Scores");
                             ${'topics' . $i}->setTextColor("black");
                             ${'topics' . $i}->setXValuesHorizontal(true);
                             ${'topics' . $i}->setBarColor("green");
                             ${'topics' . $i}->createGraph();
-                            $pdf->Image("../views/Report/generated_graphs/topicsgraph" . $i . ".png");
+                            $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                         }
+                        $d++;//counter for students
                     }
                     $i++; //counter of assesments
                 }
@@ -1577,7 +1581,7 @@ class ReportController extends Controller{
         }
         $pdf->Output();
         $t=time();
-        $pdf->Output($config['systemViewsDir']."Report/generated_report/AOreport/AOreport_".date("d-m-Y_H:i:s",$t).".pdf","F");
+        $pdf->Output($config['systemViewsDir']."Report/generated_report/AOreport/AOreport_".$user->surname."_".$user->name."_".date("d-m-Y_H:i:s",$t).".pdf","F");
     }
     /**
      *  @name   actionSavetemplate
