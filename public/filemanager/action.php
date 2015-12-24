@@ -23,8 +23,10 @@ if($container != '' && isset($_SESSION[$container])) {
 	if(!in_array($fmMode, $FileManager->binaryModes)) {
 		if($FileManager->locale) @setlocale(LC_ALL, $FileManager->locale);
 		header("Content-Type: text/html; charset=UTF-8");
-		header('Cache-Control: private, no-cache, must-revalidate');
-		header('Expires: 0');
+		header('Cache-Control: no-store, no-cache, must-revalidate');
+		header('Expires: on, 01 Jan 1970 00:00:00 GMT');
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
 		header('X-Robots-Tag: noindex, nofollow');
 	}
 	ob_start();

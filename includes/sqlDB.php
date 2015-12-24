@@ -3455,11 +3455,44 @@ class sqlDB {
                 $val['qtype']=$row['type'];
 
                 //text of answer given by student
-                //preg_match_all ('/["(.*)<\"]>/U',  $val['answerNum'], $answertext);
-                //echo $answertext[0][0];
-
+                $text=str_replace('["','',$row['answer']);
+                $text2=str_replace('"]','',$text);
+                //check if there are more of one answers
+                $found=strpos($text2,",");
+                if ($found==false){
+                    $answerID=(int)$text2;
+                    $query="select translation as textanswer
+                            from TranslationAnswers
+                            where fkAnswer='$answerID'
+                            and fkLanguage='$idLang'";
+                    $this->execQuery($query);
+                    if($this->numResultRows()>0){
+                        $row=mysqli_fetch_array($this->result);
+                        $val['answerText']=$row['textanswer'];
+                    }
+                }
+                else{//print all answer text in case of multiple response
+                    $answers=explode(",",$text2);
+                    $i=0;
+                    foreach($answers as $answer){
+                        $answerID=(int)$answer;
+                        $query="select translation as textanswer
+                            from TranslationAnswers
+                            where fkAnswer='$answerID'
+                            and fkLanguage='$idLang'";
+                        $this->execQuery($query);
+                        if($this->numResultRows()>0){
+                            $row=mysqli_fetch_array($this->result);
+                            if($i>0){
+                                $val['answerText'] .=",".$row['textanswer'];
+                            }
+                            else{
+                                $val['answerText']=$row['textanswer'];
+                            }
+                        }
+                    }
+                }
             }
-
 
         }
         catch(Exceptin $ex){

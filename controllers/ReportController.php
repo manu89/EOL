@@ -264,9 +264,13 @@ class ReportController extends Controller{
             $pdf->SetFont('Helvetica','',12);
             $pdf->Cell(50,10,$details['score'],0,1,"");
             $pdf->SetFont('Helvetica','B',12);
-            $pdf->Cell(80,10,ttAnswer,0,0,"");
+            $pdf->Cell(80,10,ttAnswerNum,0,0,"");
             $pdf->SetFont('Helvetica','',12);
             $pdf->Cell(50,10,$details['answerNum'],0,1,"");
+            $pdf->SetFont('Helvetica','B',12);
+            $pdf->Cell(80,10,ttAnswer,0,0,"");
+            $pdf->SetFont('Helvetica','',12);
+            $pdf->Cell(50,10,$details['answerText'],0,1,"");
             $pdf->Cell(0,10,"",0,1,"");
             if ($i==2){
                 $pdf->AddPage();

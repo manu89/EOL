@@ -10,6 +10,7 @@ define('ttAdminWelcome' , "Benvenuto nel pannello d'amministrazione<br/>Il siste
 define('ttAlias' , "Codice ISO 639-1");
 define('ttAndExit' , "ed Esci");
 define('ttAnswer' , "Risposta");
+define('ttAnswerNum',"Risposta scelta");
 define('ttAnswers' , "Risposte");
 define('ttArchive' , "Archivia");
 define('ttArchived' , "Archiviato");
