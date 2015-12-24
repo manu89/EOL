@@ -3435,6 +3435,7 @@ class sqlDB {
         global $log;
         $this->result=null;
         $this->mysqli=$this->connect();
+        $val=array();
         try{
             $query="select Distinct TranslationQuestions.translation, History.answer,
                     Questions.difficulty, History.score, Questions.type
@@ -3446,7 +3447,6 @@ class sqlDB {
                     and TranslationQuestions.fkLanguage='$idLang'";
             $this->execQuery($query);
             if ($this->numResultRows()>0){
-                $val=array();
                 $row=mysqli_fetch_array($this->result);
                 $val['questionText']=$row['translation'];
                 $val['answerNum']=$row['answer'];
@@ -3454,7 +3454,7 @@ class sqlDB {
                 $val['score']=$row['score'];
                 $val['qtype']=$row['type'];
 
-                //text of answer given by student
+                /*//text of answer given by student
                 $text=str_replace('["','',$row['answer']);
                 $text2=str_replace('"]','',$text);
                 //check if there are more of one answers
@@ -3469,6 +3469,7 @@ class sqlDB {
                     if($this->numResultRows()>0){
                         $row=mysqli_fetch_array($this->result);
                         $val['answerText']=$row['textanswer'];
+
                     }
                 }
                 else{//print all answer text in case of multiple response
@@ -3490,8 +3491,9 @@ class sqlDB {
                                 $val['answerText']=$row['textanswer'];
                             }
                         }
+                        $i++;
                     }
-                }
+                }*/
             }
 
         }
