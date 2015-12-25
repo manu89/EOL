@@ -7645,10 +7645,15 @@ class sqlDB {
         try {
             $found=strpos($userparam,"@");
             if ($found==false){
-                $query="select AVG(Tests.scoreFinal) AS avgtopic
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.idUser='$userparam'";
+                $query="SELECT AVG (Tests.scoreFinal) as avgtopic 
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.idUser='$userparam'";
                 $this->execQuery($query);
                 if($this->numResultRows()>0){
                     while($row=mysqli_fetch_array($this->result)){
@@ -7668,10 +7673,15 @@ class sqlDB {
                 }
             }
             else{
-                $query="select AVG(Tests.scoreFinal) AS avgtopic
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.email='$userparam'";
+                $query="SELECT AVG (Tests.scoreFinal) as avgtopic 
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.email='$userparam'";
                 $this->execQuery($query);
                 if($this->numResultRows()>0){
 
@@ -7712,9 +7722,14 @@ class sqlDB {
             $found=strpos($userparam,"@");
             if ($found==false){
                 $query="select MIN(Tests.scoreFinal) AS mintopic
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.idUser='$userparam'";
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.idUser='$userparam'";
                 $this->execQuery($query);
                 if($this->numResultRows()>0){
                     while($row=mysqli_fetch_array($this->result)){
@@ -7735,9 +7750,14 @@ class sqlDB {
             }
             else{
                 $query="select MIN(Tests.scoreFinal) AS mintopic
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.email='$userparam'";
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.email='$userparam'";
                 $this->execQuery($query);
                 if($this->numResultRows()>0){
 
@@ -7778,9 +7798,14 @@ class sqlDB {
             $found=strpos($userparam,"@");
             if ($found==false){
                 $query="select MAX(Tests.scoreFinal) AS maxtopic
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.idUser='$userparam'";
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.idUser='$userparam'";
                 $this->execQuery($query);
                 if($this->numResultRows()>0){
                     while($row=mysqli_fetch_array($this->result)){
@@ -7801,9 +7826,14 @@ class sqlDB {
             }
             else{
                 $query="select MAX(Tests.scoreFinal) AS maxtopic
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.email='$userparam'";
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.email='$userparam'";
                 $this->execQuery($query);
                 if($this->numResultRows()>0){
 
@@ -7844,9 +7874,14 @@ class sqlDB {
             $found=strpos($userparam,"@");
             if ($found==false){
                 $query="select STD(Tests.scoreFinal) AS stdtopic
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.idUser='$userparam'";
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.idUser='$userparam'";
                 $this->execQuery($query);
                 if($this->numResultRows()>0){
                     while($row=mysqli_fetch_array($this->result)){
@@ -7856,9 +7891,14 @@ class sqlDB {
             }
             else{
                 $query="select STD(Tests.scoreFinal) AS stdtopic
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.email='$userparam'";
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.email='$userparam'";
                 $this->execQuery($query);
                 if($this->numResultRows()>0){
 
@@ -7978,9 +8018,15 @@ class sqlDB {
         $groups=explode("-",$groupparam);
         try {
             $query="select AVG(Tests.scoreFinal) AS avgtopic
-                    FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                    ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                    where Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.group='$groups[0]'
+                and Users.subgroup='$groups[1]'";
             $this->execQuery($query);
             if($this->numResultRows()>0){
                 while($row=mysqli_fetch_array($this->result)){
@@ -8019,9 +8065,15 @@ class sqlDB {
         $groups=explode("-",$groupparam);
         try {
             $query="select MIN(Tests.scoreFinal) AS mintopic
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.group='$groups[0]'
+                and Users.subgroup='$groups[1]'";
             $this->execQuery($query);
             if($this->numResultRows()>0){
                 while($row=mysqli_fetch_array($this->result)){
@@ -8058,9 +8110,15 @@ class sqlDB {
         $groups=explode("-",$groupparam);
         try {
             $query="select MAX(Tests.scoreFinal) AS maxtopic
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.group='$groups[0]'
+                and Users.subgroup='$groups[1]'";
             $this->execQuery($query);
             if($this->numResultRows()>0){
                 while($row=mysqli_fetch_array($this->result)){
@@ -8097,9 +8155,15 @@ class sqlDB {
         $groups=explode("-",$groupparam);
         try {
             $query="select STD(Tests.scoreFinal) AS stddeviation
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Topics.name='$topic' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
+                (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
+                on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                on Topics.idTopic=Topics_TestSettings.fkTopic)
+                on Users.idUser=Tests.fkUser
+                where Topics_TestSettings.numQuestions > 0
+                and Topics.name='$topic'
+                and Users.group='$groups[0]'
+                and Users.subgroup='$groups[1]'";
             $this->execQuery($query);
             if($this->numResultRows()>0){
                 while($row=mysqli_fetch_array($this->result)){
@@ -8380,13 +8444,21 @@ class sqlDB {
                     $found=strpos($userparam,"@");
                     if ($found==false){
                         foreach($usertopics as $topic){
-                            $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic' and Users.idUser='$userparam'
-                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                            $query="SELECT Tests.scoreFinal
+                            FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                            where Topics_TestSettings.numQuestions > 0
+                            and Topics.name='$topic'
+                            and Subjects.name='$exam'
+                            and Users.idUser='$userparam'
+                            and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
+                                //$i=0;
                                 while($row=mysqli_fetch_array($this->result)){
                                     $topicsdata[$topic]=$row['scoreFinal'];
                                 }
@@ -8396,11 +8468,18 @@ class sqlDB {
                     }
                     else{
                         foreach($usertopics as $topic){
-                            $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic' and Users.email='$userparam'
-                        and (Tests.scoreFinal between '$minscore' and '$maxscore')";
+                            $query="SELECT Tests.scoreFinal
+                            FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                            where Topics_TestSettings.numQuestions > 0
+                            and Topics.name='$topic'
+                            and Subjects.name='$exam'
+                            and Users.email='$userparam'
+                            and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
                                 while($row=mysqli_fetch_array($this->result)){
@@ -8414,12 +8493,19 @@ class sqlDB {
                     $found=strpos($userparam,"@");
                     if ($found==false){
                         foreach($usertopics as $topic){
-                            $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic' and Users.idUser='$userparam'
-                        and (Tests.scoreFinal between '$minscore' and '$maxscore')
-                        and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
+                            $query="SELECT Tests.scoreFinal
+                            FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                            where Topics_TestSettings.numQuestions > 0
+                            and Topics.name='$topic'
+                            and Subjects.name='$exam'
+                            and Users.idUser='$userparam'
+                            and (Tests.scoreFinal between '$minscore' and '$maxscore')
+                            and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
                                 while($row=mysqli_fetch_array($this->result)){
@@ -8431,12 +8517,19 @@ class sqlDB {
                     }
                     else{
                         foreach($usertopics as $topic){
-                            $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic' and Users.email='$userparam'
-                        and (Tests.scoreFinal between '$minscore' and '$maxscore')
-                        and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
+                            $query="SELECT Tests.scoreFinal
+                            FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                            where Topics_TestSettings.numQuestions > 0
+                            and Topics.name='$topic'
+                            and Subjects.name='$exam'
+                            and Users.email='$userparam'
+                            and (Tests.scoreFinal between '$minscore' and '$maxscore')
+                            and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
                                 while($row=mysqli_fetch_array($this->result)){
@@ -8454,10 +8547,17 @@ class sqlDB {
                     $found=strpos($userparam,"@");
                     if ($found==false){
                         foreach($usertopics as $topic){
-                            $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic' and Users.idUser='$userparam'";
+                            $query="SELECT Tests.scoreFinal
+                            FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                            where Topics_TestSettings.numQuestions > 0
+                            and Topics.name='$topic'
+                            and Subjects.name='$exam'
+                            and Users.idUser='$userparam'";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
                                 while($row=mysqli_fetch_array($this->result)){
@@ -8469,10 +8569,17 @@ class sqlDB {
                     }
                     else{
                         foreach($usertopics as $topic){
-                            $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic' and Users.email='$userparam'";
+                            $query="SELECT Tests.scoreFinal
+                            FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                            where Topics_TestSettings.numQuestions > 0
+                            and Topics.name='$topic'
+                            and Subjects.name='$exam'
+                            and Users.email='$userparam'";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
                                 while($row=mysqli_fetch_array($this->result)){
@@ -8486,11 +8593,18 @@ class sqlDB {
                     $found=strpos($userparam,"@");
                     if ($found==false){
                         foreach($usertopics as $topic){
-                            $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic' and Users.idUser='$userparam'
-                        and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
+                            $query="SELECT Tests.scoreFinal
+                            FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                            where Topics_TestSettings.numQuestions > 0
+                            and Topics.name='$topic'
+                            and Subjects.name='$exam'
+                            and Users.idUser='$userparam'
+                            and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
                                 while($row=mysqli_fetch_array($this->result)){
@@ -8502,11 +8616,18 @@ class sqlDB {
                     }
                     else{
                         foreach($usertopics as $topic){
-                            $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic' and Users.email='$userparam'
-                        and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
+                            $query="SELECT Tests.scoreFinal
+                            FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                            where Topics_TestSettings.numQuestions > 0
+                            and Topics.name='$topic'
+                            and Subjects.name='$exam'
+                            and Users.email='$userparam'
+                            and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
                                 while($row=mysqli_fetch_array($this->result)){
@@ -8543,9 +8664,14 @@ class sqlDB {
                 if(($datein=="")&&($datefn=="")){//dates not set
                     foreach($grouptopics as $topic){
                         $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic'
+                        FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                            where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Topics.name='$topic'
                         and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                         $this->execQuery($query);
@@ -8559,9 +8685,14 @@ class sqlDB {
                 else{//dates set
                     foreach($grouptopics as $topic){
                         $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic'
+                        FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                            where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Topics.name='$topic'
                         and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
@@ -8581,9 +8712,14 @@ class sqlDB {
                 if(($datein=="")&&($datefn=="")){//dates not set
                     foreach($grouptopics as $topic){
                         $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic'
+                        FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Topics.name='$topic'
                         and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
@@ -8596,9 +8732,14 @@ class sqlDB {
                 else{//dates set
                     foreach($grouptopics as $topic){
                         $query="select Tests.scoreFinal
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Topics.name='$topic'
+                        FROM Users JOIN (Subjects JOIN (Topics JOIN
+                            (Topics_TestSettings JOIN (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                            on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                            on Topics.idTopic=Topics_TestSettings.fkTopic)
+                            on Subjects.idSubject=Exams.fkSubject)
+                            on Users.idUser=Tests.fkUser
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Topics.name='$topic'
                         and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);

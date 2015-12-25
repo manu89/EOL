@@ -1162,3 +1162,7 @@
 12/18/2015 14:59:01 - qDeleteReportTemplate : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM ReportTemplate
                     WHERE ReportTemplate.fkUser='3'
 		    AN' at line 2
+12/25/2015 17:08:11 - qLoadTopicScores : Unknown column 'Users.email' in 'where clause'
+12/25/2015 17:09:42 - qLoadTopicScores : Unknown column 'Users.email' in 'where clause'
+12/25/2015 17:09:47 - qLoadTopicScores : Unknown column 'Users.email' in 'where clause'
+12/25/2015 17:10:31 - qLoadTopicScores : Unknown column 'Users.email' in 'where clause'
