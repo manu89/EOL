@@ -218,9 +218,11 @@ class ReportController extends Controller{
             $details=$db->qShowQuestionsDetails($_SESSION['CRidTest'],$idLang,$question);
             if ($i==3){
                 $pdf->Addpage();
+                $d=0;
             }else{
-                if($i==(3*$i)+1){
+                if(($d % 2==0) && ($d!=2)){
                     $pdf->AddPage();
+                    $d=0;
                 }
             }
             $pdf->SetFont('Helvetica','B',20);
@@ -280,6 +282,7 @@ class ReportController extends Controller{
             $pdf->Cell(50,10,$details['answerText'],0,1,"");
 
             $i++;//questions counter
+            $d++;
         }
         $t=time();
         $pdf->Output($config['systemViewsDir']."Report/generated_report/Creport/Creport_".$user->surname."_".$user->name."_".date("d-m-Y_H:i:s",$t).".pdf","F");
