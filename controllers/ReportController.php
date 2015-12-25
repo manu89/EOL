@@ -220,7 +220,7 @@ class ReportController extends Controller{
                 $pdf->Addpage();
                 $d=0;
             }else{
-                if(($d % 2==0) && ($d!=2)){
+                if(($d % 4==0) && ($d!=0)){
                     $pdf->AddPage();
                     $d=0;
                 }
