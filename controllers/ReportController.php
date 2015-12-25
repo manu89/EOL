@@ -216,6 +216,13 @@ class ReportController extends Controller{
 
         foreach($questions as $question){
             $details=$db->qShowQuestionsDetails($_SESSION['CRidTest'],$idLang,$question);
+            if ($i==3){
+                $pdf->Addpage();
+            }else{
+                if($i==(3*$i)+1){
+                    $pdf->AddPage();
+                }
+            }
             $pdf->SetFont('Helvetica','B',20);
             $pdf->Cell(10,10,$i,1,0,"C");
             $pdf->SetFont('Helvetica','B',12);
@@ -267,20 +274,12 @@ class ReportController extends Controller{
             $pdf->Cell(80,10,ttAnswerNum,0,0,"");
             $pdf->SetFont('Helvetica','',12);
             $pdf->Cell(50,10,$details['answerNum'],0,1,"");
-            //$pdf->SetFont('Helvetica','B',12);
-            //$pdf->Cell(80,10,ttAnswer,0,0,"");
-            //$pdf->SetFont('Helvetica','',12);
-            //$pdf->Cell(50,10,$details['answerText'],0,1,"");
-            $pdf->Cell(0,9,"",0,1,"");
-            if ($i==2){
-                $pdf->AddPage();
-            }
-            if (($i%3==0)&&($i!=3)){
-                $pdf->AddPage();
-            }
+            $pdf->SetFont('Helvetica','B',12);
+            $pdf->Cell(80,10,ttAnswer,0,0,"");
+            $pdf->SetFont('Helvetica','',12);
+            $pdf->Cell(50,10,$details['answerText'],0,1,"");
+
             $i++;//questions counter
-
-
         }
         $t=time();
         $pdf->Output($config['systemViewsDir']."Report/generated_report/Creport/Creport_".$user->surname."_".$user->name."_".date("d-m-Y_H:i:s",$t).".pdf","F");

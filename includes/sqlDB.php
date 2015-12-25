@@ -3454,7 +3454,7 @@ class sqlDB {
                 $val['score']=$row['score'];
                 $val['qtype']=$row['type'];
 
-                /*//text of answer given by student
+                //text of answer given by student
                 $text=str_replace('["','',$row['answer']);
                 $text2=str_replace('"]','',$text);
                 //check if there are more of one answers
@@ -3470,6 +3470,21 @@ class sqlDB {
                         $row=mysqli_fetch_array($this->result);
                         $val['answerText']=$row['textanswer'];
 
+                    }
+                    else{// if language active not present load english answer
+                        $query="select translation as textanswer
+                            from TranslationAnswers
+                            where fkAnswer='$answerID'
+                            and fkLanguage='1'";
+                        $this->execQuery($query);
+                        if($this->numResultRows()>0){
+                            $row=mysqli_fetch_array($this->result);
+                            $val['answerText']=$row['textanswer'];
+
+                        }
+                        else{//in caso di risposta true/false o yes/no stampo not ok invece di ok(dato da default)
+                            $val['answerText']="not ok";
+                        }
                     }
                 }
                 else{//print all answer text in case of multiple response
@@ -3493,7 +3508,7 @@ class sqlDB {
                         }
                         $i++;
                     }
-                }*/
+                }
             }
 
         }
