@@ -3522,18 +3522,8 @@ class sqlDB {
                 $totquestions=$row['questions'];
             }
 
-            /*//load tot score of specific question done in tests
-            $query="select SUM(score) as totscoredone
-                    from Answers
-                    where fkQuestion='$idQuestion' and score > '0'";
-            $this->execQuery($query);
-            if ($this->numResultRows() > 0){
-                $row=mysqli_fetch_array($this->result);
-                $scorequestion=$row['totscoredone'];
-            }*/
-
             //load max score of the test
-            $query="select distinct fkTestSetting, scoreType
+            $query="select distinct scoreType
                     from Tests JOIN (Exams JOIN TestSettings on Exams.fkTestSetting=TestSettings.idTestSetting)
                     on Tests.fkExam=Exams.idExam
                     where Tests.idTest='$idTest'";

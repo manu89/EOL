@@ -231,8 +231,12 @@ class ReportController extends Controller{
             $pdf->SetTextColor(255,0,0);
             $pdf->Cell(170,10,$details['questionText'],1,0);
             if ($details['score']>0){
-                $pdf->Image($config['themeImagesDir'].'done.png',null,null,10);
-
+                if ($details['maxScore']==$details['score']){
+                    $pdf->Image($config['themeImagesDir'].'done.png',null,null,10);
+                }
+                else{
+                    $pdf->Image($config['themeImagesDir'].'Inactive.png',null,null,10);
+                }
             }else{
                 $pdf->Image($config['themeImagesDir'].'False.png',null,null,10);
 

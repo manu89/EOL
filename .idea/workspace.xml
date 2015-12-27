@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8cdbeedb-66f6-456d-af26-502dfc95e10d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/ReportController.php" afterPath="$PROJECT_DIR$/controllers/ReportController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/sqlDB.php" afterPath="$PROJECT_DIR$/includes/sqlDB.php" />
     </list>
     <ignored path="echemTest-EOL.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,223 +25,222 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="sqlDB.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sqlDB.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/includes/sqlDB.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.708334">
-              <caret line="3545" column="19" selection-start-line="3545" selection-start-column="19" selection-end-line="3545" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.11467116">
+              <caret line="3523" column="0" selection-start-line="3523" selection-start-column="0" selection-end-line="3523" selection-end-column="0" />
               <folding>
                 <element signature="e#6#131#0#PHP" expanded="true" />
                 <element signature="n#qShowStudentCreport#0;n#sqlDB#0;n#!!top" expanded="false" />
                 <element signature="n#qShowTestsCreport#0;n#sqlDB#0;n#!!top" expanded="false" />
-                <marker date="1451223577244" expanded="true" signature="1291:1574" placeholder="SELECT idUse..Users..." />
-                <marker date="1451223577244" expanded="true" signature="3217:3684" placeholder="SELECT * FRO..Subjects..." />
-                <marker date="1451223577244" expanded="true" signature="3407:3612" placeholder="SELECT fkSub..Users_Subjects..." />
-                <marker date="1451223577244" expanded="true" signature="3774:3892" placeholder="SELECT * FRO..Subjects..." />
-                <marker date="1451223577244" expanded="true" signature="4849:5065" placeholder="UPDATE Subje..." />
-                <marker date="1451223577244" expanded="true" signature="5132:5259" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="5368:5447" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="6568:6706" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="6869:6967" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="7742:7815" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="8849:9059" placeholder="UPDATE Topic..." />
-                <marker date="1451223577244" expanded="true" signature="10001:10614" placeholder="SELECT * FRO..Questions_TestSettings..." />
-                <marker date="1451223577244" expanded="true" signature="10312:10552" placeholder="SELECT idQue..Questions..." />
-                <marker date="1451223577244" expanded="true" signature="10755:11175" placeholder="SELECT * FRO..Questions_TestSettings..." />
-                <marker date="1451223577244" expanded="true" signature="11328:11550" placeholder="SELECT fkQue..History..." />
-                <marker date="1451223577244" expanded="true" signature="11328:11862" placeholder="SELECT fkQue..." />
-                <marker date="1451223577244" expanded="true" signature="11633:11862" placeholder="SELECT fkQue..Sets_Questions..." />
-                <marker date="1451223577244" expanded="true" signature="12001:12421" placeholder="SELECT * FRO..Questions_TestSettings..." />
-                <marker date="1451223577244" expanded="true" signature="12572:12794" placeholder="SELECT fkQue..History..." />
-                <marker date="1451223577244" expanded="true" signature="12572:13215" placeholder="SELECT fkQue..." />
-                <marker date="1451223577244" expanded="true" signature="12877:13215" placeholder="SELECT fkQue..Sets_Questions..." />
-                <marker date="1451223577244" expanded="true" signature="13404:13682" placeholder="SELECT * FRO..Exams..." />
-                <marker date="1451223577244" expanded="true" signature="13773:14132" placeholder="SELECT * FRO..Questions_TestSettings..." />
-                <marker date="1451223577244" expanded="true" signature="14224:14446" placeholder="SELECT fkQue..History..." />
-                <marker date="1451223577244" expanded="true" signature="14224:14867" placeholder="SELECT fkQue..." />
-                <marker date="1451223577244" expanded="true" signature="14529:14867" placeholder="SELECT fkQue..Sets_Questions..." />
-                <marker date="1451223577244" expanded="true" signature="14956:15315" placeholder="SELECT * FRO..Questions_TestSettings..." />
-                <marker date="1451223577244" expanded="true" signature="15405:15627" placeholder="SELECT fkQue..History..." />
-                <marker date="1451223577244" expanded="true" signature="15405:16048" placeholder="SELECT fkQue..." />
-                <marker date="1451223577244" expanded="true" signature="15710:16048" placeholder="SELECT fkQue..Sets_Questions..." />
-                <marker date="1451223577244" expanded="true" signature="16234:16593" placeholder="SELECT * FRO..Questions_TestSettings..." />
-                <marker date="1451223577244" expanded="true" signature="16683:16905" placeholder="SELECT fkQue..History..." />
-                <marker date="1451223577244" expanded="true" signature="16683:17326" placeholder="SELECT fkQue..." />
-                <marker date="1451223577244" expanded="true" signature="16988:17326" placeholder="SELECT fkQue..Sets_Questions..." />
-                <marker date="1451223577244" expanded="true" signature="18492:18768" placeholder="UPDATE Quest..." />
-                <marker date="1451223577244" expanded="true" signature="18643:18767" placeholder="SELECT idQue..questionstoflag..." />
-                <marker date="1451223577244" expanded="true" signature="18835:19140" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="19007:19139" placeholder="SELECT idQue..questionstoflag..." />
-                <marker date="1451223577244" expanded="true" signature="19299:19392" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="20263:20376" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="21423:21554" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="22937:23122" placeholder="SELECT idTop..Topics..." />
-                <marker date="1451223577244" expanded="true" signature="23474:23956" placeholder="SELECT idQue..." />
-                <marker date="1451223577244" expanded="true" signature="24273:24411" placeholder="SELECT * FRO..Questions..." />
-                <marker date="1451223577244" expanded="true" signature="25252:25581" placeholder="SELECT * FRO..Questions..." />
-                <marker date="1451223577244" expanded="true" signature="26798:26954" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="27021:27207" placeholder="UPDATE Quest..." />
-                <marker date="1451223577244" expanded="true" signature="27274:27335" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="28516:28684" placeholder="UPDATE Quest..." />
-                <marker date="1451223577244" expanded="true" signature="29573:29905" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="29687:29905" placeholder="SELECT type,..Questions..." />
-                <marker date="1451223577244" expanded="true" signature="30070:30232" placeholder="UPDATE Quest..." />
-                <marker date="1451223577244" expanded="true" signature="30299:30523" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="30354:30382" placeholder="SELECT @ques..." />
-                <marker date="1451223577244" expanded="true" signature="30590:30740" placeholder="SELECT * FRO..Answers..." />
-                <marker date="1451223577244" expanded="true" signature="30860:30968" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="31148:31394" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="31205:31232" placeholder="SELECT @aswr..." />
-                <marker date="1451223577244" expanded="true" signature="31703:31903" placeholder="UPDATE Quest..." />
-                <marker date="1451223577244" expanded="true" signature="33367:33684" placeholder="UPDATE Quest..." />
-                <marker date="1451223577244" expanded="true" signature="33751:33872" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="34126:34238" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="35107:35187" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="35235:35413" placeholder="UPDATE Quest..." />
-                <marker date="1451223577244" expanded="true" signature="36206:36513" placeholder="SELECT * FRO..Answers..." />
-                <marker date="1451223577244" expanded="true" signature="37296:37390" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="37532:37591" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="39040:39201" placeholder="UPDATE Answe..." />
-                <marker date="1451223577244" expanded="true" signature="39268:39374" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="39656:39759" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="40483:40553" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="41256:41878" placeholder="SELECT idExa..Exams..." />
-                <marker date="1451223577244" expanded="true" signature="42553:43526" placeholder="SELECT * FRO..Exams..." />
-                <marker date="1451223577244" expanded="true" signature="43008:43465" placeholder="SELECT * FRO..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="44146:44409" placeholder="SELECT idExa..Exams..." />
-                <marker date="1451223577244" expanded="true" signature="46068:46301" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="46566:46639" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="46932:47365" placeholder="SELECT idExa..Exams..." />
-                <marker date="1451223577244" expanded="true" signature="48682:48859" placeholder="UPDATE Exams..." />
-                <marker date="1451223577244" expanded="true" signature="49252:49698" placeholder="UPDATE Exams..." />
-                <marker date="1451223577244" expanded="true" signature="49789:49943" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="50159:50244" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="50623:51118" placeholder="SELECT idExa..Exams..." />
-                <marker date="1451223577244" expanded="true" signature="51913:52017" placeholder="UPDATE Exams..." />
-                <marker date="1451223577244" expanded="true" signature="52641:52751" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="52818:52916" placeholder="UPDATE Exams..." />
-                <marker date="1451223577244" expanded="true" signature="53714:53778" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="54442:54777" placeholder="SELECT idTes..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="55395:55754" placeholder="SELECT * FRO..Users..." />
-                <marker date="1451223577244" expanded="true" signature="55578:55753" placeholder="SELECT fkUse..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="56442:56631" placeholder="SELECT * FRO..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="57408:57648" placeholder="SELECT * FRO..Exams_Rooms..." />
-                <marker date="1451223577244" expanded="true" signature="58511:58640" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="59578:59877" placeholder="UPDATE Rooms..." />
-                <marker date="1451223577244" expanded="true" signature="60479:61139" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="60728:61099" placeholder="SELECT fkRoo..Exams_Rooms..." />
-                <marker date="1451223577244" expanded="true" signature="62051:62368" placeholder="SELECT idTop..Topics..." />
-                <marker date="1451223577244" expanded="true" signature="63087:63634" placeholder="SELECT idQue..." />
-                <marker date="1451223577244" expanded="true" signature="65959:66323" placeholder="UPDATE TestS..." />
-                <marker date="1451223577244" expanded="true" signature="66509:67396" placeholder="UPDATE TestS..." />
-                <marker date="1451223577244" expanded="true" signature="67472:67601" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="67779:67916" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="68040:68166" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="68642:68863" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="71279:71699" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="71950:72074" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="72549:72761" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="73696:73807" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="75131:75254" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="75329:75429" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="75566:75708" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="76629:76741" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="76808:76949" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="76950:76999" placeholder="UPDATE value..." />
-                <marker date="1451223577244" expanded="true" signature="78075:78113" placeholder="UPDATE Users..." />
-                <marker date="1451223577244" expanded="true" signature="79582:79654" placeholder="SELECT * FRO..Users..." />
-                <marker date="1451223577244" expanded="true" signature="80972:81685" placeholder="SELECT T.idT..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="82428:83058" placeholder="SELECT idTes..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="82866:83057" placeholder="SELECT fkSub..Users_Subjects..." />
-                <marker date="1451223577244" expanded="true" signature="83743:83873" placeholder="UPDATE Tests..." />
-                <marker date="1451223577244" expanded="true" signature="84551:84752" placeholder="UPDATE Tests..." />
-                <marker date="1451223577244" expanded="true" signature="85614:85678" placeholder="UPDATE Sets_..." />
-                <marker date="1451223577244" expanded="true" signature="86742:87028" placeholder="SELECT scale..TestSettings..." />
-                <marker date="1451223577244" expanded="true" signature="87346:87575" placeholder="SELECT idQue..Sets_Questions..." />
-                <marker date="1451223577244" expanded="true" signature="88282:88501" placeholder="UPDATE Tests..." />
-                <marker date="1451223577244" expanded="true" signature="89846:90211" placeholder="SELECT idQue..Sets_Questions..." />
-                <marker date="1451223577244" expanded="true" signature="90084:90210" placeholder="SELECT fkSet..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="91030:91117" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="91475:91803" placeholder="UPDATE Tests..." />
-                <marker date="1451223577244" expanded="true" signature="91941:92267" placeholder="UPDATE Tests..." />
-                <marker date="1451223577244" expanded="true" signature="92353:92637" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="92467:92636" placeholder="SELECT fkSet..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="93621:93773" placeholder="SELECT fkTes..Exams..." />
-                <marker date="1451223577244" expanded="true" signature="93983:94099" placeholder="SELECT * FRO..Questions_TestSettings..." />
-                <marker date="1451223577244" expanded="true" signature="94471:94573" placeholder="SELECT * FRO..Topics_TestSettings..." />
-                <marker date="1451223577244" expanded="true" signature="95228:95599" placeholder="SELECT idQue..Questions..." />
-                <marker date="1451223577244" expanded="true" signature="97061:97142" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="97209:97292" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="97575:97674" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="98408:98660" placeholder="SELECT idSet..Sets..." />
-                <marker date="1451223577244" expanded="true" signature="98727:98874" placeholder="UPDATE Sets ..." />
-                <marker date="1451223577244" expanded="true" signature="98941:99168" placeholder="UPDATE Tests..." />
-                <marker date="1451223577244" expanded="true" signature="100305:101292" placeholder="SELECT Q.idQ..Questions..." />
-                <marker date="1451223577244" expanded="true" signature="100305:103445" placeholder="SELECT Q.idQ..." />
-                <marker date="1451223577244" expanded="true" signature="100781:101062" placeholder="SELECT fkQue..Sets_Questions..." />
-                <marker date="1451223577244" expanded="true" signature="101351:103399" placeholder="SELECT Q.idQ..Questions..." />
-                <marker date="1451223577244" expanded="true" signature="101819:102643" placeholder="SELECT fkQue..TranslationQuestions..." />
-                <marker date="1451223577244" expanded="true" signature="102124:102453" placeholder="SELECT fkQue..Sets_Questions..." />
-                <marker date="1451223577244" expanded="true" signature="102821:103102" placeholder="SELECT fkQue..Sets_Questions..." />
-                <marker date="1451223577244" expanded="true" signature="103244:103306" placeholder="SELECT fkLan..Subjects..." />
-                <marker date="1451223577244" expanded="true" signature="103572:104449" placeholder="SELECT Q.idQ..Questions..." />
-                <marker date="1451223577244" expanded="true" signature="104032:104313" placeholder="SELECT fkQue..Sets_Questions..." />
-                <marker date="1451223577244" expanded="true" signature="105716:106235" placeholder="SELECT Q.idQ..History..." />
-                <marker date="1451223577244" expanded="true" signature="105716:107785" placeholder="SELECT Q.idQ..." />
-                <marker date="1451223577244" expanded="true" signature="106294:107737" placeholder="SELECT Q.idQ..History..." />
-                <marker date="1451223577244" expanded="true" signature="106712:107490" placeholder="SELECT fkQue..TranslationQuestions..." />
-                <marker date="1451223577244" expanded="true" signature="106955:107337" placeholder="SELECT fkQue..History..." />
-                <marker date="1451223577244" expanded="true" signature="107581:107643" placeholder="SELECT fkLan..Subjects..." />
-                <marker date="1451223577244" expanded="true" signature="107912:108515" placeholder="SELECT Q.idQ..History..." />
-                <marker date="1451223577244" expanded="true" signature="108311:108373" placeholder="SELECT fkLan..Subjects..." />
-                <marker date="1451223577244" expanded="true" signature="109535:109902" placeholder="SELECT * FRO..Answers..." />
-                <marker date="1451223577244" expanded="true" signature="109535:111188" placeholder="SELECT * FRO..." />
-                <marker date="1451223577244" expanded="true" signature="109961:111144" placeholder="SELECT * FRO..Answers..." />
-                <marker date="1451223577244" expanded="true" signature="110274:110836" placeholder="SELECT A.idA..Answers..." />
-                <marker date="1451223577244" expanded="true" signature="111081:111143" placeholder="SELECT fkLan..Subjects..." />
-                <marker date="1451223577244" expanded="true" signature="111319:111783" placeholder="SELECT * FRO..Answers..." />
-                <marker date="1451223577244" expanded="true" signature="111674:111736" placeholder="SELECT fkLan..Subjects..." />
-                <marker date="1451223577244" expanded="true" signature="112998:113012" placeholder="SELECT * FRO..." />
-                <marker date="1451223577244" expanded="true" signature="114624:114638" placeholder="SELECT * FRO..." />
-                <marker date="1451223577244" expanded="true" signature="116039:116161" placeholder="DELETE FROM ..." />
-                <marker date="1451223577244" expanded="true" signature="116927:117009" placeholder="SELECT * FRO..Languages..." />
-                <marker date="1451223577244" expanded="true" signature="117922:118018" placeholder="INSERT INTO ..." />
-                <marker date="1451223577244" expanded="true" signature="118559:118588" placeholder="Update Flag_..." />
-                <marker date="1451223577244" expanded="true" signature="119331:119384" placeholder="Select * fro..Subjects..." />
-                <marker date="1451223577244" expanded="true" signature="120411:120838" placeholder="SELECT DISTI..Users..." />
-                <marker date="1451223577244" expanded="true" signature="121255:121760" placeholder="SELECT DISTI..Users..." />
-                <marker date="1451223577244" expanded="true" signature="122292:122636" placeholder="SELECT DISTI..Users..." />
-                <marker date="1451223577244" expanded="true" signature="123053:123475" placeholder="SELECT DISTI..Users..." />
-                <marker date="1451223577244" expanded="true" signature="124518:125269" placeholder="SELECT Users..Users..." />
-                <marker date="1451223577244" expanded="true" signature="126373:127208" placeholder="SELECT Users..Users..." />
-                <marker date="1451223577244" expanded="true" signature="128370:129038" placeholder="SELECT Users..Users..." />
-                <marker date="1451223577244" expanded="true" signature="130131:130883" placeholder="SELECT Users..Users..." />
-                <marker date="1451223577244" expanded="true" signature="132400:132529" placeholder="select disti..Users..." />
-                <marker date="1451223577244" expanded="true" signature="133267:133393" placeholder="select Users..Users..." />
-                <marker date="1451223577244" expanded="true" signature="133720:133845" placeholder="select Users..Users..." />
-                <marker date="1451223577244" expanded="true" signature="134548:134679" placeholder="select TIMED..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="135307:135551" placeholder="select TestS..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="136183:136513" placeholder="select Topic..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="137157:137270" placeholder="select Histo..History..." />
-                <marker date="1451223577244" expanded="true" signature="138053:138590" placeholder="select Disti..History..." />
-                <marker date="1451223577244" expanded="true" signature="139355:139547" placeholder="select trans..." />
-                <marker date="1451223577244" expanded="true" signature="139907:140093" placeholder="select trans..." />
-                <marker date="1451223577244" expanded="true" signature="140880:141072" placeholder="select trans..." />
-                <marker date="1451223577244" expanded="true" signature="141739:141832" placeholder="SELECT COUNT..History..." />
-                <marker date="1451223577244" expanded="true" signature="142124:142257" placeholder="select SUM(s..Answers..." />
-                <marker date="1451223577244" expanded="true" signature="142530:142731" placeholder="select SUM(s..Answers..." />
-                <marker date="1451223577244" expanded="true" signature="142530:142757" placeholder="select disti..Tests..." />
-                <marker date="1451223577244" expanded="true" signature="142530:142780" placeholder="select disti..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="1291:1574" placeholder="SELECT idUse..Users..." />
+                <marker date="1451234563223" expanded="true" signature="3217:3684" placeholder="SELECT * FRO..Subjects..." />
+                <marker date="1451234563223" expanded="true" signature="3407:3612" placeholder="SELECT fkSub..Users_Subjects..." />
+                <marker date="1451234563223" expanded="true" signature="3774:3892" placeholder="SELECT * FRO..Subjects..." />
+                <marker date="1451234563223" expanded="true" signature="4849:5065" placeholder="UPDATE Subje..." />
+                <marker date="1451234563223" expanded="true" signature="5132:5259" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="5368:5447" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="6568:6706" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="6869:6967" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="7742:7815" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="8849:9059" placeholder="UPDATE Topic..." />
+                <marker date="1451234563223" expanded="true" signature="10001:10614" placeholder="SELECT * FRO..Questions_TestSettings..." />
+                <marker date="1451234563223" expanded="true" signature="10312:10552" placeholder="SELECT idQue..Questions..." />
+                <marker date="1451234563223" expanded="true" signature="10755:11175" placeholder="SELECT * FRO..Questions_TestSettings..." />
+                <marker date="1451234563223" expanded="true" signature="11328:11550" placeholder="SELECT fkQue..History..." />
+                <marker date="1451234563223" expanded="true" signature="11328:11862" placeholder="SELECT fkQue..." />
+                <marker date="1451234563223" expanded="true" signature="11633:11862" placeholder="SELECT fkQue..Sets_Questions..." />
+                <marker date="1451234563223" expanded="true" signature="12001:12421" placeholder="SELECT * FRO..Questions_TestSettings..." />
+                <marker date="1451234563223" expanded="true" signature="12572:12794" placeholder="SELECT fkQue..History..." />
+                <marker date="1451234563223" expanded="true" signature="12572:13215" placeholder="SELECT fkQue..." />
+                <marker date="1451234563223" expanded="true" signature="12877:13215" placeholder="SELECT fkQue..Sets_Questions..." />
+                <marker date="1451234563223" expanded="true" signature="13404:13682" placeholder="SELECT * FRO..Exams..." />
+                <marker date="1451234563223" expanded="true" signature="13773:14132" placeholder="SELECT * FRO..Questions_TestSettings..." />
+                <marker date="1451234563223" expanded="true" signature="14224:14446" placeholder="SELECT fkQue..History..." />
+                <marker date="1451234563223" expanded="true" signature="14224:14867" placeholder="SELECT fkQue..." />
+                <marker date="1451234563223" expanded="true" signature="14529:14867" placeholder="SELECT fkQue..Sets_Questions..." />
+                <marker date="1451234563223" expanded="true" signature="14956:15315" placeholder="SELECT * FRO..Questions_TestSettings..." />
+                <marker date="1451234563223" expanded="true" signature="15405:15627" placeholder="SELECT fkQue..History..." />
+                <marker date="1451234563223" expanded="true" signature="15405:16048" placeholder="SELECT fkQue..." />
+                <marker date="1451234563223" expanded="true" signature="15710:16048" placeholder="SELECT fkQue..Sets_Questions..." />
+                <marker date="1451234563223" expanded="true" signature="16234:16593" placeholder="SELECT * FRO..Questions_TestSettings..." />
+                <marker date="1451234563223" expanded="true" signature="16683:16905" placeholder="SELECT fkQue..History..." />
+                <marker date="1451234563223" expanded="true" signature="16683:17326" placeholder="SELECT fkQue..." />
+                <marker date="1451234563223" expanded="true" signature="16988:17326" placeholder="SELECT fkQue..Sets_Questions..." />
+                <marker date="1451234563223" expanded="true" signature="18492:18768" placeholder="UPDATE Quest..." />
+                <marker date="1451234563223" expanded="true" signature="18643:18767" placeholder="SELECT idQue..questionstoflag..." />
+                <marker date="1451234563223" expanded="true" signature="18835:19140" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="19007:19139" placeholder="SELECT idQue..questionstoflag..." />
+                <marker date="1451234563223" expanded="true" signature="19299:19392" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="20263:20376" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="21423:21554" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="22937:23122" placeholder="SELECT idTop..Topics..." />
+                <marker date="1451234563223" expanded="true" signature="23474:23956" placeholder="SELECT idQue..." />
+                <marker date="1451234563223" expanded="true" signature="24273:24411" placeholder="SELECT * FRO..Questions..." />
+                <marker date="1451234563223" expanded="true" signature="25252:25581" placeholder="SELECT * FRO..Questions..." />
+                <marker date="1451234563223" expanded="true" signature="26798:26954" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="27021:27207" placeholder="UPDATE Quest..." />
+                <marker date="1451234563223" expanded="true" signature="27274:27335" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="28516:28684" placeholder="UPDATE Quest..." />
+                <marker date="1451234563223" expanded="true" signature="29573:29905" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="29687:29905" placeholder="SELECT type,..Questions..." />
+                <marker date="1451234563223" expanded="true" signature="30070:30232" placeholder="UPDATE Quest..." />
+                <marker date="1451234563223" expanded="true" signature="30299:30523" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="30354:30382" placeholder="SELECT @ques..." />
+                <marker date="1451234563223" expanded="true" signature="30590:30740" placeholder="SELECT * FRO..Answers..." />
+                <marker date="1451234563223" expanded="true" signature="30860:30968" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="31148:31394" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="31205:31232" placeholder="SELECT @aswr..." />
+                <marker date="1451234563223" expanded="true" signature="31703:31903" placeholder="UPDATE Quest..." />
+                <marker date="1451234563223" expanded="true" signature="33367:33684" placeholder="UPDATE Quest..." />
+                <marker date="1451234563223" expanded="true" signature="33751:33872" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="34126:34238" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="35107:35187" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="35235:35413" placeholder="UPDATE Quest..." />
+                <marker date="1451234563223" expanded="true" signature="36206:36513" placeholder="SELECT * FRO..Answers..." />
+                <marker date="1451234563223" expanded="true" signature="37296:37390" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="37532:37591" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="39040:39201" placeholder="UPDATE Answe..." />
+                <marker date="1451234563223" expanded="true" signature="39268:39374" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="39656:39759" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="40483:40553" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="41256:41878" placeholder="SELECT idExa..Exams..." />
+                <marker date="1451234563223" expanded="true" signature="42553:43526" placeholder="SELECT * FRO..Exams..." />
+                <marker date="1451234563223" expanded="true" signature="43008:43465" placeholder="SELECT * FRO..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="44146:44409" placeholder="SELECT idExa..Exams..." />
+                <marker date="1451234563223" expanded="true" signature="46068:46301" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="46566:46639" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="46932:47365" placeholder="SELECT idExa..Exams..." />
+                <marker date="1451234563223" expanded="true" signature="48682:48859" placeholder="UPDATE Exams..." />
+                <marker date="1451234563223" expanded="true" signature="49252:49698" placeholder="UPDATE Exams..." />
+                <marker date="1451234563223" expanded="true" signature="49789:49943" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="50159:50244" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="50623:51118" placeholder="SELECT idExa..Exams..." />
+                <marker date="1451234563223" expanded="true" signature="51913:52017" placeholder="UPDATE Exams..." />
+                <marker date="1451234563223" expanded="true" signature="52641:52751" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="52818:52916" placeholder="UPDATE Exams..." />
+                <marker date="1451234563223" expanded="true" signature="53714:53778" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="54442:54777" placeholder="SELECT idTes..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="55395:55754" placeholder="SELECT * FRO..Users..." />
+                <marker date="1451234563223" expanded="true" signature="55578:55753" placeholder="SELECT fkUse..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="56442:56631" placeholder="SELECT * FRO..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="57408:57648" placeholder="SELECT * FRO..Exams_Rooms..." />
+                <marker date="1451234563223" expanded="true" signature="58511:58640" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="59578:59877" placeholder="UPDATE Rooms..." />
+                <marker date="1451234563223" expanded="true" signature="60479:61139" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="60728:61099" placeholder="SELECT fkRoo..Exams_Rooms..." />
+                <marker date="1451234563223" expanded="true" signature="62051:62368" placeholder="SELECT idTop..Topics..." />
+                <marker date="1451234563223" expanded="true" signature="63087:63634" placeholder="SELECT idQue..." />
+                <marker date="1451234563223" expanded="true" signature="65959:66323" placeholder="UPDATE TestS..." />
+                <marker date="1451234563223" expanded="true" signature="66509:67396" placeholder="UPDATE TestS..." />
+                <marker date="1451234563223" expanded="true" signature="67472:67601" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="67779:67916" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="68040:68166" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="68642:68863" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="71279:71699" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="71950:72074" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="72549:72761" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="73696:73807" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="75131:75254" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="75329:75429" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="75566:75708" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="76629:76741" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="76808:76949" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="76950:76999" placeholder="UPDATE value..." />
+                <marker date="1451234563223" expanded="true" signature="78075:78113" placeholder="UPDATE Users..." />
+                <marker date="1451234563223" expanded="true" signature="79582:79654" placeholder="SELECT * FRO..Users..." />
+                <marker date="1451234563223" expanded="true" signature="80972:81685" placeholder="SELECT T.idT..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="82428:83058" placeholder="SELECT idTes..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="82866:83057" placeholder="SELECT fkSub..Users_Subjects..." />
+                <marker date="1451234563223" expanded="true" signature="83743:83873" placeholder="UPDATE Tests..." />
+                <marker date="1451234563223" expanded="true" signature="84551:84752" placeholder="UPDATE Tests..." />
+                <marker date="1451234563223" expanded="true" signature="85614:85678" placeholder="UPDATE Sets_..." />
+                <marker date="1451234563223" expanded="true" signature="86742:87028" placeholder="SELECT scale..TestSettings..." />
+                <marker date="1451234563223" expanded="true" signature="87346:87575" placeholder="SELECT idQue..Sets_Questions..." />
+                <marker date="1451234563223" expanded="true" signature="88282:88501" placeholder="UPDATE Tests..." />
+                <marker date="1451234563223" expanded="true" signature="89846:90211" placeholder="SELECT idQue..Sets_Questions..." />
+                <marker date="1451234563223" expanded="true" signature="90084:90210" placeholder="SELECT fkSet..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="91030:91117" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="91475:91803" placeholder="UPDATE Tests..." />
+                <marker date="1451234563223" expanded="true" signature="91941:92267" placeholder="UPDATE Tests..." />
+                <marker date="1451234563223" expanded="true" signature="92353:92637" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="92467:92636" placeholder="SELECT fkSet..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="93621:93773" placeholder="SELECT fkTes..Exams..." />
+                <marker date="1451234563223" expanded="true" signature="93983:94099" placeholder="SELECT * FRO..Questions_TestSettings..." />
+                <marker date="1451234563223" expanded="true" signature="94471:94573" placeholder="SELECT * FRO..Topics_TestSettings..." />
+                <marker date="1451234563223" expanded="true" signature="95228:95599" placeholder="SELECT idQue..Questions..." />
+                <marker date="1451234563223" expanded="true" signature="97061:97142" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="97209:97292" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="97575:97674" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="98408:98660" placeholder="SELECT idSet..Sets..." />
+                <marker date="1451234563223" expanded="true" signature="98727:98874" placeholder="UPDATE Sets ..." />
+                <marker date="1451234563223" expanded="true" signature="98941:99168" placeholder="UPDATE Tests..." />
+                <marker date="1451234563223" expanded="true" signature="100305:101292" placeholder="SELECT Q.idQ..Questions..." />
+                <marker date="1451234563223" expanded="true" signature="100305:103445" placeholder="SELECT Q.idQ..." />
+                <marker date="1451234563223" expanded="true" signature="100781:101062" placeholder="SELECT fkQue..Sets_Questions..." />
+                <marker date="1451234563223" expanded="true" signature="101351:103399" placeholder="SELECT Q.idQ..Questions..." />
+                <marker date="1451234563223" expanded="true" signature="101819:102643" placeholder="SELECT fkQue..TranslationQuestions..." />
+                <marker date="1451234563223" expanded="true" signature="102124:102453" placeholder="SELECT fkQue..Sets_Questions..." />
+                <marker date="1451234563223" expanded="true" signature="102821:103102" placeholder="SELECT fkQue..Sets_Questions..." />
+                <marker date="1451234563223" expanded="true" signature="103244:103306" placeholder="SELECT fkLan..Subjects..." />
+                <marker date="1451234563223" expanded="true" signature="103572:104449" placeholder="SELECT Q.idQ..Questions..." />
+                <marker date="1451234563223" expanded="true" signature="104032:104313" placeholder="SELECT fkQue..Sets_Questions..." />
+                <marker date="1451234563223" expanded="true" signature="105716:106235" placeholder="SELECT Q.idQ..History..." />
+                <marker date="1451234563223" expanded="true" signature="105716:107785" placeholder="SELECT Q.idQ..." />
+                <marker date="1451234563223" expanded="true" signature="106294:107737" placeholder="SELECT Q.idQ..History..." />
+                <marker date="1451234563223" expanded="true" signature="106712:107490" placeholder="SELECT fkQue..TranslationQuestions..." />
+                <marker date="1451234563223" expanded="true" signature="106955:107337" placeholder="SELECT fkQue..History..." />
+                <marker date="1451234563223" expanded="true" signature="107581:107643" placeholder="SELECT fkLan..Subjects..." />
+                <marker date="1451234563223" expanded="true" signature="107912:108515" placeholder="SELECT Q.idQ..History..." />
+                <marker date="1451234563223" expanded="true" signature="108311:108373" placeholder="SELECT fkLan..Subjects..." />
+                <marker date="1451234563223" expanded="true" signature="109535:109902" placeholder="SELECT * FRO..Answers..." />
+                <marker date="1451234563223" expanded="true" signature="109535:111188" placeholder="SELECT * FRO..." />
+                <marker date="1451234563223" expanded="true" signature="109961:111144" placeholder="SELECT * FRO..Answers..." />
+                <marker date="1451234563223" expanded="true" signature="110274:110836" placeholder="SELECT A.idA..Answers..." />
+                <marker date="1451234563223" expanded="true" signature="111081:111143" placeholder="SELECT fkLan..Subjects..." />
+                <marker date="1451234563223" expanded="true" signature="111319:111783" placeholder="SELECT * FRO..Answers..." />
+                <marker date="1451234563223" expanded="true" signature="111674:111736" placeholder="SELECT fkLan..Subjects..." />
+                <marker date="1451234563223" expanded="true" signature="112998:113012" placeholder="SELECT * FRO..." />
+                <marker date="1451234563223" expanded="true" signature="114624:114638" placeholder="SELECT * FRO..." />
+                <marker date="1451234563223" expanded="true" signature="116039:116161" placeholder="DELETE FROM ..." />
+                <marker date="1451234563223" expanded="true" signature="116927:117009" placeholder="SELECT * FRO..Languages..." />
+                <marker date="1451234563223" expanded="true" signature="117922:118018" placeholder="INSERT INTO ..." />
+                <marker date="1451234563223" expanded="true" signature="118559:118588" placeholder="Update Flag_..." />
+                <marker date="1451234563223" expanded="true" signature="119331:119384" placeholder="Select * fro..Subjects..." />
+                <marker date="1451234563223" expanded="true" signature="120411:120838" placeholder="SELECT DISTI..Users..." />
+                <marker date="1451234563223" expanded="true" signature="121255:121760" placeholder="SELECT DISTI..Users..." />
+                <marker date="1451234563223" expanded="true" signature="122292:122636" placeholder="SELECT DISTI..Users..." />
+                <marker date="1451234563223" expanded="true" signature="123053:123475" placeholder="SELECT DISTI..Users..." />
+                <marker date="1451234563223" expanded="true" signature="124518:125269" placeholder="SELECT Users..Users..." />
+                <marker date="1451234563223" expanded="true" signature="126373:127208" placeholder="SELECT Users..Users..." />
+                <marker date="1451234563223" expanded="true" signature="128370:129038" placeholder="SELECT Users..Users..." />
+                <marker date="1451234563223" expanded="true" signature="130131:130883" placeholder="SELECT Users..Users..." />
+                <marker date="1451234563223" expanded="true" signature="132400:132529" placeholder="select disti..Users..." />
+                <marker date="1451234563223" expanded="true" signature="133267:133393" placeholder="select Users..Users..." />
+                <marker date="1451234563223" expanded="true" signature="133720:133845" placeholder="select Users..Users..." />
+                <marker date="1451234563223" expanded="true" signature="134548:134679" placeholder="select TIMED..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="135307:135551" placeholder="select TestS..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="136183:136513" placeholder="select Topic..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="137157:137270" placeholder="select Histo..History..." />
+                <marker date="1451234563223" expanded="true" signature="138053:138590" placeholder="select Disti..History..." />
+                <marker date="1451234563223" expanded="true" signature="139355:139547" placeholder="select trans..." />
+                <marker date="1451234563223" expanded="true" signature="139907:140093" placeholder="select trans..." />
+                <marker date="1451234563223" expanded="true" signature="140880:141072" placeholder="select trans..." />
+                <marker date="1451234563223" expanded="true" signature="141739:141832" placeholder="SELECT COUNT..History..." />
+                <marker date="1451234563223" expanded="true" signature="142099:142285" placeholder="select SUM(s..Answers..." />
+                <marker date="1451234563223" expanded="true" signature="142099:142311" placeholder="select disti..Tests..." />
+                <marker date="1451234563223" expanded="true" signature="142099:142334" placeholder="select disti..Tests..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReportController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ReportController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/ReportController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43001688">
-              <caret line="275" column="39" selection-start-line="275" selection-start-column="39" selection-end-line="275" selection-end-column="39" />
+            <state vertical-scroll-proportion="-9.375">
+              <caret line="237" column="67" selection-start-line="237" selection-start-column="67" selection-end-line="237" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -259,10 +259,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/includes/sqlDB.php" />
         <option value="$PROJECT_DIR$/public/langs/en/lang.php" />
         <option value="$PROJECT_DIR$/public/langs/it/lang.php" />
         <option value="$PROJECT_DIR$/controllers/ReportController.php" />
+        <option value="$PROJECT_DIR$/includes/sqlDB.php" />
       </list>
     </option>
   </component>
@@ -272,6 +272,9 @@
   </component>
   <component name="NamedScopeManager">
     <order />
+  </component>
+  <component name="PhpServers">
+    <servers />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
@@ -333,6 +336,72 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="echemTest-EOL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="echemTest-EOL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="themes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="echemTest-EOL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="echemTest-EOL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="themes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="echemTest-EOL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="echemTest-EOL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="themes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -414,8 +483,34 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="FullScreen" value="false" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="8cdbeedb-66f6-456d-af26-502dfc95e10d" name="Default" comment="" />
@@ -449,6 +544,14 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -462,216 +565,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/sqlDB.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.708334">
-          <caret line="3545" column="19" selection-start-line="3545" selection-start-column="19" selection-end-line="3545" selection-end-column="19" />
-          <folding>
-            <element signature="e#6#131#0#PHP" expanded="true" />
-            <element signature="n#qShowStudentCreport#0;n#sqlDB#0;n#!!top" expanded="false" />
-            <element signature="n#qShowTestsCreport#0;n#sqlDB#0;n#!!top" expanded="false" />
-            <marker date="1451223577244" expanded="true" signature="1291:1574" placeholder="SELECT idUse..Users..." />
-            <marker date="1451223577244" expanded="true" signature="3217:3684" placeholder="SELECT * FRO..Subjects..." />
-            <marker date="1451223577244" expanded="true" signature="3407:3612" placeholder="SELECT fkSub..Users_Subjects..." />
-            <marker date="1451223577244" expanded="true" signature="3774:3892" placeholder="SELECT * FRO..Subjects..." />
-            <marker date="1451223577244" expanded="true" signature="4849:5065" placeholder="UPDATE Subje..." />
-            <marker date="1451223577244" expanded="true" signature="5132:5259" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="5368:5447" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="6568:6706" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="6869:6967" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="7742:7815" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="8849:9059" placeholder="UPDATE Topic..." />
-            <marker date="1451223577244" expanded="true" signature="10001:10614" placeholder="SELECT * FRO..Questions_TestSettings..." />
-            <marker date="1451223577244" expanded="true" signature="10312:10552" placeholder="SELECT idQue..Questions..." />
-            <marker date="1451223577244" expanded="true" signature="10755:11175" placeholder="SELECT * FRO..Questions_TestSettings..." />
-            <marker date="1451223577244" expanded="true" signature="11328:11550" placeholder="SELECT fkQue..History..." />
-            <marker date="1451223577244" expanded="true" signature="11328:11862" placeholder="SELECT fkQue..." />
-            <marker date="1451223577244" expanded="true" signature="11633:11862" placeholder="SELECT fkQue..Sets_Questions..." />
-            <marker date="1451223577244" expanded="true" signature="12001:12421" placeholder="SELECT * FRO..Questions_TestSettings..." />
-            <marker date="1451223577244" expanded="true" signature="12572:12794" placeholder="SELECT fkQue..History..." />
-            <marker date="1451223577244" expanded="true" signature="12572:13215" placeholder="SELECT fkQue..." />
-            <marker date="1451223577244" expanded="true" signature="12877:13215" placeholder="SELECT fkQue..Sets_Questions..." />
-            <marker date="1451223577244" expanded="true" signature="13404:13682" placeholder="SELECT * FRO..Exams..." />
-            <marker date="1451223577244" expanded="true" signature="13773:14132" placeholder="SELECT * FRO..Questions_TestSettings..." />
-            <marker date="1451223577244" expanded="true" signature="14224:14446" placeholder="SELECT fkQue..History..." />
-            <marker date="1451223577244" expanded="true" signature="14224:14867" placeholder="SELECT fkQue..." />
-            <marker date="1451223577244" expanded="true" signature="14529:14867" placeholder="SELECT fkQue..Sets_Questions..." />
-            <marker date="1451223577244" expanded="true" signature="14956:15315" placeholder="SELECT * FRO..Questions_TestSettings..." />
-            <marker date="1451223577244" expanded="true" signature="15405:15627" placeholder="SELECT fkQue..History..." />
-            <marker date="1451223577244" expanded="true" signature="15405:16048" placeholder="SELECT fkQue..." />
-            <marker date="1451223577244" expanded="true" signature="15710:16048" placeholder="SELECT fkQue..Sets_Questions..." />
-            <marker date="1451223577244" expanded="true" signature="16234:16593" placeholder="SELECT * FRO..Questions_TestSettings..." />
-            <marker date="1451223577244" expanded="true" signature="16683:16905" placeholder="SELECT fkQue..History..." />
-            <marker date="1451223577244" expanded="true" signature="16683:17326" placeholder="SELECT fkQue..." />
-            <marker date="1451223577244" expanded="true" signature="16988:17326" placeholder="SELECT fkQue..Sets_Questions..." />
-            <marker date="1451223577244" expanded="true" signature="18492:18768" placeholder="UPDATE Quest..." />
-            <marker date="1451223577244" expanded="true" signature="18643:18767" placeholder="SELECT idQue..questionstoflag..." />
-            <marker date="1451223577244" expanded="true" signature="18835:19140" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="19007:19139" placeholder="SELECT idQue..questionstoflag..." />
-            <marker date="1451223577244" expanded="true" signature="19299:19392" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="20263:20376" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="21423:21554" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="22937:23122" placeholder="SELECT idTop..Topics..." />
-            <marker date="1451223577244" expanded="true" signature="23474:23956" placeholder="SELECT idQue..." />
-            <marker date="1451223577244" expanded="true" signature="24273:24411" placeholder="SELECT * FRO..Questions..." />
-            <marker date="1451223577244" expanded="true" signature="25252:25581" placeholder="SELECT * FRO..Questions..." />
-            <marker date="1451223577244" expanded="true" signature="26798:26954" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="27021:27207" placeholder="UPDATE Quest..." />
-            <marker date="1451223577244" expanded="true" signature="27274:27335" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="28516:28684" placeholder="UPDATE Quest..." />
-            <marker date="1451223577244" expanded="true" signature="29573:29905" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="29687:29905" placeholder="SELECT type,..Questions..." />
-            <marker date="1451223577244" expanded="true" signature="30070:30232" placeholder="UPDATE Quest..." />
-            <marker date="1451223577244" expanded="true" signature="30299:30523" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="30354:30382" placeholder="SELECT @ques..." />
-            <marker date="1451223577244" expanded="true" signature="30590:30740" placeholder="SELECT * FRO..Answers..." />
-            <marker date="1451223577244" expanded="true" signature="30860:30968" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="31148:31394" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="31205:31232" placeholder="SELECT @aswr..." />
-            <marker date="1451223577244" expanded="true" signature="31703:31903" placeholder="UPDATE Quest..." />
-            <marker date="1451223577244" expanded="true" signature="33367:33684" placeholder="UPDATE Quest..." />
-            <marker date="1451223577244" expanded="true" signature="33751:33872" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="34126:34238" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="35107:35187" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="35235:35413" placeholder="UPDATE Quest..." />
-            <marker date="1451223577244" expanded="true" signature="36206:36513" placeholder="SELECT * FRO..Answers..." />
-            <marker date="1451223577244" expanded="true" signature="37296:37390" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="37532:37591" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="39040:39201" placeholder="UPDATE Answe..." />
-            <marker date="1451223577244" expanded="true" signature="39268:39374" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="39656:39759" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="40483:40553" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="41256:41878" placeholder="SELECT idExa..Exams..." />
-            <marker date="1451223577244" expanded="true" signature="42553:43526" placeholder="SELECT * FRO..Exams..." />
-            <marker date="1451223577244" expanded="true" signature="43008:43465" placeholder="SELECT * FRO..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="44146:44409" placeholder="SELECT idExa..Exams..." />
-            <marker date="1451223577244" expanded="true" signature="46068:46301" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="46566:46639" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="46932:47365" placeholder="SELECT idExa..Exams..." />
-            <marker date="1451223577244" expanded="true" signature="48682:48859" placeholder="UPDATE Exams..." />
-            <marker date="1451223577244" expanded="true" signature="49252:49698" placeholder="UPDATE Exams..." />
-            <marker date="1451223577244" expanded="true" signature="49789:49943" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="50159:50244" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="50623:51118" placeholder="SELECT idExa..Exams..." />
-            <marker date="1451223577244" expanded="true" signature="51913:52017" placeholder="UPDATE Exams..." />
-            <marker date="1451223577244" expanded="true" signature="52641:52751" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="52818:52916" placeholder="UPDATE Exams..." />
-            <marker date="1451223577244" expanded="true" signature="53714:53778" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="54442:54777" placeholder="SELECT idTes..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="55395:55754" placeholder="SELECT * FRO..Users..." />
-            <marker date="1451223577244" expanded="true" signature="55578:55753" placeholder="SELECT fkUse..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="56442:56631" placeholder="SELECT * FRO..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="57408:57648" placeholder="SELECT * FRO..Exams_Rooms..." />
-            <marker date="1451223577244" expanded="true" signature="58511:58640" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="59578:59877" placeholder="UPDATE Rooms..." />
-            <marker date="1451223577244" expanded="true" signature="60479:61139" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="60728:61099" placeholder="SELECT fkRoo..Exams_Rooms..." />
-            <marker date="1451223577244" expanded="true" signature="62051:62368" placeholder="SELECT idTop..Topics..." />
-            <marker date="1451223577244" expanded="true" signature="63087:63634" placeholder="SELECT idQue..." />
-            <marker date="1451223577244" expanded="true" signature="65959:66323" placeholder="UPDATE TestS..." />
-            <marker date="1451223577244" expanded="true" signature="66509:67396" placeholder="UPDATE TestS..." />
-            <marker date="1451223577244" expanded="true" signature="67472:67601" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="67779:67916" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="68040:68166" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="68642:68863" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="71279:71699" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="71950:72074" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="72549:72761" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="73696:73807" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="75131:75254" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="75329:75429" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="75566:75708" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="76629:76741" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="76808:76949" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="76950:76999" placeholder="UPDATE value..." />
-            <marker date="1451223577244" expanded="true" signature="78075:78113" placeholder="UPDATE Users..." />
-            <marker date="1451223577244" expanded="true" signature="79582:79654" placeholder="SELECT * FRO..Users..." />
-            <marker date="1451223577244" expanded="true" signature="80972:81685" placeholder="SELECT T.idT..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="82428:83058" placeholder="SELECT idTes..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="82866:83057" placeholder="SELECT fkSub..Users_Subjects..." />
-            <marker date="1451223577244" expanded="true" signature="83743:83873" placeholder="UPDATE Tests..." />
-            <marker date="1451223577244" expanded="true" signature="84551:84752" placeholder="UPDATE Tests..." />
-            <marker date="1451223577244" expanded="true" signature="85614:85678" placeholder="UPDATE Sets_..." />
-            <marker date="1451223577244" expanded="true" signature="86742:87028" placeholder="SELECT scale..TestSettings..." />
-            <marker date="1451223577244" expanded="true" signature="87346:87575" placeholder="SELECT idQue..Sets_Questions..." />
-            <marker date="1451223577244" expanded="true" signature="88282:88501" placeholder="UPDATE Tests..." />
-            <marker date="1451223577244" expanded="true" signature="89846:90211" placeholder="SELECT idQue..Sets_Questions..." />
-            <marker date="1451223577244" expanded="true" signature="90084:90210" placeholder="SELECT fkSet..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="91030:91117" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="91475:91803" placeholder="UPDATE Tests..." />
-            <marker date="1451223577244" expanded="true" signature="91941:92267" placeholder="UPDATE Tests..." />
-            <marker date="1451223577244" expanded="true" signature="92353:92637" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="92467:92636" placeholder="SELECT fkSet..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="93621:93773" placeholder="SELECT fkTes..Exams..." />
-            <marker date="1451223577244" expanded="true" signature="93983:94099" placeholder="SELECT * FRO..Questions_TestSettings..." />
-            <marker date="1451223577244" expanded="true" signature="94471:94573" placeholder="SELECT * FRO..Topics_TestSettings..." />
-            <marker date="1451223577244" expanded="true" signature="95228:95599" placeholder="SELECT idQue..Questions..." />
-            <marker date="1451223577244" expanded="true" signature="97061:97142" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="97209:97292" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="97575:97674" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="98408:98660" placeholder="SELECT idSet..Sets..." />
-            <marker date="1451223577244" expanded="true" signature="98727:98874" placeholder="UPDATE Sets ..." />
-            <marker date="1451223577244" expanded="true" signature="98941:99168" placeholder="UPDATE Tests..." />
-            <marker date="1451223577244" expanded="true" signature="100305:101292" placeholder="SELECT Q.idQ..Questions..." />
-            <marker date="1451223577244" expanded="true" signature="100305:103445" placeholder="SELECT Q.idQ..." />
-            <marker date="1451223577244" expanded="true" signature="100781:101062" placeholder="SELECT fkQue..Sets_Questions..." />
-            <marker date="1451223577244" expanded="true" signature="101351:103399" placeholder="SELECT Q.idQ..Questions..." />
-            <marker date="1451223577244" expanded="true" signature="101819:102643" placeholder="SELECT fkQue..TranslationQuestions..." />
-            <marker date="1451223577244" expanded="true" signature="102124:102453" placeholder="SELECT fkQue..Sets_Questions..." />
-            <marker date="1451223577244" expanded="true" signature="102821:103102" placeholder="SELECT fkQue..Sets_Questions..." />
-            <marker date="1451223577244" expanded="true" signature="103244:103306" placeholder="SELECT fkLan..Subjects..." />
-            <marker date="1451223577244" expanded="true" signature="103572:104449" placeholder="SELECT Q.idQ..Questions..." />
-            <marker date="1451223577244" expanded="true" signature="104032:104313" placeholder="SELECT fkQue..Sets_Questions..." />
-            <marker date="1451223577244" expanded="true" signature="105716:106235" placeholder="SELECT Q.idQ..History..." />
-            <marker date="1451223577244" expanded="true" signature="105716:107785" placeholder="SELECT Q.idQ..." />
-            <marker date="1451223577244" expanded="true" signature="106294:107737" placeholder="SELECT Q.idQ..History..." />
-            <marker date="1451223577244" expanded="true" signature="106712:107490" placeholder="SELECT fkQue..TranslationQuestions..." />
-            <marker date="1451223577244" expanded="true" signature="106955:107337" placeholder="SELECT fkQue..History..." />
-            <marker date="1451223577244" expanded="true" signature="107581:107643" placeholder="SELECT fkLan..Subjects..." />
-            <marker date="1451223577244" expanded="true" signature="107912:108515" placeholder="SELECT Q.idQ..History..." />
-            <marker date="1451223577244" expanded="true" signature="108311:108373" placeholder="SELECT fkLan..Subjects..." />
-            <marker date="1451223577244" expanded="true" signature="109535:109902" placeholder="SELECT * FRO..Answers..." />
-            <marker date="1451223577244" expanded="true" signature="109535:111188" placeholder="SELECT * FRO..." />
-            <marker date="1451223577244" expanded="true" signature="109961:111144" placeholder="SELECT * FRO..Answers..." />
-            <marker date="1451223577244" expanded="true" signature="110274:110836" placeholder="SELECT A.idA..Answers..." />
-            <marker date="1451223577244" expanded="true" signature="111081:111143" placeholder="SELECT fkLan..Subjects..." />
-            <marker date="1451223577244" expanded="true" signature="111319:111783" placeholder="SELECT * FRO..Answers..." />
-            <marker date="1451223577244" expanded="true" signature="111674:111736" placeholder="SELECT fkLan..Subjects..." />
-            <marker date="1451223577244" expanded="true" signature="112998:113012" placeholder="SELECT * FRO..." />
-            <marker date="1451223577244" expanded="true" signature="114624:114638" placeholder="SELECT * FRO..." />
-            <marker date="1451223577244" expanded="true" signature="116039:116161" placeholder="DELETE FROM ..." />
-            <marker date="1451223577244" expanded="true" signature="116927:117009" placeholder="SELECT * FRO..Languages..." />
-            <marker date="1451223577244" expanded="true" signature="117922:118018" placeholder="INSERT INTO ..." />
-            <marker date="1451223577244" expanded="true" signature="118559:118588" placeholder="Update Flag_..." />
-            <marker date="1451223577244" expanded="true" signature="119331:119384" placeholder="Select * fro..Subjects..." />
-            <marker date="1451223577244" expanded="true" signature="120411:120838" placeholder="SELECT DISTI..Users..." />
-            <marker date="1451223577244" expanded="true" signature="121255:121760" placeholder="SELECT DISTI..Users..." />
-            <marker date="1451223577244" expanded="true" signature="122292:122636" placeholder="SELECT DISTI..Users..." />
-            <marker date="1451223577244" expanded="true" signature="123053:123475" placeholder="SELECT DISTI..Users..." />
-            <marker date="1451223577244" expanded="true" signature="124518:125269" placeholder="SELECT Users..Users..." />
-            <marker date="1451223577244" expanded="true" signature="126373:127208" placeholder="SELECT Users..Users..." />
-            <marker date="1451223577244" expanded="true" signature="128370:129038" placeholder="SELECT Users..Users..." />
-            <marker date="1451223577244" expanded="true" signature="130131:130883" placeholder="SELECT Users..Users..." />
-            <marker date="1451223577244" expanded="true" signature="132400:132529" placeholder="select disti..Users..." />
-            <marker date="1451223577244" expanded="true" signature="133267:133393" placeholder="select Users..Users..." />
-            <marker date="1451223577244" expanded="true" signature="133720:133845" placeholder="select Users..Users..." />
-            <marker date="1451223577244" expanded="true" signature="134548:134679" placeholder="select TIMED..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="135307:135551" placeholder="select TestS..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="136183:136513" placeholder="select Topic..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="137157:137270" placeholder="select Histo..History..." />
-            <marker date="1451223577244" expanded="true" signature="138053:138590" placeholder="select Disti..History..." />
-            <marker date="1451223577244" expanded="true" signature="139355:139547" placeholder="select trans..." />
-            <marker date="1451223577244" expanded="true" signature="139907:140093" placeholder="select trans..." />
-            <marker date="1451223577244" expanded="true" signature="140880:141072" placeholder="select trans..." />
-            <marker date="1451223577244" expanded="true" signature="141739:141832" placeholder="SELECT COUNT..History..." />
-            <marker date="1451223577244" expanded="true" signature="142124:142257" placeholder="select SUM(s..Answers..." />
-            <marker date="1451223577244" expanded="true" signature="142530:142731" placeholder="select SUM(s..Answers..." />
-            <marker date="1451223577244" expanded="true" signature="142530:142757" placeholder="select disti..Tests..." />
-            <marker date="1451223577244" expanded="true" signature="142530:142780" placeholder="select disti..Tests..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -693,9 +586,218 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/ReportController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43001688">
-          <caret line="275" column="39" selection-start-line="275" selection-start-column="39" selection-end-line="275" selection-end-column="39" />
+        <state vertical-scroll-proportion="-9.375">
+          <caret line="237" column="67" selection-start-line="237" selection-start-column="67" selection-end-line="237" selection-end-column="67" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/sqlDB.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11467116">
+          <caret line="3523" column="0" selection-start-line="3523" selection-start-column="0" selection-end-line="3523" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#131#0#PHP" expanded="true" />
+            <element signature="n#qShowStudentCreport#0;n#sqlDB#0;n#!!top" expanded="false" />
+            <element signature="n#qShowTestsCreport#0;n#sqlDB#0;n#!!top" expanded="false" />
+            <marker date="1451234563223" expanded="true" signature="1291:1574" placeholder="SELECT idUse..Users..." />
+            <marker date="1451234563223" expanded="true" signature="3217:3684" placeholder="SELECT * FRO..Subjects..." />
+            <marker date="1451234563223" expanded="true" signature="3407:3612" placeholder="SELECT fkSub..Users_Subjects..." />
+            <marker date="1451234563223" expanded="true" signature="3774:3892" placeholder="SELECT * FRO..Subjects..." />
+            <marker date="1451234563223" expanded="true" signature="4849:5065" placeholder="UPDATE Subje..." />
+            <marker date="1451234563223" expanded="true" signature="5132:5259" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="5368:5447" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="6568:6706" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="6869:6967" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="7742:7815" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="8849:9059" placeholder="UPDATE Topic..." />
+            <marker date="1451234563223" expanded="true" signature="10001:10614" placeholder="SELECT * FRO..Questions_TestSettings..." />
+            <marker date="1451234563223" expanded="true" signature="10312:10552" placeholder="SELECT idQue..Questions..." />
+            <marker date="1451234563223" expanded="true" signature="10755:11175" placeholder="SELECT * FRO..Questions_TestSettings..." />
+            <marker date="1451234563223" expanded="true" signature="11328:11550" placeholder="SELECT fkQue..History..." />
+            <marker date="1451234563223" expanded="true" signature="11328:11862" placeholder="SELECT fkQue..." />
+            <marker date="1451234563223" expanded="true" signature="11633:11862" placeholder="SELECT fkQue..Sets_Questions..." />
+            <marker date="1451234563223" expanded="true" signature="12001:12421" placeholder="SELECT * FRO..Questions_TestSettings..." />
+            <marker date="1451234563223" expanded="true" signature="12572:12794" placeholder="SELECT fkQue..History..." />
+            <marker date="1451234563223" expanded="true" signature="12572:13215" placeholder="SELECT fkQue..." />
+            <marker date="1451234563223" expanded="true" signature="12877:13215" placeholder="SELECT fkQue..Sets_Questions..." />
+            <marker date="1451234563223" expanded="true" signature="13404:13682" placeholder="SELECT * FRO..Exams..." />
+            <marker date="1451234563223" expanded="true" signature="13773:14132" placeholder="SELECT * FRO..Questions_TestSettings..." />
+            <marker date="1451234563223" expanded="true" signature="14224:14446" placeholder="SELECT fkQue..History..." />
+            <marker date="1451234563223" expanded="true" signature="14224:14867" placeholder="SELECT fkQue..." />
+            <marker date="1451234563223" expanded="true" signature="14529:14867" placeholder="SELECT fkQue..Sets_Questions..." />
+            <marker date="1451234563223" expanded="true" signature="14956:15315" placeholder="SELECT * FRO..Questions_TestSettings..." />
+            <marker date="1451234563223" expanded="true" signature="15405:15627" placeholder="SELECT fkQue..History..." />
+            <marker date="1451234563223" expanded="true" signature="15405:16048" placeholder="SELECT fkQue..." />
+            <marker date="1451234563223" expanded="true" signature="15710:16048" placeholder="SELECT fkQue..Sets_Questions..." />
+            <marker date="1451234563223" expanded="true" signature="16234:16593" placeholder="SELECT * FRO..Questions_TestSettings..." />
+            <marker date="1451234563223" expanded="true" signature="16683:16905" placeholder="SELECT fkQue..History..." />
+            <marker date="1451234563223" expanded="true" signature="16683:17326" placeholder="SELECT fkQue..." />
+            <marker date="1451234563223" expanded="true" signature="16988:17326" placeholder="SELECT fkQue..Sets_Questions..." />
+            <marker date="1451234563223" expanded="true" signature="18492:18768" placeholder="UPDATE Quest..." />
+            <marker date="1451234563223" expanded="true" signature="18643:18767" placeholder="SELECT idQue..questionstoflag..." />
+            <marker date="1451234563223" expanded="true" signature="18835:19140" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="19007:19139" placeholder="SELECT idQue..questionstoflag..." />
+            <marker date="1451234563223" expanded="true" signature="19299:19392" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="20263:20376" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="21423:21554" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="22937:23122" placeholder="SELECT idTop..Topics..." />
+            <marker date="1451234563223" expanded="true" signature="23474:23956" placeholder="SELECT idQue..." />
+            <marker date="1451234563223" expanded="true" signature="24273:24411" placeholder="SELECT * FRO..Questions..." />
+            <marker date="1451234563223" expanded="true" signature="25252:25581" placeholder="SELECT * FRO..Questions..." />
+            <marker date="1451234563223" expanded="true" signature="26798:26954" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="27021:27207" placeholder="UPDATE Quest..." />
+            <marker date="1451234563223" expanded="true" signature="27274:27335" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="28516:28684" placeholder="UPDATE Quest..." />
+            <marker date="1451234563223" expanded="true" signature="29573:29905" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="29687:29905" placeholder="SELECT type,..Questions..." />
+            <marker date="1451234563223" expanded="true" signature="30070:30232" placeholder="UPDATE Quest..." />
+            <marker date="1451234563223" expanded="true" signature="30299:30523" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="30354:30382" placeholder="SELECT @ques..." />
+            <marker date="1451234563223" expanded="true" signature="30590:30740" placeholder="SELECT * FRO..Answers..." />
+            <marker date="1451234563223" expanded="true" signature="30860:30968" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="31148:31394" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="31205:31232" placeholder="SELECT @aswr..." />
+            <marker date="1451234563223" expanded="true" signature="31703:31903" placeholder="UPDATE Quest..." />
+            <marker date="1451234563223" expanded="true" signature="33367:33684" placeholder="UPDATE Quest..." />
+            <marker date="1451234563223" expanded="true" signature="33751:33872" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="34126:34238" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="35107:35187" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="35235:35413" placeholder="UPDATE Quest..." />
+            <marker date="1451234563223" expanded="true" signature="36206:36513" placeholder="SELECT * FRO..Answers..." />
+            <marker date="1451234563223" expanded="true" signature="37296:37390" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="37532:37591" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="39040:39201" placeholder="UPDATE Answe..." />
+            <marker date="1451234563223" expanded="true" signature="39268:39374" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="39656:39759" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="40483:40553" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="41256:41878" placeholder="SELECT idExa..Exams..." />
+            <marker date="1451234563223" expanded="true" signature="42553:43526" placeholder="SELECT * FRO..Exams..." />
+            <marker date="1451234563223" expanded="true" signature="43008:43465" placeholder="SELECT * FRO..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="44146:44409" placeholder="SELECT idExa..Exams..." />
+            <marker date="1451234563223" expanded="true" signature="46068:46301" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="46566:46639" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="46932:47365" placeholder="SELECT idExa..Exams..." />
+            <marker date="1451234563223" expanded="true" signature="48682:48859" placeholder="UPDATE Exams..." />
+            <marker date="1451234563223" expanded="true" signature="49252:49698" placeholder="UPDATE Exams..." />
+            <marker date="1451234563223" expanded="true" signature="49789:49943" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="50159:50244" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="50623:51118" placeholder="SELECT idExa..Exams..." />
+            <marker date="1451234563223" expanded="true" signature="51913:52017" placeholder="UPDATE Exams..." />
+            <marker date="1451234563223" expanded="true" signature="52641:52751" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="52818:52916" placeholder="UPDATE Exams..." />
+            <marker date="1451234563223" expanded="true" signature="53714:53778" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="54442:54777" placeholder="SELECT idTes..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="55395:55754" placeholder="SELECT * FRO..Users..." />
+            <marker date="1451234563223" expanded="true" signature="55578:55753" placeholder="SELECT fkUse..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="56442:56631" placeholder="SELECT * FRO..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="57408:57648" placeholder="SELECT * FRO..Exams_Rooms..." />
+            <marker date="1451234563223" expanded="true" signature="58511:58640" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="59578:59877" placeholder="UPDATE Rooms..." />
+            <marker date="1451234563223" expanded="true" signature="60479:61139" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="60728:61099" placeholder="SELECT fkRoo..Exams_Rooms..." />
+            <marker date="1451234563223" expanded="true" signature="62051:62368" placeholder="SELECT idTop..Topics..." />
+            <marker date="1451234563223" expanded="true" signature="63087:63634" placeholder="SELECT idQue..." />
+            <marker date="1451234563223" expanded="true" signature="65959:66323" placeholder="UPDATE TestS..." />
+            <marker date="1451234563223" expanded="true" signature="66509:67396" placeholder="UPDATE TestS..." />
+            <marker date="1451234563223" expanded="true" signature="67472:67601" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="67779:67916" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="68040:68166" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="68642:68863" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="71279:71699" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="71950:72074" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="72549:72761" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="73696:73807" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="75131:75254" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="75329:75429" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="75566:75708" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="76629:76741" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="76808:76949" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="76950:76999" placeholder="UPDATE value..." />
+            <marker date="1451234563223" expanded="true" signature="78075:78113" placeholder="UPDATE Users..." />
+            <marker date="1451234563223" expanded="true" signature="79582:79654" placeholder="SELECT * FRO..Users..." />
+            <marker date="1451234563223" expanded="true" signature="80972:81685" placeholder="SELECT T.idT..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="82428:83058" placeholder="SELECT idTes..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="82866:83057" placeholder="SELECT fkSub..Users_Subjects..." />
+            <marker date="1451234563223" expanded="true" signature="83743:83873" placeholder="UPDATE Tests..." />
+            <marker date="1451234563223" expanded="true" signature="84551:84752" placeholder="UPDATE Tests..." />
+            <marker date="1451234563223" expanded="true" signature="85614:85678" placeholder="UPDATE Sets_..." />
+            <marker date="1451234563223" expanded="true" signature="86742:87028" placeholder="SELECT scale..TestSettings..." />
+            <marker date="1451234563223" expanded="true" signature="87346:87575" placeholder="SELECT idQue..Sets_Questions..." />
+            <marker date="1451234563223" expanded="true" signature="88282:88501" placeholder="UPDATE Tests..." />
+            <marker date="1451234563223" expanded="true" signature="89846:90211" placeholder="SELECT idQue..Sets_Questions..." />
+            <marker date="1451234563223" expanded="true" signature="90084:90210" placeholder="SELECT fkSet..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="91030:91117" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="91475:91803" placeholder="UPDATE Tests..." />
+            <marker date="1451234563223" expanded="true" signature="91941:92267" placeholder="UPDATE Tests..." />
+            <marker date="1451234563223" expanded="true" signature="92353:92637" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="92467:92636" placeholder="SELECT fkSet..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="93621:93773" placeholder="SELECT fkTes..Exams..." />
+            <marker date="1451234563223" expanded="true" signature="93983:94099" placeholder="SELECT * FRO..Questions_TestSettings..." />
+            <marker date="1451234563223" expanded="true" signature="94471:94573" placeholder="SELECT * FRO..Topics_TestSettings..." />
+            <marker date="1451234563223" expanded="true" signature="95228:95599" placeholder="SELECT idQue..Questions..." />
+            <marker date="1451234563223" expanded="true" signature="97061:97142" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="97209:97292" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="97575:97674" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="98408:98660" placeholder="SELECT idSet..Sets..." />
+            <marker date="1451234563223" expanded="true" signature="98727:98874" placeholder="UPDATE Sets ..." />
+            <marker date="1451234563223" expanded="true" signature="98941:99168" placeholder="UPDATE Tests..." />
+            <marker date="1451234563223" expanded="true" signature="100305:101292" placeholder="SELECT Q.idQ..Questions..." />
+            <marker date="1451234563223" expanded="true" signature="100305:103445" placeholder="SELECT Q.idQ..." />
+            <marker date="1451234563223" expanded="true" signature="100781:101062" placeholder="SELECT fkQue..Sets_Questions..." />
+            <marker date="1451234563223" expanded="true" signature="101351:103399" placeholder="SELECT Q.idQ..Questions..." />
+            <marker date="1451234563223" expanded="true" signature="101819:102643" placeholder="SELECT fkQue..TranslationQuestions..." />
+            <marker date="1451234563223" expanded="true" signature="102124:102453" placeholder="SELECT fkQue..Sets_Questions..." />
+            <marker date="1451234563223" expanded="true" signature="102821:103102" placeholder="SELECT fkQue..Sets_Questions..." />
+            <marker date="1451234563223" expanded="true" signature="103244:103306" placeholder="SELECT fkLan..Subjects..." />
+            <marker date="1451234563223" expanded="true" signature="103572:104449" placeholder="SELECT Q.idQ..Questions..." />
+            <marker date="1451234563223" expanded="true" signature="104032:104313" placeholder="SELECT fkQue..Sets_Questions..." />
+            <marker date="1451234563223" expanded="true" signature="105716:106235" placeholder="SELECT Q.idQ..History..." />
+            <marker date="1451234563223" expanded="true" signature="105716:107785" placeholder="SELECT Q.idQ..." />
+            <marker date="1451234563223" expanded="true" signature="106294:107737" placeholder="SELECT Q.idQ..History..." />
+            <marker date="1451234563223" expanded="true" signature="106712:107490" placeholder="SELECT fkQue..TranslationQuestions..." />
+            <marker date="1451234563223" expanded="true" signature="106955:107337" placeholder="SELECT fkQue..History..." />
+            <marker date="1451234563223" expanded="true" signature="107581:107643" placeholder="SELECT fkLan..Subjects..." />
+            <marker date="1451234563223" expanded="true" signature="107912:108515" placeholder="SELECT Q.idQ..History..." />
+            <marker date="1451234563223" expanded="true" signature="108311:108373" placeholder="SELECT fkLan..Subjects..." />
+            <marker date="1451234563223" expanded="true" signature="109535:109902" placeholder="SELECT * FRO..Answers..." />
+            <marker date="1451234563223" expanded="true" signature="109535:111188" placeholder="SELECT * FRO..." />
+            <marker date="1451234563223" expanded="true" signature="109961:111144" placeholder="SELECT * FRO..Answers..." />
+            <marker date="1451234563223" expanded="true" signature="110274:110836" placeholder="SELECT A.idA..Answers..." />
+            <marker date="1451234563223" expanded="true" signature="111081:111143" placeholder="SELECT fkLan..Subjects..." />
+            <marker date="1451234563223" expanded="true" signature="111319:111783" placeholder="SELECT * FRO..Answers..." />
+            <marker date="1451234563223" expanded="true" signature="111674:111736" placeholder="SELECT fkLan..Subjects..." />
+            <marker date="1451234563223" expanded="true" signature="112998:113012" placeholder="SELECT * FRO..." />
+            <marker date="1451234563223" expanded="true" signature="114624:114638" placeholder="SELECT * FRO..." />
+            <marker date="1451234563223" expanded="true" signature="116039:116161" placeholder="DELETE FROM ..." />
+            <marker date="1451234563223" expanded="true" signature="116927:117009" placeholder="SELECT * FRO..Languages..." />
+            <marker date="1451234563223" expanded="true" signature="117922:118018" placeholder="INSERT INTO ..." />
+            <marker date="1451234563223" expanded="true" signature="118559:118588" placeholder="Update Flag_..." />
+            <marker date="1451234563223" expanded="true" signature="119331:119384" placeholder="Select * fro..Subjects..." />
+            <marker date="1451234563223" expanded="true" signature="120411:120838" placeholder="SELECT DISTI..Users..." />
+            <marker date="1451234563223" expanded="true" signature="121255:121760" placeholder="SELECT DISTI..Users..." />
+            <marker date="1451234563223" expanded="true" signature="122292:122636" placeholder="SELECT DISTI..Users..." />
+            <marker date="1451234563223" expanded="true" signature="123053:123475" placeholder="SELECT DISTI..Users..." />
+            <marker date="1451234563223" expanded="true" signature="124518:125269" placeholder="SELECT Users..Users..." />
+            <marker date="1451234563223" expanded="true" signature="126373:127208" placeholder="SELECT Users..Users..." />
+            <marker date="1451234563223" expanded="true" signature="128370:129038" placeholder="SELECT Users..Users..." />
+            <marker date="1451234563223" expanded="true" signature="130131:130883" placeholder="SELECT Users..Users..." />
+            <marker date="1451234563223" expanded="true" signature="132400:132529" placeholder="select disti..Users..." />
+            <marker date="1451234563223" expanded="true" signature="133267:133393" placeholder="select Users..Users..." />
+            <marker date="1451234563223" expanded="true" signature="133720:133845" placeholder="select Users..Users..." />
+            <marker date="1451234563223" expanded="true" signature="134548:134679" placeholder="select TIMED..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="135307:135551" placeholder="select TestS..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="136183:136513" placeholder="select Topic..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="137157:137270" placeholder="select Histo..History..." />
+            <marker date="1451234563223" expanded="true" signature="138053:138590" placeholder="select Disti..History..." />
+            <marker date="1451234563223" expanded="true" signature="139355:139547" placeholder="select trans..." />
+            <marker date="1451234563223" expanded="true" signature="139907:140093" placeholder="select trans..." />
+            <marker date="1451234563223" expanded="true" signature="140880:141072" placeholder="select trans..." />
+            <marker date="1451234563223" expanded="true" signature="141739:141832" placeholder="SELECT COUNT..History..." />
+            <marker date="1451234563223" expanded="true" signature="142099:142285" placeholder="select SUM(s..Answers..." />
+            <marker date="1451234563223" expanded="true" signature="142099:142311" placeholder="select disti..Tests..." />
+            <marker date="1451234563223" expanded="true" signature="142099:142334" placeholder="select disti..Tests..." />
+          </folding>
         </state>
       </provider>
     </entry>
