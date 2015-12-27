@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8cdbeedb-66f6-456d-af26-502dfc95e10d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/ReportController.php" afterPath="$PROJECT_DIR$/controllers/ReportController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/langs/en/lang.php" afterPath="$PROJECT_DIR$/public/langs/en/lang.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/langs/it/lang.php" afterPath="$PROJECT_DIR$/public/langs/it/lang.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/sqlDB.php" afterPath="$PROJECT_DIR$/includes/sqlDB.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="echemTest-EOL.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -243,8 +239,8 @@
       <file leaf-file-name="ReportController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/ReportController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.22765599">
-              <caret line="222" column="26" selection-start-line="222" selection-start-column="26" selection-end-line="222" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.43001688">
+              <caret line="275" column="39" selection-start-line="275" selection-start-column="39" selection-end-line="275" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -264,9 +260,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/includes/sqlDB.php" />
-        <option value="$PROJECT_DIR$/controllers/ReportController.php" />
         <option value="$PROJECT_DIR$/public/langs/en/lang.php" />
         <option value="$PROJECT_DIR$/public/langs/it/lang.php" />
+        <option value="$PROJECT_DIR$/controllers/ReportController.php" />
       </list>
     </option>
   </component>
@@ -697,8 +693,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/ReportController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22765599">
-          <caret line="222" column="26" selection-start-line="222" selection-start-column="26" selection-end-line="222" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.43001688">
+          <caret line="275" column="39" selection-start-line="275" selection-start-column="39" selection-end-line="275" selection-end-column="39" />
           <folding />
         </state>
       </provider>

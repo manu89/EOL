@@ -273,7 +273,7 @@ class ReportController extends Controller{
             $pdf->SetFont('Helvetica','',12);
             $pdf->Cell(50,10,$details['score'],0,1,"");
             $pdf->SetFont('Helvetica','B',12);
-            $pdf->Cell(80,10,ttScoreFinal,0,0,"");
+            $pdf->Cell(80,10,ttScoreMax,0,0,"");
             $pdf->SetFont('Helvetica','',12);
             $pdf->Cell(50,10,$details['maxScore'],0,1,"");
             $pdf->SetFont('Helvetica','B',12);
