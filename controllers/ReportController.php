@@ -159,8 +159,8 @@ class ReportController extends Controller{
         $pdf->AddPage();
         $pdf->SetFont('Helvetica','B',22);
         $pdf->Image("themes/default/images/eol.png");
-        $pdf->Cell(0,20,ttReportCoaching,1,1,'C',false);
-        $pdf->Cell(0,8,"",0,1);
+        $pdf->Cell(0,15,ttReportCoaching,1,1,'C',false);
+        $pdf->Cell(0,5,"",0,1);
         $pdf->SetFont('Helvetica','B',12);
         $pdf->Cell(30,10,ttReportPartecipant,"B",0);
         $pdf->SetFont('Helvetica','',12);
@@ -201,10 +201,10 @@ class ReportController extends Controller{
         $pdf->Cell(40,10,ttReportDateTaken,"B",0);
         $pdf->SetFont('Helvetica','',12);
         $pdf->Cell(45,10,$_SESSION['CRdateTaken'],"B",1);
-        $pdf->Cell(0,10,"",0,1);
+        $pdf->Cell(0,5,"",0,1);
         $pdf->SetFont('Helvetica','B',16);
         $pdf->Cell(0,10,ttQuestions,0,1);
-        $pdf->Cell(0,10,"",0,1);
+        $pdf->Cell(0,3,"",0,1);
         $questions=$db->qLoadTestQuestions($_SESSION['CRidTest']);
         $i=1;
         //select lang to load for question & answer
@@ -213,14 +213,14 @@ class ReportController extends Controller{
             if(strpos($lang,"it/lang.php")){$idLang=2;}
             if(strpos($lang,"en/lang.php")){$idLang=1;}
         }
-
+        $d=0;
         foreach($questions as $question){
             $details=$db->qShowQuestionsDetails($_SESSION['CRidTest'],$idLang,$question);
             if ($i==3){
                 $pdf->Addpage();
                 $d=0;
             }else{
-                if(($d % 4==0) && ($d!=0)){
+                if(($d % 3==0) && ($d!=0)){
                     $pdf->AddPage();
                     $d=0;
                 }
@@ -237,7 +237,7 @@ class ReportController extends Controller{
                 $pdf->Image($config['themeImagesDir'].'False.png',null,null,10);
 
             }
-            $pdf->Cell(1,5,"",0,1);
+            $pdf->Cell(0,3,"",0,1);
             $pdf->SetTextColor(0,0,0);
             $pdf->SetFont('Helvetica','B',12);
             $pdf->Cell(80,10,ttReportQuestionType,0,0,"");
@@ -272,6 +272,10 @@ class ReportController extends Controller{
             $pdf->Cell(80,10,ttScore,0,0,"");
             $pdf->SetFont('Helvetica','',12);
             $pdf->Cell(50,10,$details['score'],0,1,"");
+            $pdf->SetFont('Helvetica','B',12);
+            $pdf->Cell(80,10,ttScoreFinal,0,0,"");
+            $pdf->SetFont('Helvetica','',12);
+            $pdf->Cell(50,10,$details['maxScore'],0,1,"");
             $pdf->SetFont('Helvetica','B',12);
             $pdf->Cell(80,10,ttAnswerNum,0,0,"");
             $pdf->SetFont('Helvetica','',12);

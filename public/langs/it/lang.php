@@ -383,6 +383,7 @@ define('ttSaveLanguageXML' , "Salva file XML di lingua");
 define('ttSaveQuestionInfo' , "Salva Informazioni Domanda");
 define('ttScore' , "Punteggio");
 define('ttScoreFinal' , "Punteggio finale");
+define ('ttScoreMax',"Punteggio massimo");
 define('ttScoreTest' , "Punteggio del test");
 define('ttScoreType' , "Tipo di punteggio");
 define('ttScoreMin' , "Punteggio minimo");

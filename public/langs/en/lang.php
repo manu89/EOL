@@ -384,6 +384,7 @@ define('ttSaveLanguageXML' , "Save XML Language Files");
 define('ttSaveQuestionInfo' , "Save Question Info");
 define('ttScore' , "Score");
 define('ttScoreFinal' , "Final Score");
+define ('ttScoreMax',"Score max");
 define('ttScoreTest' , "Test Score");
 define('ttScoreType' , "Score Type");
 define('ttScoreMin' , "Minimum Score");

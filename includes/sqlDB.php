@@ -3511,6 +3511,40 @@ class sqlDB {
                 }
             }
 
+            //load questions max score//
+
+            //load number of questions
+            $query="SELECT COUNT(fkQuestion) as questions
+                    FROM History where fkTest='$idTest'";
+            $this->execQuery($query);
+            if ($this->numResultRows() > 0){
+                $row=mysqli_fetch_array($this->result);
+                $totquestions=$row['questions'];
+            }
+
+            /*//load tot score of specific question done in tests
+            $query="select SUM(score) as totscoredone
+                    from Answers
+                    where fkQuestion='$idQuestion' and score > '0'";
+            $this->execQuery($query);
+            if ($this->numResultRows() > 0){
+                $row=mysqli_fetch_array($this->result);
+                $scorequestion=$row['totscoredone'];
+            }*/
+
+            //load max score of the test
+            $query="select distinct fkTestSetting, scoreType
+                    from Tests JOIN (Exams JOIN TestSettings on Exams.fkTestSetting=TestSettings.idTestSetting)
+                    on Tests.fkExam=Exams.idExam
+                    where Tests.idTest='$idTest'";
+            $this->execQuery($query);
+            if ($this->numResultRows() > 0){
+                $row=mysqli_fetch_array($this->result);
+                $maxscoretest=$row['scoreType'];
+            }
+
+            $val['maxScore']=$maxscoretest/$totquestions;
+
         }
         catch(Exceptin $ex){
             $log->append(__FUNCTION__." : ".$this->getError());
