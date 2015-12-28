@@ -5722,7 +5722,7 @@ class sqlDB {
                 if(($datein=="")&&($datefn=="")){//dates not set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select AVG(Tests.scoreFinal) AS finalscore
+                        $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
@@ -5735,7 +5735,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select AVG(Tests.scoreFinal) AS finalscore
+                        $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
@@ -5751,7 +5751,7 @@ class sqlDB {
                 else{//dates set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select AVG(Tests.scoreFinal) AS finalscore
+                        $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
@@ -5765,7 +5765,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select AVG(Tests.scoreFinal) AS finalscore
+                        $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
@@ -5786,7 +5786,7 @@ class sqlDB {
                 if(($datein=="")&&($datefn=="")){//dates not set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select AVG(Tests.scoreFinal) AS finalscore
+                        $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
@@ -5798,7 +5798,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select AVG(Tests.scoreFinal) AS finalscore
+                        $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
@@ -5813,7 +5813,7 @@ class sqlDB {
                 else{//dates set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select AVG(Tests.scoreFinal) AS finalscore
+                        $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
@@ -5826,7 +5826,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select AVG(Tests.scoreFinal) AS finalscore
+                        $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
@@ -6175,7 +6175,7 @@ class sqlDB {
                 if(($datein=="")&&($datefn=="")){//dates not set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
@@ -6188,7 +6188,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
@@ -6204,7 +6204,7 @@ class sqlDB {
                 else{//dates set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
@@ -6218,7 +6218,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
@@ -6239,7 +6239,7 @@ class sqlDB {
                 if(($datein=="")&&($datefn=="")){//dates not set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
@@ -6251,7 +6251,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
@@ -6266,7 +6266,7 @@ class sqlDB {
                 else{//dates set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
@@ -6279,7 +6279,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                        $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
@@ -6317,7 +6317,7 @@ class sqlDB {
                 if(($datein=="")&&($datefn=="")){//dates not set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select STD(Tests.scoreFinal) AS stddeviation
+                        $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
@@ -6330,7 +6330,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select STD(Tests.scoreFinal) AS stddeviation
+                        $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
@@ -6346,7 +6346,7 @@ class sqlDB {
                 else{//dates set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select STD(Tests.scoreFinal) AS stddeviation
+                        $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
@@ -6360,7 +6360,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select STD(Tests.scoreFinal) AS stddeviation
+                        $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
@@ -6381,7 +6381,7 @@ class sqlDB {
                 if(($datein=="")&&($datefn=="")){//dates not set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select STD(Tests.scoreFinal) AS stddeviation
+                        $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
@@ -6393,7 +6393,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select STD(Tests.scoreFinal) AS stddeviation
+                        $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
@@ -6408,7 +6408,7 @@ class sqlDB {
                 else{//dates set
                     $found=strpos($userparam,"@");
                     if ($found==false){
-                        $query="select STD(Tests.scoreFinal) AS stddeviation
+                        $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'
@@ -6421,7 +6421,7 @@ class sqlDB {
                         }
                     }
                     else{
-                        $query="select STD(Tests.scoreFinal) AS stddeviation
+                        $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'
@@ -7050,7 +7050,7 @@ class sqlDB {
             if(($minscore!=-1)&&($maxscore!=-1)){
                 //check dates interval has set
                 if(($datein=="")&&($datefn=="")){//dates not set
-                    $query="select AVG(Tests.scoreFinal) AS finalscore
+                    $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7064,7 +7064,7 @@ class sqlDB {
                     }
                 }
                 else{//dates set
-                    $query="select AVG(Tests.scoreFinal) AS finalscore
+                    $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7083,7 +7083,7 @@ class sqlDB {
             else{
                 //check dates interval has set
                 if(($datein=="")&&($datefn=="")){//dates not set
-                    $query="select AVG(Tests.scoreFinal) AS finalscore
+                    $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7096,7 +7096,7 @@ class sqlDB {
                     }
                 }
                 else{//dates set
-                    $query="select AVG(Tests.scoreFinal) AS finalscore
+                    $query="select ROUND(AVG(Tests.scoreFinal),2) AS finalscore
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7314,7 +7314,7 @@ class sqlDB {
             if(($minscore!=-1)&&($maxscore!=-1)){
                 //check dates interval has set
                 if(($datein=="")&&($datefn=="")){//dates not set
-                    $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                    $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7328,7 +7328,7 @@ class sqlDB {
                     }
                 }
                 else{//dates set
-                    $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                    $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7347,7 +7347,7 @@ class sqlDB {
             else{
                 //check dates interval has set
                 if(($datein=="")&&($datefn=="")){//dates not set
-                    $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                    $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7360,7 +7360,7 @@ class sqlDB {
                     }
                 }
                 else{//dates set
-                    $query="select AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart)) AS medtime
+                    $query="select ROUND(AVG(TIMEDIFF(Tests.timeEnd, Tests.timeStart))/60,2) AS medtime
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7398,7 +7398,7 @@ class sqlDB {
             if(($minscore!=-1)&&($maxscore!=-1)){
                 //check dates interval has set
                 if(($datein=="")&&($datefn=="")){//dates not set
-                    $query="select STD(Tests.scoreFinal) AS stddeviation
+                    $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7412,7 +7412,7 @@ class sqlDB {
                     }
                 }
                 else{//dates set
-                    $query="select STD(Tests.scoreFinal) AS stddeviation
+                    $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7431,7 +7431,7 @@ class sqlDB {
             else{
                 //check dates interval has set
                 if(($datein=="")&&($datefn=="")){//dates not set
-                    $query="select STD(Tests.scoreFinal) AS stddeviation
+                    $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7444,7 +7444,7 @@ class sqlDB {
                     }
                 }
                 else{//dates set
-                    $query="select STD(Tests.scoreFinal) AS stddeviation
+                    $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                         FROM Users JOIN (Tests JOIN(Exams JOIN Subjects ON Exams.fkSubject=Subjects.idSubject)
                         ON Tests.fkExam=Exams.idExam) ON Users.idUser=Tests.fkUser
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a')
@@ -7645,7 +7645,7 @@ class sqlDB {
         try {
             $found=strpos($userparam,"@");
             if ($found==false){
-                $query="SELECT AVG (Tests.scoreFinal) as avgtopic 
+                $query="SELECT ROUND(AVG (Tests.scoreFinal),2) as avgtopic 
                 FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
                 (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
                 on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
@@ -7673,7 +7673,7 @@ class sqlDB {
                 }
             }
             else{
-                $query="SELECT AVG (Tests.scoreFinal) as avgtopic 
+                $query="SELECT ROUND(AVG (Tests.scoreFinal),2) as avgtopic 
                 FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
                 (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
                 on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
@@ -7873,7 +7873,7 @@ class sqlDB {
         try {
             $found=strpos($userparam,"@");
             if ($found==false){
-                $query="select STD(Tests.scoreFinal) AS stdtopic
+                $query="select ROUND(STD(Tests.scoreFinal),2) AS stdtopic
                 FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
                 (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
                 on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
@@ -7890,7 +7890,7 @@ class sqlDB {
                 }
             }
             else{
-                $query="select STD(Tests.scoreFinal) AS stdtopic
+                $query="select ROUND(STD(Tests.scoreFinal),2) AS stdtopic
                 FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
                 (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
                 on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
@@ -8017,7 +8017,7 @@ class sqlDB {
         $this->mysqli = $this->connect();
         $groups=explode("-",$groupparam);
         try {
-            $query="select AVG(Tests.scoreFinal) AS avgtopic
+            $query="select ROUND(AVG (Tests.scoreFinal),2) AS avgtopic
                 FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
                 (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
                 on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
@@ -8154,7 +8154,7 @@ class sqlDB {
         $this->mysqli = $this->connect();
         $groups=explode("-",$groupparam);
         try {
-            $query="select STD(Tests.scoreFinal) AS stddeviation
+            $query="select ROUND(STD(Tests.scoreFinal),2) AS stddeviation
                 FROM Users JOIN (Topics JOIN (Topics_TestSettings JOIN 
                 (Exams JOIN Tests on Exams.idExam=Tests.fkExam) 
                 on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
@@ -8458,9 +8458,12 @@ class sqlDB {
                             and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
-                                //$i=0;
+                                $i=0;
                                 while($row=mysqli_fetch_array($this->result)){
-                                    $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                                 }
                             }
                         }
@@ -8482,8 +8485,12 @@ class sqlDB {
                             and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
+                                $i=0;
                                 while($row=mysqli_fetch_array($this->result)){
-                                    $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                                 }
                             }
                         }
@@ -8508,8 +8515,12 @@ class sqlDB {
                             and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
+                                $i=0;
                                 while($row=mysqli_fetch_array($this->result)){
-                                    $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                                 }
                             }
                         }
@@ -8532,8 +8543,12 @@ class sqlDB {
                             and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
+                                $i=0;
                                 while($row=mysqli_fetch_array($this->result)){
-                                    $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                                 }
                             }
                         }
@@ -8560,8 +8575,12 @@ class sqlDB {
                             and Users.idUser='$userparam'";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
+                                $i=0;
                                 while($row=mysqli_fetch_array($this->result)){
-                                    $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                                 }
                             }
                         }
@@ -8582,8 +8601,12 @@ class sqlDB {
                             and Users.email='$userparam'";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
+                                $i=0;
                                 while($row=mysqli_fetch_array($this->result)){
-                                    $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                                 }
                             }
                         }
@@ -8607,8 +8630,12 @@ class sqlDB {
                             and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
+                                $i=0;
                                 while($row=mysqli_fetch_array($this->result)){
-                                    $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                                 }
                             }
                         }
@@ -8630,8 +8657,12 @@ class sqlDB {
                             and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
+                                $i=0;
                                 while($row=mysqli_fetch_array($this->result)){
-                                    $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                                 }
                             }
                         }
@@ -8676,8 +8707,12 @@ class sqlDB {
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
+                            $i=0;
                             while($row=mysqli_fetch_array($this->result)){
-                                $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                             }
                         }
                     }
@@ -8698,8 +8733,12 @@ class sqlDB {
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
+                            $i=0;
                             while($row=mysqli_fetch_array($this->result)){
-                                $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                             }
                         }
                     }
@@ -8723,8 +8762,12 @@ class sqlDB {
                         and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
+                            $i=0;
                             while($row=mysqli_fetch_array($this->result)){
-                                $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                             }
                         }
                     }
@@ -8744,8 +8787,12 @@ class sqlDB {
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
+                            $i=0;
                             while($row=mysqli_fetch_array($this->result)){
-                                $topicsdata[$topic]=$row['scoreFinal'];
+                                    $topicindex=$topic;
+                                    $topicindex .="_".$i;
+                                    $topicsdata[$topicindex]=$row['scoreFinal'];
+                                    $i++;
                             }
                         }
                     }
