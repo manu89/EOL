@@ -395,24 +395,28 @@ class ReportController extends Controller{
                     //draw assesments Histograms if selected
                     if (isset($_POST['graphicHistogram'])) {
                         $graphdata=$db->qLoadAssesmentScores($_SESSION['examsparam'][$i], $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                        ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i.".png");
+                        ${'graph'.$i} = new PHPGraphLib(700,350, "../views/Report/generated_graphs/assesmentsgraph".$i.".png");
                         ${'graph'.$i}->addData($graphdata);
                         ${'graph'.$i}->setTitle("Assesments Scores");
                         ${'graph'.$i}->setTextColor("black");
                         ${'graph'.$i}->setXValuesHorizontal(true);
                         ${'graph'.$i}->setBarColor("#6da2ff");
+                        ${'graph'.$i}->setDataValues(true);
+                        ${'graph'.$i}->setDataValueColor("red");
                         ${'graph'.$i}->createGraph();
                         $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i.".png");
                     }
                     //draw topics Histograms if selected
                     if (isset($_POST['graphicTopicScore'])) {
                         $graphdatatopic=$db->qLoadTopicScores($usertopics, $_SESSION['examsparam'][$i], $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                        ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i.".png");
+                        ${'topics'.$i} = new PHPGraphLib(700,350, "../views/Report/generated_graphs/topicsgraph".$i.".png");
                         ${'topics'.$i}->addData($graphdatatopic);
                         ${'topics'.$i}->setTitle("Topics Scores");
                         ${'topics'.$i}->setTextColor("black");
                         ${'topics'.$i}->setXValuesHorizontal(true);
                         ${'topics'.$i}->setBarColor("green");
+                        ${'topics'.$i}->setDataValues(true);
+                        ${'topics'.$i}->setDataValueColor("red");
                         ${'topics'.$i}->createGraph();
                         $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i.".png");
                     }
@@ -619,24 +623,28 @@ class ReportController extends Controller{
                     //draw assesments Histograms if selected
                     if (isset($_POST['graphicHistogram'])) {
                         $graphdata=$db->qLoadAssesmentScores($exam, $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                        ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i.".png");
+                        ${'graph'.$i} = new PHPGraphLib(700,350, "../views/Report/generated_graphs/assesmentsgraph".$i.".png");
                         ${'graph'.$i}->addData($graphdata);
                         ${'graph'.$i}->setTitle("Assesments Scores");
                         ${'graph'.$i}->setTextColor("black");
                         ${'graph'.$i}->setXValuesHorizontal(true);
                         ${'graph'.$i}->setBarColor("#6da2ff");
+                        ${'graph'.$i}->setDataValues(true);
+                        ${'graph'.$i}->setDataValueColor("red");
                         ${'graph'.$i}->createGraph();
                         $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i.".png");
                     }
                     //draw topics Histograms if selected
                     if (isset($_POST['graphicTopicScore'])) {
                         $graphdatatopic=$db->qLoadTopicScores($usertopics, $exam, $_SESSION['userparam'],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                        ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i.".png");
+                        ${'topics'.$i} = new PHPGraphLib(700,350, "../views/Report/generated_graphs/topicsgraph".$i.".png");
                         ${'topics'.$i}->addData($graphdatatopic);
                         ${'topics'.$i}->setTitle("Topics Scores");
                         ${'topics'.$i}->setTextColor("black");
                         ${'topics'.$i}->setXValuesHorizontal(true);
                         ${'topics'.$i}->setBarColor("green");
+                        ${'topics'.$i}->setDataValues(true);
+                        ${'topics'.$i}->setDataValueColor("red");
                         ${'topics'.$i}->createGraph();
                         $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i.".png");
                     }
@@ -870,24 +878,28 @@ class ReportController extends Controller{
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
                             $graphdata=$db->qLoadAssesmentScoresGroup($_SESSION['examsparam'][$i], $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                            ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
+                            ${'graph'.$i} = new PHPGraphLib(700,350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                             ${'graph'.$i}->addData($graphdata);
                             ${'graph'.$i}->setTitle("Assesments Scores");
                             ${'graph'.$i}->setTextColor("black");
                             ${'graph'.$i}->setXValuesHorizontal(true);
                             ${'graph'.$i}->setBarColor("#6da2ff");
+                            ${'graph'.$i}->setDataValues(true);
+                            ${'graph'.$i}->setDataValueColor("red");
                             ${'graph'.$i}->createGraph();
                             $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                         }
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
                             $graphdatatopic=$db->qLoadTopicScoresGroup($grouptopics, $_SESSION['examsparam'][$i], $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                            ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
+                            ${'topics'.$i} = new PHPGraphLib(700,350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                             ${'topics'.$i}->addData($graphdatatopic);
                             ${'topics'.$i}->setTitle("Topics Scores");
                             ${'topics'.$i}->setTextColor("black");
                             ${'topics'.$i}->setXValuesHorizontal(true);
                             ${'topics'.$i}->setBarColor("green");
+                            ${'topics'.$i}->setDataValues(true);
+                            ${'topics'.$i}->setDataValueColor("red");
                             ${'topics'.$i}->createGraph();
                             $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                         }
@@ -1097,24 +1109,28 @@ class ReportController extends Controller{
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
                             $graphdata=$db->qLoadAssesmentScoresGroup($exam, $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                            ${'graph'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
+                            ${'graph'.$i} = new PHPGraphLib(700,350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                             ${'graph'.$i}->addData($graphdata);
                             ${'graph'.$i}->setTitle("Assesments Scores");
                             ${'graph'.$i}->setTextColor("black");
                             ${'graph'.$i}->setXValuesHorizontal(true);
                             ${'graph'.$i}->setBarColor("#6da2ff");
+                            ${'graph'.$i}->setDataValues(true);
+                            ${'graph'.$i}->setDataValueColor("red");
                             ${'graph'.$i}->createGraph();
                             $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                         }
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
                             $graphdatatopic=$db->qLoadTopicScoresGroup($grouptopics, $exam, $_SESSION['groupsparam'][$d],$_SESSION['minscoreparam'],$_SESSION['maxscoreparam'],$_SESSION['datein'],$_SESSION['datefn']);
-                            ${'topics'.$i} = new PHPGraphLib(500,350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
+                            ${'topics'.$i} = new PHPGraphLib(700,350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                             ${'topics'.$i}->addData($graphdatatopic);
                             ${'topics'.$i}->setTitle("Topics Scores");
                             ${'topics'.$i}->setTextColor("black");
                             ${'topics'.$i}->setXValuesHorizontal(true);
                             ${'topics'.$i}->setBarColor("green");
+                            ${'topics'.$i}->setDataValues(true);
+                            ${'topics'.$i}->setDataValueColor("red");
                             ${'topics'.$i}->createGraph();
                             $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                         }
@@ -1329,24 +1345,28 @@ class ReportController extends Controller{
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
                             $graphdata = $db->qLoadAssesmentScores($_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
-                            ${'graph' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
+                            ${'graph' . $i} = new PHPGraphLib(700, 350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                             ${'graph' . $i}->addData($graphdata);
                             ${'graph' . $i}->setTitle("Assesments Scores");
                             ${'graph' . $i}->setTextColor("black");
                             ${'graph' . $i}->setXValuesHorizontal(true);
                             ${'graph' . $i}->setBarColor("#6da2ff");
+                            ${'graph'.$i}->setDataValues(true);
+                            ${'graph'.$i}->setDataValueColor("red");
                             ${'graph' . $i}->createGraph();
                             $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                         }
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
                             $graphdatatopic = $db->qLoadTopicScores($topics, $_SESSION['examsparam'][$i],$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
-                            ${'topics' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
+                            ${'topics' . $i} = new PHPGraphLib(700, 350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                             ${'topics' . $i}->addData($graphdatatopic);
                             ${'topics' . $i}->setTitle("Topics Scores");
                             ${'topics' . $i}->setTextColor("black");
                             ${'topics' . $i}->setXValuesHorizontal(true);
                             ${'topics' . $i}->setBarColor("green");
+                            ${'topics'.$i}->setDataValues(true);
+                            ${'topics'.$i}->setDataValueColor("red");
                             ${'topics' . $i}->createGraph();
                             $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                         }
@@ -1558,24 +1578,28 @@ class ReportController extends Controller{
                         //draw assesments Histograms if selected
                         if (isset($_POST['graphicHistogram'])) {
                             $graphdata = $db->qLoadAssesmentScores($exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
-                            ${'graph' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
+                            ${'graph' . $i} = new PHPGraphLib(700, 350, "../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                             ${'graph' . $i}->addData($graphdata);
                             ${'graph' . $i}->setTitle("Assesments Scores");
                             ${'graph' . $i}->setTextColor("black");
                             ${'graph' . $i}->setXValuesHorizontal(true);
                             ${'graph' . $i}->setBarColor("#6da2ff");
+                            ${'graph'.$i}->setDataValues(true);
+                            ${'graph'.$i}->setDataValueColor("red");
                             ${'graph' . $i}->createGraph();
                             $pdf->Image("../views/Report/generated_graphs/assesmentsgraph".$i."_".$d.".png");
                         }
                         //draw topics Histograms if selected
                         if (isset($_POST['graphicTopicScore'])) {
                             $graphdatatopic = $db->qLoadTopicScores($topics,$exam,$student, $_SESSION['minscoreparam'], $_SESSION['maxscoreparam'], $_SESSION['datein'], $_SESSION['datefn']);
-                            ${'topics' . $i} = new PHPGraphLib(500, 350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
+                            ${'topics' . $i} = new PHPGraphLib(700, 350, "../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                             ${'topics' . $i}->addData($graphdatatopic);
                             ${'topics' . $i}->setTitle("Topics Scores");
                             ${'topics' . $i}->setTextColor("black");
                             ${'topics' . $i}->setXValuesHorizontal(true);
                             ${'topics' . $i}->setBarColor("green");
+                            ${'topics'.$i}->setDataValues(true);
+                            ${'topics'.$i}->setDataValueColor("red");
                             ${'topics' . $i}->createGraph();
                             $pdf->Image("../views/Report/generated_graphs/topicsgraph".$i."_".$d.".png");
                         }

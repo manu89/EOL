@@ -7483,9 +7483,14 @@ class sqlDB {
                     $found=strpos($userparam,"@");
                     if ($found==false){
                         $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.idUser='$userparam'
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam'
+                        and Users.idUser='$userparam'
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
@@ -7499,9 +7504,14 @@ class sqlDB {
                     }
                     else{
                         $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.email='$userparam'
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam'
+                        and Users.email='$userparam'
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
@@ -7518,9 +7528,13 @@ class sqlDB {
                     $found=strpos($userparam,"@");
                     if ($found==false){
                         $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.idUser='$userparam'
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Users.idUser='$userparam'
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
@@ -7535,9 +7549,13 @@ class sqlDB {
                     }
                     else{
                         $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.email='$userparam'
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Users.email='$userparam'
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
@@ -7559,9 +7577,13 @@ class sqlDB {
                     $found=strpos($userparam,"@");
                     if ($found==false){
                         $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.idUser='$userparam'";
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Users.idUser='$userparam'";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
                             $usertopics=array();
@@ -7574,9 +7596,13 @@ class sqlDB {
                     }
                     else{
                         $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.email='$userparam'";
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Users.email='$userparam'";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
                             $usertopics=array();
@@ -7592,9 +7618,13 @@ class sqlDB {
                     $found=strpos($userparam,"@");
                     if ($found==false){
                         $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.idUser='$userparam'
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Users.idUser='$userparam'
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
@@ -7608,9 +7638,13 @@ class sqlDB {
                     }
                     else{
                         $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.email='$userparam'
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Users.email='$userparam'
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
@@ -7930,9 +7964,13 @@ class sqlDB {
                 //check dates interval has set
                 if(($datein=="")&&($datefn=="")){//dates not set
                     $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                     $this->execQuery($query);
                     if($this->numResultRows()>0){
@@ -7946,9 +7984,13 @@ class sqlDB {
                 }
                 else{//dates set
                     $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                     $this->execQuery($query);
@@ -7967,9 +8009,13 @@ class sqlDB {
                 //check dates interval has set
                 if(($datein=="")&&($datefn=="")){//dates not set
                     $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
                     $this->execQuery($query);
                     if($this->numResultRows()>0){
                         $topics=array();
@@ -7982,9 +8028,13 @@ class sqlDB {
                 }
                 else{//dates set
                     $query="select distinct Topics.name
-                        FROM Users JOIN (Topics JOIN (Subjects JOIN (Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject) ON Topics.fkSubject=Subjects.idSubject) ON Users.idUser=Tests.fkUser
-                        where Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
+                        FROM Subjects JOIN (Users JOIN (Topics JOIN (Topics_TestSettings JOIN
+                        (Exams JOIN Tests on Exams.idExam=Tests.fkExam)
+                        on Topics_TestSettings.fkTestSetting=Exams.fkTestSetting)
+                        on Topics.idTopic=Topics_TestSettings.fkTopic) on Users.idUser=Tests.fkUser)
+                        on Subjects.idSubject=Exams.fkSubject
+                        where Topics_TestSettings.numQuestions > 0
+                        and Subjects.name='$exam' and Users.group='$groups[0]' and Users.subgroup='$groups[1]'
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                     $this->execQuery($query);
                     if($this->numResultRows()>0){
