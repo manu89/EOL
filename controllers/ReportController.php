@@ -1611,8 +1611,19 @@ class ReportController extends Controller{
         }
         $pdf->Output();
         $t=time();
-        $pdf->Output($config['systemViewsDir']."Report/generated_report/AOreport/AOreport_".$user->surname."_".$user->name."_".date("d-m-Y_H:i:s",$t).".pdf","F");
+        //creo la cartella Creport se non esiste
+        $dir = $config['systemViewsDir']."Report/generated_report/AOreport";
+        if (file_exists($dir)==false){
+            mkdir($config['systemViewsDir']."Report/generated_report/AOreport");
+        }
+        //creo la cartella dell'examiner se non esiste
+        $dir = $config['systemViewsDir']."Report/generated_report/AOreport/".$user->surname."_".$user->name;
+        if (file_exists($dir)==false){
+            mkdir($config['systemViewsDir']."Report/generated_report/AOreport/".$user->surname."_".$user->name);
+        }
+        $pdf->Output($config['systemViewsDir']."Report/generated_report/AOreport/".$user->surname."_".$user->name."/AOreport_".$user->surname."_".$user->name."_".date("d-m-Y_H:i:s",$t).".pdf","F");
     }
+    
     /**
      *  @name   actionSavetemplate
      *  @descr  Save a Report Template
