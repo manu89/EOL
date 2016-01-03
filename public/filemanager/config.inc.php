@@ -218,7 +218,7 @@ hideFilePath = yes
 hideLinkTarget = no
 
 ; use file cache (speeds up file transfer in FTP mode and image preview)
-useFileCache = yes
+useFileCache = no
 
 ; view deleted files (only if enableRestore = yes)
 viewDeletedFiles = no
@@ -298,7 +298,7 @@ enableBulkDownload = yes
 enableEdit = no
 
 ; enable file / directory deleting
-enableDelete = yes
+enableDelete = no
 
 ; enable file restoring
 enableRestore = no
@@ -310,7 +310,7 @@ enableRename = yes
 enablePermissions = no
 
 ; enable file / directory moving
-enableMove = yes
+enableMove = no
 
 ; enable file duplication
 enableCopy = yes
