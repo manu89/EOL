@@ -203,7 +203,8 @@ class ReportController extends Controller{
         $pdf->Cell(45,10,$_SESSION['CRdateTaken'],"B",1);
         $pdf->Cell(0,5,"",0,1);
         $pdf->SetFont('Helvetica','B',16);
-        $pdf->Cell(0,10,ttQuestions,0,1);
+        $num=$db->qLoadTestNumQuestions($_SESSION['CRidTest']);
+        $pdf->Cell(0,10,ttQuestions." - ".ttQuestionsPresented.": ".$num['qpresented'].", ".ttQuestionsAnswered.": ".$num['qanswered'],0,1);
         $pdf->Cell(0,3,"",0,1);
         $questions=$db->qLoadTestQuestions($_SESSION['CRidTest']);
         $i=1;
@@ -293,7 +294,17 @@ class ReportController extends Controller{
             $d++;
         }
         $t=time();
-        $pdf->Output($config['systemViewsDir']."Report/generated_report/Creport/Creport_".$user->surname."_".$user->name."_".date("d-m-Y_H:i:s",$t).".pdf","F");
+        //creo la cartella Creport se non esiste
+        $dir = $config['systemViewsDir']."Report/generated_report/Creport";
+        if (file_exists($dir)==false){
+            mkdir($config['systemViewsDir']."Report/generated_report/Creport");
+        }
+        //creo la cartella dell'examiner se non esiste
+        $dir = $config['systemViewsDir']."Report/generated_report/Creport/".$user->surname."_".$user->name;
+        if (file_exists($dir)==false){
+            mkdir($config['systemViewsDir']."Report/generated_report/Creport/".$user->surname."_".$user->name);
+        }
+        $pdf->Output($config['systemViewsDir']."Report/generated_report/Creport/".$user->surname."_".$user->name."/Creport_".$user->surname."_".$user->name."_".date("d-m-Y_H:i:s",$t).".pdf","F");
         $pdf->Output();
 
 

@@ -269,6 +269,8 @@ define('ttProfile' , "Profile");
 define('ttQuestion' , "Question");
 define('ttQuestionPreview' , "Question Preview");
 define('ttQuestions' , "Questions");
+define('ttQuestionsAnswered',"answered");
+define('ttQuestionsPresented',"presented");
 define('ttQEc' , "Calculator");
 define('ttQEp' , "Periodic Table");
 define('ttQTMC' , "Multiple Choice");

@@ -3398,7 +3398,7 @@ class sqlDB {
     }
 
     /**
-     * @name    qLoadTestTimeLimit
+     * @name    qLoadTestQuestions
      * @return  array
      * @descr   load array of all id questions of the test
      */
@@ -3425,6 +3425,44 @@ class sqlDB {
         }
         return $val;
     }
+
+    /**
+     * @name    qLoadTestNumQuestions
+     * @return  array
+     * @descr   number of question presented & answered
+     */
+    public function qLoadTestNumQuestions($idTest){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "SELECT COUNT(fkQuestion) as qpresented
+                      FROM History
+                      WHERE fkTest='$idTest'";
+            $this->execQuery($query);
+            if ($this->numResultRows() > 0) {
+                while($row=mysqli_fetch_array($this->result)){
+                    $num['qpresented']=$row['qpresented'];
+                }
+            }
+
+            $query = "SELECT COUNT(fkQuestion) as qanswered
+                      FROM History
+                      WHERE fkTest='$idTest' and answer is not NULL";
+            $this->execQuery($query);
+            if ($this->numResultRows() > 0) {
+                while($row=mysqli_fetch_array($this->result)){
+                    $num['qanswered']=$row['qanswered'];
+                }
+            }
+
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $num;
+    }
+
 
     /**
      * @name    qShowQuestionsDetails
