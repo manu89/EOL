@@ -20,6 +20,9 @@ define('ttBlocked' , "Blocked");
 define('ttBlock' , "Block");
 define('ttUnblock' , "Unblock");
 define('ttBonus' , "Bonus");
+define('ttNotes' ,'Error Description');
+define('ttspiegazionerr' ,'P.S. If you want to report an error not related to a specific question, leave the ID Question field blank.');
+define('ttInvia' ,'Send');
 define('ttCancel' , "Cancel");
 define('ttChangeLanguage' , "Change Language");
 define('ttChangeVersion' , "Change Test Version");
@@ -262,6 +265,7 @@ define('ttPasswordLost' , "Password Lost?");
 define('ttPort' , "Port");
 define('ttProfile' , "Profile");
 define('ttQuestion' , "Question");
+define('ttQuestionerror' , " ID Question");
 define('ttQuestionPreview' , "Question Preview");
 define('ttQuestions' , "Questions");
 define('ttQEc' , "Calculator");
@@ -371,8 +375,6 @@ define('ttCoord','PIPPO');
 define('ttPrepareImportQM' , "Preview");
 define('ttImportQM' , "Import");
 define('ttImport' , "Import echemTest");
-
-
 define('ttSbjVers' , "Version");
-
 define('ttETeachers' , "Examinator");
+define('ttErrorquestion' ,'Report Error');

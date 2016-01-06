@@ -119,6 +119,8 @@
     <text id="ttExtra">Extra</text>
     <text id="ttExamsArchive">Archive</text>
     <text id="ttExamsInProgress">Exams in progress</text>
+    <text id="ttETeachers">Examinator</text>
+    <text id="ttErrorquestion">Report Error</text>
     <!-- ===================== ERRORS ====================== -->
     <text id="ttEActivationFails">Activation fails!</text>
     <text id="ttEAlreadyRegistered">The student is already registered for this exam!</text>
@@ -197,6 +199,10 @@
     <text id="ttIPEnd">IPv4 End</text>
     <text id="ttIPStart">IPv4 Start</text>
     <text id="ttInactive">Inactive</text>
+    <text id="ttImportQM">Import</text>
+    <text id="ttImport">Import QM</text>
+
+
     <!-- ======================== J ======================== -->
     <text id="ttJoin">Join</text>
     <!-- ======================== K ======================== -->
@@ -291,6 +297,8 @@
     <text id="ttPasswordLost">Password Lost?</text>
     <text id="ttPort">Port</text>
     <text id="ttProfile">Profile</text>
+    <text id="ttPrepareImportQM">Preview</text>
+
     <!-- ======================== Q ======================== -->
     <text id="ttQuestion">Question</text>
     <text id="ttQuestionPreview">Question Preview</text>
@@ -311,7 +319,11 @@
     <text id="ttQTNMDescription">In a Numeric Question, the participant answers by typing in either a whole number or a real number.</text>
     <text id="ttQTTM">Text Match</text>
     <text id="ttQTTMDescription">In a Text Match question, the participant types in a single word, or a few words to indicate their answer. You define right or wrong words or phrases in advance by entering a list of acceptable answers.</text>
-     <!-- ======================== R ======================== -->
+    <text id="ttQuesionid">Question ID</text>
+    <text id="ttQuestionNotes">Description</text>
+    <text id="ttQuestionsend">Send Report</text>
+    <text id="ttQuestionreporting">To report more questions you need to leave the id field blank</text>
+    <!-- ======================== R ======================== -->
     <text id="ttRandom">Random</text>
     <text id="ttRefresh">Refresh</text>
     <text id="ttRegister">Register</text>
@@ -358,10 +370,11 @@
     <text id="ttSurname">Surname</text>
     <text id="ttSystem">System</text>
     <text id="ttSystemConfiguration">System Configuration</text>
+    <text id="ttSbjVers">Version</text>
+
     <!-- ======================== T ======================== -->
     <text id="ttTeacher">Teacher</text>
     <text id="ttTeachers">Teachers</text>
-    <text id="ttETeachers">Examinator</text>
     <text id="ttTest">Test</text>
     <text id="ttTests">Tests</text>
     <text id="ttTestToCorrect">Tests to correct</text>
