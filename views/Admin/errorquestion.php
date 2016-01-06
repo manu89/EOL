@@ -16,14 +16,14 @@ global $user, $log;
 
 <div id="main">
     <div class="clearer"></div>
-    <?php openBox(ttErrorquestion, 'small', 'profile') ?>
+    <?php openBox(ttQuesionid, 'small', 'profile') ?>
     <form class="infoEdit" onsubmit="return false;">
 
-        <label class="b2Space"><?= ttQuestionerror ?> : </label>
+        <label class="b2Space"><?= ttQuesionid ?> : </label>
         <input class="writable" id="idquestion" >
         <div class="clearer"></div>
 
-        <label class="b2Space"><?= ttNotes ?> : </label>
+        <label class="b2Space"><?= ttQuestionNotes ?> : </label>
         <textarea  id="notes"> </textarea>
         <div class="clearer"></div>
 
@@ -31,11 +31,11 @@ global $user, $log;
 <br>
 
         <div>
-            <a class="normal button" id="saveProfile" onclick="errorEmail();"><?= ttInvia?></a>
+            <a class="normal button" id="saveProfile" onclick="errorEmail();"><?= ttQuestionsend?></a>
             <br>
             <br>
         </div>
-        <label class="b3Space"><?= ttspiegazionerr ?>  </label>
+        <label class="b3Space"><?= ttQuestionreporting ?>  </label>
     </form>
     <?php closeBox() ?>
 </div>

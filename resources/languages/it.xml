@@ -119,6 +119,8 @@
     <text id="ttExtra">Extra</text>
     <text id="ttExamsArchive">Archivia</text>
     <text id="ttExamsInProgress">Esami in corso</text>
+    <text id="ttETeachers">Esaminatore</text>
+    <text id="ttErrorquestion">Segnalazione Domanda Errata</text>
     <!-- ===================== ERRORS ====================== -->
     <text id="ttEActivationFails">Attivazione fallita!</text>
     <text id="ttEAlreadyRegistered">Lo studente è già registrato a questo esame!</text>
@@ -197,6 +199,8 @@
     <text id="ttIPEnd">IPv4 Fine</text>
     <text id="ttIPStart">IPv4 Inizio</text>
     <text id="ttInactive">Inattivo</text>
+    <text id="ttImportQM">Import</text>
+    <text id="ttImport">Import QM</text>
     <!-- ======================== J ======================== -->
     <text id="ttJoin">Iscriviti</text>
     <!-- ======================== K ======================== -->
@@ -311,6 +315,10 @@
     <text id="ttQTNMDescription">In una domanda Numeric, i partecipanti rispondono digitando un numero intero o reale. </text>
     <text id="ttQTTM">Testo</text>
     <text id="ttQTTMDescription">In una domanda Testo, i partecipanti scelgono una sola parola, o poche parole per indicare la loro risposta. Si definiscono parole o frasi, giuste o sbagliate precedentemente inserendo un elenco di risposte accettabili.</text>
+    <text id="ttQuesionid">Question ID</text>
+    <text id="ttQuestionNotes">Description</text>
+    <text id="ttQuestionsend">Send Report</text>
+    <text id="ttQuestionreporting">To report more questions you need to leave the id field blank</text>
     <!-- ======================== R ======================== -->
     <text id="ttRandom">Casuali</text>
     <text id="ttRefresh">Aggiorna</text>
@@ -358,11 +366,11 @@
     <text id="ttSurname">Cognome</text>
     <text id="ttSystem">Sistema</text>
     <text id="ttSystemConfiguration">Configurazione di Sistema</text>
+    <text id="ttSbjVers">Versione</text>
+
     <!-- ======================== T ======================== -->
     <text id="ttTeacher">Docente</text>
     <text id="ttTeachers">Docenti</text>
-    <text id="ttETeachers">Esaminatori</text>
-
     <text id="ttTest">Test</text>
     <text id="ttTests">Test</text>
     <text id="ttTestToCorrect">Tests da correggere</text>
