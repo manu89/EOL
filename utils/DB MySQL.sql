@@ -126,7 +126,7 @@ CREATE  TABLE IF NOT EXISTS `eol`.`TestSettings` (
   `name` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Test setting''s name' ,
   `description` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL COMMENT 'Test setting''s description' ,
   `questions` SMALLINT(5) UNSIGNED NOT NULL COMMENT 'Test setting''s question''s number' ,
-  `scoreType` VARCHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT '' COMMENT 'Test setting''s score type' ,
+  `scoreType` VARCHAR(3) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT '' COMMENT 'Test setting''s score type' ,
   `scoreMin` VARCHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT '' COMMENT 'Test setting''s minimum score' ,
   `scale` DOUBLE NOT NULL DEFAULT '1' COMMENT 'Test setting''s score factor scale',
   `bonus` DOUBLE NULL DEFAULT '0' COMMENT 'Test setting''s bonus' ,
@@ -573,9 +573,9 @@ VALUES (2, 'it', 'Italiano');
 -- Insert syntax for test teacher account (password: testeol)
 -- -----------------------------------------------------
 INSERT INTO `Users` (`name`, `surname`, `email`, `password`, `role`, `fkLanguage`)
-VALUES ('admin', 'echemTest', 'admin@eol.org', '99053e95b3e682a0705474bb431f0041ece636b9', 'at', '1'),
-('User01', 'echemTest', 'user01@eol.org', '202884d0ebf976b175565124cefefee738897332', 's', '1'),
-('examiner', 'echemTest', 'examiner@eol.org', '1b7b4b4203b28059f9eaf6f754b137d5e0a3ac8a', 'e', '1');
+VALUES ('admin', 'co-eol', 'admin@coeol.org', '920a2f0e0b4cbbeb0879c009c33abbd66072b50d', 'at', '1'),
+('User01', 'co-eol', 'user01@coeol.org', '202884d0ebf976b175565124cefefee738897332', 's', '1'),
+('examiner', 'co-eol', 'examiner01@coeol.org', '20acf286a8414fb8f2dd074c54383a7714004efb', 'e', '1');
 
 
 
