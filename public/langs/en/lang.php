@@ -370,7 +370,7 @@ define('ttWrongArea' , 'Wrong Area');
 define('ttStudentAnswer' , 'Answer given by the student:');
 define('ttInsertImage' , 'Insert image');
 
-define('ttCoord','PIPPO');
+define('ttCoord','coord');
 
 define('ttPrepareImportQM' , "Preview");
 define('ttImportQM' , "Import");
@@ -378,3 +378,7 @@ define('ttImport' , "Import echemTest");
 define('ttSbjVers' , "Version");
 define('ttETeachers' , "Examinator");
 define('ttErrorquestion' ,'Report Error');
+define('ttQuesionid','ID');
+define('ttQuestionNotes','Question Note');
+define('ttQuestionsend','Send Report');
+define('ttQuestionreporting','');

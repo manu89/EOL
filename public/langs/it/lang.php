@@ -358,3 +358,24 @@ define('ttWelcome' , "Benvenuto");
 define('ttWaiting' , "Attesa");
 define('ttWarning' , "Attenzione");
 define('ttYes' , "Sì");
+
+
+define('ttHotspotAnswerInfo' , 'Coordinate Giusta Area:');
+define('ttSizeWin' , 'Dimensione Finestra:');
+define('ttWidth' , 'Larghezza:');
+define('ttHeight' , 'Altezza:');
+define('ttRightArea' , 'Giusta Area');
+define('ttWrongArea' , 'Area Errata');
+define('ttStudentAnswer' , 'Risposta data dallo Studente:');
+define('ttInsertImage' , 'Inserisci Immagine');
+
+define('ttCoord','coordinata');
+
+define('ttPrepareImportQM' , "Preview");
+define('ttImportQM' , "Import");
+define('ttImport' , "Import echemTest");
+define('ttSbjVers' , "Versione");
+define('ttQuesionid','ID');
+define('ttQuestionNotes','Note aggiuntive');
+define('ttQuestionsend','Invia Segnalazione');
+define('ttQuestionreporting','');

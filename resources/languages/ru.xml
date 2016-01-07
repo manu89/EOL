@@ -323,7 +323,7 @@
     <text id="ttQuestionNotes">Description</text>
     <text id="ttQuestionsend">Send Report</text>
     <text id="ttQuestionreporting">To report more questions you need to leave the id field blank</text>
-     <!-- ======================== R ======================== -->
+    <!-- ======================== R ======================== -->
     <text id="ttRandom">Random</text>
     <text id="ttRefresh">Refresh</text>
     <text id="ttRegister">Register</text>

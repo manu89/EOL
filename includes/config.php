@@ -23,6 +23,8 @@ $config['systemEmail'] = 'no-reply@eol.org';
 $config['systemLang'] = 'en';
 // Default system time zone (watch php documentation from time zone available)
 $config['systemTimeZone'] = 'Europe/Rome';
+
+$config['systemLogo']='';
 // Default controller for students, teachers and admins
 $config['controller']['a'] = 'Admin';
 $config['controller']['e'] = 'Teacher';
