@@ -45,8 +45,6 @@ function submitTest(askConfirmation){
             answersTest.push(JSON.stringify(answer));
         });
         var idLang = $(".dropdownSystemLanguage dd ul li").find("span.value").text();
-//        alert(answersTest);
-//        alert(JSON.stringify(answersTest));
         if(questionsTest.length == answersTest.length){
             $.ajax({
                 url     : "index.php?page=student/submittest",
@@ -59,11 +57,9 @@ function submitTest(askConfirmation){
                 },
                 success : function (data) {
                     if(data == "ACK"){
-//                        alert(data);
                         showSuccessMessage(ttMTestSubmitted);
                         setTimeout(function(){location.href = "index.php?page=student/index"}, 1500);
                     }else{
-//                        alert(data);
                         errorDialog(ttError,  data);
                     }
                 },

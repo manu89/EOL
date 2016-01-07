@@ -41,7 +41,7 @@ class AT_HS extends Answer {
         //$log->append(var_export($idAnswer, true));
         $db2 = new sqlDB();
         if (($_POST['action'] == 'show') ){
-            if ($db2->qSelect('translationanswers', 'fkAnswer', $idAnswer)) {
+            if ($db2->qSelect('TranslationAnswers', 'fkAnswer', $idAnswer)) {
                 $traslation = $db2->getResultAssoc();
                 $log->append(var_export("traslation=", true));
                 $log->append(var_export($traslation, true));
@@ -58,7 +58,7 @@ class AT_HS extends Answer {
 
 
         $db = new sqlDB();
-        if ($translation=$db->qSelect('translationquestions', 'fkQuestion', $idQuestion)) {
+        if ($translation=$db->qSelect('TranslationQuestions', 'fkQuestion', $idQuestion)) {
             //$log->append(var_export($translation, true));
             $question = $db->getResultAssoc();
             //$log->append(var_export($question, true));

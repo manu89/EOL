@@ -211,7 +211,7 @@ class StudentController extends Controller{
                         echo 'ACK';
                     }
                 }else{
-                    $log->append("cazzo qSelect2");
+                    $log->append("qSelect2");
                     die($db->getError());
                 }
             }else{

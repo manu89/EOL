@@ -213,7 +213,7 @@ class QT_TM extends Question
         $idLang='';
         $db2 = new sqlDB();
         //if (($db2->qSelect('sets_questions', 'fkQuestion', $this->get('idQuestion'))) && ($risp = $db2->getResultAssoc())) {
-        if (($db2->qSelect('sets_questions', 'fkQuestion', $this->get('idQuestion'))) && ($risp = $db2->nextRowAssoc())) {
+        if (($db2->qSelect('Sets_Questions', 'fkQuestion', $this->get('idQuestion'))) && ($risp = $db2->nextRowAssoc())) {
             $idLang = $risp['fkIdLanguage'];
             //$log->append(var_export($idLang, true));
         }
@@ -290,7 +290,7 @@ class QT_TM extends Question
         };
         $db = new sqlDB();
         $db2 = new sqlDB();
-        if ($pippo=$db->qSelect('answers', 'fkQuestion', $idAns)) {
+        if ($pippo=$db->qSelect('Answers', 'fkQuestion', $idAns)) {
             while ($result = $db->nextRowAssoc() ) {
 
                 //$lang= $result['fkLanguage'];
@@ -299,7 +299,7 @@ class QT_TM extends Question
                 //$log->append(var_export('result1', true));
                // $log->append(var_export($result, true));
                 $id=$result['idAnswer'];
-                if ($db2->qSelect('translationanswers', 'fkAnswer', $id)) {
+                if ($db2->qSelect('TranslationAnswers', 'fkAnswer', $id)) {
                     while ($traslation = $db2->nextRowAssoc()) {
                         //$log->append(var_export('secondo while', true));
                         //$log->append(var_export($traslation, true));

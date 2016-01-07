@@ -44,15 +44,17 @@ var atci = {
 //});
 
 // Sposta il puntatore in durante il test
-function getClickPosition(event) {
+function getClickPosition(container,event) {
+    var container= $(container);
 
-    var container = $( "#contentContainer" );
     container.css('position','relative');
-    var theThing = $("#thing");
+    var theThing = container.find("#thing");
     theThing.css('position','absolute');
     //var x = event.pageX;
     //var y = event.pageY; //clientY
+
     var parentOffset = container.parent().offset();
+    console.log(container.parent().length);
     var x = (event.pageX - parentOffset.left - 20 - 13);
     var y = (event.pageY - parentOffset.top - 20 - 13);
     alert("pageX&Y  x="+ x + ", y=" + y);
@@ -174,10 +176,14 @@ function questionInfoTabChanged(event, ui){
 
 function getGivenAnswer_HS(questionDiv){
 
-    var container = $( "#contentContainer" );
-    var theThing = $("#thing");
-    var posContainer = container.position();
+    var container = $(questionDiv).find(".contentContainer");
+
+    var theThing = $(questionDiv).find(".hscursor");
+
+    //var posContainer = container.position();
+
     var positionn = theThing.position();
+
     alert(positionn.left+" "+positionn.top);
     /*
     var posx = positionn.left - 20;
@@ -190,9 +196,12 @@ function getGivenAnswer_HS(questionDiv){
 
     //var mod = posx + "," + posy;
     //var ris = new Array(mod);
+
     var ris = new Array(posx , posy);
+
     //alert (ris);
-    var riss = JSON.stringify(ris);
+    //var riss = JSON.stringify(ris);
     //alert("riss=" + riss);
+
     return ris;
 }

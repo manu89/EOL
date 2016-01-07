@@ -192,8 +192,8 @@ class QT_HS extends Question {
             <div class="questionTest" value="<?= $this->get('idQuestion') ?>" type="HS">
                 <div class="questionText"><?= $domanda.$extra ?></div>
                 <div class="questionAnswers">
-                    <div id="contentContainer" class="contentContainer" onclick="getClickPosition(event)">
-                        <img id="thing" src="themes/default/images/smiley_red.png" />
+                    <div id="contentContainer" class="contentContainer" onclick="getClickPosition(this,event)">
+                        <img class="hscursor" id="thing" src="themes/default/images/smiley_red.png" />
                         <?= $questionAnswers ?>
                     </div>
                 </div>
@@ -290,10 +290,10 @@ class QT_HS extends Question {
     //if(count($answerr) > 0){
             $db = new sqlDB();
             $db2 = new sqlDB();
-            if ($pippo=$db->qSelect('answers', 'fkQuestion', $idQuest)) {
+            if ($pippo=$db->qSelect('Answers', 'fkQuestion', $idQuest)) {
                 while ($result = $db->nextRowAssoc() ) {
                     $id=$result['idAnswer'];
-                    if ($db2->qSelect('translationanswers', 'fkAnswer', $id)) {
+                    if ($db2->qSelect('TranslationAnswers', 'fkAnswer', $id)) {
                         while ($traslation = $db2->nextRowAssoc()) {
                             //$log->append(var_export($traslation['translation'], true));
                             $risultato = explode(',', $traslation['translation'], 4 );
