@@ -1,13 +1,13 @@
-DROP SCHEMA IF EXISTS `eol` ;
-CREATE SCHEMA IF NOT EXISTS `eol` DEFAULT CHARACTER SET latin1 ;
-USE `eol` ;
+DROP SCHEMA IF EXISTS `echemtest` ;
+CREATE SCHEMA IF NOT EXISTS `echemtest` DEFAULT CHARACTER SET latin1 ;
+USE `echemtest` ;
 
 -- -----------------------------------------------------
--- Table `eol`.`Languages`
+-- Table `echemtest`.`Languages`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Languages` ;
+DROP TABLE IF EXISTS `echemtest`.`Languages` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Languages` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Languages` (
   `idLanguage` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Language''s ID' ,
   `alias` CHAR(5) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Language''s alias (e.g. en_UK)' ,
   `description` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL COMMENT 'Language''s description' ,
@@ -22,11 +22,11 @@ COMMENT = 'Availables languages';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Subjects`
+-- Table `echemtest`.`Subjects`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Subjects` ;
+DROP TABLE IF EXISTS `echemtest`.`Subjects` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Subjects` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Subjects` (
   `idSubject` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Subject''s ID' ,
   `name` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Subject''s name' ,
   `description` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL COMMENT 'Subject''s description' ,
@@ -35,7 +35,7 @@ CREATE  TABLE IF NOT EXISTS `eol`.`Subjects` (
   INDEX `fk_Subjects_Language_idx` (`fkLanguage` ASC) ,
   CONSTRAINT `fk_Subjects_Language`
     FOREIGN KEY (`fkLanguage` )
-    REFERENCES `eol`.`Languages` (`idLanguage` )
+    REFERENCES `echemtest`.`Languages` (`idLanguage` )
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -45,11 +45,11 @@ COMMENT = 'Subjects';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Topics`
+-- Table `echemtest`.`Topics`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Topics` ;
+DROP TABLE IF EXISTS `echemtest`.`Topics` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Topics` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Topics` (
   `idTopic` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Topic''s ID' ,
   `name` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Topic''s name' ,
   `description` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL COMMENT 'Topic''s description' ,
@@ -58,7 +58,7 @@ CREATE  TABLE IF NOT EXISTS `eol`.`Topics` (
   INDEX `fk_Topics_Subjects_idx` (`fkSubject` ASC) ,
   CONSTRAINT `fk_Topics_Subjects`
     FOREIGN KEY (`fkSubject` )
-    REFERENCES `eol`.`Subjects` (`idSubject` )
+    REFERENCES `echemtest`.`Subjects` (`idSubject` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -68,11 +68,11 @@ COMMENT = 'Topics respective to a subject';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Questions`
+-- Table `echemtest`.`Questions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Questions` ;
+DROP TABLE IF EXISTS `echemtest`.`Questions` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Questions` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Questions` (
   `idQuestion` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Question''s ID' ,
   `type` CHAR(5) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Question''s type' ,
   `difficulty` TINYINT(4) UNSIGNED NOT NULL COMMENT 'Question''s difficulty' ,
@@ -85,7 +85,7 @@ CREATE  TABLE IF NOT EXISTS `eol`.`Questions` (
   INDEX `fk_Questions_Topics_idx` (`fkTopic` ASC) ,
   CONSTRAINT `fk_Questions_Topics`
     FOREIGN KEY (`fkTopic` )
-    REFERENCES `eol`.`Topics` (`idTopic` )
+    REFERENCES `echemtest`.`Topics` (`idTopic` )
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -95,11 +95,11 @@ COMMENT = 'Questions relevant to a topic';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Answers`
+-- Table `echemtest`.`Answers`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Answers` ;
+DROP TABLE IF EXISTS `echemtest`.`Answers` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Answers` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Answers` (
   `idAnswer` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Answer''s ID' ,
   `score` VARCHAR(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT 'Answer''s score',
   `fkQuestion` INT(10) UNSIGNED NOT NULL COMMENT 'Question''s ID' ,
@@ -107,7 +107,7 @@ CREATE  TABLE IF NOT EXISTS `eol`.`Answers` (
   INDEX `fk_Answers_Questions_idx` (`fkQuestion` ASC) ,
   CONSTRAINT `fk_Answers_Question`
     FOREIGN KEY (`fkQuestion` )
-    REFERENCES `eol`.`Questions` (`idQuestion` )
+    REFERENCES `echemtest`.`Questions` (`idQuestion` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -117,11 +117,11 @@ COMMENT = 'Answers respective to a question';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`TestSettings`
+-- Table `echemtest`.`TestSettings`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`TestSettings` ;
+DROP TABLE IF EXISTS `echemtest`.`TestSettings` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`TestSettings` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`TestSettings` (
   `idTestSetting` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Test setting''s ID' ,
   `name` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Test setting''s name' ,
   `description` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL COMMENT 'Test setting''s description' ,
@@ -139,7 +139,7 @@ CREATE  TABLE IF NOT EXISTS `eol`.`TestSettings` (
   INDEX `fk_TestSettings_Subject_idx` (`fkSubject` ASC) ,
   CONSTRAINT `fk_TestSettings_Subject`
     FOREIGN KEY (`fkSubject` )
-    REFERENCES `eol`.`Subjects` (`idSubject` )
+    REFERENCES `echemtest`.`Subjects` (`idSubject` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -149,11 +149,11 @@ COMMENT = 'Configuration setting of exam for specific subject';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Exams`
+-- Table `echemtest`.`Exams`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Exams` ;
+DROP TABLE IF EXISTS `echemtest`.`Exams` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Exams` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Exams` (
   `idExam` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Exam''s ID' ,
   `name` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Exam''s name' ,
   `datetime` DATETIME NOT NULL COMMENT 'Exam''s day and time' ,
@@ -169,12 +169,12 @@ CREATE  TABLE IF NOT EXISTS `eol`.`Exams` (
   INDEX `fk_Exams_Subject_idx` (`fkSubject` ASC) ,
   CONSTRAINT `fk_Exams_Subject`
     FOREIGN KEY (`fkSubject` )
-    REFERENCES `eol`.`Subjects` (`idSubject` )
+    REFERENCES `echemtest`.`Subjects` (`idSubject` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Exams_TestSetting`
     FOREIGN KEY (`fkTestSetting` )
-    REFERENCES `eol`.`TestSettings` (`idTestSetting` )
+    REFERENCES `echemtest`.`TestSettings` (`idTestSetting` )
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -184,11 +184,11 @@ COMMENT = 'Teacher''s Exams';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Rooms`
+-- Table `echemtest`.`Rooms`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Rooms` ;
+DROP TABLE IF EXISTS `echemtest`.`Rooms` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Rooms` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Rooms` (
   `idRoom` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Room''s ID' ,
   `name` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Room''s name' ,
   `description` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL COMMENT 'Room''s description' ,
@@ -202,11 +202,11 @@ COMMENT = 'Clients allowed to execute the exams';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Exams_Rooms`
+-- Table `echemtest`.`Exams_Rooms`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Exams_Rooms` ;
+DROP TABLE IF EXISTS `echemtest`.`Exams_Rooms` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Exams_Rooms` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Exams_Rooms` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `fkExam` INT(10) UNSIGNED NOT NULL COMMENT 'Exam''s ID' ,
   `fkRoom` INT(10) UNSIGNED NULL DEFAULT NULL COMMENT 'Room''s ID' ,
@@ -215,12 +215,12 @@ CREATE  TABLE IF NOT EXISTS `eol`.`Exams_Rooms` (
   INDEX `fk_Exams_Rooms_Exam_idx` (`fkExam` ASC) ,
   CONSTRAINT `fk_Exams_Rooms_Exam`
     FOREIGN KEY (`fkExam` )
-    REFERENCES `eol`.`Exams` (`idExam` )
+    REFERENCES `echemtest`.`Exams` (`idExam` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Exams_Rooms_Room`
     FOREIGN KEY (`fkRoom` )
-    REFERENCES `eol`.`Rooms` (`idRoom` )
+    REFERENCES `echemtest`.`Rooms` (`idRoom` )
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -230,23 +230,23 @@ COMMENT = 'Clients allowed to execute a specific exams';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Questions_TestSettings`
+-- Table `echemtest`.`Questions_TestSettings`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Questions_TestSettings` ;
+DROP TABLE IF EXISTS `echemtest`.`Questions_TestSettings` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Questions_TestSettings` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Questions_TestSettings` (
   `fkQuestion` INT(10) UNSIGNED NOT NULL COMMENT 'Question''s ID' ,
   `fkTestSetting` INT(10) UNSIGNED NOT NULL COMMENT 'Test Setting''s ID',
   PRIMARY KEY (`fkQuestion`, `fkTestSetting`) ,
   INDEX `fk_Questions_TestSettings_TestSetting` (`fkTestSetting` ASC) ,
   CONSTRAINT `fk_Questions_TestSettings_Question`
     FOREIGN KEY (`fkQuestion` )
-    REFERENCES `eol`.`Questions` (`idQuestion` )
+    REFERENCES `echemtest`.`Questions` (`idQuestion` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Questions_TestSettings_TestSetting`
     FOREIGN KEY (`fkTestSetting` )
-    REFERENCES `eol`.`TestSettings` (`idTestSetting` )
+    REFERENCES `echemtest`.`TestSettings` (`idTestSetting` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -254,11 +254,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Sets`
+-- Table `echemtest`.`Sets`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Sets` ;
+DROP TABLE IF EXISTS `echemtest`.`Sets` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Sets` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Sets` (
   `idSet` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Set''s ID' ,
   `assigned` CHAR(1) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'n' COMMENT 'Check if set is assigned (y) or not (n)' ,
   `fkExam` INT(10) UNSIGNED NOT NULL COMMENT 'Exam''s ID ' ,
@@ -266,7 +266,7 @@ CREATE  TABLE IF NOT EXISTS `eol`.`Sets` (
   INDEX `fk_Sets_Exam_idx` (`fkExam` ASC) ,
   CONSTRAINT `fk_Sets_Exam`
     FOREIGN KEY (`fkExam` )
-    REFERENCES `eol`.`Exams` (`idExam` )
+    REFERENCES `echemtest`.`Exams` (`idExam` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -276,11 +276,11 @@ COMMENT = 'Question sets';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Sets_Questions`
+-- Table `echemtest`.`Sets_Questions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Sets_Questions` ;
+DROP TABLE IF EXISTS `echemtest`.`Sets_Questions` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Sets_Questions` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Sets_Questions` (
   `fkSet` INT(10) UNSIGNED NOT NULL COMMENT 'Set''s ID' ,
   `fkQuestion` INT(10) UNSIGNED NOT NULL COMMENT 'Question''s ID' ,
   `answer` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NULL DEFAULT NULL COMMENT 'ID or text for answered question in this set' ,
@@ -290,12 +290,12 @@ CREATE  TABLE IF NOT EXISTS `eol`.`Sets_Questions` (
   INDEX `fk_Sets_Questions_Question_idx` (`fkQuestion` ASC) ,
   CONSTRAINT `fk_Sets_Questions_Question`
     FOREIGN KEY (`fkQuestion` )
-    REFERENCES `eol`.`Questions` (`idQuestion` )
+    REFERENCES `echemtest`.`Questions` (`idQuestion` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Sets_Questions_Set`
     FOREIGN KEY (`fkSet` )
-    REFERENCES `eol`.`Sets` (`idSet` )
+    REFERENCES `echemtest`.`Sets` (`idSet` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -305,11 +305,11 @@ COMMENT = 'Association between Questions and test''s sets';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Users`
+-- Table `echemtest`.`Users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Users` ;
+DROP TABLE IF EXISTS `echemtest`.`Users` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Users` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Users` (
   `idUser` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'User''s ID' ,
   `name` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'User''s name' ,
   `surname` VARCHAR(35) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'User''s surname' ,
@@ -322,7 +322,7 @@ CREATE  TABLE IF NOT EXISTS `eol`.`Users` (
   INDEX `fk_Users_Languages_idx` (`fkLanguage` ASC) ,
   CONSTRAINT `fk_Users_Languages`
     FOREIGN KEY (`fkLanguage` )
-    REFERENCES `eol`.`Languages` (`idLanguage` )
+    REFERENCES `echemtest`.`Languages` (`idLanguage` )
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -332,11 +332,11 @@ COMMENT = 'Teachers and system admins';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Tests`
+-- Table `echemtest`.`Tests`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Tests` ;
+DROP TABLE IF EXISTS `echemtest`.`Tests` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Tests` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Tests` (
   `idTest` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Test''s ID',
   `timeStart` DATETIME DEFAULT NULL COMMENT 'Test''s start time',
   `timeEnd` DATETIME DEFAULT NULL COMMENT 'Test''s end time',
@@ -373,11 +373,11 @@ COMMENT = 'Test performed by a student in a exact exam';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`History`
+-- Table `echemtest`.`History`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`History` ;
+DROP TABLE IF EXISTS `echemtest`.`History` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`History` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`History` (
   `idHistory` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'History''s ID' ,
   `fkTest` INT(10) UNSIGNED DEFAULT NULL COMMENT 'Test''s ID' ,
   `fkQuestion` INT(10) UNSIGNED NOT NULL COMMENT 'Question''s ID' ,
@@ -388,12 +388,12 @@ CREATE  TABLE IF NOT EXISTS `eol`.`History` (
   INDEX `fk_History_Question_idx` (`fkQuestion` ASC) ,
   CONSTRAINT `fk_History_Test`
     FOREIGN KEY (`fkTest` )
-    REFERENCES `eol`.`Tests` (`idTest` )
+    REFERENCES `echemtest`.`Tests` (`idTest` )
     ON DELETE SET NULL
     ON UPDATE CASCADE,
   CONSTRAINT `fk_History_Question`
     FOREIGN KEY (`fkQuestion` )
-    REFERENCES `eol`.`Questions` (`idQuestion` )
+    REFERENCES `echemtest`.`Questions` (`idQuestion` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -403,11 +403,11 @@ COMMENT = 'History of all questions and submitted answers for all tests';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Tokens`
+-- Table `echemtest`.`Tokens`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Tokens` ;
+DROP TABLE IF EXISTS `echemtest`.`Tokens` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Tokens` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Tokens` (
   `email` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'User''s email' ,
   `action` CHAR(1) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL DEFAULT 'c' COMMENT 'Token''s action (c->create, p->password)' ,
   `value` CHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Token''s SHA-1 value (40B length)' ,
@@ -419,11 +419,11 @@ COMMENT = 'Tokens for create account and password lost';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Topics_TestSettings`
+-- Table `echemtest`.`Topics_TestSettings`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Topics_TestSettings` ;
+DROP TABLE IF EXISTS `echemtest`.`Topics_TestSettings` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Topics_TestSettings` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Topics_TestSettings` (
   `fkTestSetting` INT(10) UNSIGNED NOT NULL COMMENT 'Test Setting''s ID' ,
   `fkTopic` INT(10) UNSIGNED NOT NULL COMMENT 'Topic''s ID' ,
   `numEasy` INT(10) NOT NULL COMMENT 'Random easy questions' ,
@@ -434,12 +434,12 @@ CREATE  TABLE IF NOT EXISTS `eol`.`Topics_TestSettings` (
   INDEX `fk_Topics_TestSettings_Topic` (`fkTopic` ASC) ,
   CONSTRAINT `fk_Topics_TestSettings_TestSetting`
     FOREIGN KEY (`fkTestSetting` )
-    REFERENCES `eol`.`TestSettings` (`idTestSetting` )
+    REFERENCES `echemtest`.`TestSettings` (`idTestSetting` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Topics_TestSettings_Topic`
     FOREIGN KEY (`fkTopic` )
-    REFERENCES `eol`.`Topics` (`idTopic` )
+    REFERENCES `echemtest`.`Topics` (`idTopic` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -447,11 +447,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `eol`.`TranslationAnswers`
+-- Table `echemtest`.`TranslationAnswers`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`TranslationAnswers` ;
+DROP TABLE IF EXISTS `echemtest`.`TranslationAnswers` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`TranslationAnswers` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`TranslationAnswers` (
   `fkAnswer` INT(10) UNSIGNED NOT NULL COMMENT 'Answer''s ID' ,
   `fkLanguage` INT(10) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Language''s ID' ,
   `translation` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Answer''s translation text' ,
@@ -460,12 +460,12 @@ CREATE  TABLE IF NOT EXISTS `eol`.`TranslationAnswers` (
   INDEX `fk_TranslationAnswers_Language_idx` (`fkLanguage` ASC) ,
   CONSTRAINT `fk_TranslationAnswers_Answer`
     FOREIGN KEY (`fkAnswer` )
-    REFERENCES `eol`.`Answers` (`idAnswer` )
+    REFERENCES `echemtest`.`Answers` (`idAnswer` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_TranslationAnswers_Language`
     FOREIGN KEY (`fkLanguage` )
-    REFERENCES `eol`.`Languages` (`idLanguage` )
+    REFERENCES `echemtest`.`Languages` (`idLanguage` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -475,11 +475,11 @@ COMMENT = 'Answers with they''re translations';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`TranslationQuestions`
+-- Table `echemtest`.`TranslationQuestions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`TranslationQuestions` ;
+DROP TABLE IF EXISTS `echemtest`.`TranslationQuestions` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`TranslationQuestions` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`TranslationQuestions` (
   `fkQuestion` INT(10) UNSIGNED NOT NULL COMMENT 'Question''s ID' ,
   `fkLanguage` INT(10) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Language''s ID' ,
   `translation` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL COMMENT 'Question''s translation text' ,
@@ -488,12 +488,12 @@ CREATE  TABLE IF NOT EXISTS `eol`.`TranslationQuestions` (
   INDEX `fk_TranslationQuestions_Language_idx` (`fkLanguage` ASC) ,
   CONSTRAINT `fk_TranslationQuestions_Language`
     FOREIGN KEY (`fkLanguage` )
-    REFERENCES `eol`.`Languages` (`idLanguage` )
+    REFERENCES `echemtest`.`Languages` (`idLanguage` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_TranslationQuestions_Question`
     FOREIGN KEY (`fkQuestion` )
-    REFERENCES `eol`.`Questions` (`idQuestion` )
+    REFERENCES `echemtest`.`Questions` (`idQuestion` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -503,11 +503,11 @@ COMMENT = 'Questions with they''re translations';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Users_Subjects`
+-- Table `echemtest`.`Users_Subjects`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Users_Subjects` ;
+DROP TABLE IF EXISTS `echemtest`.`Users_Subjects` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Users_Subjects` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Users_Subjects` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `fkUser` INT(10) UNSIGNED NULL DEFAULT NULL COMMENT 'User''s ID' ,
   `fkSubject` INT(10) UNSIGNED NOT NULL COMMENT 'Subject''s ID',
@@ -516,12 +516,12 @@ CREATE  TABLE IF NOT EXISTS `eol`.`Users_Subjects` (
   INDEX `fk_Teachers_Subjects_Teacher_idx` (`fkUser` ASC) ,
   CONSTRAINT `fk_Users_Subjects_Subject`
     FOREIGN KEY (`fkSubject` )
-    REFERENCES `eol`.`Subjects` (`idSubject` )
+    REFERENCES `echemtest`.`Subjects` (`idSubject` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Users_Subjects_User`
     FOREIGN KEY (`fkUser` )
-    REFERENCES `eol`.`Users` (`idUser` )
+    REFERENCES `echemtest`.`Users` (`idUser` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -534,11 +534,11 @@ COMMENT = 'Relation between Teachers and Subjects';
 
 
 -- -----------------------------------------------------
--- Table `eol`.`Flag_Import`
+-- Table `echemtest`.`Flag_Import`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eol`.`Flag_Import` ;
+DROP TABLE IF EXISTS `echemtest`.`Flag_Import` ;
 
-CREATE  TABLE IF NOT EXISTS `eol`.`Flag_Import` (
+CREATE  TABLE IF NOT EXISTS `echemtest`.`Flag_Import` (
   `done` TINYINT NULL DEFAULT 0 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -549,7 +549,7 @@ COMMENT = 'Flag to check if import is done';
 
 
 
-USE `eol` ;
+USE `echemtest` ;
 
 -- ------------------
 -- First time i add flag with 0 to do the import
@@ -570,12 +570,12 @@ INSERT INTO `Languages` (`idLanguage`, `alias`, `description`)
 VALUES (2, 'it', 'Italiano');
 
 -- -----------------------------------------------------
--- Insert syntax for test teacher account (password: testeol)
+-- Insert syntax for test teacher account (password: testechemtest)
 -- -----------------------------------------------------
 INSERT INTO `Users` (`name`, `surname`, `email`, `password`, `role`, `fkLanguage`)
-VALUES ('admin', 'echemTest', 'admin@eol.org', '99053e95b3e682a0705474bb431f0041ece636b9', 'at', '1'),
-('User01', 'echemTest', 'user01@eol.org', '202884d0ebf976b175565124cefefee738897332', 's', '1'),
-('examiner', 'echemTest', 'examiner@eol.org', '1b7b4b4203b28059f9eaf6f754b137d5e0a3ac8a', 'e', '1');
+VALUES ('admin', 'echemTest', 'admin@echemtest.org', '99053e95b3e682a0705474bb431f0041ece636b9', 'at', '1'),
+('User01', 'echemTest', 'user01@echemtest.org', '202884d0ebf976b175565124cefefee738897332', 's', '1'),
+('examiner', 'echemTest', 'examiner@echemtest.org', '1b7b4b4203b28059f9eaf6f754b137d5e0a3ac8a', 'e', '1');
 
 
 
