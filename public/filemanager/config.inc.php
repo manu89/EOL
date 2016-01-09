@@ -284,7 +284,7 @@ downloadHook = ""
 [permissions]
 
 ; enable file upload
-enableUpload = yes
+enableUpload = no
 
 ; enable download of single files
 enableDownload = yes
@@ -315,7 +315,7 @@ enableMove = no
 enableCopy = yes
 
 ; enable directory creation
-enableNewDir = yes
+enableNewDir = no
 
 ; enable file / directory search
 enableSearch = yes
