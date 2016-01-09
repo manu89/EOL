@@ -24,6 +24,7 @@ if($container != '' && isset($_SESSION[$container])) {
 		if($FileManager->locale) @setlocale(LC_ALL, $FileManager->locale);
 		header("Content-Type: text/html; charset=UTF-8");
 		header('Cache-Control: private, no-cache, must-revalidate');
+		header('Expires: 0');
 		header('X-Robots-Tag: noindex, nofollow');
 	}
 	ob_start();

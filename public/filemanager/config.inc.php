@@ -1,5 +1,4 @@
-;<?php 
-/* do not delete this line
+;<?php /* do not delete this line!
 
 [FTP]
 
@@ -170,10 +169,10 @@ forceFlash = no
 enableDocViewer = yes
 
 ; document viewer width (pixels)
-docViewerWidth = 1024
+docViewerWidth = 700
 
 ; document viewer height (pixels)
-docViewerHeight = 600
+docViewerHeight = 500
 
 ; URL for public file access, example: http://www.yourdomain.com/path/to/files
 ; NOTE: required for Google document viewer (MS Word files, PDF files, etc.)
@@ -225,7 +224,7 @@ viewDeletedFiles = no
 
 ; check for file and directory changes every .. seconds (0 = disable smart refresh)
 ; NOTE: will increase traffic and server load!
-smartRefresh = 20
+smartRefresh = 0
 
 ; quota setting, examples: 500M, 1G; leave empty if you don't need it
 quota = ""
@@ -285,7 +284,7 @@ downloadHook = ""
 [permissions]
 
 ; enable file upload
-enableUpload = no
+enableUpload = yes
 
 ; enable download of single files
 enableDownload = yes
@@ -295,7 +294,7 @@ enableDownload = yes
 enableBulkDownload = yes
 
 ; enable file editing
-enableEdit = no
+enableEdit = yes
 
 ; enable file / directory deleting
 enableDelete = no
@@ -304,7 +303,7 @@ enableDelete = no
 enableRestore = no
 
 ; enable file / directory renaming
-enableRename = yes
+enableRename = no
 
 ; enable file / directory permissions changing
 enablePermissions = no
@@ -316,7 +315,7 @@ enableMove = no
 enableCopy = yes
 
 ; enable directory creation
-enableNewDir = no
+enableNewDir = yes
 
 ; enable file / directory search
 enableSearch = yes
