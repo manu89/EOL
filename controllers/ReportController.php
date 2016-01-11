@@ -194,13 +194,10 @@ class ReportController extends Controller{
         $pdf->SetFont('Helvetica','',12);
         $pdf->Cell(45,10,$db->qLoadTestTimeLimit($_SESSION['CRidTest']),"B",1);
         $pdf->SetFont('Helvetica','B',12);
-        $pdf->Cell(40,10,ttTopic,"B",0);
-        $pdf->SetFont('Helvetica','',12);
-        $pdf->Cell(60,10,$db->qLoadTestTopic($_SESSION['CRidTest']),"B",0);
-        $pdf->SetFont('Helvetica','B',12);
         $pdf->Cell(40,10,ttReportDateTaken,"B",0);
         $pdf->SetFont('Helvetica','',12);
-        $pdf->Cell(45,10,$_SESSION['CRdateTaken'],"B",1);
+        $pdf->Cell(45,10,$_SESSION['CRdateTaken'],"B",0);
+        $pdf->Cell(100,10,"","B",1);
         $pdf->Cell(0,5,"",0,1);
         $pdf->SetFont('Helvetica','B',16);
         $num=$db->qLoadTestNumQuestions($_SESSION['CRidTest']);
@@ -217,7 +214,7 @@ class ReportController extends Controller{
         $d=0;
         foreach($questions as $question){
             $details=$db->qShowQuestionsDetails($_SESSION['CRidTest'],$idLang,$question);
-            if ($i==3){
+            if ($i==2){
                 $pdf->Addpage();
                 $d=0;
             }else{
@@ -269,6 +266,10 @@ class ReportController extends Controller{
                     $pdf->Cell(50,10,ttQTTM,0,1,"");
                     break;
             }
+            $pdf->SetFont('Helvetica','B',12);
+            $pdf->Cell(80,10,ttTopic,0,0,"");
+            $pdf->SetFont('Helvetica','',12);
+            $pdf->Cell(50,10,$details['qtopic'],0,1,"");
             $pdf->SetFont('Helvetica','B',12);
             $pdf->Cell(80,10,ttDifficulty,0,0,"");
             $pdf->SetFont('Helvetica','',12);

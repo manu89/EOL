@@ -3038,7 +3038,7 @@ class sqlDB {
             //check if minscore and maxscore are set
             if(($minscore!=-1)&&($maxscore!=-1)){
                 //check if date interval has set
-                if (($datein=="")&&($datefn=="")){//dates not set
+                /*if (($datein=="")&&($datefn=="")){//dates not set
                     $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
@@ -3050,8 +3050,8 @@ class sqlDB {
                             echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
                         }
                     }
-                }
-                else{//date set
+                }*/
+                //else{//date set
                     $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
@@ -3064,11 +3064,11 @@ class sqlDB {
                             echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
                         }
                     }
-                }
+                /*}*/
             }
             else{
                 //check if date interval has set
-                if (($datein=="")&&($datefn=="")){//dates not set
+                /*if (($datein=="")&&($datefn=="")){//dates not set
                     $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
@@ -3079,8 +3079,8 @@ class sqlDB {
                             echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
                         }
                     }
-                }
-                else{//date set
+                }*/
+                //else{//date set
                     $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
@@ -3092,7 +3092,7 @@ class sqlDB {
                             echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
                         }
                     }
-                }
+                //}
             }
         }
         catch(Exception $ex){
@@ -3114,7 +3114,7 @@ class sqlDB {
         $this->mysqli = $this->connect();
         try {
             if(($minscore!=-1)&&($maxscore!=-1)){//minscore and maxscore set
-                if (($datein==null)&&($datefn==null)){//date not set
+                /*if (($datein==null)&&($datefn==null)){//date not set
                     $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
                         Tests.scoreFinal, DATE_FORMAT(Tests.timeStart,'%d-%m-%Y %H:%i:%s') AS dateTaken,
                         Users.group, Users.subgroup, Tests.status, Tests.idTest
@@ -3145,7 +3145,7 @@ class sqlDB {
                         }
                     }
                     echo "</tbody>";
-                }else{//dates set
+                }else{*///dates set
                     $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
                         Tests.scoreFinal, DATE_FORMAT(Tests.timeStart,'%d-%m-%Y %H:%i:%s') AS dateTaken,
                         Users.group, Users.subgroup, Tests.status, Tests.idTest
@@ -3177,9 +3177,9 @@ class sqlDB {
                         }
                     }
                     echo "</tbody>";
-                }
+                //}
             }else{
-                if (($datein==null)&&($datefn==null)){
+                /*if (($datein==null)&&($datefn==null)){
                     $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
                         Tests.scoreFinal, DATE_FORMAT(Tests.timeStart,'%d-%m-%Y %H:%i:%s') AS dateTaken,
                         Users.group, Users.subgroup, Tests.status, Tests.idTest
@@ -3209,7 +3209,7 @@ class sqlDB {
                         }
                     }
                     echo "</tbody>";
-                }else{
+                }else{*/
                     $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
                         Tests.scoreFinal, DATE_FORMAT(Tests.timeStart,'%d-%m-%Y %H:%i:%s') AS dateTaken,
                         Users.group, Users.subgroup, Tests.status, Tests.idTest
@@ -3240,7 +3240,7 @@ class sqlDB {
                         }
                     }
                     echo "</tbody>";
-                }
+                //}
             }
 
         }
@@ -3475,11 +3475,12 @@ class sqlDB {
         $this->mysqli=$this->connect();
         $val=array();
         try{
-            $query="select Distinct TranslationQuestions.translation, History.answer,
+            $query="select Distinct Topics.name, TranslationQuestions.translation, History.answer,
                     Questions.difficulty, History.score, Questions.type
-                    FROM History JOIN (TranslationQuestions JOIN Questions
+                    FROM Topics JOIN (History JOIN (TranslationQuestions JOIN Questions
                     on TranslationQuestions.fkQuestion=Questions.idQuestion)
-                    on History.fkQuestion=TranslationQuestions.fkQuestion
+                    on History.fkQuestion=TranslationQuestions.fkQuestion)
+                    on Topics.idTopic=Questions.fkTopic
                     where History.fkTest='$idTest'
                     and History.fkQuestion='$idQuestion'
                     and TranslationQuestions.fkLanguage='$idLang'";
@@ -3491,6 +3492,7 @@ class sqlDB {
                 $val['difficulty']=$row['difficulty']."/3";
                 $val['score']=$row['score'];
                 $val['qtype']=$row['type'];
+                $val['qtopic']=$row['name'];
 
                 //text of answer given by student
                 $text=str_replace('["','',$row['answer']);
@@ -3549,7 +3551,6 @@ class sqlDB {
                 }
             }
 
-            //load questions max score//
 
             //load number of questions
             $query="SELECT COUNT(fkQuestion) as questions
@@ -3560,7 +3561,7 @@ class sqlDB {
                 $totquestions=$row['questions'];
             }
 
-            //load max score of the test
+            //load max score question of the test
             $query="select distinct scoreType
                     from Tests JOIN (Exams JOIN TestSettings on Exams.fkTestSetting=TestSettings.idTestSetting)
                     on Tests.fkExam=Exams.idExam

@@ -321,7 +321,7 @@ define('ttReportAssesmentStdDeviation',"Deviazione standard finiti");
 define('ttReportChecked',"Selezionati");
 define('ttReportCoaching',"Coaching Report");
 define('ttReportCWelcome',"Scegli una valutazione ed un partecipante");
-define('ttReportCDescription',"Puoi anche filtrare i dati per date e punteggio");
+define('ttReportCDescription',"Filtra i dati per date e, se vuoi, anche per punteggio");
 define('ttReportCoachingDescription',"Visualizza i risultati in dettaglio per un partecipante relativi ad una valutazione");
 define('ttReportCoachingInformation',"Seleziona un test per informazioni dettagliate");
 define('ttReportCustomize',"Personalizza report");

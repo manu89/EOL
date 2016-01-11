@@ -45,12 +45,20 @@ global $config, $user;
                     <div class="col-left">
                         <h4><?=ttReportTyping?><br></h4>
                         <input type="text" name="word" class="input-report" placeholder="<?=ttReportSearch?>" oninput="printAssesments(this.value)">
-                    </div>
-                    <div class="col-center">
+                        <br>
                         <h4><?=ttReportSearched?><br></h4>
                         <select size="5" id="crsearched_ass" onchange="printParticipant()" class="select-creport">
 
                         </select>
+                    </div>
+                    <div class="col-center">
+                        <!--<h4><?=ttReportSearched?><br></h4>
+                        <select size="5" id="crsearched_ass" onchange="printParticipant()" class="select-creport">
+
+                        </select>-->
+                        <h3><?=ttReportDateInterval?></h3>
+                        <?=ttReportDateFrom?> <input type="date" class="input-report" id="crdateIn" oninput="printParticipant()"/>&nbsp;&nbsp;<?=ttReportDateTo?>
+                        <input class="input-report" type="date" id="crdateFn" oninput="printParticipant()"/>
                     </div>
                     <div class="col-center">
                         <h4><?=ttReportAOSelectPartecipant?><br></h4>
@@ -60,10 +68,10 @@ global $config, $user;
                     </div>
                         <br/>
                         <hr class="divider"/>
-                        <h3><?=ttReportDateInterval?></h3>
+                        <!--<h3><?=ttReportDateInterval?></h3>
                         <?=ttReportDateFrom?> <input type="date" class="input-report" id="crdateIn" oninput="printParticipant()"/>&nbsp;&nbsp;<?=ttReportDateTo?>
                         <input class="input-report" type="date" id="crdateFn" oninput="printParticipant()"/>
-                        <hr/>
+                        <hr/>-->
                         <h3><?=ttReportAssesmentScore?></h3>
                         <?=ttActivate?><input type="checkbox" id="assesmentScore" onclick="unlock(this,assesmentMinScore,assesmentMaxScore)">
                         <br/>

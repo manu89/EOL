@@ -322,7 +322,7 @@ define('ttReportAssesmentStdDeviation',"Standard deviation for those finished");
 define('ttReportChecked',"Selected");
 define('ttReportCoaching',"Coaching Report");
 define('ttReportCWelcome',"Choose an assessment and a participant");
-define('ttReportCDescription',"You can also filter data by dates and score");
+define('ttReportCDescription',"You have to filter data by dates and, if you want, also by score");
 define('ttReportCoachingDescription',"See detailed results for one participant taking one assessment");
 define('ttReportCoachingInformation',"Select one test to see detailed information");
 define('ttReportCustomize',"Customize your report");
