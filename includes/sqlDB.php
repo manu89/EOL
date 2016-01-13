@@ -3037,21 +3037,6 @@ class sqlDB {
         try {
             //check if minscore and maxscore are set
             if(($minscore!=-1)&&($maxscore!=-1)){
-                //check if date interval has set
-                /*if (($datein=="")&&($datefn=="")){//dates not set
-                    $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
-                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
-                        ON Users.idUser=Tests.fkUser
-                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
-                        and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')";
-                    $this->execQuery($query);
-                    if ($this->numResultRows()>0){
-                        while($row=mysqli_fetch_array($this->result)){
-                            echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
-                        }
-                    }
-                }*/
-                //else{//date set
                     $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
@@ -3064,23 +3049,8 @@ class sqlDB {
                             echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
                         }
                     }
-                /*}*/
             }
             else{
-                //check if date interval has set
-                /*if (($datein=="")&&($datefn=="")){//dates not set
-                    $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
-                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
-                        ON Users.idUser=Tests.fkUser
-                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')";
-                    $this->execQuery($query);
-                    if ($this->numResultRows()>0){
-                        while($row=mysqli_fetch_array($this->result)){
-                            echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
-                        }
-                    }
-                }*/
-                //else{//date set
                     $query="SELECT DISTINCT Users.idUser, Users.name, Users.surname
                         FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam) ON Subjects.idSubject=Exams.fkSubject)
                         ON Users.idUser=Tests.fkUser
@@ -3092,7 +3062,6 @@ class sqlDB {
                             echo "<option value=".$row['idUser'].">".$row['surname']."&nbsp;".$row['name']."</option>";
                         }
                     }
-                //}
             }
         }
         catch(Exception $ex){
@@ -3114,38 +3083,6 @@ class sqlDB {
         $this->mysqli = $this->connect();
         try {
             if(($minscore!=-1)&&($maxscore!=-1)){//minscore and maxscore set
-                /*if (($datein==null)&&($datefn==null)){//date not set
-                    $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
-                        Tests.scoreFinal, DATE_FORMAT(Tests.timeStart,'%d-%m-%Y %H:%i:%s') AS dateTaken,
-                        Users.group, Users.subgroup, Tests.status, Tests.idTest
-                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject)
-                        ON Users.idUser=Tests.fkUser
-                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
-                        and Users.idUser='$user'
-                        and (Tests.scoreFinal BETWEEN '$minscore' and '$maxscore')
-                        ORDER BY Tests.timeStart";
-                    $this->execQuery($query);
-                    echo "<tbody>";
-                    if($this->numResultRows()>0){
-                        $i=1;
-                        while($row=mysqli_fetch_array($this->result)){
-                            echo "<tr onclick=showCreportDetails() id=".$row['idTest'].">
-                            <td>".$i."</td>
-                            <td class=scoreFinal>".$row['scoreFinal']."</td>
-                            <td class=dateTaken>".$row['dateTaken']."</td>";
-                            if (($row['status']=="a")or($row['status']=="e")) {
-                                echo "<td class=status>".ttFinishedNormal."</td>";
-                            }
-                            if (($row['status']=="b")) {
-                                echo "<td class=status>".ttBlocked."</td>";
-                            }
-                            echo"</tr>";
-                            $i++;
-                        }
-                    }
-                    echo "</tbody>";
-                }else{*///dates set
                     $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
                         Tests.scoreFinal, DATE_FORMAT(Tests.timeStart,'%d-%m-%Y %H:%i:%s') AS dateTaken,
                         Users.group, Users.subgroup, Tests.status, Tests.idTest
@@ -3177,39 +3114,7 @@ class sqlDB {
                         }
                     }
                     echo "</tbody>";
-                //}
             }else{
-                /*if (($datein==null)&&($datefn==null)){
-                    $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
-                        Tests.scoreFinal, DATE_FORMAT(Tests.timeStart,'%d-%m-%Y %H:%i:%s') AS dateTaken,
-                        Users.group, Users.subgroup, Tests.status, Tests.idTest
-                        FROM Users JOIN (Subjects JOIN(Exams JOIN Tests ON Exams.idExam=Tests.fkExam)
-                        ON Subjects.idSubject=Exams.fkSubject)
-                        ON Users.idUser=Tests.fkUser
-                        WHERE Subjects.name='$exam' and (Exams.status='e' or Exams.status='a')
-                        and Users.idUser='$user'
-                        ORDER BY Tests.timeStart";
-                    $this->execQuery($query);
-                    echo "<tbody>";
-                    if($this->numResultRows()>0){
-                        $i=1;
-                        while($row=mysqli_fetch_array($this->result)){
-                            echo "<tr onclick=showCreportDetails() id=".$row['idTest'].">
-                            <td>".$i."</td>
-                            <td class=scoreFinal>".$row['scoreFinal']."</td>
-                            <td class=dateTaken>".$row['dateTaken']."</td>";
-                            if (($row['status']=="a")or($row['status']=="e")) {
-                                echo "<td class=status>".ttFinishedNormal."</td>";
-                            }
-                            if (($row['status']=="b")) {
-                                echo "<td class=status>".ttBlocked."</td>";
-                            }
-                            echo"</tr>";
-                            $i++;
-                        }
-                    }
-                    echo "</tbody>";
-                }else{*/
                     $query = "SELECT Users.idUser,Subjects.name AS materia, Users.name, Users.surname,
                         Tests.scoreFinal, DATE_FORMAT(Tests.timeStart,'%d-%m-%Y %H:%i:%s') AS dateTaken,
                         Users.group, Users.subgroup, Tests.status, Tests.idTest
@@ -3240,7 +3145,6 @@ class sqlDB {
                         }
                     }
                     echo "</tbody>";
-                //}
             }
 
         }
