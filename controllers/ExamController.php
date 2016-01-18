@@ -341,6 +341,126 @@ class ExamController extends Controller{
         }
     }
 
+    /**
+     *  @name   actionExportdata
+     *  @descr  take data from checkbox and registration list
+     */
+    private function actionExportdata(){
+        global $config;
+        //recupero tutti i dati per generare il pdf o il csv
+        $_SESSION['tests']=json_decode($_POST['tests']);
+        $_SESSION['idExam']=$_POST['idExam'];
+        if (isset($_POST['sName'])){$_SESSION['sName']=1;}else{$_SESSION['sName']=0;};
+        if (isset($_POST['sEmail'])){$_SESSION['sEmail']=1;}else{$_SESSION['sEmail']=0;};
+        if (isset($_POST['sTime'])){$_SESSION['sTime']=1;}else{$_SESSION['sTime']=0;};
+        if (isset($_POST['sScoreFinal'])){$_SESSION['sScoreFinal']=1;}else{$_SESSION['sScoreFinal']=0;};
+    }
+
+    /**
+     *  @name   actionExportpdf
+     *  @descr  generate PDF of register students at exam
+     */
+    private function actionExportpdf(){
+        global $config;
+        include($config['systemFpdfDir'].'fpdf.php');
+        $db=new sqlDB();
+        $pdf=new FPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('Helvetica','B',18);
+        $pdf->Image("themes/default/images/eol.png");
+        $pdf->Cell(0,15,ttExamResults." ".$db->qShowExamName($_SESSION['idExam']),1,1,'C',false);
+        $pdf->Cell(0,5,"",0,1);
+        $pdf->SetFont('Helvetica','B',12);
+        if ($_SESSION['sName']==1) {
+            $pdf->Cell(60, 10, ttName, 0, 0);
+        }
+        if ($_SESSION['sEmail']==1) {
+            $pdf->Cell(50, 10, ttEmail, 0, 0);
+        }
+        if ($_SESSION['sTime']==1) {
+            $pdf->Cell(40, 10, ttTimeUsed, 0, 0,"");
+        }
+        if ($_SESSION['sScoreFinal']==1) {
+            $pdf->Cell(20, 10, ttScoreFinal, 0, 0,"");
+        }
+        $pdf->Ln();
+        $pdf->SetFont('Helvetica','',10);
+        //print all test result in pdf--only fields chose
+        foreach ($_SESSION['tests'] as $test){
+            if ($_SESSION['sName']==1){
+                $pdf->Cell(60,10,$test->sName,0,0);
+            }
+            if ($_SESSION['sEmail']==1) {
+                $pdf->Cell(55, 10, $test->sEmail, 0, 0);
+            }
+            if ($_SESSION['sTime']==1) {
+                $pdf->Cell(45, 10, $test->sTime, 0, 0,"");
+            }
+            if ($_SESSION['sScoreFinal']==1) {
+                $pdf->Cell(20, 10, $test->sScoreFinal, 0, 0,"");
+            }
+            $pdf->Ln();
+        }
+        $pdf->Output();
+    }
+
+    /**
+     *  @name   actionExportcsv
+     *  @descr  generate CSV file of register students at exam
+     */
+    private function actionExportcsv(){
+        global $log;
+        // output headers so that the file is downloaded rather than displayed
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=results.csv');
+
+        // create a file pointer connected to the output stream
+        $output = fopen('php://output', 'w');
+        $headerb="";
+        // output the column headings
+        if($_SESSION['sName']==1){
+            $headerb .=ttName.",";
+
+        }
+        if($_SESSION['sEmail']==1){
+            $headerb .=ttEmail.",";
+        }
+        if($_SESSION['sTime']==1){
+            $headerb .='"'.ttTimeUsed.'",';
+        }
+        if($_SESSION['sScoreFinal']==1){
+            $headerb .='"'.ttScoreFinal.'",';
+        }
+        $header=substr($headerb,0,strlen($headerb)-1);
+        fputs($output,$header);
+        fputs($output,"\n");
+        foreach($_SESSION['tests'] as $test){
+            $datab="";
+            // output the data
+            if($_SESSION['sName']==1){
+                $datab .='"'.$test->sName.'",';
+
+            }
+            if($_SESSION['sEmail']==1){
+                $datab .=$test->sEmail.",";
+            }
+            if($_SESSION['sTime']==1){
+                $datab .=$test->sTime.",";
+            }
+            if($_SESSION['sScoreFinal']==1){
+                $datab .=$test->sScoreFinal.",";
+            }
+            $data=substr($datab,0,strlen($datab)-1);
+            fputs($output,$data);
+            fputs($output,"\n");
+        }
+        //fputcsv($output, array(
+           // , ttEmail, ttTimeUsed, ttScoreFinal));
+
+        //fputcsv($output,array($_SESSION['tests'][0]->sName,$_SESSION['tests'][0]->sEmail));
+
+    }
+
     /********************************************************************
      *                          Test Settings                           *
      ********************************************************************/
@@ -796,8 +916,9 @@ class ExamController extends Controller{
                 'allow',
                 'actions' => array('Settings', 'Showsettingsinfo', 'Updatesettingsinfo', 'Newsettings', 'Deletesettings',
                                    'Exams', 'Showexaminfo', 'Deleteexam', 'Testsettingslist', 'Updateexaminfo', 'Newexam', 'Changestatus',
-                                   'Showregistrationslist', 'Showaddstudentspanel', 'Registerstudents', 'Toggleblock', 'Correct', 'View', 'Archiveexam'),
-                'roles'   => array('t','e'),
+                                   'Showregistrationslist', 'Showaddstudentspanel', 'Registerstudents', 'Toggleblock', 'Correct', 'View', 'Archiveexam',
+                                    'Exportcsv','Exportpdf','Exportdata'),
+                'roles'   => array('a','t','e'),
             ),
             array(
                 'deny',

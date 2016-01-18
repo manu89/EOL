@@ -166,6 +166,10 @@ function refreshStudentsList(){
             alert("jQuery AJAX request error:".error);
         }
     });
+
+    //rivisualizzo pulsante export
+    $("#exportbutton").removeClass("hidden");
+    $("#exportbutton").addClass("button");
 }
 
 /**
@@ -196,4 +200,118 @@ function viewTest(selected){
  */
 function closeStudentsList(){
     closeLightbox($("#registrationsList"));
+}
+
+/**
+ *  @name   exportPDF
+ *  @descr  send data to generate a pdf of students registered to the exam
+ */
+function exportPDF(){
+    var idExam = examsTable.row(examRowEdit).data()[etci.examID];
+    var tests= new Array();
+    var i=0;
+    $("#registrationsTable tbody tr").each(function(){
+        tests[i]={
+            sName:$(this).find(".sName").text(),
+            sEmail:$(this).find(".sEmail").text(),
+            sTime:$(this).find(".sTime").text(),
+            sScoreFinal:$(this).find(".sScoreFinal").text()
+        };
+        i++;
+    });
+
+    $.ajax({
+        url     : "index.php?page=exam/exportdata",
+        type    : "post",
+        data    : {
+            tests: JSON.stringify(tests),
+            idExam:idExam,
+            sName: $("input[type=checkbox][name=sName]:checked").val(),
+            sEmail: $("input[type=checkbox][name=sEmail]:checked").val(),
+            sTime: $("input[type=checkbox][name=sTime]:checked").val(),
+            sScoreFinal: $("input[type=checkbox][name=sScoreFinal]:checked").val()
+        },
+        success : function (data){
+            window.location.assign("index.php?page=exam/exportpdf")
+            //window.open('index.php?page=exam/exportpdf','_blank');
+        },
+        error : function (request, status, error) {
+            alert("jQuery AJAX request error:".error);
+        }
+    });
+}
+
+/**
+ *  @name   exportCSV
+ *  @descr  send data to generate a csv file of students registered to the exam
+ */
+function exportCSV(){
+    var idExam = examsTable.row(examRowEdit).data()[etci.examID];
+    var tests= new Array();
+    var i=0;
+    $("#registrationsTable tbody tr").each(function(){
+        tests[i]={
+            sName:$(this).find(".sName").text(),
+            sEmail:$(this).find(".sEmail").text(),
+            sTime:$(this).find(".sTime").text(),
+            sScoreFinal:$(this).find(".sScoreFinal").text()
+        };
+        i++;
+    });
+
+    $.ajax({
+        url     : "index.php?page=exam/exportdata",
+        type    : "post",
+        data    : {
+            tests:JSON.stringify(tests),
+            idExam:idExam,
+            sName: $("input[type=checkbox][name=sName]:checked").val(),
+            sEmail: $("input[type=checkbox][name=sEmail]:checked").val(),
+            sTime: $("input[type=checkbox][name=sTime]:checked").val(),
+            sScoreFinal: $("input[type=checkbox][name=sScoreFinal]:checked").val()
+        },
+        success : function (data){
+            window.location.assign("index.php?page=exam/exportcsv")
+        },
+        error : function (request, status, error) {
+            alert("jQuery AJAX request error:".error);
+        }
+    });
+}
+
+/**
+ *  @name   showCheckbox
+ *  @descr  show div for selected specific field to export
+ */
+function showCheckbox(){
+    $("#export").removeClass("hidden");
+    $("#exportbutton").addClass("hidden");
+    $("#exportbutton").removeClass("button");
+    $("#csv").removeClass("hidden");
+    $("#csv").addClass("button");
+    $("#pdf").removeClass("hidden");
+    $("#pdf").addClass("button");
+}
+
+/***********************
+ * @name selectAllFields
+ * @desc Select or deselect all checkboxes relative to export data
+ **********************/
+var checkedfields=false;
+
+function selectAllFields(){
+    if(!checkedfields){
+        $(".field").each(function(){
+            $(this).prop("checked",true);
+            checkedfields=true;
+            $("#selectallck").text(ttDeselectAll);
+        });
+    }
+    else{
+        $(".field").each(function(){
+            $(this).prop("checked",false);
+            checkedfields=false;
+            $("#selectallck").text(ttSelectAll);
+        });
+    }
 }

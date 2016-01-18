@@ -128,13 +128,13 @@ if(!(isset($_POST['action'])) || ($_POST['action'] != 'refresh')){
                         <tr>
                             <td><img src="<?= $config['themeImagesDir'] . $status['imageTitle'] ?>.png"
                                      title="<?= $status['imageTitle'] ?>" alt="<?= $status['imageTitle'] ?>"/></td>
-                            <td><?= $registration['surname'] . ' ' . $registration['name'] ?></td>
-                            <td><?= $registration['email'] ?></td>
+                            <td class="sName"><?= $registration['surname'] . ' ' . $registration['name'] ?></td>
+                            <td class="sEmail"><?= $registration['email'] ?></td>
                             <td><?= $start ?></td>
                             <td><?= $end ?></td>
-                            <td><?= $time ?></td>
+                            <td class="sTime"><?= $time ?></td>
                             <td><?= $registration['scoreTest'] ?>/<?=$testsettingInfo['scoreType']?></td>
-                            <td><?= $scoreFinal ?>/<?=$testsettingInfo['scoreType']?></td>
+                            <td class="sScoreFinal"><?= $scoreFinal ?>/<?=$testsettingInfo['scoreType']?></td>
                             <td>
                                 <?php if (($examInfo['status'] != 'a') || ($registration['status'] == 'a')) { ?>
                                     <span class="manageButton <?= $status['action'] ?>">
@@ -168,9 +168,19 @@ if(!(isset($_POST['action'])) || ($_POST['action'] != 'refresh')){
 <form action="" method="post" id="idTestForm" target="_blank">
     <input type="hidden" id="idTest" name="idTest" value="">
 </form>
-
+<div id="export" class="hidden">
+    <h3><?=ttExportSelect?></h3>
+    <?=ttName?> <input type="checkbox" name="sName" class="field" value="si">
+    <?=ttEmail?> <input type="checkbox" name="sEmail" class="field" value="si">
+    <?=ttTimeUsed?> <input type="checkbox" name="sTime" class="field" value="si">
+    <?=ttScoreFinal?> <input type="checkbox" name="sScoreFinal" class="field" value="si">
+    <a id="selectallck" class="normal button lSpace tSpace" onclick="selectAllFields();"> <?= ttSelectAll ?></a>
+</div>
 <input type="hidden" id="idExam" value="<?= $_POST['idExam'] ?>"/>
 <a class="normal button right lSpace tSpace" onclick="refreshStudentsList();"> <?= ttRefresh ?></a>
+<a id="exportbutton" class="normal button right lSpace tSpace" onclick="showCheckbox();"> <?= ttExport ?></a>
+<a id="csv" class="hidden normal right lSpace tSpace" onclick="exportCSV();"> <?= ttExportCSV ?></a>
+<a id="pdf" class="hidden normal right lSPace tSpace" onclick="exportPDF();"> <?= ttExportPDF ?></a>
 <a class="normal button tSpace" onclick="closeStudentsList();"> <?= ttClose ?></a>
 <div class="clearer"></div>
 

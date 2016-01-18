@@ -1775,6 +1775,13 @@ span.manageButton {
     top: 2px;
 }
 
+#export{
+    margin:20px;
+    border: solid 5px #969696;
+    padding:10px;
+    font-size:14px;
+}
+
 /*************************************
 *            Correct Test            *
 *************************************/

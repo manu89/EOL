@@ -1424,6 +1424,29 @@ class sqlDB {
     }
 
     /**
+     * @name    qShowExamName
+     * @return  string
+     * @descr   return name of the exam
+     */
+    public function qShowExamName($idExam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try {
+            $query = "Select name from Exams where idExam='$idExam'";
+            $this->execQuery($query);
+            if($this->numResultRows()>0){
+                $row=mysqli_fetch_array($this->result);
+                $val=$row['name'];
+            }
+        }
+        catch(Exception $ex){
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $val;
+    }
+
+    /**
      * @name    qStudentsNotRegistered
      * @param   $idExam       String        Requested Exam's ID
      * @return  Boolean
