@@ -166,7 +166,7 @@ forceFlash = no
 [docViewer]
 
 ; enable document viewer
-enableDocViewer = yes
+enableDocViewer = no
 
 ; document viewer width (pixels)
 docViewerWidth = 700
@@ -232,7 +232,7 @@ quota = ""
 [upload]
 
 ; which upload engine should be used; possible values: Java, JS, Perl, PHP
-uploadEngine = "Java"
+uploadEngine = "JS"
 
 ; keep folder structure when uploading directories with sub folders
 ; NOTE: works only in combination with the Java upload engine!
