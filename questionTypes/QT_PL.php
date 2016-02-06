@@ -121,10 +121,10 @@ class QT_PL extends Question
             if (($db->qsubquestionsettestPL($this->get('idQuestion'))) && ($subSet = $db->getResultAssoc())) {
 
             }
-            var_dump(($subSet));
-            var_dump(count($subSet));
-            for ($a = 0 ; $a < count($subSet); $a++) {
+
+            for ($a = 0; $a < count($subSet); $a++) {
                 echo '<tr>
+                    <td>' . ($subSet[$a]['text']) . '</td>
                             <td>' . ($subSet[$a]['text']) . '</td>
                             <td>' . ($subSet[$a]['sub_questions']) . '</td>
 
@@ -147,16 +147,26 @@ class QT_PL extends Question
             </thead>
             <tbody>
             <?php
+           $a=0;
             $db = new sqlDB();
             if ($db->qAnswerSet($idQuestion, null, $idSubject)) {
+
+
+
                 while ($answer = $db->nextRowAssoc()) {
-                    echo '<tr>
+                 
+                    echo '<tr >
 
                               <td>' . strip_tags($answer['translation']) . '</td>
 
                               <td>' . $answer['score'] . '</td>
-                          </tr>';
-                }
+
+
+                          </tr>'; }
+
+
+
+
             }
             ?>
             </tbody>

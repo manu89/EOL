@@ -573,6 +573,16 @@ class AdminController extends Controller{
 
     }
 
+  private function actionErrorquestion(){
+        global $engine;
+
+        $engine->renderDoctype();
+        $engine->loadLibs();
+        $engine->renderHeader();
+        $engine->renderPage();
+        $engine->renderFooter();
+
+    }
     /**
      *  @name   actionSetpassword
      *  @descr  Shows page to insert the first password and activate user's account
@@ -680,14 +690,11 @@ class AdminController extends Controller{
      *  );
      * @return array
      */
-    private function accessRules(){
+     private function accessRules(){
         return array(
             array(
                 'allow',
-                'actions' => array('Index', 'Exit', 'Newteacher', 'Rooms', 'Showroominfo', 'Newroom', 'Updateroominfo',
-                                   'Deleteroom','Selectlanguage', 'Language', 'Savelanguage', 'Newlanguage', 'Systemconfiguration',
-                                   'Updatesystemconfiguration'
-                                   ),
+                'actions' => array('Index', 'Exit'),
                 'roles'   => array('a'),
             ),
             array(
@@ -698,12 +705,38 @@ class AdminController extends Controller{
             array(
                 'allow',
                 'actions' => array('Newstudent'),
-                'roles'   => array('?', 'a', 't'),
+                'roles'   => array('?', 'a'),
+            ),
+            array(
+                'allow',
+                'actions' => array('Newteacher'),
+                'roles'   => array('a'),
+            ),
+            array(
+                'allow',
+                'actions' => array('Newuserfromemail'),
+                'roles'   => array('t'),
             ),
             array(
                 'allow',
                 'actions' => array('Setpassword', 'Lostpassword'),
                 'roles'   => array('?'),
+            ),
+            array(
+                'allow',
+                'actions' => array('Errorquestion', 'Erroremail'),
+                'roles'   => array('a','s'),
+            ),   array(
+                'allow',
+                'actions' => array('Erroremail'),
+                'roles'   => array('a','s'),
+            ),
+
+            array(
+                'allow',
+                'actions' => array('Rooms', 'Showroominfo', 'Newroom', 'Updateroominfo', 'Deleteroom',
+                                   'Selectlanguage', 'Language', 'Savelanguage', 'Newlanguage'),
+                'roles'   => array('a'),
             ),
             array(
                 'deny',

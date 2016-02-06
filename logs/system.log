@@ -49,3 +49,179 @@
 11/27/2015 14:14:49 - 1378
 12/01/2015 14:24:38 - 1379
 12/01/2015 14:27:29 - 1380
+12/09/2015 16:34:36 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+12/09/2015 16:34:37 - 1353
+12/09/2015 16:34:38 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+12/09/2015 16:34:39 - 1353
+12/09/2015 16:34:40 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+12/09/2015 16:34:41 - 1348
+12/09/2015 16:35:17 - 1369
+12/09/2015 16:43:35 - 1382
+12/09/2015 16:57:10 - 1292
+12/09/2015 16:57:42 - 1310
+12/09/2015 17:05:56 - 1364
+12/09/2015 17:05:57 - 1364
+12/09/2015 17:25:09 - 1384
+02/03/2016 15:18:20 - 1385
+02/03/2016 15:22:49 - 1319
+02/03/2016 15:22:51 - 1319
+02/03/2016 15:22:52 - 1319
+02/03/2016 15:27:00 - 1386
+02/03/2016 15:55:34 - 1387
+02/03/2016 15:55:49 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:05:27 - 1388
+02/03/2016 16:05:40 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:07:34 - 1389
+02/03/2016 16:07:46 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:07:57 - 1
+02/03/2016 16:07:57 - 2
+02/03/2016 16:07:57 - 1389
+02/03/2016 16:07:57 - a1
+02/03/2016 16:07:57 - qNewAnswerPL : Cannot add or update a child row: a foreign key constraint fails (`eol`.`answers`, CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`fksub`) REFERENCES `sub_questions` (`sub_questions`) ON DELETE CASCADE ON UPDATE CASCADE)
+02/03/2016 16:08:09 - 1389
+02/03/2016 16:08:11 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:08:32 - 1390
+02/03/2016 16:08:39 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:09:34 - 1
+02/03/2016 16:09:34 - 2
+02/03/2016 16:09:34 - 1390
+02/03/2016 16:09:34 - 874
+02/03/2016 16:09:42 - 1390
+02/03/2016 16:37:57 - 1391
+02/03/2016 16:38:05 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:39:36 - 1392
+02/03/2016 16:39:44 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:41:51 - 1393
+02/03/2016 16:42:00 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:42:05 - 1
+02/03/2016 16:42:05 - 2
+02/03/2016 16:42:05 - 1393
+02/03/2016 16:42:05 - 877
+02/03/2016 16:42:07 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:42:11 - 1
+02/03/2016 16:42:11 - 2
+02/03/2016 16:42:11 - 1393
+02/03/2016 16:42:11 - 877
+02/03/2016 16:42:13 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:42:22 - 1
+02/03/2016 16:42:22 - 2
+02/03/2016 16:42:22 - 1393
+02/03/2016 16:42:22 - 878
+02/03/2016 16:42:27 - 1
+02/03/2016 16:42:27 - 2
+02/03/2016 16:42:27 - 1393
+02/03/2016 16:42:27 - 878
+02/03/2016 16:42:33 - 1393
+02/03/2016 16:45:57 - 1394
+02/03/2016 16:46:04 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:47:40 - 1395
+02/03/2016 16:47:49 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/03/2016 16:47:54 - 1
+02/03/2016 16:47:54 - 2
+02/03/2016 16:47:54 - 1395
+02/03/2016 16:47:54 - 
+02/03/2016 16:47:54 - qNewAnswerPL : Cannot add or update a child row: a foreign key constraint fails (`eol`.`answers`, CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`fksub`) REFERENCES `sub_questions` (`sub_questions`) ON DELETE CASCADE ON UPDATE CASCADE)
+02/03/2016 16:50:24 - 1396
+02/03/2016 16:50:35 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/05/2016 14:55:48 - 1397
+02/05/2016 14:56:25 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/05/2016 14:56:39 - 1
+02/05/2016 14:56:39 - 2
+02/05/2016 14:56:39 - 1397
+02/05/2016 14:56:39 - 882
+02/05/2016 14:56:40 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/05/2016 14:56:47 - 1
+02/05/2016 14:56:47 - 2
+02/05/2016 14:56:47 - 1397
+02/05/2016 14:56:47 - 882
+02/05/2016 14:56:48 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/05/2016 14:56:53 - 1
+02/05/2016 14:56:53 - 2
+02/05/2016 14:56:53 - 1397
+02/05/2016 14:56:53 - 882
+02/05/2016 14:56:55 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/05/2016 14:57:15 - 1
+02/05/2016 14:57:15 - 2
+02/05/2016 14:57:15 - 1397
+02/05/2016 14:57:15 - 883
+02/05/2016 14:57:27 - 1
+02/05/2016 14:57:27 - 2
+02/05/2016 14:57:27 - 1397
+02/05/2016 14:57:27 - 883
+02/05/2016 14:57:34 - 1
+02/05/2016 14:57:34 - 2
+02/05/2016 14:57:34 - 1397
+02/05/2016 14:57:34 - 883
+02/05/2016 14:57:54 - 1397
+02/05/2016 15:01:02 - 1398
+02/05/2016 15:01:15 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/05/2016 15:01:19 - 1
+02/05/2016 15:01:19 - 2
+02/05/2016 15:01:19 - 1398
+02/05/2016 15:01:19 - dsdsssd
+02/05/2016 15:01:19 - qNewAnswerPL : Cannot add or update a child row: a foreign key constraint fails (`eol`.`answers`, CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`fksub`) REFERENCES `sub_questions` (`sub_questions`) ON DELETE CASCADE ON UPDATE CASCADE)
+02/05/2016 15:02:20 - 1397
+02/05/2016 15:02:49 - 1397
+02/05/2016 15:03:21 - 1397
+02/05/2016 15:04:01 - 1397
+02/05/2016 15:04:56 - 1397
+02/05/2016 15:06:59 - 1397
+02/05/2016 15:08:23 - 1397
+02/05/2016 15:08:55 - 1397
+02/05/2016 15:09:19 - 1397
+02/05/2016 15:09:52 - 1397
+02/05/2016 15:22:55 - 1397
+02/05/2016 15:23:36 - 1397
+02/05/2016 15:24:00 - 1397
+02/05/2016 15:25:14 - 1397
+02/05/2016 15:26:02 - 1397
+02/05/2016 15:26:43 - 1397
+02/05/2016 15:28:03 - 1397
+02/05/2016 15:29:15 - 1397
+02/05/2016 15:29:15 - 1397
+02/05/2016 15:29:15 - 1397
+02/05/2016 15:29:54 - 1397
+02/05/2016 15:31:00 - 1397
+02/05/2016 15:33:21 - 1397
+02/05/2016 15:34:21 - 1397
+02/05/2016 15:34:52 - 1397
+02/05/2016 15:35:42 - 1397
+02/05/2016 15:36:55 - 1397
+02/05/2016 15:39:08 - 1397
+02/05/2016 15:39:52 - 1397
+02/05/2016 15:40:19 - 1397
+02/05/2016 15:41:24 - 1397
+02/05/2016 15:43:41 - 1397
+02/05/2016 15:45:44 - 1397
+02/05/2016 15:46:27 - 1397
+02/06/2016 09:36:06 - 1397
+02/06/2016 09:36:28 - 1397
+02/06/2016 09:36:39 - 1397
+02/06/2016 09:37:02 - 1397
+02/06/2016 09:37:49 - 1397
+02/06/2016 09:57:21 - 1340
+02/06/2016 09:57:21 - 1397
+02/06/2016 09:57:21 - 1397
+02/06/2016 09:57:27 - 1397
+02/06/2016 10:03:36 - 1397
+02/06/2016 10:03:41 - 1397
+02/06/2016 10:04:17 - 1397
+02/06/2016 10:04:58 - 1397
+02/06/2016 10:05:56 - 1397
+02/06/2016 10:06:17 - 1397
+02/06/2016 10:06:55 - 1399
+02/06/2016 10:07:12 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/06/2016 10:07:16 - 1
+02/06/2016 10:07:16 - 2
+02/06/2016 10:07:16 - 1399
+02/06/2016 10:07:16 - 885
+02/06/2016 10:07:16 - 1
+02/06/2016 10:07:16 - 2
+02/06/2016 10:07:16 - 1399
+02/06/2016 10:07:16 - 885
+02/06/2016 10:07:18 - qAnswerSetPL : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sub_questions' not exists'' at line 7
+02/06/2016 10:07:31 - 1
+02/06/2016 10:07:31 - 2
+02/06/2016 10:07:31 - 1399
+02/06/2016 10:07:31 - 886
+02/06/2016 10:07:36 - 1399

@@ -204,7 +204,7 @@ function adminMenu(){
     global $tt; ?>
 
 <ul class="topnav">
-    <li><a href="index.php"><?= ttHome ?></a></li>
+    <li><a href="index.php"><?= ttAndExit ?></a></li>
     <li>
         <a class="trigger"><?= ttSubjects ?></a>
         <ul class="subnav">
@@ -240,7 +240,7 @@ function teacherMenu(){
     global $tt; ?>
 
 <ul class="topnav">
-    <li><a href="index.php"><?= ttHome ?></a></li>
+    <li><a href="index.php"><?= ttAndExit ?></a></li>
     <li>
         <a class="trigger"><?= ttSubjects ?></a>
         <ul class="subnav">
@@ -268,7 +268,7 @@ function adminTeacherMenu(){
     global $tt; ?>
 
 <ul class="topnav">
-    <li><a href="index.php"><?= ttHome ?></a></li>
+    <li><a href="index.php"><?= ttAndExit ?></a></li>
     <li>
         <a class="trigger"><?= ttSubjects ?></a>
         <ul class="subnav">

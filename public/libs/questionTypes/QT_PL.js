@@ -104,7 +104,7 @@ function initializeSubquestionsTable_PL(){
         bSort : false,
         columns :  [
 
-            { className: "zScore", width : "10px",visible : true},
+            { className: "zScore", width : "10px",visible : false},
             { className: "zText", width : "740px", mRender: function(data){return truncate(data, '740px')}, visible :  true },
             { className: "zSubID", visible :  true}
         ],
@@ -121,11 +121,16 @@ function initializeSubquestionsTable_PL(){
 
             oTable = $('#subquestionsTable').dataTable();
 
-            var aData = oTable.fnGetData(this);
-            adNumber = aData;
-            alert(aData);
+
+
+           var aData = oTable.fnGetData(this);
+
+         adNumber = aData;
+
+
             initializeAnswersTable_PL();
         });
+
 
     $("#subquestionsTable_filter").css("margin-right", "50px")
         .after($("#newSubquestion_PL").parent())
