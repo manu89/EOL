@@ -292,6 +292,7 @@ define('ttRegEnd' , "Chiusura registrazione");
 define('ttRemove',"Rimuovi");
 define('ttRemoveAll',"Svuota");
 define('ttRenewPassword' , "Rinnova Password");
+define('ttAOdef',"Guarda una panoramica dei risultati per una o più valutazioni");
 define('ttAOreportSaved',"Tutti i report che verranno generati saranno salvati nel server e visibili nell'apposita sezione");
 define('ttReport',"Report");
 define('ttReportAllFinished',"Completati");

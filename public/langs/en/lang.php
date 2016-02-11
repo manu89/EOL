@@ -293,6 +293,7 @@ define('ttRegEnd' , "Registation closure");
 define('ttRemove',"Remove");
 define('ttRemoveAll',"Remove all");
 define('ttRenewPassword' , "Renew Password");
+define('ttAOdef',"See an overwiev of result for one or more assessments");
 define('ttAOreportSaved',"All the generated report will be saved on server. You can see them in the specific section");
 define('ttReport', "Report");
 define('ttReportAllFinished',"All finished");
