@@ -1623,7 +1623,7 @@ class ReportController extends Controller{
         }
         $pdf->Output($config['systemViewsDir']."Report/generated_report/AOreport/".$user->surname."_".$user->name."/AOreport_".$user->surname."_".$user->name."_".date("d-m-Y_H:i:s",$t).".pdf","F");
     }
-    
+
     /**
      *  @name   actionSavetemplate
      *  @descr  Save a Report Template

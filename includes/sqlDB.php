@@ -3254,7 +3254,7 @@ class sqlDB {
                                     }
                                     $x++;
                                 }
-                                if (in_array(false,$trovato[$student])){
+                                if (in_array(false,$trovato[$group.'-'.$subgr])){
                                     $notpresent[$d]=true;
                                 }
                                 else{
@@ -8249,7 +8249,7 @@ class sqlDB {
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $index=0;
+                            $index=1;
                             while($row=mysqli_fetch_array($this->result)){
                                 $assesmentsdata[$index]=$row['scoreFinal'];
                                 $index++;
@@ -8264,7 +8264,7 @@ class sqlDB {
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $index=0;
+                            $index=1;
                             while($row=mysqli_fetch_array($this->result)){
                                 $assesmentsdata[$index]=$row['scoreFinal'];
                                 $index++;
@@ -8283,7 +8283,7 @@ class sqlDB {
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $index=0;
+                            $index=1;
                             while($row=mysqli_fetch_array($this->result)){
                                 $assesmentsdata[$index]=$row['scoreFinal'];
                                 $index++;
@@ -8299,7 +8299,7 @@ class sqlDB {
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $index=0;
+                            $index=1;
                             while($row=mysqli_fetch_array($this->result)){
                                 $assesmentsdata[$index]=$row['scoreFinal'];
                                 $index++;
@@ -8320,7 +8320,7 @@ class sqlDB {
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.idUser='$userparam'";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $index=0;
+                            $index=1;
                             while($row=mysqli_fetch_array($this->result)){
                                 $assesmentsdata[$index]=$row['scoreFinal'];
                                 $index++;
@@ -8334,7 +8334,7 @@ class sqlDB {
                         where Subjects.name='$exam' and (Tests.status='e' or Tests.status='a') and Users.email='$userparam'";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $index=0;
+                            $index=1;
                             while($row=mysqli_fetch_array($this->result)){
                                 $assesmentsdata[$index]=$row['scoreFinal'];
                                 $index++;
@@ -8352,7 +8352,7 @@ class sqlDB {
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $index=0;
+                            $index=1;
                             while($row=mysqli_fetch_array($this->result)){
                                 $assesmentsdata[$index]=$row['scoreFinal'];
                                 $index++;
@@ -8367,7 +8367,7 @@ class sqlDB {
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $index=0;
+                            $index=1;
                             while($row=mysqli_fetch_array($this->result)){
                                 $assesmentsdata[$index]=$row['scoreFinal'];
                                 $index++;
@@ -8408,7 +8408,7 @@ class sqlDB {
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                     $this->execQuery($query);
                     if($this->numResultRows()>0){
-                        $index=0;
+                        $index=1;
                         while($row=mysqli_fetch_array($this->result)){
                             $assesmentsdata[$index]=$row['scoreFinal'];
                             $index++;
@@ -8425,7 +8425,7 @@ class sqlDB {
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                     $this->execQuery($query);
                     if($this->numResultRows()>0){
-                        $index=0;
+                        $index=1;
                         while($row=mysqli_fetch_array($this->result)){
                             $assesmentsdata[$index]=$row['scoreFinal'];
                             $index++;
@@ -8444,7 +8444,7 @@ class sqlDB {
                         and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
                     $this->execQuery($query);
                     if($this->numResultRows()>0){
-                        $index=0;
+                        $index=1;
                         while($row=mysqli_fetch_array($this->result)){
                             $assesmentsdata[$index]=$row['scoreFinal'];
                             $index++;
@@ -8460,7 +8460,7 @@ class sqlDB {
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                     $this->execQuery($query);
                     if($this->numResultRows()>0){
-                        $index=0;
+                        $index=1;
                         while($row=mysqli_fetch_array($this->result)){
                             $assesmentsdata[$index]=$row['scoreFinal'];
                             $index++;
@@ -8508,7 +8508,7 @@ class sqlDB {
                             and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
-                                $i=0;
+                                $i=1;
                                 while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
@@ -8535,7 +8535,7 @@ class sqlDB {
                             and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
-                                $i=0;
+                                $i=1;
                                 while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
@@ -8565,7 +8565,7 @@ class sqlDB {
                             and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
-                                $i=0;
+                                $i=1;
                                 while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
@@ -8593,7 +8593,7 @@ class sqlDB {
                             and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
-                                $i=0;
+                                $i=1;
                                 while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
@@ -8625,7 +8625,7 @@ class sqlDB {
                             and Users.idUser='$userparam'";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
-                                $i=0;
+                                $i=1;
                                 while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
@@ -8651,7 +8651,7 @@ class sqlDB {
                             and Users.email='$userparam'";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
-                                $i=0;
+                                $i=1;
                                 while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
@@ -8680,7 +8680,7 @@ class sqlDB {
                             and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
-                                $i=0;
+                                $i=1;
                                 while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
@@ -8707,7 +8707,7 @@ class sqlDB {
                             and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                             $this->execQuery($query);
                             if($this->numResultRows()>0){
-                                $i=0;
+                                $i=1;
                                 while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
@@ -8757,7 +8757,7 @@ class sqlDB {
                         and (Tests.scoreFinal between '$minscore' and '$maxscore')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $i=0;
+                            $i=1;
                             while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
@@ -8783,7 +8783,7 @@ class sqlDB {
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $i=0;
+                            $i=1;
                             while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
@@ -8812,7 +8812,7 @@ class sqlDB {
                         and Users.group='$groups[0]' and Users.subgroup='$groups[1]'";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $i=0;
+                            $i=1;
                             while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
@@ -8837,7 +8837,7 @@ class sqlDB {
                         and (DATE(Tests.timeStart) BETWEEN '$datein' and '$datefn')";
                         $this->execQuery($query);
                         if($this->numResultRows()>0){
-                            $i=0;
+                            $i=1;
                             while($row=mysqli_fetch_array($this->result)){
                                     $topicindex=$topic;
                                     $topicindex .="_".$i;
