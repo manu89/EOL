@@ -189,7 +189,8 @@ class StudentController extends Controller{
             if((isset($_POST['questions'])) && (isset($_POST['answers']))){
                 $questions = json_decode($_POST['questions'], true);
                 $answers = json_decode($_POST['answers'], true);
-
+                $tipo=$db->tipologiaDomanda($questions);
+                $i=0;
                 if($db->qUpdateTestAnswers($_SESSION['idSet'], $questions, $answers)){
 
                     if((isset($_POST['submit'])) && ($_POST['submit'] == "true")){      // Close test
@@ -201,8 +202,8 @@ class StudentController extends Controller{
                             $answer = json_decode(array_pop($answers), true);
                             //calcolo la lunghezza del vettore $answer
                             $lunganswer=count($answer);
-                            //verifico se nella prima posizione non c'è un valore numerico
-                            if((is_numeric($answer[0])==false)){
+                            //verifico se la domanda è di tipo Fill In Blank
+                            if($tipo[$i]=="FB"){
 
                                 for($k=0;$k<$lunganswer;$k++){
                                     $answer[$k]=trim($answer[$k]);
@@ -219,6 +220,7 @@ class StudentController extends Controller{
                             if((!empty($answer)) && (is_numeric($answer[0]))){
                                 $finalAnswers = array_merge((array)$finalAnswers, (array)$answer);
                             }
+                            $i++;
                         }
                         if($db->qEndTest($_SESSION['idSet'], $finalAnswers)){
                             unset($_SESSION['idSet']);
