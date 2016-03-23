@@ -3082,5 +3082,36 @@ class sqlDB {
         }
 
     }
+ public function tipologiaDomanda($vettoreId)
+    {
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        $inverso=array_reverse($vettoreId);
+        $lunghezza=count($inverso);
 
+        try {
+          for ($i=0;$i<$lunghezza;$i++) {
+              $query = "SELECT type
+                      FROM questions
+                      WHERE
+                          questions.idQuestion = '$inverso[$i]'";
+
+              $this->execQuery($query);
+
+              if ($risultato = $this->nextRowAssoc()) {
+                  $log->append($risultato['type']);
+                  $vettoreTipologie[$i]=$risultato['type'];
+              } else {
+                  return 0;
+
+
+
+              }
+          }
+            return $vettoreTipologie;
+        } catch (Exception $ex) {
+            $log->append(__FUNCTION__ . " : " . $this->getError());
+        }
+    }
 }
