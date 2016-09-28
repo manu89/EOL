@@ -1,0 +1,360 @@
+09/28/2016 18:54:33 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:54:33 - 
+09/28/2016 18:54:33 - SELECT idExam, E.name AS examName, S.name AS subjectName, E.fkSubject, datetime, status
+                      FROM Exams AS E
+                      JOIN Subjects AS S ON S.idSubject = E.fkSubject
+                      JOIN Users_Subjects AS US ON US.fkSubject = S.idSubject
+                      JOIN Users AS U ON U.idUser  = US.fkUser
+                      WHERE
+                          E.status != 'a'  AND U.subGroup = '1'
+09/28/2016 18:54:33 - 
+09/28/2016 18:54:33 - SELECT idTest, timeStart, timeEnd, T.status, scoreTest, fkExam, fkSubject, idUser, S.name, S.surname, Sub.name AS subName
+                      FROM Tests AS T
+                          JOIN Exams AS E ON T.fkExam = E.idExam
+                          JOIN Users AS S ON T.fkUser = S.idUser
+                          JOIN Subjects AS Sub ON E.fkSubject = Sub.idSubject
+                      WHERE
+                          E.fkSubject IN (SELECT fkSubject
+                                          FROM Users_Subjects
+                                          WHERE
+                                              fkUser = '1')
+09/28/2016 18:54:33 - 
+09/28/2016 18:54:36 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:54:36 - 
+09/28/2016 18:54:36 - SELECT idExam, Exams.name exam, status, Subjects.name subject,
+                           TestSettings.name settings, password, datetime, idSubject, idTestSetting, scale
+                    FROM
+                        Exams
+                            LEFT JOIN Subjects ON Exams.fkSubject = Subjects.idSubject
+                            LEFT JOIN TestSettings ON Exams.fkTestSetting = TestSettings.idTestSetting
+                            LEFT JOIN Users_Subjects ON Subjects.idSubject = Users_Subjects.fkSubject
+                    WHERE fkUser = '1'
+                    ORDER BY datetime DESC
+09/28/2016 18:54:36 - 
+09/28/2016 18:56:00 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:56:00 - 
+09/28/2016 18:56:00 - SELECT idExam, Exams.name exam, status, Subjects.name subject,
+                           TestSettings.name settings, password, datetime, idSubject, idTestSetting, scale
+                    FROM
+                        Exams
+                            LEFT JOIN Subjects ON Exams.fkSubject = Subjects.idSubject
+                            LEFT JOIN TestSettings ON Exams.fkTestSetting = TestSettings.idTestSetting
+                            LEFT JOIN Users_Subjects ON Subjects.idSubject = Users_Subjects.fkSubject
+                    WHERE fkUser = '1'
+                    ORDER BY datetime DESC
+09/28/2016 18:56:00 - 
+09/28/2016 18:56:03 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:56:03 - 
+09/28/2016 18:56:03 - SELECT *
+                          FROM
+                              Subjects
+                          WHERE
+                              idSubject IN (
+                                  SELECT fkSubject
+                                  FROM
+                                      Users_Subjects
+                                  WHERE
+                                      fkUser = '1'
+                              )
+                          ORDER BY name
+09/28/2016 18:56:03 - 
+09/28/2016 18:56:03 - SELECT *
+                      FROM
+                          Users AS U WHERE
+                               role IN ('at', 't', 'st','e')
+09/28/2016 18:56:03 - 
+09/28/2016 18:56:08 - SELECT * FROM Subjects WHERE idSubject = '32'
+09/28/2016 18:56:08 - SELECT * FROM Languages
+09/28/2016 18:56:08 - 
+09/28/2016 18:56:08 - SELECT *
+                      FROM
+                          Users AS U  JOIN Users_Subjects AS US ON U.idUser = US.fkUser
+                        WHERE
+                            role IN ('at', 't', 'st','e')
+                            AND
+                            US.fkSubject = '32';
+09/28/2016 18:56:08 - 
+09/28/2016 18:56:09 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:56:09 - 
+09/28/2016 18:56:09 - SELECT * FROM Languages
+09/28/2016 18:56:09 - 
+09/28/2016 18:56:09 - SELECT * FROM Subjects WHERE idSubject = '32'
+09/28/2016 18:56:09 - SELECT * FROM TestSettings WHERE fkSubject = '32' ORDER BY name
+09/28/2016 18:56:09 - 
+09/28/2016 18:56:09 - SELECT * FROM Topics WHERE fkSubject = '32' ORDER BY name
+09/28/2016 18:56:09 - 
+09/28/2016 18:56:09 - SELECT idTopic
+                              FROM
+                                  Topics
+                              WHERE
+                                  fkSubject = '32'
+09/28/2016 18:56:09 - 
+09/28/2016 18:56:09 - SELECT idQuestion, status, translation, type, difficulty, fkLanguage, idTopic, name, shortText
+                              FROM Questions
+	                              JOIN TranslationQuestions ON idQuestion = fkQuestion
+	                              JOIN Topics ON idTopic = fkTopic
+                              WHERE
+                                  status != 'd'
+                                  AND
+                                  fkTopic IN (815,816,817,818,819,825) ORDER BY idQuestion
+09/28/2016 18:56:09 - 
+09/28/2016 18:56:30 - SELECT * FROM TestSettings WHERE idTestSetting = '17'
+09/28/2016 18:56:30 - SELECT idTopic, Topics.name AS topicName, numQuestions
+                     FROM Topics
+                         JOIN Topics_TestSettings ON idTopic = fkTopic
+                         JOIN TestSettings ON idTestSetting = fkTestSetting
+                     WHERE
+                         idTestSetting = '17'
+09/28/2016 18:56:30 - 
+09/28/2016 18:56:30 - SELECT idQuestion, status, translation, type, difficulty, fkLanguage, name, fkTopic
+                     FROM Questions, TranslationQuestions, Topics
+                     WHERE
+                        idTopic = fkTopic
+                        AND
+                        idQuestion=fkQuestion
+                        AND
+                        idQuestion IN (	SELECT Questions_TestSettings.fkQuestion
+                                        FROM Questions_TestSettings
+                                        WHERE fkTestSetting = '17')
+09/28/2016 18:56:30 - SELECT * FROM Topics WHERE fkSubject = '32'
+09/28/2016 18:56:30 - 
+09/28/2016 18:56:31 - SELECT * FROM TestSettings WHERE idTestSetting = '22'
+09/28/2016 18:56:31 - SELECT idTopic, Topics.name AS topicName, numQuestions
+                     FROM Topics
+                         JOIN Topics_TestSettings ON idTopic = fkTopic
+                         JOIN TestSettings ON idTestSetting = fkTestSetting
+                     WHERE
+                         idTestSetting = '22'
+09/28/2016 18:56:31 - 
+09/28/2016 18:56:31 - SELECT idQuestion, status, translation, type, difficulty, fkLanguage, name, fkTopic
+                     FROM Questions, TranslationQuestions, Topics
+                     WHERE
+                        idTopic = fkTopic
+                        AND
+                        idQuestion=fkQuestion
+                        AND
+                        idQuestion IN (	SELECT Questions_TestSettings.fkQuestion
+                                        FROM Questions_TestSettings
+                                        WHERE fkTestSetting = '22')
+09/28/2016 18:56:31 - 
+09/28/2016 18:56:31 - SELECT * FROM Topics WHERE fkSubject = '32'
+09/28/2016 18:56:31 - 
+09/28/2016 18:56:33 - SELECT * FROM TestSettings WHERE idTestSetting = '22'
+09/28/2016 18:56:33 - SELECT idTopic, Topics.name AS topicName, numQuestions
+                     FROM Topics
+                         JOIN Topics_TestSettings ON idTopic = fkTopic
+                         JOIN TestSettings ON idTestSetting = fkTestSetting
+                     WHERE
+                         idTestSetting = '22'
+09/28/2016 18:56:33 - 
+09/28/2016 18:56:33 - SELECT idQuestion, status, translation, type, difficulty, fkLanguage, name, fkTopic
+                     FROM Questions, TranslationQuestions, Topics
+                     WHERE
+                        idTopic = fkTopic
+                        AND
+                        idQuestion=fkQuestion
+                        AND
+                        idQuestion IN (	SELECT Questions_TestSettings.fkQuestion
+                                        FROM Questions_TestSettings
+                                        WHERE fkTestSetting = '22')
+09/28/2016 18:56:33 - 
+09/28/2016 18:56:33 - SELECT * FROM Topics WHERE fkSubject = '32'
+09/28/2016 18:56:33 - 
+09/28/2016 18:56:35 - UPDATE Users
+                      SET fkLanguage = '1'WHERE
+                          idUser = '1'
+09/28/2016 18:56:35 - SELECT * FROM Languages
+09/28/2016 18:56:35 - 
+09/28/2016 18:56:35 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:56:35 - 
+09/28/2016 18:56:35 - SELECT * FROM Languages
+09/28/2016 18:56:35 - 
+09/28/2016 18:56:35 - SELECT * FROM Subjects WHERE idSubject = '32'
+09/28/2016 18:56:35 - SELECT * FROM TestSettings WHERE fkSubject = '32' ORDER BY name
+09/28/2016 18:56:35 - 
+09/28/2016 18:56:35 - SELECT * FROM Topics WHERE fkSubject = '32' ORDER BY name
+09/28/2016 18:56:35 - 
+09/28/2016 18:56:35 - SELECT idTopic
+                              FROM
+                                  Topics
+                              WHERE
+                                  fkSubject = '32'
+09/28/2016 18:56:35 - 
+09/28/2016 18:56:35 - SELECT idQuestion, status, translation, type, difficulty, fkLanguage, idTopic, name, shortText
+                              FROM Questions
+	                              JOIN TranslationQuestions ON idQuestion = fkQuestion
+	                              JOIN Topics ON idTopic = fkTopic
+                              WHERE
+                                  status != 'd'
+                                  AND
+                                  fkTopic IN (815,816,817,818,819,825) ORDER BY idQuestion
+09/28/2016 18:56:35 - 
+09/28/2016 18:56:40 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:56:40 - 
+09/28/2016 18:56:40 - SELECT idExam, E.name AS examName, S.name AS subjectName, E.fkSubject, datetime, status
+                      FROM Exams AS E
+                      JOIN Subjects AS S ON S.idSubject = E.fkSubject
+                      JOIN Users_Subjects AS US ON US.fkSubject = S.idSubject
+                      JOIN Users AS U ON U.idUser  = US.fkUser
+                      WHERE
+                          E.status != 'a'  AND U.subGroup = '1'
+09/28/2016 18:56:40 - 
+09/28/2016 18:56:40 - SELECT idTest, timeStart, timeEnd, T.status, scoreTest, fkExam, fkSubject, idUser, S.name, S.surname, Sub.name AS subName
+                      FROM Tests AS T
+                          JOIN Exams AS E ON T.fkExam = E.idExam
+                          JOIN Users AS S ON T.fkUser = S.idUser
+                          JOIN Subjects AS Sub ON E.fkSubject = Sub.idSubject
+                      WHERE
+                          E.fkSubject IN (SELECT fkSubject
+                                          FROM Users_Subjects
+                                          WHERE
+                                              fkUser = '1')
+09/28/2016 18:56:40 - 
+09/28/2016 18:57:52 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:57:52 - 
+09/28/2016 18:57:52 - SELECT * FROM Languages
+09/28/2016 18:57:52 - 
+09/28/2016 18:57:52 - SELECT * FROM Subjects WHERE idSubject = '32'
+09/28/2016 18:57:52 - SELECT * FROM TestSettings WHERE fkSubject = '32' ORDER BY name
+09/28/2016 18:57:52 - 
+09/28/2016 18:57:52 - SELECT * FROM Topics WHERE fkSubject = '32' ORDER BY name
+09/28/2016 18:57:52 - 
+09/28/2016 18:57:52 - SELECT idTopic
+                              FROM
+                                  Topics
+                              WHERE
+                                  fkSubject = '32'
+09/28/2016 18:57:52 - 
+09/28/2016 18:57:52 - SELECT idQuestion, status, translation, type, difficulty, fkLanguage, idTopic, name, shortText
+                              FROM Questions
+	                              JOIN TranslationQuestions ON idQuestion = fkQuestion
+	                              JOIN Topics ON idTopic = fkTopic
+                              WHERE
+                                  status != 'd'
+                                  AND
+                                  fkTopic IN (815,816,817,818,819,825) ORDER BY idQuestion
+09/28/2016 18:57:52 - 
+09/28/2016 18:57:53 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:57:53 - 
+09/28/2016 18:58:01 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:58:01 - 
+09/28/2016 18:58:01 - SELECT *
+                          FROM
+                              Subjects
+                          WHERE
+                              idSubject IN (
+                                  SELECT fkSubject
+                                  FROM
+                                      Users_Subjects
+                                  WHERE
+                                      fkUser = '1'
+                              )
+                          ORDER BY name
+09/28/2016 18:58:01 - 
+09/28/2016 18:58:01 - SELECT *
+                      FROM
+                          Users AS U WHERE
+                               role IN ('at', 't', 'st','e')
+09/28/2016 18:58:01 - 
+09/28/2016 18:58:03 - SELECT * FROM Subjects WHERE idSubject = '32'
+09/28/2016 18:58:03 - SELECT * FROM Languages
+09/28/2016 18:58:03 - 
+09/28/2016 18:58:03 - SELECT *
+                      FROM
+                          Users AS U  JOIN Users_Subjects AS US ON U.idUser = US.fkUser
+                        WHERE
+                            role IN ('at', 't', 'st','e')
+                            AND
+                            US.fkSubject = '32';
+09/28/2016 18:58:03 - 
+09/28/2016 18:58:04 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:58:04 - 
+09/28/2016 18:58:04 - SELECT * FROM Languages
+09/28/2016 18:58:04 - 
+09/28/2016 18:58:04 - SELECT * FROM Subjects WHERE idSubject = '32'
+09/28/2016 18:58:04 - SELECT * FROM Topics WHERE fkSubject = '32' ORDER BY name
+09/28/2016 18:58:04 - 
+09/28/2016 18:58:04 - SELECT idTopic
+                              FROM
+                                  Topics
+                              WHERE
+                                  fkSubject = '32'
+09/28/2016 18:58:04 - 
+09/28/2016 18:58:04 - SELECT idQuestion, status, translation, type, difficulty, fkLanguage, idTopic, name, shortText
+                              FROM Questions
+	                              JOIN TranslationQuestions ON idQuestion = fkQuestion
+	                              JOIN Topics ON idTopic = fkTopic
+                              WHERE
+                                  status != 'd'
+                                  AND
+                                  fkTopic IN (815,816,817,818,819,825) ORDER BY idQuestion
+09/28/2016 18:58:04 - 
+09/28/2016 18:58:09 - SELECT * FROM Subjects WHERE idSubject = '32'
+09/28/2016 18:58:09 - SELECT * FROM Languages
+09/28/2016 18:58:09 - 
+09/28/2016 18:58:09 - SELECT * FROM Topics WHERE fkSubject = '32' ORDER BY name
+09/28/2016 18:58:09 - 
+09/28/2016 18:58:21 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:58:21 - 
+09/28/2016 18:58:21 - SELECT * FROM Users WHERE role = 't'
+09/28/2016 18:58:21 - SELECT * FROM Users WHERE role = 'at'
+09/28/2016 18:58:21 - SELECT * FROM Users WHERE role = 'e'
+09/28/2016 18:58:21 - SELECT * FROM Users WHERE role = 's'
+09/28/2016 18:58:21 - SELECT * FROM Subjects
+09/28/2016 18:58:21 - SELECT * FROM Questions
+09/28/2016 18:58:21 - SELECT * FROM Exams
+09/28/2016 18:58:21 - SELECT * FROM Tests
+09/28/2016 18:58:24 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:58:24 - 
+09/28/2016 18:58:24 - SELECT * FROM Languages
+09/28/2016 18:58:24 - 
+09/28/2016 18:58:30 - SELECT * FROM Users WHERE idUser = '1'
+09/28/2016 18:58:30 - SELECT *
+                      FROM Languages
+                      ORDER BY alias
+09/28/2016 18:58:30 - 
+09/28/2016 18:58:30 - SELECT idExam, E.name AS examName, S.name AS subjectName, E.fkSubject, datetime, status
+                      FROM Exams AS E
+                      JOIN Subjects AS S ON S.idSubject = E.fkSubject
+                      JOIN Users_Subjects AS US ON US.fkSubject = S.idSubject
+                      JOIN Users AS U ON U.idUser  = US.fkUser
+                      WHERE
+                          E.status != 'a'  AND U.subGroup = '1'
+09/28/2016 18:58:30 - 
+09/28/2016 18:58:30 - SELECT idTest, timeStart, timeEnd, T.status, scoreTest, fkExam, fkSubject, idUser, S.name, S.surname, Sub.name AS subName
+                      FROM Tests AS T
+                          JOIN Exams AS E ON T.fkExam = E.idExam
+                          JOIN Users AS S ON T.fkUser = S.idUser
+                          JOIN Subjects AS Sub ON E.fkSubject = Sub.idSubject
+                      WHERE
+                          E.fkSubject IN (SELECT fkSubject
+                                          FROM Users_Subjects
+                                          WHERE
+                                              fkUser = '1')
+09/28/2016 18:58:30 - 
