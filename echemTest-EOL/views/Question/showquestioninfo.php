@@ -7,7 +7,8 @@
  * Desc: Show question and releated answers info panels or show empty infos for new question
  */
 
-global $config, $log, $user;
+
+global $config, $log, $user, $qlog, $old_question_id, $new_question_id;
 
 // Variables for new question
 $subjectInfo = null;

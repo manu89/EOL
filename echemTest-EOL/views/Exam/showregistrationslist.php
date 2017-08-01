@@ -22,7 +22,7 @@ if(!(isset($_POST['action'])) || ($_POST['action'] != 'refresh')){
             <?= ttAdd ?>
         </div>
     </div>
-    <table id="registrationsTable" class="stripe hover order-column">
+    <table id="registrationsTable" class="stripe hover order-column" style="text-align:center;">
         <thead>
             <tr>
                 <th class="uStatus"></th>
@@ -46,6 +46,13 @@ if(!(isset($_POST['action'])) || ($_POST['action'] != 'refresh')){
         if(($db->qSelect('Exams', 'idExam', $_POST['idExam'])) && ($examInfo = $db->nextRowAssoc())){
             if(($db->qSelect('TestSettings', 'idTestSetting', $examInfo['fkTestSetting'])) && ($testsettingInfo = $db->nextRowAssoc())){
                 if ($db->qExamRegistrationsList($_POST['idExam'])) {
+                    /*
+                    's' => array('imageTitle' => 'Started',
+                            'action' => 'block',
+                            'actionIcon' => 'block',
+                            'actionTitle' => ttBlock,
+                            'actionFunction' => "toggleBlockTest(new Array(true, this));"),
+                    */
                     $statuses = array('w' => array('imageTitle' => 'Waiting',
                         'action' => 'block',
                         'actionIcon' => 'block',
@@ -53,9 +60,9 @@ if(!(isset($_POST['action'])) || ($_POST['action'] != 'refresh')){
                         'actionFunction' => "toggleBlockTest(new Array(true, this));"),
                         's' => array('imageTitle' => 'Started',
                             'action' => 'block',
-                            'actionIcon' => 'block',
+                            'actionIcon' => 'working',
                             'actionTitle' => ttBlock,
-                            'actionFunction' => "toggleBlockTest(new Array(true, this));"),
+                            'actionFunction' => "saveStudentExamProblem(new Array(true, this));"),
                         'e' => array('imageTitle' => 'Ended',
                             'action' => 'correct',
                             'actionIcon' => 'correct',

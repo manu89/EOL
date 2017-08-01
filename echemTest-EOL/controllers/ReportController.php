@@ -1512,6 +1512,10 @@ private function actionDeletetemplate(){
             $pdf->SetFont('Helvetica','',12);
             $pdf->Cell(50,10,$details['qtopic'],0,1,"");
             $pdf->SetFont('Helvetica','B',12);
+            $pdf->Cell(80,10,"ID",0,0,"");
+            $pdf->SetFont('Helvetica','',12);
+            $pdf->Cell(50,10,$details['idQuestion'],0,1,"");
+            $pdf->SetFont('Helvetica','B',12);
             $pdf->Cell(80,10,ttDifficulty,0,0,"");
             $pdf->SetFont('Helvetica','',12);
             $pdf->Cell(50,10,$details['difficulty'],0,1,"");
@@ -1546,7 +1550,7 @@ private function actionDeletetemplate(){
         if (file_exists($dir)==false){
             mkdir($config['systemViewsDir']."Report/generated_report/Creport/".$user->surname."_".$user->name);
         }
-        $pdf->Output($config['systemViewsDir']."Report/generated_report/Creport/".$user->surname."_".$user->name."/Creport_".$user->surname."_".$user->name."_".date("d-m-Y_H:i:s",$t).".pdf","F");
+       // $pdf->Output($config['systemViewsDir']."Report/generated_report/Creport/".$user->surname."_".$user->name."/Creport_".$user->surname."_".$user->name."_".date("d-m-Y_H:i:s",$t).".pdf","F");
         $pdf->Output();
 
 

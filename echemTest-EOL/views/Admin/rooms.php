@@ -39,17 +39,17 @@
             <div class="clearer"></div>
 
             <label class="b2Space" for="infoIPStart"><?= ttIPStart ?> : </label>
-            <input class="readonly" type="text" id="infoIPStart0" size="3" value=""> .
-            <input class="readonly" type="text" id="infoIPStart1" size="3" value=""> .
-            <input class="readonly" type="text" id="infoIPStart2" size="3" value=""> .
-            <input class="readonly" type="text" id="infoIPStart3" size="3" value="">
+            <input class="readonly" style="width:13%" type="text" id="infoIPStart0" size="3" value="">.
+            <input class="readonly" style="width:13%"  type="text" id="infoIPStart1" size="3" value="">.
+            <input class="readonly" style="width:13%"  type="text" id="infoIPStart2" size="3" value="">.
+            <input class="readonly" style="width:13%"  type="text" id="infoIPStart3" size="3" value="">
             <div class="clearer"></div>
 
             <label class="b2Space" for="infoIPEnd"><?= ttIPEnd ?> : </label>
-            <input class="readonly" type="text" id="infoIPEnd0" size="3" value=""> .
-            <input class="readonly" type="text" id="infoIPEnd1" size="3" value=""> .
-            <input class="readonly" type="text" id="infoIPEnd2" size="3" value=""> .
-            <input class="readonly" type="text" id="infoIPEnd3" size="3" value="">
+            <input class="readonly" style="width:13%"  type="text" id="infoIPEnd0" size="3" value="">.
+            <input class="readonly" style="width:13%"  type="text" id="infoIPEnd1" size="3" value="">.
+            <input class="readonly" style="width:13%"  type="text" id="infoIPEnd2" size="3" value="">.
+            <input class="readonly" style="width:13%"  type="text" id="infoIPEnd3" size="3" value="">
             <div class="clearer"></div>
 
         </form>

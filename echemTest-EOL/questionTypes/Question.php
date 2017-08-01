@@ -91,8 +91,16 @@ abstract class Question {
     public function createNewQuestion(){
         global $log;
         $db = new sqlDB();
+        $db2 = new sqlDB();
         if($db->qNewQuestion($this->get('idTopic'), $this->get('type'), $this->get('difficulty'), $this->get('extras'), $this->get('shortText'), $this->get('translationsQ'))){
             if(($idQuestion = $db->nextRowEnum()) && ($idQuestion = $idQuestion[0])){
+                if($db2->qGetSettingsOnNewQuestion($this->get('idTopic'))){
+                    $testSetting = $db2->getResultAssoc('idTestSetting');
+                    foreach ($testSetting as $idtestSetting => $test){
+                        $db2->qInsertQuestionsDistributionOnNewQuestion($idtestSetting,$idQuestion);
+                    }
+                }
+                $db2->close();
                 return $idQuestion;
             }else{
                 $log->append("createNewQuestion Error !");

@@ -14,7 +14,7 @@ class sqlDB {
     private $dbName;
     private $dbUsername;
     private $dbPassword;
-    private $mysqli;
+    public $mysqli;
     private $active = false;
     private $error;
     public 	$result;
@@ -79,6 +79,14 @@ class sqlDB {
                 'email'     => $e,
                 'lang'      => $l,
                 'role'      => $r);
+            // AGGIUNTA DAMIANO LOGIN TIME lastLogin
+            /*
+            $dt = new DateTime(); 
+            $dt=$dt->format('Y-m-d H:i:s');
+            $this->mysqli = $this->connect();
+            $query = "UPDATE Users SET `lastLogin` = '$dt' WHERE `idUser` = 1";
+            $this->execQuery($query);
+            */
         }else{
             $result = null;
         }
@@ -611,7 +619,7 @@ class sqlDB {
                 }else{
                     array_push($topics, $idTopic);
                 }
-                if(count($topics) > 0){
+                if(count($topics) > 0){ // DAMIANO CONTROLLA PERCHE STATUS ERA DIVERSO DA D E NON UGUALE A
                     $query = "SELECT idQuestion, status, translation, type, difficulty, fkLanguage, idTopic, name, shortText
                               FROM Questions
 	                              JOIN TranslationQuestions ON idQuestion = fkQuestion
@@ -641,6 +649,40 @@ class sqlDB {
 
         return $ack;
     }
+
+    /**
+     * @name    qCountQuestionPerTopic
+     * @descr   Get questions info by subject ID, topic ID or question ID
+     */
+    public function qCountQuestionPerTopic($idTopic,$difficulty, $idLanguage = null){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        try{
+            $query = "SELECT count(*) as maxQuestions
+                      FROM Questions
+                          JOIN TranslationQuestions ON idQuestion = fkQuestion
+                          JOIN Topics ON idTopic = fkTopic
+                      WHERE
+                          status = 'a'
+                          AND
+                          difficulty = $difficulty
+                          AND
+                          fkTopic = $idTopic";
+            if($idLanguage != null)
+                $query .= " AND fkLanguage = '$idLanguage'";
+
+            $this->mysqli = $this->connect();
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $ack;
+    }
+
+
 
     /**
      * @name    qQuestionInfo
@@ -741,6 +783,54 @@ class sqlDB {
             $query = "SELECT LAST_INSERT_ID()";
             array_push($queries, $query);
             $this->execTransaction($queries);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $ack;
+    }
+
+    /**
+     * @name    qGetSettingsOnNewQuestion
+     * @param   $idTopic            String        Topic's ID
+     * @return  Boolean
+     * @descr   Get all the test settings related on a dated topic
+     */
+    public function qGetSettingsOnNewQuestion($idTopic){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "SELECT idTestSetting 
+                      FROM Topics JOIN Subjects ON Topics.fkSubject = Subjects.idSubject
+                      JOIN TestSettings ON Subjects.idSubject = TestSettings.fkSubject
+                      WHERE Topics.idTopic = '$idTopic'";
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $ack;
+    }
+
+    /**
+     * @name    qInsertQuestionsDistributionOnNewQuestion
+     * @return  Boolean
+     * @descr   Insert into questions distribution the new question
+     */
+    public function qInsertQuestionsDistributionOnNewQuestion($idTestSetting,$idQuestion){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "INSERT INTO questionsdistribution (fkTestsetting, fkQuestion, counter)
+                          VALUES('$idTestSetting','$idQuestion',0)";
+            $this->execQuery($query);
+
         }catch(Exception $ex){
             $ack = false;
             $log->append(__FUNCTION__." : ".$this->getError());
@@ -1302,15 +1392,15 @@ class sqlDB {
         $ack = true;
         $this->result = null;
         $this->mysqli = $this->connect();
-
         try{
-            $query = "SELECT idExam, E.name AS examName, S.name AS subjectName, E.fkSubject, datetime, status
+          // ci stava anche AND U.subGroup = '$subGroup
+            $query = "SELECT DISTINCT idExam, E.name AS examName, S.name AS subjectName, E.fkSubject, datetime, status
                       FROM Exams AS E
                       JOIN Subjects AS S ON S.idSubject = E.fkSubject
                       JOIN Users_Subjects AS US ON US.fkSubject = S.idSubject
                       JOIN Users AS U ON U.idUser  = US.fkUser
                       WHERE
-                          E.status != 'a'  AND U.subGroup = '$subGroup'";
+                          E.status != 'a' ";
             if($idTeacher != null)
                 $query .= "AND
                            E.fkSubject IN (SELECT US.fkSubject
@@ -1511,7 +1601,7 @@ class sqlDB {
             $this->execTransaction($queries);
         }catch(Exception $ex){
             $ack = false;
-            $log->append(__FUNCTION__." : ".$this->getError());
+            $log->append(__FUNCTION__." ERRORE : ".$this->getError());
         }
 
         return $ack;
@@ -1833,7 +1923,7 @@ class sqlDB {
 
         try{
             $data = $this->prepareData(array($idTestSetting));
-            $query= "SELECT idTopic, Topics.name AS topicName, numQuestions
+            $query= "SELECT idTopic, Topics.name AS topicName,Topics_TestSettings.numQuestions, Topics_TestSettings.numEasy, Topics_TestSettings.numMedium, Topics_TestSettings.numHard
                      FROM Topics
                          JOIN Topics_TestSettings ON idTopic = fkTopic
                          JOIN TestSettings ON idTestSetting = fkTestSetting
@@ -1903,23 +1993,25 @@ class sqlDB {
      * @return  Boolean
      * @descr   Returns true if info was saved successfully, false otherwise
      */
-    public function qUpdateTestSettingsInfo($idTestSetting, $completeUpdate, $name, $desc, $scoreType=null, $scoreMin=null,
-                                            $bonus=null, $negative=null, $editable=null, $duration=null, $questions=null,
-                                            $distributionMatrix=null, $questionsT=null, $questionsD=null, $questionsM=null){
+    public function qUpdateTestSettingsInfo($questionsDistribution,$idTestSetting, $completeUpdate, $name, $desc, $scoreType=null, $scoreMin=null,
+                                            $bonus=null, $negative=null, $editable=null,$certificate=null, $duration=null, $questions=null,
+                                            $easy=null, $medium=null, $hard=null, $matrixDistribution=null, $mandatQuestionsI=null,
+                                            $numTopics=null){
         global $log;
         $ack = true;
         $this->result = null;
         $this->mysqli = $this->connect();
 
         try{
-            $data = $this->prepareData(array($name, $desc, $negative, $editable));
+            $data = $this->prepareData(array($name, $desc));
             if($completeUpdate != 'true'){
                 $query = "UPDATE TestSettings
                           SET
                               name = '".$data[0]."',
                               description = '".$data[1]."',
                               negative = '$negative',
-                              editable = '$editable'
+                              editable = '$editable',
+                              certificate = '$certificate'
                           WHERE
                               idTestSetting = '$idTestSetting'";
                 $this->execQuery($query);
@@ -1938,9 +2030,10 @@ class sqlDB {
                               duration = '$duration',
                               negative = '$negative',
                               editable = '$editable',
-                              numEasy = '".$questionsD[1]['total']."',
-                              numMedium = '".$questionsD[2]['total']."',
-                              numHard = '".$questionsD[3]['total']."'
+                              certificate = '$certificate',
+                              numEasy = '$easy',
+                              numMedium = '$medium',
+                              numHard = '$hard'
                           WHERE
                               idTestSetting = '$idTestSetting'";
                 array_push($queries, $query);
@@ -1949,10 +2042,10 @@ class sqlDB {
                           WHERE
                               fkTestSetting = '$idTestSetting'";
                 array_push($queries, $query);
-                foreach($questionsM as $idQuestion){
+                foreach($mandatQuestionsI as $idQuestion){
                     if($idQuestion != 0){
                         $query = "INSERT INTO Questions_TestSettings (fkQuestion, fkTestSetting)
-                                  VALUES ('$idQuestion', '$idTestSetting')";
+                              VALUES ('$idQuestion', '$idTestSetting')";
                         array_push($queries, $query);
                     }
                 }
@@ -1961,16 +2054,22 @@ class sqlDB {
                           WHERE
                               fkTestSetting = '$idTestSetting'";
                 array_push($queries, $query);
-                foreach($questionsT as $topicID => $arrayQuestionT){
-                    if($arrayQuestionT != null){
-                        $numEasy = $distributionMatrix[1][$topicID];
-                        $numMedium = $distributionMatrix[2][$topicID];
-                        $numHard = $distributionMatrix[3][$topicID];
-                        $numQuestions = $arrayQuestionT['total'];
-                        $query = "INSERT INTO Topics_TestSettings (fkTestSetting, fkTopic, numEasy, numMedium, numHard, numQuestions)
-                              VALUES('$idTestSetting', '$topicID', '$numEasy', '$numMedium', '$numHard', '$numQuestions')";
-                        array_push($queries, $query);
-                    }
+                for ($i=0; $i<$numTopics; $i++){
+                    $numEasy = $matrixDistribution[$i][0];
+                    $numMedium = $matrixDistribution[$i][1];
+                    $numHard = $matrixDistribution[$i][2];
+                    $idTopic = $matrixDistribution[$i][3];
+                    $numQuestions = $numEasy+$numMedium+$numHard;
+                    $query = "INSERT INTO Topics_TestSettings (fkTestSetting, fkTopic, numEasy, numMedium, numHard, numQuestions)
+                          VALUES($idTestSetting, '$idTopic', '$numEasy', '$numMedium', '$numHard', '$numQuestions')";
+                    array_push($queries, $query);
+                }
+                $query = "DELETE FROM questionsdistribution WHERE fkTestSetting= '$idTestSetting'";
+                array_push($queries, $query);
+                foreach($questionsDistribution as $question){
+                    $query = "INSERT INTO questionsdistribution (fkTestSetting,fkQuestion,counter)
+                              VALUES ($idTestSetting, '$question', 0)";
+                    array_push($queries,$query);
                 }
 //                $log->append(var_export($queries, true));
                 $this->execTransaction($queries);
@@ -2003,50 +2102,67 @@ class sqlDB {
      * @return  Boolean
      * @descr   Returns true if info was saved successfully, false otherwise
      */
-    public function qNewSettings($idSubject, $name, $scoreType, $scoreMin, $bonus, $negative, $editable, $duration,
-                                 $questions, $desc, $distributionMatrix, $questionsT, $questionsD, $questionsM){
+    public function qNewSettings($idSubject, $questionDistribution, $name, $scoreType, $scoreMin, $bonus, $negative, $editable, $certificate, $duration,
+                                 $questions, $easy, $medium, $hard, $desc, $matrixDistribution, $mandatQuestions, $numTopics){
         global $log;
         $ack = true;
         $this->result = null;
         $this->mysqli = $this->connect();
+
+        $log->append(">>>>>>>>>>>>>>>>>>>> 15.1");
         $log->append($idSubject. $name. $scoreType. $scoreMin. $bonus. $negative. $editable. $duration.
             $questions. $desc);
         try{
-        	$queries = array();
+            $queries = array();
 
+        $log->append(">>>>>>>>>>>>>>>>>>>> 15.2");
             $data = $this->prepareData(array($name, $desc));
             $scale = round($scoreType / $questions, 1,PHP_ROUND_HALF_UP);
-            $query = "INSERT INTO TestSettings (name, description, questions, scoreType, scoreMin, scale, bonus, negative, editable, duration, numEasy, numMedium, numHard, fkSubject)
-                  	  VALUES ('$data[0]', '$data[1]', '$questions', '$scoreType', '$scoreMin', '$scale', '$bonus', '$negative', '$editable', '$duration', '".$questionsD[1]['total']."', '".$questionsD[2]['total']."', '".$questionsD[3]['total']."', '$idSubject')";
-			array_push($queries, $query);
+            $query = "INSERT INTO TestSettings (name, description, questions, scoreType, scoreMin, scale, bonus, negative, editable, certificate, duration, numEasy, numMedium, numHard, fkSubject)
+                  	  VALUES ('$data[0]', '$data[1]', '$questions', '$scoreType', '$scoreMin', '$scale', '$bonus', '$negative', '$editable','$certificate', '$duration', '$easy', '$medium', '$hard','$idSubject')";
+            array_push($queries, $query);
             $query = "SET @settID = LAST_INSERT_ID()";
             array_push($queries, $query);
 
-            foreach($questionsM as $idQuestion){
+        $log->append(">>>>>>>>>>>>>>>>>>>> 15.3");
+            foreach($mandatQuestions as $idQuestion){
                 if($idQuestion != 0){
                     $query = "INSERT INTO Questions_TestSettings (fkQuestion, fkTestSetting)
                               VALUES ('$idQuestion', @settID)";
                     array_push($queries, $query);
                 }
-			}
-            foreach($questionsT as $topicID => $arrayQuestionT){
-                if($arrayQuestionT != null){
-                    $numEasy = $distributionMatrix[1][$topicID];
-                    $numMedium = $distributionMatrix[2][$topicID];
-                    $numHard = $distributionMatrix[3][$topicID];
-                    $numQuestions = $arrayQuestionT['total'];
-                    $query = "INSERT INTO Topics_TestSettings (fkTestSetting, fkTopic, numEasy, numMedium, numHard, numQuestions)
-                              VALUES(@settID, '$topicID', '$numEasy', '$numMedium', '$numHard', '$numQuestions')";
-                    array_push($queries, $query);
-                }
             }
+
+        $log->append(">>>>>>>>>>>>>>>>>>>> 15.4");
+            for ($i=0; $i<$numTopics; $i++){
+                $numEasy = $matrixDistribution[$i][0];
+                $numMedium = $matrixDistribution[$i][1];
+                $numHard = $matrixDistribution[$i][2];
+                $idTopic = $matrixDistribution[$i][3];
+                $numQuestions = $numEasy+$numMedium+$numHard;
+                $query = "INSERT INTO Topics_TestSettings (fkTestSetting, fkTopic, numEasy, numMedium, numHard, numQuestions)
+                          VALUES(@settID, '$idTopic', '$numEasy', '$numMedium', '$numHard', '$numQuestions')";
+                array_push($queries, $query);
+            }
+        $log->append(">>>>>>>>>>>>>>>>>>>> 15.5");
+
+            foreach($questionDistribution as $question){
+                    $query = "INSERT INTO questionsdistribution (fkTestSetting,fkQuestion,counter)
+                              VALUES (@settID, '$question', 0)";
+                    array_push($queries,$query);
+            }
+
+        $log->append(">>>>>>>>>>>>>>>>>>>> 15.6");
+
             $query = "SELECT @settID";
             array_push($queries, $query);
 
-			//********************************************************
+            //********************************************************
 //            $log->append(var_export($queries, true));
             $this->execTransaction($queries);
+        $log->append(">>>>>>>>>>>>>>>>>>>> 15.7");
         }catch(Exception $ex){
+        $log->append(">>>>>>>>>>>>>>>>>>>> 15.8");
             $ack = false;
             $log->append(__FUNCTION__." : ".$this->getError());
         }
@@ -2143,6 +2259,27 @@ class sqlDB {
 
         return $ack;
     }
+
+    public function qListSpecificSubgroup($idGroup){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+
+            $query = "SELECT *
+                          FROM
+                               SubGroup WHERE fkGroup = $idGroup ORDER BY NameSubGroup";
+
+            $this->execQuery($query);
+        }catch (Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__.' : '.$this->getError());
+        }
+
+        return $ack;
+    }
+
     public function qGetSubGroup($id){
         global $log;
         $ack = true;
@@ -2162,6 +2299,7 @@ class sqlDB {
 
         return $ack;
     }
+
     public function qGetGroup($id){
         global $log;
         $ack = true;
@@ -2229,13 +2367,14 @@ class sqlDB {
      * @return  Boolean
      * @descr   Returns true if User's profile was successfully updated, false otherwise
      */
-    public function qUpdateProfile($idUser, $name=null, $surname=null, $email=null, $password=null, $lang=null, $role = null){
+    public function qUpdateProfile($idUser, $name=null, $surname=null, $group=null, $subgroup=null,$email=null, $password=null, $lang=null, $role = null){
         global $log;
         $ack = true;
         $this->result = null;
         $this->mysqli = $this->connect();
 
         try{
+            
             $query = "UPDATE Users
                       SET ";
             if($name != null){
@@ -2245,6 +2384,12 @@ class sqlDB {
             if($surname != null){
                 $data = $this->prepareData(array($surname));
                 $query .= "surname = '$data[0]',";
+            }
+            if($group != null){
+                $query .= "`group` = '$group',";
+            }
+            if($subgroup != null){
+                $query .= "subgroup = '$subgroup',";
             }
             if($email != null){
                 $query .= "email = '$email',";
@@ -2469,6 +2614,36 @@ class sqlDB {
         return $ack;
     }
 
+
+/**
+     * @name    qUpdateTestAnswers
+     * @param   $idSet          String      Questions set ID
+     * @param   $question      Array       Array of all question's ID
+     * @param   $answer        Array       Array of all question's answer/s
+     * @return  Boolean
+     * @descr   Return true if successfully update answer for requested test
+     */
+    public function qUpdateTestAnswer($idSet,$IdLang, $question, $answer){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+
+        try{
+            //$query = "UPDATE Sets_Questions SET answer = CASE\n";
+            $query = "UPDATE Sets_Questions SET fkIdLanguage = $IdLang , answer = CASE\n"; // inserisco nella tabella anche la lingua utilizzata per eseguire il test
+            $query .= "WHEN (fkSet = $idSet AND fkQuestion = $question) THEN '$answer'\n";
+            $query .= "ELSE answer
+                       END";
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack =false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+        return $ack;
+    }
+
+
     /**
      * @name    qEndTest
      * @param   $idSet          String      Question set ID
@@ -2482,6 +2657,79 @@ class sqlDB {
         $this->mysqli = $this->connect();
 
         try{
+            $datetime = date("Y-m-d H:i:s");
+
+            // Get scale and negative from test settings
+            $query = "SELECT scale, negative
+                      FROM TestSettings AS TS
+                          JOIN Exams AS E ON E.fkTestSetting = TS.idTestSetting
+                          JOIN Tests AS T ON T.fkExam = E.idExam
+                      WHERE
+                          T.fkSet = '$idSet'";
+            $this->execQuery($query);
+            $row = $this->nextRowAssoc();
+            $scale = $row['scale'];
+            $allowNegative = ($row['negative'] == 0)? false : true;
+
+            // Calculate test's score
+            $this->mysqli = $this->connect();
+            $score = 0;
+            $query = "SELECT idQuestion, type, answer
+                      FROM Sets_Questions AS SQ
+                           JOIN Questions AS Q ON Q.idQuestion = SQ.fkQuestion
+                      WHERE
+                          fkSet = '$idSet'";
+            $this->execQuery($query);
+            $test = $this->getResultAssoc('idQuestion');
+
+            foreach($test as $idQuestion => $setQuestion){
+                $question = Question::newQuestion($setQuestion['type'], $setQuestion);
+                $scoreTemp = $question->getScoreFromGivenAnswer();
+                // If negative score is not allowed and question's score is negative sum 0, sum real score otherwise
+                $score2add = (!$allowNegative && $scoreTemp < 0)? 0 : $scoreTemp;
+                $score += $score2add;
+            }
+            $score = round($scale * $score, 2);
+
+            // Update test
+            $this->mysqli = $this->connect();
+            $query = "UPDATE Tests
+                      SET timeEnd = '$datetime',
+                          scoreTest = '$score',
+                          status = 'e'
+                      WHERE
+                          fkSet = '$idSet'";
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack =false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $ack;
+    }
+
+
+    /**
+     * @name    qEndTest
+     * @param   $idSet          String      Question set ID
+     * @return  Boolean
+     * @descr   Return true if test successfully stopped
+     */
+    public function qEndTestByTeacher($idTest){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+
+        try{
+          $query = "SELECT fkSet
+                      FROM Tests 
+                      WHERE
+                          idTest = '$idTest'";
+          $this->execQuery($query);
+          $idSet = $this->nextRowAssoc();
+          $idSet = $idSet["fkSet"];
+
             $datetime = date("Y-m-d H:i:s");
 
             // Get scale and negative from test settings
@@ -2633,13 +2881,13 @@ class sqlDB {
 *******************************************************************/
 
     /**
-     * @name    qMakeQuestionsSet
+     * @name    qMakeQuestionsSetOld
      * @param   $idExam     String        Exam's ID
      * @param   $idUser     String        Student's ID
      * @return  Boolean
      * @descr   Create a new test, create a question's set and register student in exam
      */
-    public function qMakeQuestionsSet($idExam, $idUser){
+    public function qMakeQuestionsSetOld($idExam, $idUser){
         global $log;
         $ack = true;
         $this->error = null;
@@ -2801,6 +3049,145 @@ class sqlDB {
 
         return $ack;
 
+    }
+
+    /**
+     * @name    qMakeQuestionsSet
+     * @param   $idExam     String        Exam's ID
+     * @param   $idUser     String        Student's ID
+     * @return  Boolean
+     * @descr   Create a new test, create a question's set and register student in exam
+     */
+    public function qMakeQuestionsSet($idExam, $idUser){
+        global $log;
+        $ack = true;
+        $this->error = null;
+        $this->mysqli = $this->connect();
+
+        try{
+            $query = "SELECT fkTestSetting
+                      FROM
+                          Exams
+                      WHERE
+                          idExam = '$idExam'";
+            $this->execQuery($query);
+            $examInfo = $this->nextRowAssoc();
+            $idTestSetting = $examInfo['fkTestSetting'];
+
+            $questionsSelected = array();
+            $query = "SELECT *
+			 	 	  FROM
+			 		      Questions_TestSettings
+			 		  WHERE
+			 		      fkTestSetting = '$idTestSetting'";
+            $this->execQuery($query);
+            while(($question = $this->nextRowAssoc())){
+                array_push($questionsSelected, $question['fkQuestion']);
+            }
+
+//            $log->append("questionsSelected: ".var_export($questionsSelected, true));
+
+            $topics = array();
+            $this->mysqli = $this->connect();
+            $query= "SELECT *
+					 FROM
+					     Topics_TestSettings
+					 WHERE
+					 	 fkTestSetting = '$idTestSetting'";
+            $this->execQuery($query);
+            while(($topic = $this->nextRowAssoc())){
+                $topics[$topic['fkTopic']] = $topic;
+            }
+
+//            $log->append("topics: ".var_export($topics, true));
+
+            $questionsSet = $questionsSelected;
+            foreach($topics as $idTopic => $topicInfo){
+                $difficulties = getSystemDifficulties();
+                foreach($difficulties as $difficulty => $difficultyName){
+                    $allQuestions = array();
+                    $difficultyName = 'num'.ucfirst($difficultyName);
+                    $this->mysqli = $this->connect();
+                    $query = "SELECT Questions.idQuestion, questionsdistribution.counter
+                              FROM
+                                  Questions JOIN questionsdistribution 
+                                  ON Questions.idQuestion = questionsdistribution.fkQuestion
+                              WHERE
+                                  Questions.fkTopic = '$idTopic'
+                                  AND
+                                  questionsdistribution.fkTestSetting = '$idTestSetting'
+                                  AND
+                                  Questions.difficulty = '$difficulty'
+                                  AND
+                                  Questions.status = 'a' ";
+                    if(count($questionsSelected) > 0)
+                        $query .= "AND
+                                   idQuestion NOT IN (".implode(',', $questionsSelected).")";
+                    $this->execQuery($query);
+                    while(($question = $this->nextRowAssoc())){
+                        $allQuestions[$question['idQuestion']] = $question['counter'];
+                    }
+                    $questionsForDifficulty = $topics[$idTopic][$difficultyName];
+                    if($questionsForDifficulty <= count($allQuestions)){
+                        while($questionsForDifficulty > 0){
+                            $minCounterQuestions = $this->getMinCounterQuestions($allQuestions);
+                            $idToAdd = rand(0, (count($minCounterQuestions) - 1));
+                            array_push($questionsSet, $minCounterQuestions[$idToAdd]);
+                            unset($allQuestions[$minCounterQuestions[$idToAdd]]);
+                            $questionsForDifficulty--;
+                        }
+                    }
+                }
+            }
+            $this->mysqli = $this->connect();
+            $queries = array();
+            $query = "INSERT INTO Sets (assigned, fkExam)
+                      VALUES ('n', '$idExam')";
+            array_push($queries, $query);
+
+            $query = "INSERT INTO Sets_Questions (fkSet, fkQuestion, answer)
+                  VALUES \n";
+            foreach ($questionsSet as $idQuestion) {
+                $query .= "(LAST_INSERT_ID(), '$idQuestion', ''),";
+            }
+            $query = substr_replace($query, '', -1);// Remove last coma
+
+            array_push($queries, $query);
+
+            $query = "INSERT INTO Tests (status, fkExam, fkUser)
+                      VALUES ('w', '$idExam', '$idUser')";
+            array_push($queries, $query);
+
+            $query = "UPDATE questionsdistribution SET counter = counter+1
+                      WHERE fkTestSetting = '$idTestSetting' AND
+                      fkQuestion IN (".implode(',', $questionsSet).")";
+            array_push($queries, $query);
+
+            $this->execTransaction($queries);
+
+        }catch(Exception $e){
+            $ack = false;
+            $log->append("Exception: ".$this->getError());
+        }
+        return $ack;
+    }
+
+    /**
+     * @name    getMinCounterQuestions
+     * @return  array
+     * @descr   Return the array of the questions that have minimum counter
+     */
+    private function getMinCounterQuestions($allQuestions){
+        global $log;
+        $questions = array();
+        $min = min($allQuestions);
+        foreach ($allQuestions as $idQuestion => $counter){
+            if($counter == $min){
+                array_push($questions,$idQuestion);
+            }
+        }
+        $log->append("Domande: ".var_export($questions, true));
+        return $questions;
     }
 
     /**
@@ -3855,7 +4242,7 @@ class sqlDB {
         $this->mysqli=$this->connect();
         $val=array();
         try{
-            $query="select Distinct Topics.name, TranslationQuestions.translation, History.answer,
+            $query="select Distinct Questions.idQuestion,Topics.name, TranslationQuestions.translation, History.answer,
                     Questions.difficulty, History.score, Questions.type
                     FROM Topics JOIN (History JOIN (TranslationQuestions JOIN Questions
                     on TranslationQuestions.fkQuestion=Questions.idQuestion)
@@ -3867,7 +4254,7 @@ class sqlDB {
 
             $this->execQuery($query);
             if($this->numResultRows()==0){
-              $query="select Distinct Topics.name, TranslationQuestions.translation, History.answer,
+              $query="select Distinct Questions.idQuestion,Topics.name, TranslationQuestions.translation, History.answer,
                 Questions.difficulty, History.score, Questions.type
                 FROM Topics JOIN (History JOIN (TranslationQuestions JOIN Questions
                 on TranslationQuestions.fkQuestion=Questions.idQuestion)
@@ -3880,9 +4267,17 @@ class sqlDB {
             }
             if ($this->numResultRows()>0){
               $row=mysqli_fetch_array($this->result);
+
               $val['questionText']=strip_tags($row['translation']);
               $val['questionText'] = preg_replace("/&#?[a-z0-9]+;/i","", $val['questionText']);
-              $val['difficulty']=$row['difficulty']."/3";
+              if($row['difficulty'] == '1'){
+                $val['difficulty'] = 'Easy';
+              }elseif ($row['difficulty'] == '2') {
+                $val['difficulty'] = 'Medium';
+              }else{
+                $val['difficulty'] = 'Hard';
+              }
+              $val['idQuestion'] = $row['idQuestion'];
               $val['score']=$row['score'];
               $val['qtype']=$row['type'];
               $val['qtopic']=$row['name'];
@@ -10406,6 +10801,437 @@ class sqlDB {
         return $ack;
     }
 
+    /**
+     * @name    qStudents
+     * @return  boolean
+     * @descr   select students
+     */
+
+    public function qStudents(){
+        global $log;
+
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+
+        try{
+                $query = "SELECT DISTINCT *
+                          FROM
+                              Users
+                          WHERE 
+                              Users.role = 's'
+                          
+                          ORDER BY Users.surname";
+                $this->execQuery($query);
+
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $ack;
+    }
+    public function qAdminsTeachers(){
+        global $log;
+
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+
+        try{
+            $query = "SELECT DISTINCT *
+                          FROM
+                              Users
+                          WHERE 
+                              Users.role = 't'
+                          OR 
+                              Users.role= 'a'
+                          OR 
+                              Users.role = 'at'
+                          OR 
+                              Users.role = 'e'
+                          OR 
+                              Users.role = 'er'
+                          
+                          ORDER BY Users.surname";
+            $this->execQuery($query);
+
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $ack;
+    }
+
+    /**
+     * @name    qUpdateStudentInfo
+     * @param   $idStudent       String        Requested Student's ID
+     * @param   $name            String        Student's name
+     * @param   $surname         String        Student's surname
+     * @param   $email           String        Student's email
+     * @param   $group           String        Student's group
+     * @param   $subgroup        String        Student's subgroup
+     * @return  Boolean
+     * @descr   Returns true if info was saved successfully, false otherwise
+     */
+    public function qUpdateStudentInfo($idUser, $name,$surname,$email,$group,$subgroup,$role){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+
+        try{
+
+            $query = "UPDATE Users
+                      SET
+                          name = '$name',
+                          surname = '$surname',
+                          email = '$email',
+                          `group` = '$group',
+                          `subgroup` = '$subgroup',
+                          role = '$role'
+                      WHERE
+                          idUser = '$idUser'";
+
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $ack;
+    }
+
+    /**
+     * @name    qUpdateTeacherInfo
+     * @param   $idTeacher       String        Requested Teacher's ID
+     * @param   $name            String        Teacher's name
+     * @param   $surname         String        Teacher's surname
+     * @param   $email           String        Teacher's email
+     * @param   $group           String        Teacher's group
+     * @param   $subgroup        String        Teacher's subgroup
+     * @return  Boolean
+     * @descr   Returns true if info was saved successfully, false otherwise
+     */
+    public function qUpdateTeacherInfo($idUser, $name,$surname,$email,$group,$subgroup,$role){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+
+        try{
+
+            $query = "UPDATE Users
+                      SET
+                          name = '$name',
+                          surname = '$surname',
+                          email = '$email',
+                          `group` = '$group',
+                          `subgroup` = '$subgroup',
+                          role = '$role'
+                      WHERE
+                          idUser = '$idUser'";
+
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $ack;
+    }
+
+    /**
+     * @name    qDeleteUser
+     * @param   $idStudent       String        Requested Student's ID
+     * @param   $name            String        Student's name
+     * @param   $surname         String        Student's surname
+     * @param   $email           String        Student's email
+     * @param   $group           String        Student's group
+     * @param   $subgroup        String        Student's subgroup
+     * @return  Boolean
+     * @descr   Returns true if info was saved successfully, false otherwise
+     */
+    public function qDeleteUser($idUser){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "DELETE FROM `Users` 
+                      WHERE `idUser`='$idUser'";
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $ack;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @name    qListOnlyGroup
+     * @return  Boolean
+     * @descr   Returns List Group
+     */
+    public function qListOnlyGroup(){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+
+            $query = "SELECT *
+                          FROM
+                              GroupNTC ORDER BY NameGroup";
+
+            $this->execQuery($query);
+        }catch (Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__.' : '.$this->getError());
+        }
+
+        return $ack;
+    }
+
+    /**
+     * @name    qNewGroup
+     * @return  Boolean
+     * @descr   Insert a new group
+     */
+    public function qNewGroup($groupName){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "INSERT INTO GroupNTC (NameGroup)
+                          VALUES ('$groupName')";
+            $this->execQuery($query);
+        }catch (Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__.' : '.$this->getError());
+        }
+        return $ack;
+        
+    }
+
+    /**
+     * @name    qNewSubgroup
+     * @return  Boolean
+     * @descr   Insert a new Subgroup
+     */
+    public function qNewSubgroup($group,$subgroupName){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "INSERT INTO SubGroup (NameSubGroup, fkGroup)
+                          VALUES ('$subgroupName','$group')";
+            $this->execQuery($query);
+        }catch (Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__.' : '.$this->getError());
+        }
+        return $ack;
+
+    }
+
+    /**
+     * @name    qUpdateGroupInfo
+     * @return  Boolean
+     * @descr   Update a group
+     */
+    public function qUpdateGroupInfo($idGroup,$groupName){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+
+        try{
+
+            $query = "UPDATE GroupNTC
+                      SET
+                          NameGroup = '$groupName'
+                      WHERE
+                          idGroup = '$idGroup'";
+
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $ack;
+    }
+
+    /**
+     * @name    qUpdateSubgroupInfo
+     * @return  Boolean
+     * @descr   Update a subgroup
+     */
+    public function qUpdateSubgroupInfo($idSubgroup,$subgroupName,$fkGroup){
+        global $log;
+        $ack = true;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+
+        try{
+
+            $query = "UPDATE SubGroup
+                      SET
+                          NameSubGroup = '$subgroupName',
+                          fkGroup = $fkGroup
+                      WHERE
+                          idSubGroup = '$idSubgroup'";
+
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+        return $ack;
+    }
+
+    /**
+     * @name    qcalcScore
+     * @return  Boolean
+     * @descr   Returns the score type of a test
+     */
+    public function qcalcScore($idTest){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+
+            $query = "select distinct scoreType
+                      from Tests JOIN (Exams JOIN TestSettings on Exams.fkTestSetting=TestSettings.idTestSetting)
+                      on Tests.fkExam=Exams.idExam
+                      where Tests.idTest='$idTest'";
+
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+
+    }
+
+    /**
+     * @name    qGetCertificate
+     * @return  Boolean
+     * @descr   Returns certificate value of the test
+     */
+    public function qGetCertificate($idExam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+
+            $query = "select TestSettings.certificate
+                      from TestSettings JOIN Exams 
+                      on TestSettings.idTestSetting=Exams.fkTestSetting
+                      where Exams.idExam='$idExam'";
+
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+    }
+
+    /**
+     * @name    qGetSubjectExam
+     * @return  Boolean
+     * @descr   Returns the subject of the exam
+     */
+    public function qGetSubjectExam($idExam){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+
+            $query = "select Subjects.name
+                      from Subjects JOIN Exams 
+                      on Subjects.idSubject=Exams.fkSubject
+                      where Exams.idExam='$idExam'";
+
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+    }
+
+    /**
+     * @name    qGetUserTest
+     * @return  Boolean
+     * @descr   Returns info about the users who did the test
+     */
+    public function qGetUserTest($idTest){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+
+            $query = "select Users.surname, Users.name, Users.email, Users.group, SubGroup.NameSubGroup, GroupNTC.NameGroup
+                      from Tests JOIN ((Users JOIN SubGroup on Users.subgroup = SubGroup.idSubGroup)
+                      JOIN GroupNTC on Users.group = GroupNTC.idGroup)
+                      on Users.idUser=Tests.fkUser
+                      where Tests.idTest='$idTest'";
+
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+    }
+
+    /**
+     * @name    getMandatQuestionsInfo
+     * @return  Boolean
+     * @descr   Returns informations about mandatory questions selected
+     */
+    public function getMandatQuestionsInfo($mandatQuestions){
+        global $log;
+        $this->result = null;
+        $this->mysqli = $this->connect();
+        try{
+            $query = "select idQuestion, difficulty, fkTopic
+                      from Questions
+                      where idQuestion In('";
+            for($i = 0 ; $i< count($mandatQuestions)-1; $i++){
+                $query .= $mandatQuestions[$i]."','";
+            }
+            $query .= $mandatQuestions[count($mandatQuestions)-1]."')";
+
+            $this->execQuery($query);
+        }catch(Exception $ex){
+            $ack = false;
+            $log->append(__FUNCTION__." : ".$this->getError());
+        }
+    }
+
+
 
 /*******************************************************************
 *                              mysqli                              *
@@ -10460,10 +11286,10 @@ class sqlDB {
      * @throws  Exception
      * @descr   Execute a simple query
      */
-    private function execQuery($query){
+    public function execQuery($query){
         global $log;
 // ******************************************************************* //
-       $log->append($query);
+       //$log->append($query); //DAMIANO QUI QUERY LOG 
 // ******************************************************************* //
         if(!($this->result = $this->mysqli->query($query)))
             throw new Exception("Error");
@@ -10482,7 +11308,7 @@ class sqlDB {
         try{
             while(count($queries) > 0){
                 $query = array_shift($queries);
-//                $log->append($query);
+              //  $log->append($query);
                 $this->execQuery($query);           // Execute queries one by one as long as there isn't error
             }
             $this->mysqli->commit();

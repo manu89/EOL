@@ -210,7 +210,7 @@ function printMenu(){
  * @descr   Create the admin menu on page
  */
 function adminMenu(){
-    global $tt; ?>
+    global $tt, $config; ?>
 
 <ul class="topnav">
     <li><a href="index.php"><?= ttHome ?></a></li>
@@ -224,10 +224,19 @@ function adminMenu(){
         <a class="trigger"><?= ttUsers ?></a>
         <ul class="subnav">
             <li><a href="index.php?page=admin/newteacher"><?= ttNewTeacher ?>/<?= ttAdministrator ?></a></li>
+            <li><a href="index.php?page=admin/editteacher"><?= ttEditTeacher ?></a></li>
             <li><a href="index.php?page=admin/newstudent"><?= ttNewStudent ?></a></li>
+            <li><a href="index.php?page=admin/editstudent"><?= ttEditStudent ?></a></li>
         </ul>
     </li>
-
+    <li>
+        <a class="trigger"><?= ttGroup ?></a>
+        <ul class="subnav">
+            <li><a href="index.php?page=admin/newgroup"><?= ttNewGroup ?>/<?= ttSubgroup ?></a></li>
+            <li><a href="index.php?page=admin/editgroup"><?= ttEditGroup ?>/<?= ttSubgroup ?></a></li>
+        </ul>
+    </li>
+    <li><a href="<?= $config['systemFileManagerDir']?>filemanager.php?type=certificate"><?= ttCertificates ?></a></li>
     <li>
         <a class="trigger"><?= ttSystem ?></a>
         <ul class="subnav">
@@ -364,7 +373,9 @@ function studentMenu(){
 /**
  * @name    dropdownSystemLanguage
  * @descr   Print the dropdown menu for change system language
+ * MINIMAL VERSION in case of troubles with languages ...
  */
+/*
 function dropdownSystemLanguage(){
     global $config, $user;
 
@@ -381,8 +392,7 @@ function dropdownSystemLanguage(){
         echo '</ul></dd></dl>';
     }
 }
-//MODIFICATA, RIPRISTINARLA QUANDO LE ALTRE LINGUE SARANNO PRONTE
-/*
+*/
 function dropdownSystemLanguage(){
     global $config, $user;
     $db = new sqlDB();
@@ -399,7 +409,6 @@ function dropdownSystemLanguage(){
         echo '</ul></dd></dl>';
     }
 }
-*/
 /**
  * @name    guestMenu
  * @descr   Print the guest menu on page

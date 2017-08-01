@@ -239,7 +239,7 @@ class ImportqmController extends Controller{
                                     //$log->append("idTopic: ".$idTopic);
 
                                     switch ($questionsInfo['itemtype']) {
-                                        /*
+                                        
                                         case 'Multiple Choice':
                                             ImportQMController::parserMC($item,$idTopic,"MC",$difficulty,$idLang);
                                             break;
@@ -259,11 +259,11 @@ class ImportqmController extends Controller{
                                         case 'Text Match':
                                             ImportQMController::parserTM($item, $idTopic, "TM", $difficulty, $idLang);
                                             break;
-                                        */
+                                        
                                         case 'Hot Spot':
                                             ImportQMController::parserHS($item, $idTopic, "HS", $difficulty, $idLang);
                                             break;
-
+					
 
                                     }
 

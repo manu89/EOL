@@ -8,6 +8,16 @@
  */
 
 global $user, $log;
+$db = new sqlDB();
+
+if(($db->qSelect('Users', 'idUser', $user->id)) && ($u = $db->nextRowAssoc())){
+    $userGroup = $u['group'];
+    $userSubGroup = $u['subgroup'];
+}else{
+    $log->append(__FUNCTION__." : ".$db->getError());
+    die("NACK");
+}
+
 ?>
 
 <div id="navbar">
@@ -25,6 +35,45 @@ global $user, $log;
 
         <label class="b2Space"><?= ttSurname ?> : </label>
         <input class="writable" type="text" id="userSurname" value="<?= $user->surname ?>">
+        <div class="clearer"></div>
+
+        <label class="b2Space"><?= ttGroup ?> : </label>
+        <select id="userGroup">
+            <?php
+            $db = new sqlDB();
+            $db->qListGroup();
+            $current = null;
+            $now = null;
+            while($a = $db->nextRowAssoc()){
+                $current = $a["NameGroup"];
+                if($now == null){
+                    $now = $current;
+                    echo "<optgroup label='$now'>";
+                }
+                if($now != $current){
+                    echo "</optgroup>";
+                    echo "<optgroup label='$current'>";
+                    $now = $current;
+                }
+                if($now == $current){
+                    $value = $a["NameSubGroup"];
+                    $idGroup = $a["idGroup"];
+                    $idSubGroup = $a["idSubGroup"];
+                    if($idGroup == $userGroup && $idSubGroup == $userSubGroup){
+                        echo "<option value='$idGroup-$idSubGroup' selected>$value</option>";
+                    }else{
+                        echo "<option value='$idGroup-$idSubGroup' >$value</option>";
+                    }
+
+
+                }
+            }
+            echo "</optgroup>";
+            ?>
+        </select>
+
+        <div class="clearer"></div>
+
         <div class="clearer"></div>
 
         <label class="b2Space"><?= ttEmail ?> : </label>

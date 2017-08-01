@@ -190,7 +190,7 @@ class AdminController extends Controller{
 
             if ($_POST['idquestion'] == '') { //se non inseriscono id quindi solo una segnalazione varia
                 $to = ""; //destinatatio email
-                $subject = "Segnalazione da Eol";//oggetto
+                $subject = "Segnalazione da LibreEol";//oggetto
                 $message = $_POST['notes'];//note
                 $headers = 'from' . $user->email . "\r\n" .
                     'Reply-To:' . $user->email . "\r\n" .
@@ -198,7 +198,7 @@ class AdminController extends Controller{
 
             } else {
 
-                $to = "emanuelegragnoli@live.it"; //destinatatio email
+                $to = "osvaldo.gervasi@unipg.it"; //destinatatio email
                 $subject = "Modifica domanda n." . $_POST['idquestion']; //oggetto email
                 $message = $_POST['notes'];//note
                 $headers = 'from' . $user->email . "\r\n" .
@@ -211,9 +211,10 @@ class AdminController extends Controller{
                 $log->append("Errore. Nessun messaggio inviato.");
                 echo "NACK";
             }
-            else
+            else{
                 $log->append("MSG INVIATO CORRETTAMENTE");
-            echo "ACK";
+                echo "ACK";
+            }
 
         }
         else
@@ -230,16 +231,23 @@ class AdminController extends Controller{
         if((isset($_POST['alias'])) && (isset($_POST['constants'])) && (isset($_POST['translations']))){
 
             global $log, $config;
-            $xml = new DOMDocument();
+            $xml = new DOMDocument('1.0', 'utf-8');
+             $xml->formatOutput = true;
+             $xml->preserveWhiteSpace = false;
             $xml->load($config['systemLangsXml'].$_POST['alias'].'.xml');
-
             $constants = json_decode($_POST['constants'], true);
             $translations = json_decode($_POST['translations'], true);
-
-            for($index = 0; $index < count($constants); $index++)
-                $xml->getElementById($constants[$index])->nodeValue = str_replace("\n", '\n', $translations[$index]);
-
-            chmod($config['systemLangsXml'].$_POST['alias'].'.xml', 0766);
+	    for($index = 0; $index < count($constants); $index++)
+                if($xml->getElementById($constants[$index]))
+                    $xml->getElementById($constants[$index])->nodeValue = str_replace("\n", '\n', $translations[$index]);
+                else{
+                    $language = $xml->getElementsByTagName("language")->item(0);
+                    $newString=$xml->createElement('text',$translations[$index]);
+                    $attribute=$xml->createAttribute('id');
+                    $attribute->value =$constants[$index];
+                    $newString->appendChild($attribute);
+                    $language->appendChild($newString);
+                }
             if($xml->save($config['systemLangsXml'].$_POST['alias'].'.xml')){
                 $xml = new DOMDocument();
                 $phpText = "<?php\n";
@@ -259,7 +267,15 @@ class AdminController extends Controller{
 
                     $phpText .= "define('$id' , \"".str_replace('"', '\"', $value)."\");\n";
                 }
-
+                if (!file_exists($config['systemLangsDir'].$_POST['alias'])) {
+                    mkdir($config['systemLangsDir'].$_POST['alias'], 0766, true);
+                }
+		else{
+		  if (file_exists($config['systemLangsDir'].$_POST['alias'].'/lang.php')) 
+			unlink($config['systemLangsDir'].$_POST['alias'].'/lang.php');
+		  if (file_exists($config['systemLangsDir'].$_POST['alias'].'/lang.js')) 
+			unlink($config['systemLangsDir'].$_POST['alias'].'/lang.js');
+		}
 
                 $fP = fopen($config['systemLangsDir'].$_POST['alias'].'/lang.php', "w");
                 chmod($config['systemLangsDir'].$_POST['alias'].'/lang.php', 0766);
@@ -282,7 +298,6 @@ class AdminController extends Controller{
                         $write = true;
                     }else{
                         $attemps--;
-                        sleep(2000);
                     }
                 }
 
@@ -291,7 +306,7 @@ class AdminController extends Controller{
 
                 echo 'ACK';
             }else
-                echo 'NACK';
+                echo 'If the files are well formatted, write permissions are not enough, give chmod 0766 to '.$config['systemLangsXml'].$_POST['alias'].'.xml';
 
         }else
             $log->append(__FUNCTION__." : Params not set - ".var_export($_POST));
@@ -693,7 +708,7 @@ class AdminController extends Controller{
                     die($db->getError());
                 }
             }
-            if($db->qUpdateProfile($user->id, $_POST['name'], $_POST['surname'], null, $password)){
+            if($db->qUpdateProfile($user->id, $_POST['name'], $_POST['surname'], $_POST['group'], $_POST['subgroup'], null, $password)){
                 $user->name = $_POST['name'];
                 $user->surname = $_POST['surname'];
                 $_SESSION['user'] = serialize($user);
@@ -703,7 +718,7 @@ class AdminController extends Controller{
             }
         }elseif(isset($_POST['lang'])){
             $db = new sqlDB();
-            if($db->qUpdateProfile($user->id, null, null, null, null, $_POST['lang'])){
+            if($db->qUpdateProfile($user->id, null, null, null, null, null, null, $_POST['lang'])){
                 if(($db->qSelect('Languages')) && ($allLangs = $db->getResultAssoc('idLanguage'))){
                     $user->lang = $allLangs[$_POST['lang']]['alias'];
                     $_SESSION['user'] = serialize($user);
@@ -718,6 +733,257 @@ class AdminController extends Controller{
             $log->append(__FUNCTION__." : Params not set");
         }
     }
+
+    /**
+     *  @name   actionEditstudent
+     *  @descr  Shows EditStudentPage
+     */
+
+    private function actionEditstudent(){
+        global $engine;
+
+        $engine->renderDoctype();
+        $engine->loadLibs();
+        $engine->renderHeader();
+        $engine->renderPage();
+        $engine->renderFooter();
+
+    }
+
+    /**
+     *  @name   actionEditteacher
+     *  @descr  Shows Edit Admin/Teacher Page
+     */
+    private function actionEditteacher(){
+        global $engine;
+
+        $engine->renderDoctype();
+        $engine->loadLibs();
+        $engine->renderHeader();
+        $engine->renderPage();
+        $engine->renderFooter();
+
+    }
+
+    /**
+     *  @name   actionShowstudentinfo
+     *  @descr  Show info about a student
+     */
+    private function actionShowstudentinfo(){
+        global $engine, $user, $log;
+
+        if((isset($_POST['action'])) && (isset($_POST['idStudent']))){
+            $engine->loadLibs();
+            $engine->renderPage();
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+
+    /**
+     *  @name   actionShowteacherinfo
+     *  @descr  Show info about a admin/teacher
+     */
+    private function actionShowteacherinfo(){
+        global $engine, $user, $log;
+
+        if((isset($_POST['action'])) && (isset($_POST['idTeacher']))){
+            $engine->loadLibs();
+            $engine->renderPage();
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+
+    /**
+     *  @name   actionUpdatestudentinfo
+     *  @descr  Edit the student in the db
+     */
+    private function actionUpdatestudentinfo(){
+        global $log;
+
+        if((isset($_POST['name'])) && (isset($_POST['surname'])) &&
+            (isset($_POST['email'])) && (isset($_POST['group'])) && (isset($_POST['subgroup'])) && (isset($_POST['idStudent']))){
+            $db = new sqlDB();
+            if($db->qUpdateStudentInfo($_POST['idStudent'],$_POST['name'], $_POST['surname'], $_POST['email'], $_POST['group'],$_POST['subgroup'],$_POST['role'])){
+                echo "ACK";
+            }else{
+                die($db->getError());
+            }
+            $db->close();
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+
+    /**
+     *  @name   actionUpdatestudentinfo
+     *  @descr  Edit the admin/teacher in the db
+     */
+    private function actionUpdateteacherinfo(){
+        global $log;
+
+        if((isset($_POST['name'])) && (isset($_POST['surname'])) &&  (isset($_POST['role'])) &&
+            (isset($_POST['email'])) && (isset($_POST['group'])) && (isset($_POST['subgroup'])) && (isset($_POST['idTeacher']))){
+            $db = new sqlDB();
+            if($db->qUpdateTeacherInfo($_POST['idTeacher'],$_POST['name'], $_POST['surname'], $_POST['email'], $_POST['group'],$_POST['subgroup'],$_POST['role'])){
+                echo "ACK";
+            }else{
+                die($db->getError());
+            }
+            $db->close();
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+
+
+    /**
+     *  @name   actionDeleteuser
+     *  @descr  Delete user from the db
+     */
+
+    private function actionDeleteuser(){
+        global $log;
+        if(isset($_POST['idUser'])){
+            $db = new sqlDB();
+            if($db->qDeleteUser($_POST['idUser'])){
+                echo 'ACK';
+            }else{
+                die($db->getError());
+            }
+            $db->close();
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+
+    /**
+     *  @name   actionNewGroup
+     *  @descr  Shows addgroup page
+     */
+    private function actionNewgroup(){
+        global $engine;
+
+        $engine->renderDoctype();
+        $engine->loadLibs();
+        $engine->renderHeader();
+        $engine->renderPage();
+        $engine->renderFooter();
+
+    }
+
+    /**
+     *  @name   actionAddnewgroup
+     *  @descr  Add a new group
+     */
+
+    private function actionAddnewgroup(){
+        global $log;
+
+        if(isset($_POST['group'])){
+            $db = new sqlDB();
+            if($db->qNewGroup($_POST['group'])){
+                echo "ACK";
+            }else{
+                die($db->getError());
+            }
+            $db->close();
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+
+    /**
+     *  @name   actionAddnewsubgroup
+     *  @descr  Add a new subgroup
+     */
+    private function actionNewsubgroup(){
+        global $log;
+
+        if(isset($_POST['group']) && isset($_POST['subgroup'])){
+            $db = new sqlDB();
+            if($db->qNewSubgroup($_POST['group'], $_POST['subgroup'])){
+                echo "ACK";
+            }else{
+                die($db->getError());
+            }
+            $db->close();
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+
+    /**
+     *  @name   actionNewGroup
+     *  @descr  Shows addgroup page
+     */
+    private function actionEditgroup(){
+        global $engine;
+
+        $engine->renderDoctype();
+        $engine->loadLibs();
+        $engine->renderHeader();
+        $engine->renderPage();
+        $engine->renderFooter();
+
+    }
+
+    /**
+     *  @name   actionShowgroupinfo
+     *  @descr  Show showgroupinfo page
+     */
+    private function actionShowgroupinfo(){
+        global $engine, $user, $log;
+
+        if((isset($_POST['action']))){
+            $engine->loadLibs();
+            $engine->renderPage();
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+
+    /**
+     *  @name   actionUpdategroupinfo
+     *  @descr  Updates the group info
+     */
+    private function actionUpdategroupinfo(){
+        global $log;
+
+        if((isset($_POST['idGroup']))&& (isset($_POST['groupName']))){
+            $db = new sqlDB();
+            if($db->qUpdateGroupInfo($_POST['idGroup'],$_POST['groupName'])){
+                echo "ACK";
+            }else{
+                die($db->getError());
+            }
+            $db->close();
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+
+    /**
+     *  @name   actionUpdatesubgroupinfo
+     *  @descr  Updates the subgroup info
+     */
+    private function actionUpdatesubgroupinfo(){
+        global $log;
+
+        if((isset($_POST['idSubgroup']))&& (isset($_POST['subgroupName'])) && (isset($_POST['fkGroup']))){
+            $db = new sqlDB();
+            if($db->qUpdateSubgroupInfo($_POST['idSubgroup'],$_POST['subgroupName'], $_POST['fkGroup'])){
+                echo "ACK";
+            }else{
+                die($db->getError());
+            }
+            $db->close();
+        }else{
+            $log->append(__FUNCTION__." : Params not set");
+        }
+    }
+
 
     /**
      * @name   accessRules
@@ -737,8 +1003,10 @@ class AdminController extends Controller{
                 'allow',
                 'actions' => array('Index', 'Exit', 'Newteacher', 'Rooms', 'Showroominfo', 'Newroom', 'Updateroominfo',
                                    'Deleteroom','Selectlanguage', 'Language', 'Savelanguage', 'Newlanguage', 'Systemconfiguration',
-                                   'Updatesystemconfiguration'
-                                   ),
+                                   'Updatesystemconfiguration','Editstudent','Showstudentinfo','Updatestudentinfo',
+                                    'Editteacher','Showteacherinfo','Updateteacherinfo','Newsubgroup','Newgroup','Addnewgroup',
+                                    'Showgroupinfo','Editgroup','Updategroupinfo','Updatesubgroupinfo','Deleteuser'
+            ),
                 'roles'   => array('a'),
             ),
             array(

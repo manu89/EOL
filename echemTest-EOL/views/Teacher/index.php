@@ -16,11 +16,12 @@ global $config, $user;
 </div>
 
 <div id="main">
-    <div id="examsTableMinContainer">
+    <div id="loader" class="loader"></div>
+    <div id="examsTableMinContainer" style="visibility: hidden">
         <?php
         $db = new sqlDB();
-        if($db->qExamsInProgress($user->id)){
-            echo '<table id="homeExamsTable" class="hover stripe order-column">
+        if($db->qExamsInProgress(1,$user->id)){
+            echo '<table id="homeExamsTable" class="hover stripe order-column" style="text-align:center;">
                       <thead>
                           <tr>
                               <th class="eStatus"></th>
@@ -69,12 +70,12 @@ global $config, $user;
         }
         ?>
     </div>
-    <div id="testsTableContainer">
+    <div id="testsTableContainer" style="visibility: hidden">
         <?php
         $db = new sqlDB();
         $db2 = new sqlDB();
         if($db->qTestsList($user->id)){
-            echo '<table id="homeTestsTable" class="hover stripe order-column">
+            echo '<table id="homeTestsTable" class="hover stripe order-column" style="text-align:center;">
                       <thead>
                           <tr>
                               <th class="tName">'.ttName.'</th>
@@ -82,15 +83,16 @@ global $config, $user;
                               <th class="tTime">'.ttTimeUsed.'</th>
                               <th class="tScore">'.ttScoreTest.'</th>
                               <th class="tTestID"></th>
+                              <th class="tTestStatus"></th>
                           </tr>
                       </thead>
                       <tbody>';
             while($test = $db->nextRowAssoc()){
-                if($test['status'] == 'e'){
+                if($test['status'] == 'e' || $test['status'] == 'a' ){
 
                     $subject = $test['subName'];
                     $idTest = $test['idTest'];
-
+                    $testStatus = $test['status'];
 
                     /*
                     $start = new DateTime($test['timeStart']);
@@ -123,6 +125,7 @@ global $config, $user;
                               <td>'.$time.'</td>
                               <td>'.$score.'</td>
                               <td>'.$idTest.'</td>
+                              <td>'.$testStatus.'</td>
                           </tr>';
                 }
             }
@@ -138,3 +141,11 @@ global $config, $user;
     <input type="hidden" name="idExam" value="">
     <input type="hidden" name="idTest" value="">
 </form>
+
+<script>
+$(document).ready(function() {
+    $('#examsTableMinContainer').css("visibility","visible");
+    $('#testsTableContainer').css("visibility","visible");
+    $('#loader').hide();
+});
+</script>

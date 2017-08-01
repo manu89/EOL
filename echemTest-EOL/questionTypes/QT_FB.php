@@ -162,6 +162,97 @@ class QT_FB extends Question {
                 <br>
             </div>
             <div class="questionAnswers"><?php
+                $null = "";
+                $demand = $this->get('translation');
+                $length = strlen($demand);
+                $textboxCount = 0;
+                $counting = 1;
+                for ($i = 0; $i < $length; $i++) {
+                    if ($demand[$i] != "<") {
+                        echo "$demand[$i]";
+                    } else {
+                        if (isset($demand[$i + 5])) {
+                            $ok = true;
+                            if (!($ok && (strcmp($demand[$i + 1], "i") == 0))) $ok = false;
+                            if (!($ok && (strcmp($demand[$i + 2], "n") == 0))) $ok = false;
+                            if (!($ok && (strcmp($demand[$i + 3], "p") == 0))) $ok = false;
+                            if (!($ok && (strcmp($demand[$i + 4], "u") == 0))) $ok = false;
+                            if (!($ok && (strcmp($demand[$i + 5], "t") == 0))) $ok = false;
+                            if ($ok == true) {
+                                $ok = 0;
+                                $okT = 0;
+                                $j = 0;
+                                for ($j = $i; $j < $length && $ok < 11; $j++) {
+
+                                    if ($demand[$j] == "t" && $ok == 0) $ok++;
+                                    elseif ($demand[$j] == "y" && $ok == 1) $ok++;
+                                    elseif ($demand[$j] == "p" && $ok == 2) $ok++;
+                                    elseif ($demand[$j] == "e" && $ok == 3) $ok++;
+                                    elseif ($demand[$j] == "=" && $ok == 4) $ok++;
+                                    elseif ($ok == 5) $ok++;
+                                    elseif ($demand[$j] == "t" && $ok == 6) $ok++;
+                                    elseif ($demand[$j] == "e" && $ok == 7) $ok++;
+                                    elseif ($demand[$j] == "x" && $ok == 8) $ok++;
+                                    elseif ($demand[$j] == "t" && $ok == 9) $ok++;
+                                    elseif ($ok == 10) $ok++;
+                                    else {
+                                        $ok = 0;
+                                        if ($okT >= 5 || $demand[$j]==">") {
+                                            $j = $length;
+                                        }
+                                    }
+                                    $okT = $ok;
+                                }
+                                if ($ok == 11) {
+                                    if(isset($answered[$textboxCount]))
+                                        $textbox = '<input type="text" id="rispostas" value="'.$answered[$textboxCount].'">';
+                                    else
+                                        $textbox = '<input type="text" id="rispostas" value="">';
+                                    echo $textbox;
+                                    $textboxCount++;
+                                    $counting++;
+                                    while ($j < $length && $demand[$j] != ">") {
+                                        $j++;
+                                    }
+                                    $i = $j;
+                                } else {
+                                    echo "<";
+                                }
+                            } else {
+                                echo "<";
+                            }
+                        }
+                        else{
+                                echo "<";
+                            }
+                        }
+                    }
+                ?></div>
+        </div>
+        <br>
+        <?php
+        // -------  Add extra buttons  ------- //
+        $extra = '';
+        if(strpos($this->get('extra'), 'c') !== false){
+            $extras['calculator'] = true;
+            $extra .= '<img class="extraIcon calculator" src="'.$config['themeImagesDir'].'QEc.png'.'">';
+        }
+        if(strpos($this->get('extra'), 'p') !== false){
+            $extras['periodicTable'] = true;
+            $extra .= '<img class="extraIcon periodicTable" src="'.$config['themeImagesDir'].'QEp.png'.'">';
+        }
+        return $extras;
+    }
+/*
+    public function printQuestionInTest($idSubject, $answered, $extras){
+        global $config;
+        $idQuestionTest=$this->get('idQuestion');
+        ?>
+        <div class="questionTest" value=<?php echo "'".$idQuestionTest."'" ?> type="FB">
+            <div class="questionText"><?php echo ttQTFB_TEXT ?>
+                <br>
+            </div>
+            <div class="questionAnswers"><?php
                 echo $this->get('translation');
                 ?></div>
         </div>
@@ -179,8 +270,7 @@ class QT_FB extends Question {
         }
         return $extras;
     }
-
-
+*/
 
 
 

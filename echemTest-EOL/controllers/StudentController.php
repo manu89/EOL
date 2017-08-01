@@ -221,6 +221,51 @@ class StudentController extends Controller{
         }
     }
 
+
+
+/**
+     *  @name   actionSubmittest
+     *  @descr  Saves all test's answers and close test if is requestd
+     */
+    private function actionUpdateAnswer(){
+        global $log;
+        if(isset($_SESSION['idSet'])){
+            $db = new sqlDB();
+            if(($db->qSelect('Tests', 'fkSet', $_SESSION['idSet'])) && ($testInfo = $db->nextRowAssoc())){
+//                if(($testInfo['status'] != 'w') && ($testInfo['status'] != 's')){
+
+                $db2 = new sqlDB();
+                if(($db2->qSelect('Users', 'idUser', $testInfo ['fkUser'])) && ($testInfo2 = $db2->nextRowAssoc())) {
+                    $idLang = $testInfo2['fkLanguage'];    //prendo la lingua dalla tabella users
+                }else{
+                    die($db->getError());
+                }
+
+                if($testInfo['status'] != 's'){
+                    die(ttETestBlockedSubmitted);               // Test has been blocked or already submitted
+                }
+            }else{
+                die($db->getError());
+            }
+            if((isset($_POST['question'])) && (isset($_POST['answer']))){
+                $questions = json_decode($_POST['question'], true);
+                $answers = json_decode($_POST['answer'], true);
+                if($db->qUpdateTestAnswer($_SESSION['idSet'],$idLang, $question, $answer)){                                                           // Leave test open
+                        echo 'ACK';
+                }else{
+                    $log->append("qSelect2");
+                    die($db->getError());
+                }
+            }else{
+                $log->append(__FUNCTION__." : Params not set");
+            }
+        }else{
+            die(ttETestAlreadySubmitted);
+        }
+    }
+
+
+
     /**
      *  @name   actionTest
      *  @descr  Show student's test
@@ -239,6 +284,41 @@ class StudentController extends Controller{
         }
     }
 
+
+    /**
+     *  @name   actionCheckExamAvailability
+     *  @descr  check if the teacher submitted the test
+     */
+    private function actionCheckExamAvailability(){
+        global $log;
+        if(isset($_SESSION['idSet'])){
+            $db = new sqlDB();
+            if(($db->qSelect('Tests', 'fkSet', $_SESSION['idSet'])) && ($testInfo = $db->nextRowAssoc())){
+                if($testInfo['status'] != 's'){
+                    echo "SUBMITTED";               // Test has been blocked or already submitted
+                }else{
+                    echo "ACK";
+                }
+            }else{
+                die($db->getError());
+            }
+        }else{
+            die(ttETestAlreadySubmitted);
+        }
+    }
+
+
+    /**
+     *  @name   actionCloseTest
+     *  @descr  remove set from session
+     */
+    private function actionCloseTest(){
+        global $log;
+        unset($_SESSION['idSet']);
+        echo "ACK";
+    }
+
+
     /**
      *  @name   accessRules
      *  @descr  Returns all access rules for Home controller's actions:
@@ -255,7 +335,7 @@ class StudentController extends Controller{
             array(
                 'allow',
                 'actions' => array('Index', 'Checkexamstatus', 'Logintest',
-                                   'Starttest', 'Test', 'Submittest', 'Register'),
+                                   'Starttest', 'Test', 'Submittest', 'Register','Checkexamavailability','Closetest'),
                 'roles'   => array('s'),
             ),
             array(

@@ -19,9 +19,11 @@ if(isset($_POST['idExam'])){
 <div id="navbar">
     <?php printMenu(); ?>
 </div>
+
+<div id="loader" class="loader"></div>
 <div id="main">
     <div>
-        <div id="examsTableContainer">
+        <div id="examsTableContainer" style="visibility: hidden; text-align:center;">
             <div class="smallButtons">
                 <div id="newExam">
                     <img class="icon" src="<?= $config['themeImagesDir'].'new.png' ?>"/><br/>
@@ -36,7 +38,7 @@ if(isset($_POST['idExam'])){
             $db = new sqlDB();
             if($db->qExams()){
             ?>
-                <table id="examsTable" class="stripe hover order-column">
+                <table id="examsTable" class="hover stripe order-column">
                     <thead>
                         <tr>
                             <th class="eStatus"></th>
@@ -133,3 +135,10 @@ if(isset($_POST['idExam'])){
     </script>
 
 <?php }?>
+
+<script>
+$(document).ready(function() {
+    $('#examsTableContainer').css("visibility","visible");
+    $('#loader').hide();
+});
+</script>

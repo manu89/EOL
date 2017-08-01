@@ -12,7 +12,6 @@ global $config;
 ?>
 
 <div id="loginDiv">
-    <img src="<?= $config['themeImagesDir']; ?>logo.gif" alt="logo"/>
 
     <form name="login" class="login" onsubmit="return false;" id="loginForm">
 
@@ -20,11 +19,11 @@ global $config;
         <input type="text" class="text" name="email" value="" id="email" /><br />
         <label for="password"><?= ttPassword; ?></label>
         <input type="password" class="text" name="password" value="" id="password" />
-        <p id="result"></p>
-
-        <a class="normal button" id="login" onclick="logIn();"><?= ttLogin ?></a><br/>
-        <a class="little" href="index.php?page=admin/newstudent"><?= ttJoin ?></a>
-        <a class="little" href="index.php?page=admin/lostpassword"><?= ttPasswordLost ?></a>
+        <p id="result">&nbsp;</p>
+        <a class="normal button" style="width:172px;padding:7px" id="login" onclick="logIn();"><?= ttLogin ?></a><br/>
+        <a class="little delete" style="width:85px;padding:2px" href="index.php?page=admin/lostpassword"><?= ttPasswordLost ?></a>
+        <a class="little ok" style="width:85px;padding:2px" href="index.php?page=admin/newstudent"><?= ttJoin ?></a>
+        
         <div class="clearer"></div>
     </form>
 

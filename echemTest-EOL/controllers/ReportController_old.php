@@ -177,7 +177,7 @@ class ReportController extends Controller{
         global $config;
         $idExam = $_POST["idExam"];
         $subject = $_POST["subject"];
-	$subject = str_replace(" ", "_", $subject);
+        $subject = str_replace(" ", "_", $subject);
         $date = $_POST["date"];
         $date = explode("/", $date);
         $date = $date[0]."-".$date[1]."-".$date[2];
@@ -190,15 +190,21 @@ class ReportController extends Controller{
         if (file_exists($dir)==false){
             mkdir($config['systemViewsDir']."Report/generated_report/RatingExam/".$subject);
         }
-
+        if (file_exists("temp")==false){
+            mkdir("temp");
+        }
         $path = $dir."/".$date.".csv";
+        $path2 = "temp/".$date.".csv";
         $file = fopen($path,"w");
+        $file2 = fopen($path2,"w");
         chmod($path,0777);
+        chmod($path2,0777);
         $db=new sqlDB();
         if ($db->qGetRatingExam($idExam)) {
             $a = ttName.",".ttSurname.",".ttEmail.",".ttTimeStart.",".ttTimeEnd.",".ttTimeUsed.",".ttScoreTest.",".ttFinalScore;
             $title = array($a);
             fputcsv($file,explode(",", $title[0]));
+            fputcsv($file2,explode(",", $title[0]));
             while ($info = $db->nextRowAssoc()) {
                 $start = strtotime($info['timeStart']);
                 $end = strtotime($info['timeEnd']);
@@ -220,12 +226,15 @@ class ReportController extends Controller{
                 }
                 $info["timeDiff"] = $time;
                 fputcsv($file,$info);
+                fputcsv($file2,$info);
             }
+            echo json_encode(array("success",$path2));
         }else{
             echo json_encode(array("success","error"));
         }
         fclose($file);
-        echo json_encode(array("success",$path));
+        fclose($file2);
+        //echo json_encode(array("success",$path2));
     }
     private function actionAoreportresult(){
         global $config,$user;
@@ -1494,11 +1503,9 @@ private function actionDeletetemplate(){
                 case "FB":
                     $pdf->Cell(50,10,"Fill in Blanks",0,1,"");
                     break;
-		case "HS":
+                case "HS":
                     $pdf->Cell(50,10,"Hotspot",0,1,"");
                     break;
-
-
             }
             $pdf->SetFont('Helvetica','B',12);
             $pdf->Cell(80,10,ttTopic,0,0,"");

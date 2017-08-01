@@ -17,15 +17,19 @@ ini_set('display_errors', 1);
 require_once('../includes/essential.php');
 
 global $config;
-
+// Initialize session's vars
+session_start();
+if(isset($_SESSION['dbNameChanged'])){
+    $config['dbName']=$_SESSION['dbNameChanged'];
+}
 // Set timezone for system's functions and logs
 date_default_timezone_set($config['systemTimeZone']);
 
 // Create new log element
 $log = new Log($config);
+$qlog = new QLog($config);
 
-// Initialize session's vars
-session_start();
+
 
 // Unserialise user istance (if exists)
 $user = new User();
@@ -60,4 +64,4 @@ if($engine->controller != 'Error'){
 
 ob_end_flush();
 // Prevent including/requesting of this file
-die();
+die();?> 

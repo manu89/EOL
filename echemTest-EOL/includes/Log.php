@@ -22,3 +22,19 @@ class Log {
         file_put_contents($this->systemLog, date('m/d/Y H:i:s').' - '.$text."\n", FILE_APPEND | LOCK_EX);
     }
 }
+
+class QLog {
+
+    private $qlog;
+
+    public function QLog($config = null) {
+        if(config != null)
+            $this->qlog = $config['qLog'];
+        else
+            $this->qlog = "../logs/question.log";
+    }
+
+    public function append($text){
+        file_put_contents($this->qlog, date('Y/m/d H:i:s').' - '.$text."\n", FILE_APPEND | LOCK_EX);
+    }
+}

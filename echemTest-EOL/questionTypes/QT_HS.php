@@ -192,9 +192,16 @@ class QT_HS extends Question {
             <div class="questionTest" value="<?= $this->get('idQuestion') ?>" type="HS">
                 <div class="questionText"><?= $domanda.$extra ?></div>
                 <div class="questionAnswers">
-                    <div id="contentContainer" class="contentContainer" onclick="getClickPosition(this,event)">
-                        <img class="hscursor" id="thing" src="themes/default/images/smiley_red.png" />
-                        <?= $questionAnswers ?>
+                    <div id="contentContainer" style="position:relative;" class="contentContainer" onclick="getClickPosition(this,event)" >
+                        <?= $questionAnswers ?>                        
+                    <?php 
+                    //style="position: relative; left:'.$answered[0].'px; top:'.$answered[1].'px;"
+                        if(isset($answered[0]) && isset($answered[1])){
+                            echo '<img class="hscursor" id="thing" style="position: absolute;" src="themes/default/images/smiley_red.png" onload="riposiziona(this,'.$answered[0].','.$answered[1].');"/>';
+                        }else{                                
+                            echo '<img class="hscursor" id="thing" src="themes/default/images/smiley_red.png" />';
+                        }
+                    ?>
                     </div>
                 </div>
             </div>
@@ -223,8 +230,8 @@ class QT_HS extends Question {
                 $right_wrongClass = ($answer['score'] > 0) ? 'rightAnswer' : 'wrongAnswer';
 
                 $risultato = explode(',', $answer['translation'], 4 );
-                if(($answered[0] > intval($risultato[0])) && ($answered[0] < intval($risultato[2])) ) {
-                    if(($answered[1] > intval($risultato[1])) && ($answered[1] < intval($risultato[3])) ) {
+                if(($answered[0] >= intval($risultato[0])) && ($answered[0] <= intval($risultato[2])) ) {
+                    if(($answered[1] >= intval($risultato[1])) && ($answered[1] <= intval($risultato[3])) ) {
                         $questionScore += round(($answer['score']* $scale ), 1);
                         $answerdClass = 'answered';
                     }
@@ -250,7 +257,7 @@ class QT_HS extends Question {
             ?>
 
             <div class="questionTest <?= $questionClass.' '.$lastQuestion ?>" value="<?= $this->get('idQuestion') ?>" type="HS">
-                <div class="questionText" onclick="showHide(this); prova(<?= $answered[0] ?>,<?= $answered[1] ?>);">
+                <div class="questionText" onclick="showHide(this);">
                     <span class="responseQuestion"></span>
 
                     <?= $domanda ?>
@@ -260,9 +267,13 @@ class QT_HS extends Question {
                 </div>
 
                 <div class="questionAnswers hidden">
-                    <div id="contentContainer">
-                        <img id="thing" src="themes/default/images/smiley_red.png" />
+                    <div id="contentContainer" style="position:relative">
+                        <img id="thing" style="position:absolute;" src="themes/default/images/smiley_red.png" 
+                        onload="riposizionaInCorrezione(this,<?php echo $answered[0].','.$answered[1]?>)" />
                         <?= $immagine ?>
+                        <p class="rettangoloRispostaStudente" 
+                            style="position:absolute;left:<?= $risultato[0]?>px;top:<?= $risultato[1]-15 ?>px;height:<?php $hpx=$risultato[3]-$risultato[1]; echo $hpx."px"; ?>;width:<?php $wpx=$risultato[2]-$risultato[0]; echo $wpx."px"; ?>; border:3px solid green;"
+                        </p>
                     </div>
                     <?= $questionAnswers ?>
                 </div>
@@ -299,8 +310,8 @@ class QT_HS extends Question {
                             $risultato = explode(',', $traslation['translation'], 4 );
                             //$log->append(var_export($risultato, true));
                             //$log->append(var_export($answerrdecode, true));
-                            if(($answerrdecode[0] > intval($risultato[0])) && ($answerrdecode[0] < intval($risultato[2])) ) {
-                                if(($answerrdecode[1] > intval($risultato[1])) && ($answerrdecode[1] < intval($risultato[3])) ) {
+                            if(($answerrdecode[0] >= intval($risultato[0])) && ($answerrdecode[0] <= intval($risultato[2])) ) {
+                                if(($answerrdecode[1] >= intval($risultato[1])) && ($answerrdecode[1] <= intval($risultato[3])) ) {
                                     //$log->append(var_export("RISPOSTA GIUSTA", true));
                                     $score += $result['score'];
                                 }

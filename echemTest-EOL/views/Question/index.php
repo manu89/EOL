@@ -7,7 +7,7 @@
  * Desc: Show topics and questions about requested subject
  */
 
-global $config, $user;
+global $config, $user, $qlog;
 
 ?>
 
@@ -114,7 +114,7 @@ global $config, $user;
                               <td>'.$topic.'</td>
                               <td>'.$type.'</td>
                               <td>'.$difficulty.'</td>
-                              <td>'.$idQuestion.'</td>
+                              <td onMouseover="showHistory(event,'.$idQuestion.')" onMouseout="hideHistory()">'.$idQuestion.'</td>
                               <td>'.$idTopic.'</td>
                               <td>'.$typeID.'</td>
                               <td>'.$languageID.'</td>
@@ -145,7 +145,7 @@ global $config, $user;
                       <td>'.$topic.'</td>
                       <td>'.$type.'</td>
                       <td>'.$difficulty.'</td>
-                      <td>'.$idQuestion.'</td>
+                      <td onMouseover="showHistory(event,'.$idQuestion.')" onMouseout="hideHistory()">'.$idQuestion.'</td>
                       <td>'.$idTopic.'</td>
                       <td>'.$typeID.'</td>
                       <td>'.$languageID.'</td>
@@ -153,6 +153,46 @@ global $config, $user;
         }
     }
     ?>
+
+
+    <!--       find position of mouse in mouseOver action    -->
+            <script language="JavaScript">
+                function showHistory(event,idq) {
+                    //var posDiv = document.getElementById("historyDiv");
+                    var posX;
+
+                    posX = event.clientX;
+                    //posDiv.style.visibility='visible';
+                    //posDiv.style.left = posX -100 + "px";
+                    //posDiv.style.top = posY -100 + "px";
+
+                   historyWindow=window.open("Question_history.php?id="+idq, "Titolo", "width=300px height=400px left=840px top=300px");
+                }
+            </script>
+
+
+
+            <script language="JavaScript">
+                function hideHistory() {
+                    /*var posDiv = document.getElementById("historyDiv");
+                    posDiv.style.visibility='hidden';*/
+                    if(historyWindow!=null)
+                        historyWindow.close()
+
+                }
+            </script>
+
+    <!-- code of popup box wich contents the history of selected question -->
+<!---->
+
+    <?php
+
+    ?>
+
+     <!-- ********************************* -->
+
+
+
             </tbody>
         </table>
     </div>

@@ -102,7 +102,7 @@ openBox(ttExam.' '.ttInfo, 'normal-70.1%', 'examInfo');
         <a id="examDescChars" class="charsCounter hidden"></a>
         <div class="clearer"></div>
     </div>
-    <div class="columnCenter">
+    <div class="columnCenter" style="max-width:255px">
         <h2 class="center"><?= ttRegistrations ?></h2>
 
         <?php

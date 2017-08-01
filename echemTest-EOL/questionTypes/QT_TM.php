@@ -165,11 +165,18 @@ class QT_TM extends Question
 
             $questionAnswers = '';
             shuffle($answerSet);
-            $questionAnswers .= '<div>
-                                    <form action="QT_TM.php">
-                                        <input id="inputNumber" type="text">
-                                    </form>
-                                </div> ';
+            if($answered[0]!=null)
+                $questionAnswers .= '<div>
+                                        <form action="QT_TM.php">
+                                            <input id="inputNumber" type="text" value="'.$answered[0].'">
+                                        </form>
+                                    </div> ';
+            else
+                $questionAnswers .= '<div>
+                                        <form action="QT_TM.php">
+                                            <input id="inputNumber" type="text" value="'.$answered[0].'">
+                                        </form>
+                                    </div> ';
             /**foreach($answerSet as $answer){
              * $checked = (in_array($answer['idAnswer'], $answered)) ? 'checked' : '';
              * $questionAnswers .= '<div>

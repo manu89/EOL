@@ -123,7 +123,7 @@ class QT_NM extends Question
         if (($db->qAnswerSet($this->get('idQuestion'), $this->get('fkLanguage'), $_SESSION['idSubject'])) && ($answerSet = $db->getResultAssoc())) {
 
             $questionAnswers = '<div>
-                                        <input id="inputNumber" type="text" onfocusout="controlNum()">
+                                        <input id="inputNumber" type="text" >
                                 </div> ';
             /**
              * foreach($answerSet as $answer){
@@ -163,10 +163,17 @@ class QT_NM extends Question
 
             $questionAnswers = '';
             shuffle($answerSet);
-            $questionAnswers .= '<div>
-                                        <input id="inputNumber" type="number" onfocusout="controlNum()">
-                                        <!-- <input id="inputNumber" type="text" onblur="controlNum()"> -->
-                                </div> ';
+            if($answered[0]==null){
+                $questionAnswers .= '<div>
+                                        <input id="inputNumber" type="text" onchange="this.style.background=myFunction(this.value);">
+                                        
+                                    </div> ';
+            }else{
+                $questionAnswers .= '<div>
+                                        <input id="inputNumber" type="text" value="'.trim($answered[0]).'" onchange="this.style.background=myFunction(this.value)">
+                                        
+                                    </div> ';
+            }
             /**foreach($answerSet as $answer){
              * $checked = (in_array($answer['idAnswer'], $answered)) ? 'checked' : '';
              * $questionAnswers .= '<div>
@@ -214,15 +221,20 @@ class QT_NM extends Question
 
         if (($db->qAnswerSet($this->get('idQuestion'), null, $idSubject)) && ($answerSet = $db->getResultAssoc('idAnswer'))) {
 
-            $questionAnswers = '<div class="responseNM" value="' . $this->get('idQuestion') . '"> <b> Risposta data dallo studente: </b> ' . $answered[0] . '</div>';
+            $questionAnswers = '<div class="responseNM" value="' . $this->get('idQuestion') . '"> <b> Provided response: </b> ' . $answered[0] . '</div>';
 
             //echo $answerSet['score'];
             foreach ($answerSet as $idAnswer => $answer) {
                 $answerdClass = "";
-                $right_wrongClass = ($answer['score'] > 0) ? 'rightAnswer' : 'wrongAnswer';
-                if ($answered[0] === $answer['translation']) {
+                $right_wrongClass ='wrongAnswer';
+                //$right_wrongClass ='rightAnswer';
+
+		$upperBound=$answer['translation']+($answer['translation']/100);
+                $lowerBound=$answer['translation']-($answer['translation']/100);
+                if(($answered['0']>=$lowerBound)&&($answered['0']<=$upperBound)) {
+		    $right_wrongClass =  'rightAnswer';
                     $questionScore += round(($answer['score'] * $scale), 1);
-                    $answerdClass = 'answered';
+			$answerdClass = 'answered';
                 }
                 $questionAnswers .= '<div class="' . $answerdClass . '">
                                          <span value="' . $idAnswer . '" class="responseNM ' . $right_wrongClass . '"></span>
@@ -233,8 +245,8 @@ class QT_NM extends Question
             $questionAnswers .= '<label class="questionScore">' . $questionScore . '</label>
                                  <div class="clearer"></div>';
 
-            if (count($answered) != 0)
-                $questionClass = ($questionScore > 0) ? 'rightQuestion' : 'wrongQuestion';
+            //if (count($answered) != 0)
+            $questionClass = ($questionScore > 0) ? 'rightQuestion' : 'wrongQuestion';
             ?>
 
             <div class="questionTest <?= $questionClass . ' ' . $lastQuestion ?>"
@@ -258,64 +270,31 @@ class QT_NM extends Question
         $this->printQuestionInCorrection($idSubject, $answered, $scale, $lastQuestion);
     }
 
-    public function getScoreFromGivenAnswer()
-    {
+    public function getScoreFromGivenAnswer(){
         global $log;
         $score = 0;
         $answerr = $this->get('answer'); //24
         $idAns=$this->get('idQuestion');  // 286
         $answerr = json_decode(stripslashes($this->get('answer')), true);
-        //$log->append(var_export($answerr, true));
-        //$log->append(var_export($answerr[0], true));
-        //$log->append(var_export(json_decode(stripslashes($this->get('answer')), true), true));
-        //$db->qSelect('answers', 'fkQuestion', $answerr);
-
-        //if(count($answerr) > 0){
             $db = new sqlDB();
             $db2 = new sqlDB();
             if ($pippo=$db->qSelect('Answers', 'fkQuestion', $idAns)) {
-                //$aaa=$db->getResultAssoc('idAnswer');
-                //$log->append(var_export($aaa, true));
-                //$log->append(var_export('pippo=', true));
-                //$log->append(var_export($pippo, true));
-                //$result = $db->nextRowAssoc();
-                //$log->append(var_export($result, true));
                 while ($result = $db->nextRowAssoc() ) {
-                    //$log->append(var_export('result1', true));
-                    //$log->append(var_export($result, true));
-                    //$log->append(var_export($result['idAnswer'], true));
+                    $find=false;
                     $id=$result['idAnswer'];
-                    //$log->append(var_export($id, true));
                     if ($db2->qSelect('TranslationAnswers', 'fkAnswer', $id)) {
-                        //$traslation = $db->nextRowAssoc();
-                        //$log->append(var_export($traslation, true));
                         while ($traslation = $db2->nextRowAssoc()) {
-                            //$log->append(var_export('secondo while', true));
-                            //$log->append(var_export($traslation, true));
-                            //$log->append(var_export($traslation['translation'], true));
-                            //$log->append(var_export($result['score'], true));
-                            //$log->append(var_export($traslation['translation'], true));
-                            //$log->append(var_export($answerr, true));
-                            if($answerr['0']===$traslation['translation']) {
+             			    $upperBound=$traslation['translation']+($traslation['translation']/100);
+            			    $lowerBound=$traslation['translation']-($traslation['translation']/100);
+                            if(($answerr['0']>=$lowerBound)&&($answerr['0']<=$upperBound)) {
                                 $score += $result['score'];
-                                }
+				                break;
                             }
-                        }else die($db->getError());
-                    }
-                }else die($db->getError());
+                        }
+                    }else die($db->getError());
+                }
+            }else die($db->getError());
             //}
-            return $score;
-        }
+        return $score;
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-

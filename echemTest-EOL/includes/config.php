@@ -10,15 +10,15 @@
 /*----------------------------------*
  *  All system configurations       *
  *----------------------------------*/
-
+session_start();
 // System version
-$config['systemVersion'] = '1.0';
+$config['systemVersion'] = '2.0';
 // System title
-$config['systemTitle'] = 'EOL - Esami On Line';
+$config['systemTitle'] = 'LibreEOL - Exams On Line';
 // System home website (used for emails)
 $config['systemHome'] = 'http://'. $_SERVER["SERVER_NAME"].'/';
 // System comunication email
-$config['systemEmail'] = 'no-reply@eol.org';
+$config['systemEmail'] = 'no-reply@libreeol.org';
 // Default system language (watch Languages table in db)
 $config['systemLang'] = 'en';
 // Default system time zone (watch php documentation from time zone available)
@@ -53,6 +53,7 @@ $config['topicResQM']='../../';
 $config['logDir'] = '../logs/';
 // System log files
 $config['systemLog'] = $config['logDir'].'system.log';
+$config['qLog'] = $config['logDir'].'question.log';   // config - create new Log file
 // Main upload directory
 $config['systemUploadDir'] = '/fileman/Uploads/Images';
 // Datatable text column length
@@ -71,10 +72,15 @@ $config['dbHost'] = 'localhost';
 // Database port
 $config['dbPort'] = '3306';
 // Database name
-$config['dbName'] = 'echemtest';
+if(isset($_SESSION['dbNameChanged'])){
+    $config['dbName']=$_SESSION['dbNameChanged'];
+}else{
+	$config['dbName'] = 'echemtest';
+}
 // Database access username
 $config['dbUsername'] = 'root';
 // Database access password
+//$config['dbPassword'] = '';
 $config['dbPassword'] = '';
 
 /*----------------------------------*
@@ -85,6 +91,11 @@ $config['dbPassword'] = '';
 $config['themesDir'] = 'themes/';
 // Theme name (equals to theme folder)
 $config['themeName'] = 'default';
+if(isset($_SESSION['dbNameChanged'])){
+    $config['themeName'] = 'default';
+}else{
+	$config['themeName'] = 'default';
+}
 // Theme directory
 $config['themeDir'] = $config['themesDir'].$config['themeName'].'/';
 // Theme's images directory

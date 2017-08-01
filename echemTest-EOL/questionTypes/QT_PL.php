@@ -296,72 +296,49 @@ class QT_PL extends Question
         ?>
 
         <div class="questionTest" value="<?= $this->get('idQuestion') ?>" type="PL">
-            <div class="questionText"><?= $this->get('translation') ?></div>
-
-
+        <div class="questionText"><?= $this->get('translation') ?></div>
             <div class="questionAnswers">
                 <?php
+                $i=0;
                 for ($a = 0; $a < count($subSet); $a++) {
-
-
-                if (($db->qAnswerSetPL($subSet[$a]['sub_questions'], $this->get('fkLanguage'),$idSubject)) && ($answerSet = $db->getResultAssoc())) {
-
-                $questionAnswers = '';
-
-
-
-
+                    if (($db->qAnswerSetPL($subSet[$a]['sub_questions'], $this->get('fkLanguage'),$idSubject)) && ($answerSet = $db->getResultAssoc())) {
+                    $questionAnswers = '';
                 // -------  Add extra buttons  ------- //
-                $extra = '';
-                if (strpos($this->get('extra'), 'c') !== false)
-                    $extra .= '<img class="extraIcon calculator" src="' . $config['themeImagesDir'] . 'QEc.png' . '">';
-                if (strpos($this->get('extra'), 'p') !== false)
-                    $extra .= '<img class="extraIcon periodicTable" src="' . $config['themeImagesDir'] . 'QEp.png' . '">';
-                ?>
-
-
-
-
-
-
-                <?= $subSet[$a]['translation']?>
-
-
-                <select id="prova">
-                    <?php
-                    foreach ($answerSet as $answer) {
-
-
-
-                        if ($answer['fkLanguage'] != $this->getRAsspc($a, 'fkLanguage'))
-                            $class = 'mainLang';
-
-                        $questionAnswers .= '<div>
-
-
-                                        <option id="prova" value="' . $answer['idAnswer'] . '">' . $answer['translation'] . '</option>
-
-                                     </div>';
-
-                    }
-
-                    echo $questionAnswers;
-
-                    }
-
+                    $extra = '';
+                    if (strpos($this->get('extra'), 'c') !== false)
+                        $extra .= '<img class="extraIcon calculator" src="' . $config['themeImagesDir'] . 'QEc.png' . '">';
+                    if (strpos($this->get('extra'), 'p') !== false)
+                        $extra .= '<img class="extraIcon periodicTable" src="' . $config['themeImagesDir'] . 'QEp.png' . '">';
                     ?>
+                    <?= $subSet[$a]['translation']?>
+                    <select id="prova">
+                        <?php
+                        foreach ($answerSet as $answer) {
+                            if ($answer['fkLanguage'] != $this->getRAsspc($a, 'fkLanguage'))
+                                $class = 'mainLang';
+                            if(isset($answered[$i]) && $answered[$i]==$answer['idAnswer']){
+                                $questionAnswers .= '<div>
+                                        <option selected="selected" id="prova" value="' . $answer['idAnswer'] . '">' . $answer['translation'] . '</option>
+                                     </div>';
+                                $i++;
+                            }
+                            else{
+                                $questionAnswers .= '<div>
+                                        <option id="prova" value="' . $answer['idAnswer'] . '">' . $answer['translation'] . '</option>
+                                     </div>';
+                            } 
 
+                        }                          
+                        echo $questionAnswers;
 
-            </div>
-
-            </select>
-            <br/>
-            <?php
-            } ?>
-
+                        }
+                    ?>
+                    </div>
+                    </select>
+                    <br/>
+                    <?php
+                } ?> </div>
         </div>
-
-
         <?php
     }
 

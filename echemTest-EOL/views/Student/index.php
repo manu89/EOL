@@ -8,6 +8,7 @@
  */
 
 global $user;
+//unset($_SESSION['idSet']);
 ?>
 
 <div id="navbar">
@@ -25,7 +26,12 @@ global $user;
             echo '<div class="list"><ul>';
             while($subject = $db->nextRowAssoc()){
                 if(! in_array($subject['fkSubject'], $readedSubjects)){
-                    echo '<li><a class="showSubjectInfoAndExams" value="'.$subject['fkSubject'].'" onclick="showSubjectInfoAndExams(this);">'.$subject['subjectName'].'</a></li>';
+                    echo '<li>
+                    <a class="showSubjectInfoAndExams" 
+                    value="'.$subject['fkSubject'].'" 
+                    onclick="showSubjectInfoAndExams(this);">
+                    '.$subject['subjectName'].'</a>
+                    </li>';
                     array_push($readedSubjects, $subject['fkSubject']);
                 }
             }

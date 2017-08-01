@@ -28,7 +28,7 @@ global $config, $user;
             <tr><td></td><td>See an overwiev of result for one or more assessments</td></tr>
             <tr><td><img src="<?=$config['themeImagesDir']?>report.png" class="img-report"/></td><td><a class="replink" href="index.php?page=report/creport"><?= ttReportCoaching ?></a></td></tr>
             <tr><td></td><td><?=ttReportCoachingDescription?></td></tr>
-            <tr><td><img src="<?=$config['themeImagesDir']?>report.png" class="img-report"/></td><td><a class="replink" target="_blank" href="<?=$config['systemFileManagerDir']?>filemanager.php"><?= ttReportViewer ?></a></td></tr>
+            <tr><td><img src="<?=$config['themeImagesDir']?>report.png" class="img-report"/></td><td><a class="replink" target="_blank" href="<?=$config['systemFileManagerDir']?>filemanager.php?type=report"><?= ttReportViewer ?></a></td></tr>
             <tr><td></td><td><?=ttReportViewerDescription?></td></tr>
         </table>
 

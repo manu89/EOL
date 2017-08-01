@@ -10,7 +10,10 @@ var examEditing = false;
 var examRowSelected = null;
 var examRowEdit = null;
 var examNew = false;
-
+var altezza = $(window).height()-330;
+if(altezza<250){
+    altezza=250;
+}
 var examsTable = null;
 var etci = {
     status : 0,
@@ -27,20 +30,20 @@ var etci = {
     statusID : 11
 };
 
-statuses = {"w" : {"imageTitle"  : ttWaiting,
-                   "actionTitle" : ttStart,
+statuses = {"w" : {"imageTitle"  : "Waiting",
+                   "actionTitle" : "Start",
                    "action"      : "start",
                    "confirm"     : ttCStartExam,
                    "newStatus"   : "s",
                    "message"     : ttMExamStarted},
-            "s" : {"imageTitle"  : ttStarted,
-                   "actionTitle" : ttStop,
+            "s" : {"imageTitle"  : "Started",
+                   "actionTitle" : "Stop",
                    "action"      : "stop",
                    "confirm"     : ttCStopExam,
                    "newStatus"   : "e",
                    "message"     : ttMExamStopped},
-            "e" : {"imageTitle"  : ttStopped,
-                   "actionTitle" : ttStart,
+            "e" : {"imageTitle"  : "Stopped",
+                   "actionTitle" : "Start",
                    "action"      : "start",
                    "confirm"     : ttCStartExam,
                    "newStatus"   : "s",
@@ -55,7 +58,7 @@ $(function(){
     $("#newExam").on("click", function(){ newExam(); });
 
     examsTable = $("#examsTable").DataTable({
-        scrollY:        294,
+        scrollY:        altezza,
         scrollCollapse: false,
         jQueryUI:       true,
         paging:         false,
@@ -69,7 +72,7 @@ $(function(){
             { className: "eSettings" },
             { className: "ePassword", width : "30px", sortable : false },
             { className: "eManage", searchable : false, sortable : false },
-            { className: "eExamID", visible : false },
+            { className: "eExamID", visible : true },
             { className: "eSubjectID", visible : false },
             { className: "eSettingsID", visible : false },
             { className: "eStatusID", visible : false }
@@ -196,7 +199,7 @@ function archiveExam(askConfirmationAndExamToArchive){
                 idExam      :   idExam
             },
             success : function (data) {
-                if(data == "ACK"){
+                if(data.trim() == "ACK"){
 //                    alert(data);
                     var newStatus = status["newStatus"];
                     examsTable.cell(examsTable.row(examRowEdit).index(), etci.status).data(
@@ -270,7 +273,7 @@ function changeExamStatus(askConfirmationAndExamToChange){
                 action      :   status["action"]
             },
             success : function (data) {
-                if(data == "ACK"){
+                if(data.trim() == "ACK"){
 //                    alert(data);
                     var newStatus = status["newStatus"];
                     examsTable.cell(examsTable.row(examRowEdit).index(), etci.status).data(

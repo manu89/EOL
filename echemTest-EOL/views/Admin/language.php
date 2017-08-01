@@ -51,8 +51,11 @@ $langTo = $xmlTo->getElementById('name')->nodeValue.' ('.strtoupper($xmlTo->getE
             echo '<tr>
                       <td>'.$translationID.'</td>
                       <td>'.str_replace('\n', '¶<br/>', $textsFrom->item($index)->nodeValue).'</td>
-                      <td><span class="value hidden">'.$translation.'</span><textarea class="language '.$filled.'">'.$translation.'</textarea></td>
-                  </tr>';
+                      ';
+                      if($translation=='')
+                        $translation=$textsFrom->item($index)->nodeValue;
+                      echo '<td><span class="value hidden">'.$translation.'</span><textarea class="language '.$filled.'">'.$translation.'</textarea></td>';
+                  echo '</tr>';
         }
         ?>
 

@@ -41,7 +41,10 @@ class QuestionController extends Controller{
      *  @descr  Show index page
      */
     private function actionIndex(){
-        global $config, $engine;
+        global $config, $engine, $qlog;
+
+
+
 
         if(isset($_POST['idSubject'])){
             $_SESSION['idSubject'] = $_POST['idSubject'];
@@ -82,6 +85,10 @@ class QuestionController extends Controller{
         }
 
     }
+
+
+
+
     /********************************************************************
      *                             Question                             *
      ********************************************************************/
@@ -122,13 +129,14 @@ class QuestionController extends Controller{
      *  @name   actionShowquestioninfo
      *  @descr  Show all details about selected question with relative answers with specific language
      */
-    private function actionShowquestioninfo(){
+    private function actionShowquestioninfo(){  // event double click on question
         global $log, $engine;
 
         if(((isset($_POST['action'])) && (isset($_POST['idQuestion']))) ||
             (isset($_POST['action'])) && (isset($_POST['type'])) && (isset($_POST['topic']))){
             $engine->loadLibs();
             $engine->renderPage();
+
         }else{
             $log->append("Params not set in '".__FUNCTION__.'\' function: $_POST = '.var_export($_POST, true));
             die("Params not set in '".__FUNCTION__." function");
@@ -136,45 +144,130 @@ class QuestionController extends Controller{
     }
 
     /**
+     *  @name   actionShowquestionhistory
+     *  @descr  Show all details about question's history
+     */
+    private function actionShowquestionhistory(){
+   /*    global $qlog, $engine;
+
+        if (isset($_POST['idQuestion'])){
+            $ActualQuestionId= $_POST['idQuestion'];
+
+            $qlog->append("************************* --> ".$ActualQuestionId);
+
+
+        } */
+
+    }
+
+
+    /**
      *  @name   actionUpdatequestioninfo
      *  @descr  If requested duplicates the question and updates all its infos
      */
     private function actionUpdatequestioninfo(){
-        global $log;
+        global $log, $qlog, $user,$OldquestionID,$NewquestionID , $question_newText;
+        $textChanged = false;
+
+        $db = new sqlDB();
+        $db->result = null; $db->mysqli = $db->connect();
 
         if((isset($_POST['idQuestion'])) && (isset($_POST['idTopic'])) && (isset($_POST['difficulty'])) &&
            (isset($_POST['translationsQ'])) && (isset($_POST['shortText'])) && (isset($_POST['extras'])) &&
-           (isset($_POST['mainLang']))){
+           (isset($_POST['mainLang']))) {
 
-            $db = new sqlDB();
             $questionID = $_POST['idQuestion'];
-            if($db->qGetEditAndDeleteConstraints('edit', 'question2', array($_POST['idQuestion']))){
-                if($db->numResultRows() > 0){
-                    if($db->qDuplicateQuestion($questionID, true)){
-                        if($questionID = $db->nextRowEnum()){
-                            $questionID = $questionID[0];
-                        }
-                    }else{
-                        die($db->getError());
+            $question_newText = $_POST['shortText'];
+            $OldquestionID = $_POST['idQuestion'];
+            $usernamesurname = $user->name . " " . $user->surname;
+
+            //query to find old question's text
+
+                $queryOldText = "SELECT shortText FROM Questions WHERE idQuestion= ".$OldquestionID;
+                $db->execQuery($queryOldText);
+                if ($db->numResultRows()>0){
+                    while ($row = mysqli_fetch_array($db->result)){
+                        $question_oldText=$row['shortText'];
                     }
                 }
-            }else{
-                die($db->getError());
+
+
+                if (trim(strtolower($question_oldText)) != trim(strtolower($question_newText))){
+                    $textChanged=true;
+                }
+
+
+
+
+            if($textChanged) {
+
+
+                if ($db->qGetEditAndDeleteConstraints('edit', 'question2', array($_POST['idQuestion']))) { //if question was used
+
+                    if ($db->numResultRows() > 0) {  //if there are results
+                        if ($db->qDuplicateQuestion($questionID, true)) {  // if duplicateQuestion return true
+
+                            if ($questionID = $db->nextRowEnum()) { //next free id question
+                                $NewquestionID = $questionID[0];
+
+                                if ($OldquestionID != $NewquestionID) { //if question's id change (assigned question was modified)
+
+                                    $qlog->append($usernamesurname . " modified question id " . $OldquestionID . " in question id " . $NewquestionID . "\n-"); //write file log
+
+                                    //select to find idparent
+                                    $parentQuery = "SELECT FkQuestionParent FROM Questions_History WHERE FkQuestion = " . $OldquestionID;
+                                    $db->execQuery($parentQuery);
+                                    if ($db->numResultRows() > 0) {  //if query find a result
+                                        while ($row = mysqli_fetch_array($db->result)) {
+                                            $idParent = $row['FkQuestionParent'];
+
+                                            //INSERT new question's history saving old parent
+                                            $query = "INSERT INTO `Questions_History` (`FkQuestion`, `FkQuestionParent`, `WhoChanged`, `Date`)
+                                        VALUES ('$NewquestionID', '$idParent', '$usernamesurname', '" . date('Y/m/d') . "')";
+                                            $db->execQuery($query);
+
+                                        }
+
+                                    } else {
+                                        //INSERT new question's history
+                                        $query = "INSERT INTO `Questions_History` (`FkQuestion`, `FkQuestionParent`, `WhoChanged`, `Date`)
+                                        VALUES ('$NewquestionID', '$OldquestionID', '$usernamesurname', '" . date('Y/m/d') . "')";
+                                        $db->execQuery($query);
+                                    }
+
+
+                                }
+                                $questionID = $questionID[0];
+
+                            }
+                        } else {
+                            die($db->getError());
+                        }
+                    }
+                } else {
+                    die($db->getError());
+                }
             }
             $translationsQ = json_decode($_POST['translationsQ'], true);
-            if($translationsQ[$_POST['mainLang']]){
-                if($db->qUpdateQuestionInfo($questionID, $_POST['idTopic'], $_POST['difficulty'], $_POST['extras'], $_POST['shortText'], $translationsQ)){
+            if ($translationsQ[$_POST['mainLang']]) {
+                if ($db->qUpdateQuestionInfo($questionID, $_POST['idTopic'], $_POST['difficulty'], $_POST['extras'], $_POST['shortText'], $translationsQ)) {
                     echo $this->updateQuestionRow($questionID, $_POST['mainLang'], $translationsQ);
                 }
-            }else{
+            } else {
                 die(ttEMainLanguageEmpty);
             }
+
+
+
         }else{
             $log->append("Params not set in '".__FUNCTION__.'\' function: $_POST = '.var_export($_POST, true));
             die("Params not set in '".__FUNCTION__." function");
         }
 
     }
+
+
+
 
     /**
      *  @name   updateQuestionRow
@@ -739,7 +832,7 @@ class QuestionController extends Controller{
         return array(
             array(
                 'allow',
-                'actions' => array('Index', 'Showtopics', 'Showquestionpreview','Showquestionpreviewpdl', 'Showquestioninfo',
+                'actions' => array('Index', 'Showtopics', 'Showquestionpreview','Showquestionpreviewpdl', 'Showquestioninfo', 'Showquestionhistory',
                                    'Newquestion', 'Showquestionlanguages','Showsubquestionsinfo',
                                    'Updatequestioninfo', 'Deletequestion','Deletesubquestion', 'Changestatus',
                                    'Showanswerinfo', 'Updateanswerdetails',
@@ -748,7 +841,7 @@ class QuestionController extends Controller{
             ),
             array(
                 'allow',
-                'actions' => array('Index2', 'Showtopics', 'Showquestionpreview', 'Showquestioninfo',
+                'actions' => array('Index2', 'Showtopics', 'Showquestionpreview', 'Showquestioninfo', 'Showquestionhistory',
                     'Showquestionlanguages',
                     'Changestatus',
                     'Showanswerinfo'),

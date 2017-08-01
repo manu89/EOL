@@ -2724,55 +2724,53 @@ class sqlDB {
               $questionsSet = $questionsSelected;
               $difficulties = getSystemDifficulties();
               $questionsForDifficulty=0;
-
               $this->mysqli = $this->connect();
               $query = "SELECT numEasy,numMedium,numHard FROM TestSettings WHERE idTestSetting='$idTestSetting'";
               $this->execQuery($query);
               $numberOfQuestions = $this->getResultAssoc();
-
               $easy=$numberOfQuestions["0"]["numEasy"];
               $medium=$numberOfQuestions["0"]['numMedium'];
               $hard=$numberOfQuestions["0"]['numHard'];
+              $ok=1;
               foreach($difficulties as $difficulty => $difficultyName){
-                $difficultyName = 'num'.ucfirst($difficultyName);
-                $this->mysqli = $this->connect();
-                $query = "SELECT idQuestion
-                  FROM
-                  Questions
-                  WHERE
-                  difficulty = '$difficulty'
-                  AND
-                  status = 'a' 
-                  AND (";
-                $topics=$topicsBackup;
-                $numTopics = count($topics); 
-                $i=0;$num=0;
-                foreach($topics as $idTopic => $topicInfo){
-                  $query .= "fkTopic = '$idTopic' ";
-                  if(!(++$i === $numTopics)){ //if it is not the last element...
-                    $query .= " OR ";
-                  }                            
+                if($ok==1){
+                  $difficultyName = 'num'.ucfirst($difficultyName);
+                  $this->mysqli = $this->connect();
+                  $query = "SELECT idQuestion
+                    FROM
+                    Questions
+                    WHERE
+                    difficulty = '$difficulty'
+                    AND
+                    status = 'a' 
+                    AND (";
+                  $topics=$topicsBackup;
+                  $numTopics = count($topics); 
+                  $i=0;$num=0;
+                  foreach($topics as $idTopic => $topicInfo){
+                    $query .= "fkTopic = '$idTopic' ";
+                    if(!(++$i === $numTopics)){ //if it is not the last element...
+                      $query .= " OR ";
+                    }                            
+                  }
+                  $query=$query." )";
+                  if(count($questionsSelected) > 0)
+                    $query .= "AND idQuestion NOT IN (".implode(',', $questionsSelected).")";
+                  $this->execQuery($query);
+                  $allQuestions[$difficultyName] = $this->getResultAssoc();
+                  if($difficulty==1)$questionsForDifficulty = $easy;
+                  elseif($difficulty==2)$questionsForDifficulty = $medium;
+                  else $questionsForDifficulty = $hard;                
+                  if($questionsForDifficulty <= count($allQuestions[$difficultyName])){
+                          while($questionsForDifficulty > 0){
+                              $idToAdd = rand(0, (count($allQuestions[$difficultyName]) - 1));
+                              array_push($questionsSet, $allQuestions[$difficultyName][$idToAdd]['idQuestion']);                           
+                              unset($allQuestions[$difficultyName][$idToAdd]);
+                              $allQuestions[$difficultyName] = array_values($allQuestions[$difficultyName]);
+                              $questionsForDifficulty--;
+                          }
+                  }else $ok=0;
                 }
-                $query=$query." )";
-                if(count($questionsSelected) > 0)
-                  $query .= "AND idQuestion NOT IN (".implode(',', $questionsSelected).")";
-                $this->execQuery($query);
-                $allQuestions[$difficultyName] = $this->getResultAssoc();
-
-                if($difficulty==1)$questionsForDifficulty = $easy;
-                elseif($difficulty==2)$questionsForDifficulty = $medium;
-                else $questionsForDifficulty = $hard;                
-                if($questionsForDifficulty <= count($allQuestions[$difficultyName])){
-                        $ok=2;
-                        while($questionsForDifficulty > 0){
-                            $idToAdd = rand(0, (count($allQuestions[$difficultyName]) - 1));
-                            array_push($questionsSet, $allQuestions[$difficultyName][$idToAdd]['idQuestion']);                           
-                            unset($allQuestions[$difficultyName][$idToAdd]);
-                            $allQuestions[$difficultyName] = array_values($allQuestions[$difficultyName]);
-                            // e se aggiungo qui ?
-                            $questionsForDifficulty--;
-                        }
-                }else $ok=0;
               }
             }if($ok==0){ // qui mettere il caso in cui prende quello che è possibile !
               die(ttERegFailedQuestions);

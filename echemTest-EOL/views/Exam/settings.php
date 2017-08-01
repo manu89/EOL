@@ -14,7 +14,6 @@ global $user, $tt, $config;
     <?php printMenu(); ?>
 </div>
 <div id="main">
-
     <?php
     $subjectInfo = null;
     $db = new sqlDB();
@@ -105,7 +104,7 @@ global $user, $tt, $config;
                                             $type = constant('ttQT'.$question['type']);
                                             $difficulty = constant('ttD'.$question['difficulty']);
                                             $difficultyID = 'settingsD'.$question['difficulty'];
-                                            $checkbox = '<input type="checkbox" value="'.$idQuestion.'" name="question" onchange="selectQuestion(this);"/>';
+                                            $checkbox = '<input type="checkbox" id="check'.$idQuestion.'" value="'.$idQuestion.'" name="question" onchange="selectQuestion(this);"/>';
                                             if($question['fkLanguage'] == $subjectInfo['fkLanguage'])
                                                 $text = $question['shortText'];
                                             $languages = '<img title="'.$allLangs[$question['fkLanguage']]['description'].'"
@@ -132,7 +131,7 @@ global $user, $tt, $config;
                                             $type = constant('ttQT'.$question['type']);
                                             $difficulty = constant('ttD'.$question['difficulty']);
                                             $difficultyID = 'settingsD'.$question['difficulty'];
-                                            $checkbox = '<input type="checkbox" value="'.$idQuestion.'" name="question" onchange="selectQuestion(this);"/>';
+                                            $checkbox = '<input type="checkbox" id="check'.$idQuestion.'"  value="'.$idQuestion.'" name="question" onchange="selectQuestion(this);"/>';
                                             if($question['fkLanguage'] == $subjectInfo['fkLanguage'])
                                                 $text = $question['shortText'];
                                             $languages = '<img title="'.$allLangs[$question['fkLanguage']]['description'].'"
