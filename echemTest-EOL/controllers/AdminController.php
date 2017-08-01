@@ -647,7 +647,7 @@ class AdminController extends Controller{
             $db = new sqlDB();
             if(($db->qSelect('Tokens', 'value', $_POST['token'])) && ($token = $db->nextRowAssoc()) &&
                ($db->qSelect('Users', 'email', $token['email'])) && ($userInfo = $db->nextRowAssoc()) &&
-               ($db->qUpdateProfile($userInfo['idUser'], null, null, null, sha1($_POST['password']))) &&
+               ($db->qUpdateProfile($userInfo['idUser'], null, null, null, null, null, sha1($_POST['password']))) &&
                ($db->qDelete('Tokens', 'value', $_POST['token']))){
                 $message = str_replace('_USERNAME_', $userInfo['name'], ttMailCredentials);
                 $message = str_replace('_USEREMAIL_', $userInfo['email'], $message);
